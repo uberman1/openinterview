@@ -17,11 +17,27 @@ function wait(ms){ return new Promise(r=>setTimeout(r, ms)) }
 
 async function run(){
   const result = { checks: [], passed: false, ts: new Date().toISOString(), module: MOD }
+  
+  // Build client first
+  log('[selftest] building client...')
+  const bld = spawn('npm', ['run', 'build'], { cwd: path.resolve(process.cwd(), 'client') })
+  bld.stdout.on('data', d=> log(String(d).trim()))
+  bld.stderr.on('data', d=> log(String(d).trim()))
+  await new Promise((resolve)=> bld.on('close', resolve))
+  const buildOk = bld.exitCode === 0
+  if (!buildOk) {
+    result.checks.push({ name: 'client.build', ok: false, error: 'Build failed' })
+    fs.writeFileSync(jsonPath, JSON.stringify(result, null, 2))
+    console.log('CHECKS FAILED, see logs/selftest.*')
+    process.exit(1)
+  }
+  result.checks.push({ name: 'client.build', ok: true })
+  
   log(`[selftest m${MOD}] starting server...`)
-  const srv = spawn('node', ['--loader', 'tsx', 'server/index.ts'], { env: { ...process.env, PORT, NODE_ENV: 'test' } })
+  const srv = spawn('npm', ['run', 'dev'], { env: { ...process.env, PORT, NODE_ENV: 'development' }, cwd: process.cwd() })
   srv.stdout.on('data', d=> log(String(d).trim()))
   srv.stderr.on('data', d=> log(String(d).trim()))
-  await wait(2000)
+  await wait(5000)
 
   // 1) Health
   try {
@@ -63,15 +79,6 @@ async function run(){
     const ok = r.status === 200 && j?.ok === true
     result.checks.push({ name: 'protected.auth', ok })
   } catch (e){ result.checks.push({ name: 'protected.auth', ok: false, error: String(e) }) }
-
-  // 6) Client Build
-  log('[selftest] building client...')
-  const bld = spawn('npm', ['run', 'build'], { cwd: path.resolve(process.cwd(), 'client') })
-  bld.stdout.on('data', d=> log(String(d).trim()))
-  bld.stderr.on('data', d=> log(String(d).trim()))
-  await new Promise((resolve)=> bld.on('close', resolve))
-  const buildOk = bld.exitCode === 0
-  result.checks.push({ name: 'client.build', ok: buildOk })
 
   srv.kill('SIGINT')
   result.passed = result.checks.every(c=>c.ok)
