@@ -35,7 +35,47 @@ async function run() {
     result.checks.push({ name: 'api.health', ok: false, error: String(e) });
   }
 
-  // 3) Client build check
+  // 3) Create Profile
+  let profileId = null;
+  try {
+    const r = await fetch('http://127.0.0.1:5000/api/v1/profiles', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: 'Test User', email: 'test@example.com' })
+    });
+    const j = await r.json();
+    const ok = r.status === 201 && j?.profile?.email === 'test@example.com';
+    if (ok) profileId = j.profile.id;
+    result.checks.push({ name: 'profiles.create', ok, detail: j });
+  } catch (e) {
+    result.checks.push({ name: 'profiles.create', ok: false, error: String(e) });
+  }
+
+  // 4) List Profiles
+  try {
+    const r = await fetch('http://127.0.0.1:5000/api/v1/profiles?q=test');
+    const j = await r.json();
+    const ok = Array.isArray(j.items) && j.items.length >= 1;
+    result.checks.push({ name: 'profiles.list', ok, count: j.items?.length });
+  } catch (e) {
+    result.checks.push({ name: 'profiles.list', ok: false, error: String(e) });
+  }
+
+  // 5) Create Interview
+  try {
+    const r = await fetch('http://127.0.0.1:5000/api/v1/interviews', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ profileId, title: 'Intro Interview' })
+    });
+    const j = await r.json();
+    const ok = r.status === 201 && j?.interview?.profileId === profileId;
+    result.checks.push({ name: 'interviews.create', ok });
+  } catch (e) {
+    result.checks.push({ name: 'interviews.create', ok: false, error: String(e) });
+  }
+
+  // 6) Client build check
   log('[selftest] building client...');
   let buildOk = false;
   const bld = spawn('npm', ['run', 'build']);

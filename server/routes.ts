@@ -7,6 +7,9 @@ import { APP_VERSION, API_BASE } from "../shared/constants";
 import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
+import { router as profilesRouter } from "./routes.profiles";
+import { router as interviewsRouter } from "./routes.interviews";
+import { errorMiddleware } from "./errors";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Health endpoint
@@ -187,6 +190,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: 'Failed to get adapter status' });
     }
   });
+
+  // Module 1: Domain routes
+  app.use(`${API_BASE}`, profilesRouter);
+  app.use(`${API_BASE}`, interviewsRouter);
+
+  // Error handler (must be last)
+  app.use(errorMiddleware);
 
   const httpServer = createServer(app);
   return httpServer;
