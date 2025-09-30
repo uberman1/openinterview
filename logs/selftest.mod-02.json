@@ -5,7 +5,7 @@
       "ok": true,
       "detail": {
         "status": "ok",
-        "env": "development",
+        "env": "test",
         "version": "0.1.0",
         "adapters": {
           "auth": "mock",
@@ -17,7 +17,7 @@
           "useMockAdapters": true
         },
         "responseTime": "0ms",
-        "timestamp": "2025-09-30T23:10:40.255Z"
+        "timestamp": "2025-09-30T23:22:21.551Z"
       }
     },
     {
@@ -41,10 +41,10 @@
     },
     {
       "name": "client.build",
-      "ok": false
+      "ok": true
     }
   ],
-  "passed": false,
-  "ts": "2025-09-30T23:10:39.206Z",
+  "passed": true,
+  "ts": "2025-09-30T23:22:20.296Z",
   "module": "02"
 }
