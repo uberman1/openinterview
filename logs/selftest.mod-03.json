@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "name": "api.health",
+      "ok": true,
+      "detail": {
+        "status": "ok",
+        "env": "development",
+        "version": "0.1.0",
+        "adapters": {
+          "auth": "mock",
+          "storage": "mock",
+          "email": "mock",
+          "payments": "mock"
+        },
+        "flags": {
+          "useMockAdapters": true
+        },
+        "responseTime": "0ms",
+        "timestamp": "2025-09-30T22:36:32.054Z"
+      }
+    },
+    {
+      "name": "auth.login",
+      "ok": true
+    },
+    {
+      "name": "auth.me",
+      "ok": true
+    },
+    {
+      "name": "protected.unauth",
+      "ok": true,
+      "status": 401
+    },
+    {
+      "name": "protected.auth",
+      "ok": true
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-09-30T22:36:30.004Z",
+  "module": "03"
+}

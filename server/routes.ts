@@ -10,8 +10,12 @@ import path from "path";
 import { router as profilesRouter } from "./routes.profiles";
 import { router as interviewsRouter } from "./routes.interviews";
 import { errorMiddleware } from "./errors";
+import { attachUser, mountAuthRoutes } from "./auth.mock";
+import { router as protectedRouter } from "./protected.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Attach user from Authorization header (if token valid)
+  app.use(attachUser);
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {
     const startTime = Date.now();
@@ -191,9 +195,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Auth routes (Module 3)
+  mountAuthRoutes(app, API_BASE);
+
   // Module 1: Domain routes
   app.use(`${API_BASE}`, profilesRouter);
   app.use(`${API_BASE}`, interviewsRouter);
+
+  // Protected routes (Module 3)
+  app.use(`${API_BASE}`, protectedRouter);
 
   // Error handler (must be last)
   app.use(errorMiddleware);

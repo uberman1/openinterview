@@ -42,20 +42,16 @@ export default function App(){
     return ()=> window.removeEventListener('storage', onStorage)
   }, [])
 
-  React.useEffect(()=>{
-    setLoggedIn(authStore.isLoggedIn())
-  }, [path])
-
   return (
     <ErrorBoundary>
       <div style={{display:'grid', gridTemplateColumns:'220px 1fr', minHeight:'100vh', fontFamily:'system-ui, -apple-system, Segoe UI, Roboto'}}>
         <aside style={{background:'#0f172a', color:'#cbd5e1', padding:16}}>
-          <h3 style={{marginTop:0}} data-testid="heading-app">OpenInterview</h3>
+          <h3 style={{marginTop:0}}>OpenInterview</h3>
           <nav style={{display:'grid', gap:8}}>
-            <a href="#/" style={{color:'#93c5fd'}} data-testid="nav-dashboard">Dashboard</a>
-            {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}} data-testid="nav-login">Login</a>}
-            {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}} data-testid="nav-profiles">Profiles</a>}
-            {loggedIn && <button onClick={doLogout} style={{marginTop:8}} data-testid="button-logout">Logout</button>}
+            <a href="#/" style={{color:'#93c5fd'}}>Dashboard</a>
+            {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}}>Login</a>}
+            {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}}>Profiles</a>}
+            {loggedIn && <button onClick={doLogout} style={{marginTop:8}}>Logout</button>}
           </nav>
         </aside>
         <main style={{padding:24}}>
