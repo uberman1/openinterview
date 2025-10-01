@@ -15,11 +15,16 @@ import { mountStorageRoutes } from "./storage.routes";
 import { mountPaymentsRoutes } from "./payments.routes";
 import { mountDashboardRoutes } from "./dashboard.routes";
 import { mountAdminRoutes } from "./admin.routes";
+import { mountOps } from "./ops.readiness";
+import { serveStaticWithCache } from "./ops.static";
 import { router as protectedRouter } from "./protected.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
   mountAuth(app, API_BASE);
+  
+  // Mount ops routes (readiness/liveness)
+  mountOps(app, API_BASE);
   
   // Mount admin analytics routes
   mountAdminRoutes(app, API_BASE);
@@ -224,6 +229,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Error handler (must be last)
   app.use(errorMiddleware);
+
+  // Serve static files with cache headers (only in production)
+  if (process.env.NODE_ENV !== 'development') {
+    serveStaticWithCache(app, path.resolve(process.cwd(), 'dist', 'public'));
+  }
 
   const httpServer = createServer(app);
   return httpServer;
