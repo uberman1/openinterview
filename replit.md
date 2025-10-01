@@ -8,6 +8,18 @@ This is a full-stack TypeScript application with an Express backend, React front
 
 ## Recent Changes
 
+**Module 11 - Deployment Readiness (October 2025)**
+- Added health check endpoints: `GET /api/v1/ready` (readiness probe), `GET /api/v1/live` (liveness probe)
+- Implemented graceful shutdown handler for SIGINT/SIGTERM with 5-second timeout fallback
+- Static file serving with intelligent cache headers:
+  - `/assets/*`: Cache-Control: public, max-age=3600 (1 hour)
+  - HTML files: Cache-Control: no-store (always fresh)
+- Critical bug fix: API 404s now return proper JSON errors instead of index.html
+  - Added explicit API 404 handler before static middleware to prevent SPA catch-all from hijacking unmatched API routes
+- Build size: 38.1kb (dist/index.js)
+- Test coverage: Module 11 selftest validates readiness/liveness endpoints, graceful shutdown, cache headers, and API 404 handling
+- New files: `/server/ops.readiness.ts`, `/server/ops.shutdown.ts`, `/server/ops.static.ts`
+
 **Module 10 - Admin Analytics Endpoints (October 2025)**
 - Added `requireAdmin` middleware (`/server/middleware/requireAdmin.ts`) for role-based access control
 - Implemented admin analytics endpoint: `GET /api/v1/admin/stats`
