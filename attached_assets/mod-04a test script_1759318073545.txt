@@ -1,0 +1,79 @@
+bash -c "$(cat <<'SH'
+set -euo pipefail
+
+echo "[m04a] Using PORT=5050 and USE_MOCK_AUTH=false"
+export PORT=5050
+export NODE_ENV=test
+export USE_MOCK_AUTH=false
+export MODULE_NUM=04
+
+echo "[m04a] Building client+server…"
+npm run build
+
+echo "[m04a] Running Module 04 selftest…"
+node scripts/selftest.js || true  # allow the script to continue so we can capture and summarize
+
+# Ensure logs/ exists
+mkdir -p logs
+
+# Copy canonical outputs to mod-04a filenames
+JSON_SRC="logs/selftest.mod-04.json"
+LOG_SRC="logs/mod-04.log"
+JSON_OUT="logs/selftest.mod-04a.json"
+LOG_OUT="logs/mod-04a.log"
+
+if [ -f "$JSON_SRC" ]; then cp -f "$JSON_SRC" "$JSON_OUT"; fi
+if [ -f "$LOG_SRC" ]; then cp -f "$LOG_SRC" "$LOG_OUT"; fi
+
+# Summarize results
+echo
+echo "========== Module 04A Summary =========="
+
+if [ -f "$JSON_SRC" ]; then
+  node - <<'NODE'
+const fs = require('fs');
+const path = require('path');
+const src = path.resolve('logs/selftest.mod-04.json');
+if (!fs.existsSync(src)) {
+  console.log("No selftest JSON found at logs/selftest.mod-04.json");
+  process.exit(0);
+}
+const j = JSON.parse(fs.readFileSync(src,'utf8'));
+const pick = name => j.checks.find(c => c.name===name) || {};
+function status(c){ return c.ok ? "PASSED" : ("FAILED" + (c.status ? ` (${c.status})`: (c.error? ` (${c.error})`:""))) }
+const rows = [
+  ["api.health", status(pick("api.health"))],
+  ["auth.signup", status(pick("auth.signup"))],
+  ["auth.login", status(pick("auth.login"))],
+  ["auth.me", status(pick("auth.me"))],
+  ["protected.unauth", status(pick("protected.unauth"))],
+  ["protected.auth", status(pick("protected.auth"))],
+  ["client.build", status(pick("client.build"))]
+];
+console.log(`Timestamp: ${j.ts || "n/a"}`);
+console.log(`Passed: ${j.passed}`);
+console.log("");
+for (const [k,v] of rows){
+  console.log(`${k.padEnd(18)} ${v}`);
+}
+NODE
+else
+  echo "Selftest JSON not found. Check build/test output above."
+fi
+
+echo
+if [ -f "$LOG_OUT" ]; then
+  echo "[m04a] Key request lines from mod-04a.log:"
+  # show the most relevant lines for quick triage
+  grep -E " /api/v1/(auth|protected|health)" "$LOG_OUT" || true
+else
+  echo "[m04a] No mod-04a.log found."
+fi
+
+echo
+echo "Artifacts saved:"
+[ -f "$JSON_OUT" ] && echo " - $JSON_OUT"
+[ -f "$LOG_OUT" ] && echo " - $LOG_OUT"
+echo "========================================"
+SH
+)"
