@@ -12,15 +12,15 @@ function countRecent(items: { createdAt?: string }[], days=7){
 
 export function mountAdminRoutes(app: Express, base: string){
   app.get(`${base}/admin/stats`, requireAdmin as any, async (_req, res) => {
-    const profiles = await load<Profile[]>('profiles.json', []);
-    const interviews = await load<Interview[]>('interviews.json', []);
+    const profiles = (await load('profiles.json', [])) as Profile[];
+    const interviews = (await load('interviews.json', [])) as Interview[];
 
     const totals = { profiles: profiles.length, interviews: interviews.length };
     const interviewsByStatus = {
-      draft: interviews.filter(i => i.status === 'draft').length,
-      scheduled: interviews.filter(i => i.status === 'scheduled').length,
-      completed: interviews.filter(i => i.status === 'completed').length,
-      canceled: interviews.filter(i => i.status === 'canceled').length,
+      draft: interviews.filter((i: Interview) => i.status === 'draft').length,
+      scheduled: interviews.filter((i: Interview) => i.status === 'scheduled').length,
+      completed: interviews.filter((i: Interview) => i.status === 'completed').length,
+      canceled: interviews.filter((i: Interview) => i.status === 'canceled').length,
     };
     const recentProfiles = countRecent(profiles, 7);
     const recentInterviews = countRecent(interviews, 7);
