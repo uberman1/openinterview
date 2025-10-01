@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "name": "profiles.create",
+      "ok": true,
+      "status": 201
+    },
+    {
+      "name": "profiles.search",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "interviews.create",
+      "ok": true,
+      "status": 201
+    },
+    {
+      "name": "interviews.list",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "profiles.pagination",
+      "ok": true,
+      "status": "200/200"
+    },
+    {
+      "name": "profiles.duplicate",
+      "ok": true,
+      "status": 409
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-10-01T21:19:39.744Z",
+  "module": "07"
+}

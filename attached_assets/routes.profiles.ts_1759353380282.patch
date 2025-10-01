@@ -1,0 +1,4 @@
+// Edit your profiles routes to use fsStore:
+// + import { load, save, paginate } from './data/fsStore';
+// POST /profiles: validate fields, 409 on duplicate email (ci), create with id + createdAt, save to profiles.json, return 201 { profile }
+// GET /profiles: load from profiles.json, filter by q on name/email/headline (ci), sort createdAt desc then id, paginate(limit,cursor)

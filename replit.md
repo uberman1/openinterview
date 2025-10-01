@@ -6,6 +6,18 @@ OpenInterview is a modular development framework built on a mock-first architect
 
 This is a full-stack TypeScript application with an Express backend, React frontend, and PostgreSQL database. The system is designed for the "replit-deployment model" - build and validate core features using mocks, then progressively replace them with real implementations through configuration changes rather than code rewrites.
 
+## Recent Changes
+
+**Module 07 - File-Backed Persistence with Search and Pagination (October 2025)**
+- Added file-backed persistence layer (`/server/data/fsStore.ts`) for profiles and interviews
+- Implemented search and pagination capabilities for profiles and interviews
+- Profiles: Search by name/email/headline with case-insensitive matching
+- Interviews: Filter by profileId and search by title
+- Pagination: Cursor-based pagination with configurable limits (1-50 items per page)
+- Data storage: JSON files in `/data` directory (profiles.json, interviews.json)
+- Duplicate email protection: Returns 409 status on duplicate email attempts
+- Test coverage: Module 07 selftest validates all persistence, search, and pagination features
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -74,9 +86,19 @@ The repository follows a monorepo pattern with clear separation of concerns:
 - `test_results`: Automated test execution records
 
 **Storage Strategy:**
-- Development: In-memory storage (`MemStorage` class) for zero-dependency local development
+- Development: 
+  - In-memory storage (`MemStorage` class) for zero-dependency local development
+  - File-backed persistence (`/server/data/fsStore.ts`) for profiles and interviews with search/pagination
+  - JSON storage in `/data` directory (profiles.json, interviews.json)
 - Production: PostgreSQL via Neon serverless (configured via `DATABASE_URL`)
 - Migration path: Drizzle Kit for schema migrations in `/migrations` directory
+
+**File-Backed Persistence (Module 07):**
+- `fsStore.ts` provides `load()`, `save()`, and `paginate()` utilities
+- Atomic writes using temp files and rename for data safety
+- Cursor-based pagination with configurable limits (1-50 items)
+- Search filtering with case-insensitive matching
+- Automatic directory creation and error handling for missing files
 
 The `IStorage` interface defines the contract, allowing seamless swapping between implementations.
 
@@ -130,9 +152,12 @@ Security is implemented as composable middleware layers that can be adjusted per
 - Single entry point: `node dist/index.js`
 
 **Testing Strategy:**
-- Self-test framework (`/scripts/selftest.ts`) validates API contracts and build process
-- Outputs machine-parsable JSON (`/logs/selftest.json`) and human-readable logs
+- Self-test framework (`/scripts/selftest.js`) validates API contracts and build process
+- Module-based testing: Modules 00-07 each have specific test suites
+- Outputs machine-parsable JSON (`/logs/selftest.mod-XX.json`) and human-readable logs (`/logs/mod-XX.log`)
+- Module 07 tests: Profiles creation/search, interviews creation/listing, pagination, duplicate detection
 - Health check endpoints provide real-time system validation
+- Run tests: `MODULE_NUM=XX node scripts/selftest.js` where XX is 00-07
 
 ## External Dependencies
 
