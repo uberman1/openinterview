@@ -1,4 +1,4 @@
-// scripts/selftest.js — unified runner for Modules 00–08
+// scripts/selftest.js — unified runner for Modules 00–09
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
@@ -10,12 +10,12 @@ const base = `http://127.0.0.1:${PORT}/api/v1`;
 const logsDir = path.resolve(process.cwd(), 'logs');
 if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
 
-const logName = MOD === '08' ? 'mod-08.log' : (MOD === '07' ? 'mod-07.log' : `selftest.mod-${MOD}.log`);
-const jsonName = `selftest.mod-${MOD}.json`;
-const logPath = path.join(logsDir, logName);
-const jsonPath = path.join(logsDir, jsonName);
+const logFileName = MOD === '09' ? 'mod-09.log' : `selftest.mod-${MOD}.log`;
+const jsonFileName = `selftest.mod-${MOD}.json`;
+const logPath = path.join(logsDir, logFileName);
+const jsonPath = path.join(logsDir, jsonFileName);
 
-const log = (s) => fs.appendFileSync(logPath, s + '\n');
+const log = (line) => fs.appendFileSync(logPath, line + '\n');
 const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
 async function req(url, init) {
@@ -27,10 +27,10 @@ async function req(url, init) {
 
 async function startServer() {
   log(`[selftest m${MOD}] starting server...`);
-  const dist = path.resolve(process.cwd(), 'dist', 'index.js');
-  if (!fs.existsSync(dist)) {
+  const distIndex = path.resolve(process.cwd(), 'dist', 'index.js');
+  if (!fs.existsSync(distIndex)) {
     log('[selftest] dist/index.js not found. Running build first...');
-    await new Promise(res => spawn('npm', ['run', 'build'], { stdio: 'inherit' }).on('close', res));
+    await new Promise((resolve) => spawn('npm', ['run', 'build'], { stdio: 'inherit' }).on('close', resolve));
   }
   const env = { ...process.env, PORT, NODE_ENV: 'test' };
   if (MOD === '04') env.USE_MOCK_AUTH = 'false';
@@ -185,6 +185,45 @@ async function runM08(result) {
   }
 }
 
+async function runM09(result) {
+  try {
+    // create profile
+    const email = `m09_${Date.now()}@example.com`;
+    const p = await req(`${base}/profiles`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: 'User 09', email }) });
+    result.checks.push({ name: 'profiles.create', ok: p.r.status === 201, status: p.r.status });
+    const profileId = p.body?.profile?.id;
+
+    // create interview with scheduledAt and status scheduled
+    const inAt = new Date(Date.now() + 3600_000).toISOString();
+    let iv = await req(`${base}/interviews`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ profileId, title: 'Phone Screen', scheduledAt: inAt, status: 'scheduled' }) });
+    result.checks.push({ name: 'interviews.create.scheduled', ok: iv.r.status === 201, status: iv.r.status });
+    const interviewId = iv.body?.interview?.id;
+
+    // update to completed
+    let up = await req(`${base}/interviews/${interviewId}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ status: 'completed' }) });
+    result.checks.push({ name: 'interviews.update.completed', ok: up.r.status === 200 && up.body?.interview?.status === 'completed', status: up.r.status });
+
+    // invalid transition: completed -> scheduled
+    let bad = await req(`${base}/interviews/${interviewId}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ status: 'scheduled' }) });
+    result.checks.push({ name: 'interviews.update.invalid', ok: bad.r.status === 400, status: bad.r.status });
+
+    // reminder
+    let rm = await req(`${base}/interviews/${interviewId}/remind`, { method: 'POST' });
+    result.checks.push({ name: 'interviews.remind', ok: rm.r.status === 204, status: rm.r.status });
+
+    // filters
+    const from = new Date(Date.now() - 24 * 3600_000).toISOString();
+    const to = new Date(Date.now() + 24 * 3600_000).toISOString();
+    let flt = await req(`${base}/interviews?status=completed&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`);
+    const contains = Array.isArray(flt.body?.items) ? flt.body.items.some(x => x.id === interviewId) : Array.isArray(flt.body) ? flt.body.some(x => x.id === interviewId) : false;
+    result.checks.push({ name: 'interviews.filter.window', ok: flt.r.status === 200 && contains, status: flt.r.status });
+  } catch (e) {
+    for (const n of ['profiles.create', 'interviews.create.scheduled', 'interviews.update.completed', 'interviews.update.invalid', 'interviews.remind', 'interviews.filter.window']) {
+      result.checks.push({ name: n, ok: false, error: String(e) });
+    }
+  }
+}
+
 async function run() {
   const result = { checks: [], passed: false, ts: new Date().toISOString(), module: MOD };
   const srv = await startServer();
@@ -194,6 +233,7 @@ async function run() {
   if (MOD === '06') await runM06(result);
   if (MOD === '07') await runM07(result);
   if (MOD === '08') await runM08(result);
+  if (MOD === '09') await runM09(result);
 
   // client build at end
   log('[selftest] building client...');

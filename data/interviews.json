@@ -4,5 +4,24 @@
     "profileId": "933e3c05-0f1e-4376-9445-5b3be1b84d8b",
     "title": "Intro Call",
     "createdAt": "2025-10-01T21:19:41.103Z"
+  },
+  {
+    "id": "54b3c34f-2267-462d-bbb7-d85b28d2fb0d",
+    "profileId": "92278947-9186-4310-83eb-d77489c0f2a4",
+    "title": "Phone Screen",
+    "scheduledAt": "2025-10-01T23:13:54.856Z",
+    "status": "completed",
+    "createdAt": "2025-10-01T22:13:54.873Z",
+    "updatedAt": "2025-10-01T22:13:54.919Z"
+  },
+  {
+    "id": "29614ffb-c756-41c0-88ae-eecbb2b2604a",
+    "profileId": "12ba6302-b8e1-4c72-bdb6-6f75b6d5f1bd",
+    "title": "Tech Interview",
+    "scheduledAt": "2025-10-15T10:00:00.000Z",
+    "status": "completed",
+    "createdAt": "2025-10-01T22:14:28.183Z",
+    "updatedAt": "2025-10-01T22:14:36.761Z",
+    "notes": "Great interview!"
   }
 ]
