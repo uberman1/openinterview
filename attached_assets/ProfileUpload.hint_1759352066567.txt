@@ -1,0 +1,16 @@
+// client/patches/ProfileUpload.hint.txt
+// In your Profile page component, import and render the UploadWidget like this:
+//
+// import UploadWidget from '@/components/UploadWidget';
+//
+// function ProfileDetailPage(){ /* ... */
+//   return (
+//     <>
+//       {/* existing UI ... */}
+//       <section>
+//         <h3>Attachments</h3>
+//         <UploadWidget />
+//       </section>
+//     </>
+//   );
+// }

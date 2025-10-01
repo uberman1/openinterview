@@ -1,6 +1,7 @@
 // /client/src/pages/ProfileDetail.jsx
 import React from 'react'
 import { api } from '../api'
+import UploadWidget from '@/components/UploadWidget'
 
 export default function ProfileDetail({ id, navigate }){
   const [p, setP] = React.useState(null)
@@ -35,6 +36,10 @@ export default function ProfileDetail({ id, navigate }){
         {items.map(it=> <li key={it.id} data-testid={`interview-${it.id}`}>{it.title} <small>({new Date(it.createdAt).toLocaleString()})</small></li>)}
         {items.length===0 && <li data-testid="text-no-interviews">No interviews yet.</li>}
       </ul>
+      <section style={{marginTop:24}}>
+        <h3 data-testid="heading-attachments">Attachments</h3>
+        <UploadWidget />
+      </section>
     </div>
   )
 }
