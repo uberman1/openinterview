@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-
 export default function Dashboard(){
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  
   useEffect(() => {
     const token = window.localStorage?.getItem('token') || '';
     const headers = token ? { Authorization: 'Bearer ' + token } : {};
@@ -12,10 +10,8 @@ export default function Dashboard(){
       .then(setData)
       .catch(e => setError(e.message));
   }, []);
-  
   if (error) return <div>Dashboard error: {error}</div>;
   if (!data) return <div>Loading dashboard…</div>;
-  
   return (
     <div style={{padding:'1rem'}}>
       <h1>Dashboard</h1>

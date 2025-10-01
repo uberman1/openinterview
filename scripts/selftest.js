@@ -1,4 +1,4 @@
-// scripts/selftest.js — unified runner for Modules 00–07
+// scripts/selftest.js — unified runner for Modules 00–08
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
@@ -10,7 +10,7 @@ const base = `http://127.0.0.1:${PORT}/api/v1`;
 const logsDir = path.resolve(process.cwd(), 'logs');
 if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
 
-const logName = MOD === '07' ? 'mod-07.log' : `selftest.mod-${MOD}.log`;
+const logName = MOD === '08' ? 'mod-08.log' : (MOD === '07' ? 'mod-07.log' : `selftest.mod-${MOD}.log`);
 const jsonName = `selftest.mod-${MOD}.json`;
 const logPath = path.join(logsDir, logName);
 const jsonPath = path.join(logsDir, jsonName);
@@ -155,6 +155,36 @@ async function runM07(result) {
   }
 }
 
+async function runM08(result) {
+  try {
+    const email = `m08_${Date.now()}@example.com`;
+    const password = 'Passw0rd!';
+    
+    // Signup
+    let s = await req(`${base}/auth/signup`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email, password }) });
+    const okSignup = (s.r.status >= 200 && s.r.status < 300) || s.r.status === 409;
+    result.checks.push({ name: 'auth.signup', ok: okSignup, status: s.r.status });
+    
+    // Login
+    let l = await req(`${base}/auth/login`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email, password }) });
+    const token = l.body?.token;
+    result.checks.push({ name: 'auth.login', ok: l.r.status === 200 && !!token, status: l.r.status });
+    
+    // Dashboard without auth
+    let u = await req(`${base}/dashboard`);
+    result.checks.push({ name: 'dashboard.auth.required', ok: u.r.status === 401, status: u.r.status });
+    
+    // Dashboard with auth
+    let d = await req(`${base}/dashboard`, { headers: { authorization: 'Bearer ' + token } });
+    const ok = d.r.status === 200 && d.body?.user && Array.isArray(d.body?.profiles) && Array.isArray(d.body?.interviews) && typeof d.body?.plan === 'string';
+    result.checks.push({ name: 'dashboard.fetch', ok, status: d.r.status });
+  } catch (e) {
+    for (const n of ['auth.signup', 'auth.login', 'dashboard.auth.required', 'dashboard.fetch']) {
+      result.checks.push({ name: n, ok: false, error: String(e) });
+    }
+  }
+}
+
 async function run() {
   const result = { checks: [], passed: false, ts: new Date().toISOString(), module: MOD };
   const srv = await startServer();
@@ -163,6 +193,7 @@ async function run() {
   if (MOD === '05') await runM05(result);
   if (MOD === '06') await runM06(result);
   if (MOD === '07') await runM07(result);
+  if (MOD === '08') await runM08(result);
 
   // client build at end
   log('[selftest] building client...');

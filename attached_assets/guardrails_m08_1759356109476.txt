@@ -1,0 +1,13 @@
+Scope: Add dashboard session handling and UI. Do not change package.json, install packages, or edit env/config. Keep TS/Vite architecture.
+
+Allowed:
+- Add /server/middleware/requireAuth.ts
+- Add /server/dashboard.routes.ts
+- Edit /server/routes.ts to mount dashboard routes after auth
+- Add /client/src/pages/Dashboard.jsx
+- Replace /scripts/selftest.js with provided version
+- Write logs/selftest.mod-08.json and logs/mod-08.log
+
+Run:
+  npm run build
+  MODULE_NUM=08 node scripts/selftest.js
