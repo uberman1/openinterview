@@ -11,11 +11,15 @@ import { router as profilesRouter } from "./routes.profiles";
 import { router as interviewsRouter } from "./routes.interviews";
 import { errorMiddleware } from "./errors";
 import { mountAuth } from "./auth.routes.js";
+import { mountStorageRoutes } from "./storage.routes";
 import { router as protectedRouter } from "./protected.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
   mountAuth(app, API_BASE);
+  
+  // Mount storage routes for file uploads
+  mountStorageRoutes(app, API_BASE);
   
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {

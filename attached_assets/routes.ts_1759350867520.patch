@@ -1,0 +1,8 @@
+// server/routes.ts.patch
+// Apply these changes:
+
+// ADD import:
++ import { mountStorageRoutes } from "./storage.routes";
+
+// In registerRoutes(app):
++ mountStorageRoutes(app, API_BASE);
