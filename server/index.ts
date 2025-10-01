@@ -1,80 +1,81 @@
-// /server/index.ts — m04b: unified auth entrypoint (real vs mock via USE_MOCK_AUTH)
-import express from 'express';
-import helmet from 'helmet';
-import cors from 'cors';
-import morgan from 'morgan';
-import rateLimit from 'express-rate-limit';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { APP_VERSION, API_BASE } from '../shared/constants.js';
-import flags from '../config/flags.json' assert { type: 'json' };
-import { errorMiddleware } from './errors.js';
-import { router as profiles } from './routes.profiles.js';
-import { router as interviews } from './routes.interviews.js';
-import { mountAuth } from './auth.routes.js';
-import { router as protectedRouter } from './protected.routes.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import express, { type Request, Response, NextFunction } from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
-const PORT = Number(process.env.PORT) || 5050;
 
-// Security + hardening
-app.use(helmet());
-const allowed = (process.env.ALLOWED_ORIGINS || '').split(',').filter(Boolean);
-app.use(
-  cors({
-    origin(origin, cb) {
-      if (!origin || allowed.includes(origin)) return cb(null, true);
-      return cb(new Error('Not allowed by CORS'), false);
-    },
-  })
-);
-app.use(express.json({ limit: '200kb' }));
-app.use(express.urlencoded({ extended: false, limit: '200kb' }));
+declare module 'http' {
+  interface IncomingMessage {
+    rawBody: unknown
+  }
+}
+app.use(express.json({
+  verify: (req, _res, buf) => {
+    req.rawBody = buf;
+  }
+}));
+app.use(express.urlencoded({ extended: false }));
 
-// Rate limit
-const limiter = rateLimit({ windowMs: 60 * 1000, max: 120 });
-app.use(limiter);
+app.use((req, res, next) => {
+  const start = Date.now();
+  const path = req.path;
+  let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
-// Access logging
-const logsDir = path.resolve(__dirname, '../logs');
-if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
-const accessLog = path.join(logsDir, 'access.log');
-const accessStream = fs.createWriteStream(accessLog, { flags: 'a' });
-app.use(morgan('combined', { stream: accessStream }));
+  const originalResJson = res.json;
+  res.json = function (bodyJson, ...args) {
+    capturedJsonResponse = bodyJson;
+    return originalResJson.apply(res, [bodyJson, ...args]);
+  };
 
-// Health
-app.get(`${API_BASE}/health`, (_req, res) => {
-  const adapters = flags.adapters || {};
-  res.json({
-    status: 'ok',
-    env: process.env.NODE_ENV || 'development',
-    version: APP_VERSION,
-    adapters,
-    flags: {
-      useMockAdapters: flags.useMockAdapters,
-      useMockAuth: !!/^true$/i.test(String(process.env.USE_MOCK_AUTH || '')),
-    },
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    if (path.startsWith("/api")) {
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) {
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
+
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "…";
+      }
+
+      log(logLine);
+    }
   });
+
+  next();
 });
 
-// Auth (unified: selects real vs mock via USE_MOCK_AUTH)
-mountAuth(app, API_BASE);
+(async () => {
+  const server = await registerRoutes(app);
 
-// Domain routes (keep before any static middleware)
-app.use(`${API_BASE}`, profiles);
-app.use(`${API_BASE}`, interviews);
-app.use(`${API_BASE}`, protectedRouter);
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
 
-// 404
-app.use((_req, res) => res.status(404).json({ error: 'Not Found' }));
+    res.status(status).json({ message });
+    throw err;
+  });
 
-// Error handler
-app.use(errorMiddleware);
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
+  }
 
-app.listen(PORT, () => {
-  console.log(`[server] listening on :${PORT}`);
-});
+  // ALWAYS serve the app on the port specified in the environment variable PORT
+  // Other ports are firewalled. Default to 5000 if not specified.
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+  const port = parseInt(process.env.PORT || '5000', 10);
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true,
+  }, () => {
+    log(`serving on port ${port}`);
+  });
+})();

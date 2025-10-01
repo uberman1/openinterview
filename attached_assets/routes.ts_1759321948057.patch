@@ -1,0 +1,34 @@
+// server/routes.ts.patch
+// Apply these changes to your existing server/routes.ts
+
+// 1) Replace mock-only imports with unified auth import
+- import { attachUser, mountAuthRoutes } from "./auth.mock";
++ import { mountAuth } from "./auth.routes.js";
+  import type { Express } from "express";
+  import { API_BASE } from "../shared/constants";
+
+// 2) Remove global mock attach and call unified router early
+ export function registerRoutes(app: Express) {
+-  app.use(attachUser);
+-  mountAuthRoutes(app, API_BASE);
++  // unified router picks mock vs real via USE_MOCK_AUTH
++  mountAuth(app, API_BASE);
+
+   // ... your domain routes remain below, e.g.:
+   // app.use(`${API_BASE}`, profilesRouter);
+   // app.use(`${API_BASE}`, interviewsRouter);
+
+// 3) Optionally expose useMockAuth in health for visibility
+   app.get(`${API_BASE}/health`, (_req, res) => {
+     res.json({
+       status: "ok",
+       env: process.env.NODE_ENV || "development",
+       version: "0.1.0",
+       flags: {
+         // keep existing flags
+         useMockAdapters: /* existing flag or remove if not present */ undefined,
++        useMockAuth: /^true$/i.test(String(process.env.USE_MOCK_AUTH || "")),
+       },
+     });
+   });
+ }

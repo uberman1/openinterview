@@ -10,12 +10,13 @@ import path from "path";
 import { router as profilesRouter } from "./routes.profiles";
 import { router as interviewsRouter } from "./routes.interviews";
 import { errorMiddleware } from "./errors";
-import { attachUser, mountAuthRoutes } from "./auth.mock";
+import { mountAuth } from "./auth.routes.js";
 import { router as protectedRouter } from "./protected.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Attach user from Authorization header (if token valid)
-  app.use(attachUser);
+  // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
+  mountAuth(app, API_BASE);
+  
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {
     const startTime = Date.now();
@@ -29,7 +30,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         env: process.env.NODE_ENV || 'development',
         version: APP_VERSION,
         adapters: flags.adapters || {},
-        flags: { useMockAdapters: flags.useMockAdapters },
+        flags: { 
+          useMockAdapters: flags.useMockAdapters,
+          useMockAuth: /^true$/i.test(String(process.env.USE_MOCK_AUTH || ''))
+        },
         responseTime,
         timestamp: new Date().toISOString()
       };
@@ -194,9 +198,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: 'Failed to get adapter status' });
     }
   });
-
-  // Auth routes (Module 3)
-  mountAuthRoutes(app, API_BASE);
 
   // Module 1: Domain routes
   app.use(`${API_BASE}`, profilesRouter);

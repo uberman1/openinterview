@@ -2,40 +2,39 @@
   "checks": [
     {
       "name": "api.health",
-      "ok": false,
-      "error": "TypeError: fetch failed"
+      "ok": true
     },
     {
       "name": "auth.signup",
-      "ok": false,
-      "error": "TypeError: fetch failed"
+      "ok": true,
+      "status": 201
     },
     {
       "name": "auth.login",
-      "ok": false,
-      "error": "TypeError: fetch failed"
+      "ok": true,
+      "status": 200
     },
     {
       "name": "auth.me",
-      "ok": false,
-      "error": "TypeError: fetch failed"
+      "ok": true,
+      "status": 200
     },
     {
       "name": "protected.unauth",
-      "ok": false,
-      "error": "TypeError: fetch failed"
+      "ok": true,
+      "status": 401
     },
     {
       "name": "protected.auth",
-      "ok": false,
-      "error": "TypeError: fetch failed"
+      "ok": true,
+      "status": 200
     },
     {
       "name": "client.build",
       "ok": true
     }
   ],
-  "passed": false,
-  "ts": "2025-10-01T12:11:19.671Z",
+  "passed": true,
+  "ts": "2025-10-01T12:36:55.593Z",
   "module": "04"
 }
