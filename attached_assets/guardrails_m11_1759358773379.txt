@@ -1,0 +1,13 @@
+Scope: Add readiness/liveness, graceful shutdown, and static cache headers. Do not change package.json, install packages, or edit env/config. Keep TS/Vite architecture.
+
+Allowed:
+- Add /server/ops.readiness.ts
+- Add /server/ops.shutdown.ts
+- Add /server/ops.static.ts
+- Edit /server/routes.ts to mount ops routes and static with cache headers (API before static).
+- Replace /scripts/selftest.js with provided version.
+- Write logs/selftest.mod-11.json and logs/mod-11.log.
+
+Run:
+  npm run build
+  MODULE_NUM=11 node scripts/selftest.js

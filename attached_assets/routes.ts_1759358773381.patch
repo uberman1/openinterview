@@ -1,0 +1,7 @@
+// server/routes.ts.patch
++ import { mountOps } from './ops.readiness';
++ import { serveStaticWithCache } from './ops.static';
+// After app is created and API_BASE resolved:
++ mountOps(app, API_BASE);
+// Replace your static mount with:
++ serveStaticWithCache(app, require('path').resolve(process.cwd(), 'dist', 'public'));
