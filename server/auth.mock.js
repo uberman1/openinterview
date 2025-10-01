@@ -25,12 +25,34 @@ export function ensureAuth(req, res, next){
 }
 
 export function mountAuthRoutes(app, base){
-  // Login always succeeds with a demo user
+  // Attach user middleware globally for all routes
+  app.use(attachUser);
+  
+  // In-memory user store
+  const users = new Map(); // email -> user
+  
+  // Signup endpoint
+  app.post(`${base}/auth/signup`, (req, res)=>{
+    const { email, password } = req.body || {};
+    if (!email) return res.status(400).json({ error: { code: 'BAD_INPUT', message: 'Email required' } });
+    if (users.has(email)) return res.status(409).json({ error: { code: 'USER_EXISTS', message: 'User already exists' } });
+    
+    const user = { id: 'user_' + Math.random().toString(36).slice(2), email, name: email.split('@')[0] };
+    users.set(email, user);
+    return res.status(201).json({ user });
+  });
+  
+  // Login always succeeds with the registered user
   app.post(`${base}/auth/login`, (req, res)=>{
-    const token = makeToken()
-    const user = { id: 'demo-user', email: 'demo@example.com', name: 'Demo User', roles: ['user'] }
-    tokens.set(token, user)
-    res.json({ token, user })
+    const { email } = req.body || {};
+    let user = users.get(email);
+    if (!user) {
+      // Fallback to demo user for backward compatibility
+      user = { id: 'demo-user', email: 'demo@example.com', name: 'Demo User', roles: ['user'] };
+    }
+    const token = makeToken();
+    tokens.set(token, user);
+    res.json({ token, user });
   })
 
   app.post(`${base}/auth/logout`, (req, res)=>{
