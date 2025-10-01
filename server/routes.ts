@@ -227,13 +227,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected routes (Module 3)
   app.use(`${API_BASE}`, protectedRouter);
 
-  // Error handler (must be last)
-  app.use(errorMiddleware);
+  // API 404 handler - must come before static serving
+  app.use(`${API_BASE}/*`, (_req, res) => {
+    res.status(404).json({ error: { code: 'NOT_FOUND', message: 'API endpoint not found' } });
+  });
 
-  // Serve static files with cache headers (only in production)
+  // Serve static files with cache headers (in production/test, not development)
   if (process.env.NODE_ENV !== 'development') {
     serveStaticWithCache(app, path.resolve(process.cwd(), 'dist', 'public'));
   }
+
+  // Error handler (must be last)
+  app.use(errorMiddleware);
 
   const httpServer = createServer(app);
   return httpServer;

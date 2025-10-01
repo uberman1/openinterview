@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "name": "ops.ready",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "ops.live",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "static.index",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "ops.shutdown",
+      "ok": true
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-10-01T22:59:26.919Z",
+  "module": "11"
+}
