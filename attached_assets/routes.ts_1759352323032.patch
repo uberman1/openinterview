@@ -1,0 +1,6 @@
+// server/routes.ts.patch
+// Add this import:
++ import { mountPaymentsRoutes } from './payments.routes';
+
+// Inside registerRoutes(app) after auth mount:
++ mountPaymentsRoutes(app, API_BASE);

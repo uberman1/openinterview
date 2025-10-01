@@ -1,0 +1,10 @@
+// scripts/selftest_hook.m06.patch.txt
+// If you are not using the merged runner, add this to your scripts/selftest.js
+// (Ensure it writes logs/selftest.mod-06.json and logs/mod-06.log accordingly).
+
+/* PSEUDOCODE:
+await payments.checkout → expect 200 + sessionId
+await payments.session.open → expect status 'open'
+await payments.webhook.paid → POST webhook → expect 204
+await payments.session.paid → expect status 'paid'
+*/

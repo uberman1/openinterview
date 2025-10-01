@@ -12,6 +12,7 @@ import { router as interviewsRouter } from "./routes.interviews";
 import { errorMiddleware } from "./errors";
 import { mountAuth } from "./auth.routes.js";
 import { mountStorageRoutes } from "./storage.routes";
+import { mountPaymentsRoutes } from "./payments.routes";
 import { router as protectedRouter } from "./protected.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -20,6 +21,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Mount storage routes for file uploads
   mountStorageRoutes(app, API_BASE);
+  
+  // Mount payments routes for checkout and subscriptions
+  mountPaymentsRoutes(app, API_BASE);
   
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {
