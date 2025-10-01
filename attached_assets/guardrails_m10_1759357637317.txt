@@ -1,0 +1,19 @@
+Scope: Add admin analytics endpoints. Do not change package.json, install packages, or edit env/config. Keep TS/Vite architecture.
+
+Allowed actions:
+- Add /server/middleware/requireAdmin.ts (requires req.user and checks admin email rule).
+- Add /server/admin.routes.ts with GET /admin/stats:
+  * Returns { totals: { profiles, interviews }, interviewsByStatus: { draft, scheduled, completed, canceled }, recentProfiles: N, recentInterviews: N }
+- Edit /server/routes.ts to import and call mountAdminRoutes(app, API_BASE) after auth mount.
+- Replace /scripts/selftest.js with provided version including Module 10 checks.
+- Write logs/selftest.mod-10.json and logs/mod-10.log.
+
+Run exactly:
+  npm run build
+  MODULE_NUM=10 node scripts/selftest.js
+
+Success criteria:
+- GET /api/v1/admin/stats without token → 401
+- GET /api/v1/admin/stats as non-admin → 403
+- GET /api/v1/admin/stats as admin → 200 with expected fields
+- Selftest prints ALL CHECKS PASSED and logs are written

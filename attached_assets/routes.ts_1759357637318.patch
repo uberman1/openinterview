@@ -1,0 +1,6 @@
+// server/routes.ts.patch
+// Add this import near other route imports:
++ import { mountAdminRoutes } from './admin.routes';
+
+// Inside registerRoutes(app) AFTER auth is mounted:
++ mountAdminRoutes(app, API_BASE);

@@ -14,11 +14,15 @@ import { mountAuth } from "./auth.routes.js";
 import { mountStorageRoutes } from "./storage.routes";
 import { mountPaymentsRoutes } from "./payments.routes";
 import { mountDashboardRoutes } from "./dashboard.routes";
+import { mountAdminRoutes } from "./admin.routes";
 import { router as protectedRouter } from "./protected.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
   mountAuth(app, API_BASE);
+  
+  // Mount admin analytics routes
+  mountAdminRoutes(app, API_BASE);
   
   // Mount dashboard routes for authenticated user data
   mountDashboardRoutes(app, API_BASE);
