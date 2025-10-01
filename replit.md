@@ -8,6 +8,29 @@ This is a full-stack TypeScript application with an Express backend, React front
 
 ## Recent Changes
 
+**Module 10 - Admin Analytics Endpoints (October 2025)**
+- Added `requireAdmin` middleware (`/server/middleware/requireAdmin.ts`) for role-based access control
+- Implemented admin analytics endpoint: `GET /api/v1/admin/stats`
+- Analytics data: totals (profiles, interviews), interviewsByStatus breakdown, recentProfiles/Interviews (7-day window)
+- Access control: 401 for unauthenticated requests, 403 for non-admin users, 200 for admin@example.com
+- Enhanced mock auth with signup endpoint and global user attachment middleware
+- Build size: 36.1kb (dist/index.js)
+- Test coverage: Module 10 selftest validates authentication, authorization, and analytics aggregation
+
+**Module 09 - Interview Workflow with Scheduling and Status Management (October 2025)**
+- Added interview scheduling with `scheduledAt` field (ISO datetime)
+- Status management: draft (initial), scheduled, completed, canceled (terminal states)
+- Status transition validation: prevents invalid transitions (e.g., completed → scheduled)
+- Reminder endpoint: `POST /api/v1/interviews/:id/remind` logs to `logs/mod-09.log`
+- Enhanced filtering: status, date range (from/to), and search (title/notes)
+- Data tracking: `createdAt`, `updatedAt`, optional `notes` field
+
+**Module 08 - Dashboard Session Handling (October 2025)**
+- Added `requireAuth` middleware for protected routes
+- Dashboard endpoint: `GET /api/v1/dashboard` aggregates user/plan/profiles/interviews
+- Authentication required: 401 for unauthenticated requests
+- Returns user info, payment plan, and aggregated data from file-backed storage
+
 **Module 07 - File-Backed Persistence with Search and Pagination (October 2025)**
 - Added file-backed persistence layer (`/server/data/fsStore.ts`) for profiles and interviews
 - Implemented search and pagination capabilities for profiles and interviews
