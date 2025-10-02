@@ -1,0 +1,4 @@
+// server/routes.ts.patch
++ import { mountAdminConsoleRoutes } from './admin.console.routes';
+// After admin guard/routes are available:
++ mountAdminConsoleRoutes(app, API_BASE);

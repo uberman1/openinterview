@@ -15,6 +15,7 @@ import { mountStorageRoutes } from "./storage.routes";
 import { mountPaymentsRoutes } from "./payments.routes";
 import { mountDashboardRoutes } from "./dashboard.routes";
 import { mountAdminRoutes } from "./admin.routes";
+import { mountAdminConsoleRoutes } from "./admin.console.routes";
 import { mountOps } from "./ops.readiness";
 import { serveStaticWithCache } from "./ops.static";
 import { router as protectedRouter } from "./protected.routes";
@@ -28,6 +29,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Mount admin analytics routes
   mountAdminRoutes(app, API_BASE);
+  
+  // Mount admin console routes (users, flags)
+  mountAdminConsoleRoutes(app, API_BASE);
   
   // Mount dashboard routes for authenticated user data
   mountDashboardRoutes(app, API_BASE);
