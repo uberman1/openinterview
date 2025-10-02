@@ -176,6 +176,12 @@ export default function Login(){
         <p style={styles.hint}>
           Tip: Use <code>admin@example.com</code> to access the Admin Console.
         </p>
+
+        <div style={styles.demoLink}>
+          <a href="/demo.html" style={styles.link} target="_blank" rel="noopener noreferrer">
+            Open Demo Launcher →
+          </a>
+        </div>
       </form>
     </div>
   );
@@ -193,4 +199,6 @@ const styles = {
   button: { width:'100%', marginTop:'0.25rem', padding:'0.7rem', border:0, borderRadius:10, background:'#2563eb', color:'#fff', fontWeight:600, cursor:'pointer' },
   error: { marginTop:'0.75rem', padding:'0.5rem 0.75rem', background:'#7f1d1d', color:'#fecaca', borderRadius:8, border:'1px solid #991b1b' },
   hint: { marginTop:'0.75rem', fontSize:'0.85rem', color:'#9ca3af' },
+  demoLink: { marginTop:'0.5rem', textAlign:'center', paddingTop:'0.5rem', borderTop:'1px solid #374151' },
+  link: { color:'#60a5fa', textDecoration:'none', fontSize:'0.875rem' },
 };
