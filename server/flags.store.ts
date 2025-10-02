@@ -18,7 +18,7 @@ const DEFAULTS: Flags = {
 };
 
 export async function getFlags() {
-  const flags = await load<Partial<Flags>>(FILE, {});
+  const flags = await load(FILE, {});
   return { ...DEFAULTS, ...flags };
 }
 

@@ -6,11 +6,11 @@ import { load } from './data/fsStore';
 type UserRow = { id: string; email: string; createdAt?: string };
 
 async function listUsers(): Promise<UserRow[]> {
-  const users = await load<UserRow[]>('users.json', []);
+  const users = await load('users.json', []);
   if (users.length) return users;
   
-  const profiles = await load<any[]>('profiles.json', []);
-  const derived = profiles.filter(p => p?.email).map((p: any) => ({
+  const profiles = await load('profiles.json', []);
+  const derived = profiles.filter((p: any) => p?.email).map((p: any) => ({
     id: p.id || p.email,
     email: String(p.email),
     createdAt: p.createdAt
