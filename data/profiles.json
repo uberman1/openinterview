@@ -266,5 +266,26 @@
     "email": "liam.harper@example.com",
     "headline": "UX Researcher",
     "createdAt": "2025-10-02T19:49:50.710Z"
+  },
+  {
+    "id": "f0c99c4e-e040-4e78-b37a-a6c32a30005c",
+    "name": "Test Candidate",
+    "email": "test@example.com",
+    "headline": "Software Engineer",
+    "createdAt": "2025-10-02T21:44:31.312Z"
+  },
+  {
+    "id": "dd98c5a2-ff44-4f1f-ba88-7c3e31113a87",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "headline": "UX Designer",
+    "createdAt": "2025-10-02T21:48:27.930Z"
+  },
+  {
+    "id": "41606a35-1504-44e5-a6ab-448e5a853a7f",
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "headline": "Product Manager",
+    "createdAt": "2025-10-02T21:55:32.742Z"
   }
 ]

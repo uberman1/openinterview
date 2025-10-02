@@ -7,6 +7,8 @@ import ProfilesList from './pages/ProfilesList'
 import ProfileNew from './pages/ProfileNew'
 import ProfileDetail from './pages/ProfileDetail'
 import InterviewNew from './pages/InterviewNew'
+import PagesIndex from './pages/PagesIndex'
+import ProfilePublic from './pages/ProfilePublic'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import { authStore } from './auth'
@@ -28,9 +30,11 @@ export default function App(){
   const renderRoute = ()=>{
     if (path === '/' || path === '') return <Dashboard/>
     if (path === '/login') return <Login navigate={navigate}/>
+    if (path === '/pages') return <PagesIndex/>
     if (path === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
     if (path === '/profiles/new') return guard(<ProfileNew navigate={navigate}/>)
     let m
+    if (m = matchRoute('/public/profile/:id', path)) return <ProfilePublic/>
     if (m = matchRoute('/profiles/:id', path)) return guard(<ProfileDetail id={m.id} navigate={navigate}/>)
     if (m = matchRoute('/profiles/:id/interviews/new', path)) return guard(<InterviewNew profileId={m.id} navigate={navigate}/>)
     return <NotFound/>

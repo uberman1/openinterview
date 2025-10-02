@@ -59,5 +59,14 @@
     "status": "completed",
     "createdAt": "2025-10-01T22:32:44.424Z",
     "updatedAt": "2025-10-01T22:32:44.433Z"
+  },
+  {
+    "id": "a5ee7dee-b147-4c26-bd88-4f81e0fe52ef",
+    "profileId": "dd98c5a2-ff44-4f1f-ba88-7c3e31113a87",
+    "title": "Intro with Jane Smith",
+    "scheduledAt": "2025-10-03T09:00:00.000Z",
+    "status": "scheduled",
+    "createdAt": "2025-10-02T21:52:28.805Z",
+    "updatedAt": "2025-10-02T21:52:28.805Z"
   }
 ]

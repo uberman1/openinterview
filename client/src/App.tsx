@@ -11,6 +11,8 @@ import Tests from "@/pages/tests";
 import Logs from "@/pages/logs";
 import AdminConsole from "@/pages/AdminConsole";
 import Login from "@/pages/Login";
+import PagesIndex from "@/pages/PagesIndex";
+import ProfilePublic from "@/pages/ProfilePublic";
 import NotFound from "@/pages/not-found";
 import Sidebar from "@/components/sidebar";
 
@@ -28,6 +30,8 @@ function Router() {
           <Route path="/logs" component={Logs} />
           <Route path="/admin" component={AdminConsole} />
           <Route path="/login" component={Login} />
+          <Route path="/pages" component={PagesIndex} />
+          <Route path="/public/profile/:id" component={ProfilePublic} />
           <Route component={NotFound} />
         </Switch>
       </div>
