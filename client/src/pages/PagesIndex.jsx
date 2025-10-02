@@ -1,4 +1,5 @@
-// client/src/pages/PagesIndex.jsx
+// client/src/pages/
+
 import React, { useEffect, useState } from 'react';
 import { api } from '../lib/api';
 export default function PagesIndex() {
