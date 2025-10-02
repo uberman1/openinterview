@@ -1,0 +1,65 @@
+{
+  "checks": [
+    {
+      "name": "admin.console.auth.login",
+      "ok": true
+    },
+    {
+      "name": "admin.console.unauth.stats",
+      "ok": true,
+      "status": 401
+    },
+    {
+      "name": "admin.console.unauth.flags",
+      "ok": true,
+      "status": 401
+    },
+    {
+      "name": "admin.console.nonadmin.stats",
+      "ok": true,
+      "status": 403
+    },
+    {
+      "name": "admin.console.nonadmin.flags",
+      "ok": true,
+      "status": 403
+    },
+    {
+      "name": "admin.console.stats",
+      "ok": {
+        "draft": 0,
+        "scheduled": 2,
+        "completed": 4,
+        "canceled": 0
+      },
+      "status": 200
+    },
+    {
+      "name": "admin.console.flags.list",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "admin.console.users",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "admin.console.flags.patch",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "admin.console.flags.confirm",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-10-02T11:40:55.200Z",
+  "module": "12"
+}

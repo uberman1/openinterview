@@ -8,6 +8,19 @@ This is a full-stack TypeScript application with an Express backend, React front
 
 ## Recent Changes
 
+**Module 12 - Admin Console UI and Feature Flags (October 2025)**
+- Added feature flags storage system (`/server/flags.store.ts`) with 5 flags: enableEmails, enablePayments, enableCloudStorage, enableSupabase, enableVideoPipeline
+- Implemented admin console routes (`/server/admin.console.routes.ts`):
+  - `GET /api/v1/admin/users`: Lists users from users.json or derives from profiles
+  - `GET /api/v1/admin/flags`: Returns feature flags configuration
+  - `PATCH /api/v1/admin/flags`: Updates feature flags (persists to flags.json)
+- Added AdminConsole React component (`/client/src/pages/AdminConsole.jsx`) with stats, flags management, and user list
+- Route wiring: `/admin` path accessible to admin users
+- Access control: 401 for unauthenticated, 403 for non-admin, 200 for admin@example.com
+- Build size: 39.6kb (dist/index.js)
+- Test coverage: Module 12 selftest validates auth, admin guards, stats retrieval, flags CRUD, and user listing
+- New files: `/server/flags.store.ts`, `/server/admin.console.routes.ts`, `/client/src/pages/AdminConsole.jsx`
+
 **Module 11 - Deployment Readiness (October 2025)**
 - Added health check endpoints: `GET /api/v1/ready` (readiness probe), `GET /api/v1/live` (liveness probe)
 - Implemented graceful shutdown handler for SIGINT/SIGTERM with 5-second timeout fallback
