@@ -10,6 +10,7 @@ import Flags from "@/pages/flags";
 import Tests from "@/pages/tests";
 import Logs from "@/pages/logs";
 import AdminConsole from "@/pages/AdminConsole";
+import Login from "@/pages/Login";
 import NotFound from "@/pages/not-found";
 import Sidebar from "@/components/sidebar";
 
@@ -26,6 +27,7 @@ function Router() {
           <Route path="/tests" component={Tests} />
           <Route path="/logs" component={Logs} />
           <Route path="/admin" component={AdminConsole} />
+          <Route path="/login" component={Login} />
           <Route component={NotFound} />
         </Switch>
       </div>

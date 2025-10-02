@@ -1,0 +1,18 @@
+Scope: Implement a working Login UI only. Do not change package.json, install packages, or edit server configs/env. Keep TS/Vite architecture and existing auth endpoints.
+
+Allowed actions:
+- Replace /client/src/pages/Login.jsx with provided form implementation
+- Add /client/src/lib/api.js and /client/src/lib/auth.js
+- Update client router to ensure a /login route exists (no other route changes)
+- Optionally add scripts/selftest.m13a.js (API smoke); primary validation is manual UI
+
+Run:
+  npm run build
+  npm run dev   (then open /login)
+
+Success:
+- /login shows email + password inputs and a Login button
+- Submitting calls /api/v1/auth/login and handles errors
+- On success, token is saved and user is redirected:
+  - admin@example.com → /admin
+  - others → /dashboard

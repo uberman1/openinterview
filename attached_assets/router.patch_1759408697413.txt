@@ -1,0 +1,3 @@
+// Ensure your client router includes the Login route:
+// import Login from './pages/Login.jsx';
+// <Route path="/login" element={<Login/>} />
