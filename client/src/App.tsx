@@ -9,6 +9,7 @@ import Adapters from "@/pages/adapters";
 import Flags from "@/pages/flags";
 import Tests from "@/pages/tests";
 import Logs from "@/pages/logs";
+import AdminConsole from "@/pages/AdminConsole";
 import NotFound from "@/pages/not-found";
 import Sidebar from "@/components/sidebar";
 
@@ -24,6 +25,7 @@ function Router() {
           <Route path="/flags" component={Flags} />
           <Route path="/tests" component={Tests} />
           <Route path="/logs" component={Logs} />
+          <Route path="/admin" component={AdminConsole} />
           <Route component={NotFound} />
         </Switch>
       </div>
