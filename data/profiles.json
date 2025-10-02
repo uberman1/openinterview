@@ -245,5 +245,26 @@
     "name": "Stat P",
     "email": "stats_1759357964406@example.com",
     "createdAt": "2025-10-01T22:32:44.409Z"
+  },
+  {
+    "id": "cbeced7f-d436-444e-8a20-e00eace2a987",
+    "name": "Ethan Carter",
+    "email": "ethan.carter@example.com",
+    "headline": "Senior Product Designer",
+    "createdAt": "2025-10-02T19:49:50.685Z"
+  },
+  {
+    "id": "071bf1dc-d898-449c-bd3a-8630b7fd2299",
+    "name": "Olivia Bennett",
+    "email": "olivia.bennett@example.com",
+    "headline": "Design Manager",
+    "createdAt": "2025-10-02T19:49:50.697Z"
+  },
+  {
+    "id": "a0246cc2-8859-439e-924d-c76179ddfb7f",
+    "name": "Liam Harper",
+    "email": "liam.harper@example.com",
+    "headline": "UX Researcher",
+    "createdAt": "2025-10-02T19:49:50.710Z"
   }
 ]
