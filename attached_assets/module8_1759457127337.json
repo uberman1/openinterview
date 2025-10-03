@@ -1,0 +1,11 @@
+{
+  "name": "Module 8 \u2013 Profiles & Public Pages",
+  "public": [
+    "/#/u/testuser"
+  ],
+  "protected": [
+    "/#/profile"
+  ],
+  "admin": [],
+  "notes": "Public profile smoke route uses /#/u/testuser; replace with a real username for full test."
+}

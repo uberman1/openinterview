@@ -1,0 +1,11 @@
+{
+  "name": "Module 9 \u2013 Real Share Links",
+  "public": [
+    "/#/s/testtoken"
+  ],
+  "protected": [
+    "/#/dashboard"
+  ],
+  "admin": [],
+  "notes": "Smoke share route /#/s/testtoken; real token validated via human QA."
+}

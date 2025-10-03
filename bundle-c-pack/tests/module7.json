@@ -1,0 +1,12 @@
+{
+  "name": "Module 7 – Supabase Storage (Videos)",
+  "public": [
+    "/"
+  ],
+  "protected": [
+    "/#/upload",
+    "/#/dashboard"
+  ],
+  "admin": [],
+  "notes": "Validates upload and listing (requires configured Supabase Storage)."
+}
