@@ -1,0 +1,14 @@
+{
+  "name": "openinterview-bundle-b-core-mock",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "journey": "node runner/run.js",
+    "journey:all": "node runner/run.js ALL"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.46.0",
+    "dotenv": "^16.4.5"
+  }
+}

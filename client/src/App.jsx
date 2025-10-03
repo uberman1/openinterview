@@ -10,6 +10,8 @@ import ProfileDetail from './pages/ProfileDetail'
 import InterviewNew from './pages/InterviewNew'
 import PagesIndex from './pages/PagesIndex'
 import ProfilePublic from './pages/ProfilePublic'
+import UploadMock from './pages/UploadMock'
+import ShareMock from './pages/ShareMock'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import { authStore } from './auth'
@@ -33,10 +35,12 @@ export default function App(){
     if (path === '/dashboard') return <Dashboard/>
     if (path === '/login') return <Login navigate={navigate}/>
     if (path === '/profile') return <ProfileEditor/>
+    if (path === '/upload') return <UploadMock/>
     if (path === '/pages') return <PagesIndex/>
     if (path === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
     if (path === '/profiles/new') return guard(<ProfileNew navigate={navigate}/>)
     let m
+    if (m = matchRoute('/s/:token', path)) return <ShareMock token={m.token}/>
     if (m = matchRoute('/public/profile/:id', path)) return <ProfilePublic/>
     if (m = matchRoute('/profiles/:id', path)) return guard(<ProfileDetail id={m.id} navigate={navigate}/>)
     if (m = matchRoute('/profiles/:id/interviews/new', path)) return guard(<InterviewNew profileId={m.id} navigate={navigate}/>)
@@ -61,6 +65,7 @@ export default function App(){
           <nav style={{display:'grid', gap:8}}>
             <a href="#/" style={{color:'#93c5fd'}} data-testid="nav-dashboard">Dashboard</a>
             <a href="#/profile" style={{color:'#93c5fd'}} data-testid="nav-profile">My Profile</a>
+            <a href="#/upload" style={{color:'#93c5fd'}} data-testid="nav-upload">Uploads</a>
             {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}} data-testid="nav-login">Login</a>}
             {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}} data-testid="nav-profiles">Profiles</a>}
             {loggedIn && <button onClick={doLogout} style={{marginTop:8}} data-testid="button-logout">Logout</button>}
