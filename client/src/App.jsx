@@ -12,6 +12,8 @@ import PagesIndex from './pages/PagesIndex'
 import ProfilePublic from './pages/ProfilePublic'
 import UploadMock from './pages/UploadMock'
 import ShareMock from './pages/ShareMock'
+import Browse from './pages/Browse'
+import AdminConsole from './pages/AdminConsole'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import { authStore } from './auth'
@@ -31,14 +33,17 @@ export default function App(){
   const guard = (el)=> loggedIn ? el : <Login navigate={navigate}/>
 
   const renderRoute = ()=>{
-    if (path === '/' || path === '') return <Dashboard/>
-    if (path === '/dashboard') return <Dashboard/>
-    if (path === '/login') return <Login navigate={navigate}/>
-    if (path === '/profile') return <ProfileEditor/>
-    if (path === '/upload') return <UploadMock/>
-    if (path === '/pages') return <PagesIndex/>
-    if (path === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
-    if (path === '/profiles/new') return guard(<ProfileNew navigate={navigate}/>)
+    const basePath = path.split('?')[0]
+    if (basePath === '/' || basePath === '') return <Dashboard/>
+    if (basePath === '/dashboard') return <Dashboard/>
+    if (basePath === '/login') return <Login navigate={navigate}/>
+    if (basePath === '/profile') return <ProfileEditor/>
+    if (basePath === '/upload') return <UploadMock/>
+    if (basePath === '/browse') return <Browse/>
+    if (basePath === '/pages') return <PagesIndex/>
+    if (basePath.startsWith('/admin')) return <AdminConsole path={basePath}/>
+    if (basePath === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
+    if (basePath === '/profiles/new') return guard(<ProfileNew navigate={navigate}/>)
     let m
     if (m = matchRoute('/s/:token', path)) return <ShareMock token={m.token}/>
     if (m = matchRoute('/public/profile/:id', path)) return <ProfilePublic/>
@@ -66,8 +71,10 @@ export default function App(){
             <a href="#/" style={{color:'#93c5fd'}} data-testid="nav-dashboard">Dashboard</a>
             <a href="#/profile" style={{color:'#93c5fd'}} data-testid="nav-profile">My Profile</a>
             <a href="#/upload" style={{color:'#93c5fd'}} data-testid="nav-upload">Uploads</a>
+            <a href="#/browse" style={{color:'#93c5fd'}} data-testid="nav-browse">Browse</a>
             {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}} data-testid="nav-login">Login</a>}
             {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}} data-testid="nav-profiles">Profiles</a>}
+            {loggedIn && <a href="#/admin" style={{color:'#93c5fd'}} data-testid="nav-admin">Admin</a>}
             {loggedIn && <button onClick={doLogout} style={{marginTop:8}} data-testid="button-logout">Logout</button>}
           </nav>
         </aside>

@@ -1,0 +1,13 @@
+{
+  "name": "Module 11 – Admin Console",
+  "public": [
+    "/"
+  ],
+  "protected": [],
+  "admin": [
+    "/#/admin",
+    "/#/admin/users",
+    "/#/admin/settings"
+  ],
+  "notes": "Admin area shows mock users and settings; non-admin should be blocked in your app's guard (mock ok)."
+}
