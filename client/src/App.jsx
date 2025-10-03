@@ -3,6 +3,7 @@ import React from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { useHashLocation, matchRoute } from './router'
 import Dashboard from './pages/Dashboard'
+import ProfileEditor from './pages/ProfileEditor'
 import ProfilesList from './pages/ProfilesList'
 import ProfileNew from './pages/ProfileNew'
 import ProfileDetail from './pages/ProfileDetail'
@@ -29,7 +30,9 @@ export default function App(){
 
   const renderRoute = ()=>{
     if (path === '/' || path === '') return <Dashboard/>
+    if (path === '/dashboard') return <Dashboard/>
     if (path === '/login') return <Login navigate={navigate}/>
+    if (path === '/profile') return <ProfileEditor/>
     if (path === '/pages') return <PagesIndex/>
     if (path === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
     if (path === '/profiles/new') return guard(<ProfileNew navigate={navigate}/>)
@@ -57,6 +60,7 @@ export default function App(){
           <h3 style={{marginTop:0}} data-testid="heading-app">OpenInterview</h3>
           <nav style={{display:'grid', gap:8}}>
             <a href="#/" style={{color:'#93c5fd'}} data-testid="nav-dashboard">Dashboard</a>
+            <a href="#/profile" style={{color:'#93c5fd'}} data-testid="nav-profile">My Profile</a>
             {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}} data-testid="nav-login">Login</a>}
             {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}} data-testid="nav-profiles">Profiles</a>}
             {loggedIn && <button onClick={doLogout} style={{marginTop:8}} data-testid="button-logout">Logout</button>}
