@@ -1,0 +1,12 @@
+{
+  "name": "Module 3 – Dashboard & Profile (Mock Data)",
+  "public": [
+    "/"
+  ],
+  "protected": [
+    "/#/",
+    "/#/profiles"
+  ],
+  "admin": [],
+  "notes": "Adapted for current app: /#/ is Dashboard, /#/profiles is the closest to profile editing. Original expected /#/dashboard and /#/profile."
+}
