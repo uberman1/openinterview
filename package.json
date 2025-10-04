@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "test": "node selftest.mjs"
+    "test": "node selftest.mjs",
+    "dev": "node index.js"
   },
   "dependencies": {
     "express": "^4.19.2"
