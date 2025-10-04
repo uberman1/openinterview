@@ -1,0 +1,12 @@
+:root{
+  --bg:#ffffff; --text:#111111; --muted:#6b7280; --border:#e5e7eb; --accent:#111111;
+  --r:14px; --w:1160px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.55}
+a{color:var(--text);text-decoration:none}
+.container{max-width:var(--w);margin:0 auto;padding:24px}
+.input{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:#fff}
+.btn{background:#111;color:#fff;border:0;border-radius:12px;padding:12px 16px;cursor:pointer}
+.btn:hover{background:#000}

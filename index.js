@@ -129,6 +129,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 const port = process.env.PORT || 5000;
-server.listen(port, () => {
+server.listen(port, '0.0.0.0', () => {
   console.log(`Module-1 engine wrapper listening on ${port}`);
 });
