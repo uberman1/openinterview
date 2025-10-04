@@ -63,8 +63,7 @@ async function verifyGuardrails(guards) {
 
 async function get(pathname) {
   const r = await fetch(BASE + pathname);
-  const text = await r.text();
-  return { status: r.status, text, json: () => JSON.parse(text) };
+  return { status: r.status, text: await r.text(), json: async () => r.json() };
 }
 async function post(pathname, body) {
   const r = await fetch(BASE + pathname, {
@@ -72,8 +71,7 @@ async function post(pathname, body) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
   });
-  const text = await r.text();
-  return { status: r.status, text, json: () => JSON.parse(text) };
+  return { status: r.status, text: await r.text(), json: async () => r.json() };
 }
 
 (async () => {
