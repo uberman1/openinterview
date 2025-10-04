@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "email": "user@example.com",
+      "name": "Ethan Carter",
+      "role": "user",
+      "handle": "ethan"
+    },
+    {
+      "id": "u2",
+      "email": "admin@example.com",
+      "name": "Admin",
+      "role": "admin",
+      "handle": "admin"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "p1",
+      "userId": "u1",
+      "handle": "ethan",
+      "public": {
+        "title": "Senior Product Designer",
+        "city": "San Francisco, CA"
+      }
+    }
+  ]
+}

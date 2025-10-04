@@ -1,0 +1,3 @@
+Agent 3 — Guardrail Prompt (paste into task/PR)
+
+Implement Module‑1 cutover exactly as specified. Do not alter `public/login.html`, `public/css/theme.css`, or `public/index.html`. Do not add frameworks or global resets. Ensure `/` and `/#/login` land on `/login.html`. Keep role routing (admin → /admin.html; others → /profile.html). Run `npm test` and ensure all checks pass. Any visual or token change is out of scope.
