@@ -1,0 +1,19 @@
+{
+  "name": "openinterview-module2-user",
+  "version": "2.0.1",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "node selftest.mjs",
+    "verify:guardrails": "node verify_guardrails.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.3"
+  }
+}

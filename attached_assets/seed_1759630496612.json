@@ -1,0 +1,173 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "email": "user@example.com",
+      "name": "Ethan Carter",
+      "role": "user",
+      "handle": "ethan"
+    },
+    {
+      "id": "u2",
+      "email": "admin@example.com",
+      "name": "Admin",
+      "role": "admin",
+      "handle": "admin"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "p1",
+      "userId": "u1",
+      "handle": "ethan",
+      "isDefault": true,
+      "title": "Senior Product Designer",
+      "city": "San Francisco, CA",
+      "about": "Experienced product designer with a strong track record in SaaS and B2B.",
+      "video": "",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://linkedin.com/in/ethan"
+        },
+        {
+          "label": "Portfolio",
+          "href": "https://ethan.design"
+        }
+      ],
+      "resumeFileId": "f_resume_01",
+      "attachmentFileIds": [
+        "f_case_01",
+        "f_demo_02"
+      ],
+      "highlights": [
+        "5+ years of experience",
+        "Strong portfolio",
+        "Excellent communication"
+      ]
+    },
+    {
+      "id": "p2",
+      "userId": "u1",
+      "handle": "ethan-ic",
+      "isDefault": false,
+      "title": "Interaction Designer",
+      "city": "Remote",
+      "about": "IC track profile for hands-on roles.",
+      "video": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/ethan"
+        }
+      ],
+      "resumeFileId": "f_resume_02",
+      "attachmentFileIds": [
+        "f_case_01"
+      ],
+      "highlights": [
+        "Rapid prototyping",
+        "Design systems"
+      ]
+    }
+  ],
+  "availability": {
+    "u1": {
+      "weekly": {
+        "Mon": [
+          "09:00",
+          "10:00",
+          "11:00",
+          "14:00"
+        ],
+        "Tue": [
+          "09:00",
+          "10:00"
+        ],
+        "Wed": [
+          "10:00",
+          "11:00"
+        ],
+        "Thu": [
+          "09:00",
+          "14:00"
+        ],
+        "Fri": [
+          "09:00",
+          "10:00"
+        ]
+      },
+      "overrides": []
+    }
+  },
+  "interviews": [
+    {
+      "id": "i1",
+      "userId": "u1",
+      "title": "Software Engineer Interview",
+      "when": "2025-08-20T14:00:00Z",
+      "company": "Tech Solutions",
+      "recruiter": "Jane Smith"
+    },
+    {
+      "id": "i2",
+      "userId": "u1",
+      "title": "Product Manager Interview",
+      "when": "2025-07-20T18:00:00Z",
+      "company": "Innovate Inc.",
+      "recruiter": "John Doe"
+    }
+  ],
+  "files": [
+    {
+      "id": "f_resume_01",
+      "userId": "u1",
+      "name": "resume_ethan_senior.pdf",
+      "mime": "application/pdf",
+      "sizeLabel": "2MB",
+      "url": "/files/resume_ethan_senior.pdf",
+      "uploadedAt": "2025-07-26"
+    },
+    {
+      "id": "f_resume_02",
+      "userId": "u1",
+      "name": "resume_ethan_ic.pdf",
+      "mime": "application/pdf",
+      "sizeLabel": "1.8MB",
+      "url": "/files/resume_ethan_ic.pdf",
+      "uploadedAt": "2025-07-21"
+    },
+    {
+      "id": "f_case_01",
+      "userId": "u1",
+      "name": "case_study.pdf",
+      "mime": "application/pdf",
+      "sizeLabel": "1.2MB",
+      "url": "/files/case_study.pdf",
+      "uploadedAt": "2025-07-20"
+    },
+    {
+      "id": "f_demo_02",
+      "userId": "u1",
+      "name": "demo_deck.pdf",
+      "mime": "application/pdf",
+      "sizeLabel": "800KB",
+      "url": "/files/demo_deck.pdf",
+      "uploadedAt": "2025-07-18"
+    }
+  ],
+  "videos": [
+    {
+      "id": "VID001",
+      "user": "Ethan Carter",
+      "duration": "15 min",
+      "status": "Published"
+    }
+  ],
+  "reports": [
+    {
+      "url": "https://openinterview.me/video1"
+    }
+  ],
+  "bookings": []
+}
