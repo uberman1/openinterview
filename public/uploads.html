@@ -1,0 +1,36 @@
+<!doctype html><html><head>
+<meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/>
+<title>User • Uploads</title><link rel='stylesheet' href='/css/theme.css'/></head><body>
+<aside class='sidebar'><div style='font-weight:700;margin-bottom:12px'>OpenInterview.me</div><a class='navlink' href='/profile.html'>Home</a><a class='navlink' href='/availability.html'>Availability</a><a class='navlink' href='/profiles.html'>Profiles</a><a class='navlink muted' href='/uploads.html'>Uploads</a><a class='navlink' href='/subscription.html'>Subscription</a><a class='navlink' href='/password.html'>Password</a><a class='navlink' href='/login.html'>Log Out</a><button class='btn' style='margin-top:8px;width:100%;background:#f7f7f7;color:#111'>Upgrade</button></aside>
+<main class='main'><div class='container'>
+<h1>Uploads</h1>
+<div class='section'>
+  <div style='display:flex;gap:8px;align-items:center'>
+    <label class='muted'>Profile</label>
+    <select id='profileSel' class='input' style='max-width:280px'></select>
+    <button id='shareSel' class='btn out'>Share Selected Profile</button>
+  </div>
+</div>
+<div class='section'><h2>Resume (for selected profile)</h2><div id='resumePicker'>Loading…</div></div>
+<div class='section'><h2>Attachments (for selected profile)</h2><div id='assignedList'>Loading…</div></div>
+<div class='section'>
+  <h2>Your Library</h2>
+  <div style='display:flex;gap:8px;margin-bottom:8px'><input id='newName' class='input' placeholder='filename.pdf' style='max-width:280px'/><button id='upload' class='btn'>Upload</button></div>
+  <div id='library'>Loading…</div>
+</div>
+</div></main>
+<script type='module'>
+import {api, requireUser} from '/js/app.js'; const u=requireUser(); let profiles=[], library=[], current=null;
+function renderProfileSel(){ const sel=document.querySelector('#profileSel'); sel.innerHTML = profiles.map(p=>`<option value="${p.id}">${p.handle} ${p.isDefault?'(Default)':''}</option>`).join(''); current = profiles.find(p=>p.id===sel.value) || profiles[0]; }
+function renderResumePicker(){ const div=document.querySelector('#resumePicker'); div.innerHTML = library.map(f=>`<label style="display:block;margin-top:6px"><input type="radio" name="resume" value="${f.id}" ${current.resumeFileId===f.id?'checked':''}> ${f.name}</label>`).join('') + '<div style="margin-top:8px"><button id="saveResume" class="btn out">Save Resume</button></div>'; }
+function renderAssigned(){ const list=(current.attachmentFileIds||[]).map(id=>library.find(f=>f.id===id)).filter(Boolean); document.querySelector('#assignedList').innerHTML = list.length? list.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:10px;padding:8px;margin-top:6px"><div>${f.name}</div><button class="btn out" data-unassign="${f.id}">Unassign</button></div>`).join('') : '<div class="muted">No attachments assigned</div>'; }
+function renderLibrary(){ const assigned = new Set(current.attachmentFileIds||[]); document.querySelector('#library').innerHTML = library.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:10px;padding:8px;margin-top:6px"><div>${f.name}</div><div style="display:flex;gap:6px">${assigned.has(f.id)?'':'<button class="btn out" data-assign="'+f.id+'">Assign</button>'}<button class="btn out" data-del="${f.id}">Delete</button></div></div>`).join(''); }
+async function loadAll(){ [profiles, library] = await Promise.all([ api(`/api/profiles?userId=${u.id}`), api(`/api/files?userId=${u.id}`) ]); renderProfileSel(); renderResumePicker(); renderAssigned(); renderLibrary(); }
+document.querySelector('#profileSel').addEventListener('change', (e)=>{ current = profiles.find(p=>p.id===e.target.value); renderResumePicker(); renderAssigned(); renderLibrary(); });
+document.addEventListener('change', (e)=>{ if(e.target.name==='resume') current.resumeFileId = e.target.value; });
+document.addEventListener('click', async (e)=>{ if(e.target.id==='saveResume'){ await api(`/api/profiles/${current.id}/resume`, {method:'PATCH', body: JSON.stringify({fileId: current.resumeFileId||null})}); alert('Saved'); } if(e.target.dataset.assign){ await api(`/api/profiles/${current.id}/attachments`, {method:'POST', body: JSON.stringify({fileId:e.target.dataset.assign})}); current=(await api(`/api/profiles/${current.id}`)); renderAssigned(); renderLibrary(); } if(e.target.dataset.unassign){ await api(`/api/profiles/${current.id}/attachments/${e.target.dataset.unassign}`, {method:'DELETE'}); current=(await api(`/api/profiles/${current.id}`)); renderAssigned(); renderLibrary(); } if(e.target.dataset.del){ await api(`/api/files/${e.target.dataset.del}`, {method:'DELETE'}); library=await api(`/api/files?userId=${u.id}`); renderLibrary(); } });
+document.querySelector('#upload').onclick = async ()=>{ const name=document.querySelector('#newName').value.trim(); if(!name) return alert('Enter filename'); const f = await api('/api/files', {method:'POST', body: JSON.stringify({userId:u.id, name})}); library.push(f); renderLibrary(); document.querySelector('#newName').value=''; };
+document.querySelector('#shareSel').onclick = async ()=>{ const url = `${location.origin}/u/${current.handle}`; await navigator.clipboard.writeText(url); alert('Link copied'); };
+loadAll();
+</script>
+</body></html>

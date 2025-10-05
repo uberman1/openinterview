@@ -86,13 +86,6 @@ app.get("/api/profiles", (req,res)=>{
   const { userId } = req.query;
   res.json(db.profiles.filter(p=>p.userId===userId));
 });
-app.get("/api/profiles/default", (req,res)=>{
-  const { userId } = req.query;
-  const list = db.profiles.filter(p=>p.userId===userId);
-  const def = list.find(p=>p.isDefault) || list[0] || null;
-  if(!def) return res.status(404).send("no profiles");
-  res.json(def);
-});
 app.get("/api/profiles/:id", (req,res)=>{
   const p = db.profiles.find(x=>x.id===req.params.id);
   if(!p) return res.status(404).end();
@@ -111,6 +104,13 @@ app.patch("/api/profiles/:id", (req,res)=>{
   if(resumeFileId!==undefined) p.resumeFileId = resumeFileId;
   if(attachmentFileIds!==undefined) p.attachmentFileIds = attachmentFileIds;
   res.json(p);
+});
+app.get("/api/profiles/default", (req,res)=>{
+  const { userId } = req.query;
+  const list = db.profiles.filter(p=>p.userId===userId);
+  const def = list.find(p=>p.isDefault) || list[0] || null;
+  if(!def) return res.status(404).send("no profiles");
+  res.json(def);
 });
 app.patch("/api/profiles/:id/default", (req,res)=>{
   const id = req.params.id;
@@ -165,5 +165,5 @@ export default app;
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, '0.0.0.0', ()=> console.log("Server running on", PORT));
+  app.listen(PORT, ()=> console.log("Server running on", PORT));
 }

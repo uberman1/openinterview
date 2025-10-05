@@ -1,0 +1,32 @@
+<!doctype html><html><head>
+<meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/>
+<title>User • Profiles</title><link rel='stylesheet' href='/css/theme.css'/></head><body>
+<aside class='sidebar'><div style='font-weight:700;margin-bottom:12px'>OpenInterview.me</div><a class='navlink' href='/profile.html'>Home</a><a class='navlink' href='/availability.html'>Availability</a><a class='navlink muted' href='/profiles.html'>Profiles</a><a class='navlink' href='/uploads.html'>Uploads</a><a class='navlink' href='/subscription.html'>Subscription</a><a class='navlink' href='/password.html'>Password</a><a class='navlink' href='/login.html'>Log Out</a><button class='btn' style='margin-top:8px;width:100%;background:#f7f7f7;color:#111'>Upgrade</button></aside>
+<main class='main'><div class='container'>
+<h1>Profiles</h1>
+<div class='section'>
+  <div style='display:flex;gap:10px;align-items:center;margin-bottom:8px'><button id='create' class='btn'>New Profile</button></div>
+  <table><thead><tr><th>Name</th><th>Title</th><th>City</th><th>Default</th><th style='text-align:right'>Actions</th></tr></thead>
+  <tbody id='rows'><tr><td colspan='5' class='muted'>Loading…</td></tr></tbody></table>
+</div>
+</div></main>
+<script type='module'>
+import {api, requireUser} from '/js/app.js'; const u=requireUser();
+function row(p){ const def = p.isDefault?'<span class="muted">Default</span>':''; return `<tr>
+  <td>${p.handle}</td><td>${p.title||''}</td><td>${p.city||''}</td><td>${def}</td>
+  <td style="text-align:right;display:flex;gap:8px;justify-content:flex-end">
+    <button class="btn out" data-view="${p.handle}">View Public</button>
+    <button class="btn out" data-share="${p.handle}">Share</button>
+    ${p.isDefault?'':`<button class="btn out" data-default="${p.id}">Set Default</button>`}
+    <a class="btn out" href="/profile_edit.html?id=${p.id}">Edit</a>
+  </td>
+</tr>`; }
+async function load(){ const list=await api(`/api/profiles?userId=${u.id}`); document.querySelector('#rows').innerHTML = list.length? list.map(row).join('') : '<tr><td colspan="5" class="muted">No profiles yet</td></tr>'; }
+document.addEventListener('click', async (e)=>{ const t=e.target;
+  if(t.dataset.view) window.open(`/u/${t.dataset.view}`,'_blank');
+  if(t.dataset.share){ const url = `${location.origin}/u/${t.dataset.share}`; await navigator.clipboard.writeText(url); alert('Link copied'); }
+  if(t.dataset.default){ await api(`/api/profiles/${t.dataset.default}/default`, {method:'PATCH'}); load(); }
+});
+load();
+</script>
+</body></html>
