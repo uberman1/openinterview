@@ -234,3 +234,58 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, '0.0.0.0', ()=> console.log("Server running on", PORT));
 }
+
+
+// ---- Availability helpers ----
+function toMin(t){ const [H,M]=t.split(':').map(Number); return H*60+M; }
+function fromMin(m){ const H=String(Math.floor(m/60)).padStart(2,'0'); const Mi=String(m%60).padStart(2,'0'); return H+':'+Mi; }
+function addMinutes(dateStr, timeStr, mins){
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const [H,Mi] = timeStr.split(':').map(Number);
+  const dt = new Date(Date.UTC(y, m-1, d, H, Mi, 0));
+  return new Date(dt.getTime() + mins*60000);
+}
+
+
+// Generate bookable start times
+app.get("/api/slots", (req,res) => {
+  const userId = req.query.userId || "u1";
+  const date = req.query.date; // YYYY-MM-DD
+  const duration = parseInt(req.query.duration||"30",10);
+  if (!date) return res.status(400).json({error:"date required"});
+
+  const av = db.availability.find(a=>a.userId===userId);
+  if (!av) return res.json({ slots: [] });
+
+  const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const d = new Date(date+"T00:00:00Z");
+  const dayKey = dayNames[d.getUTCDay()];
+  let blocks = av.weekly?.[dayKey] || [];
+
+  const ex = (av.exceptions||[]).find(x=>x.date===date);
+  if (ex) blocks = ex.type === "block" ? [] : (ex.blocks || []);
+
+  const inc = av.rules?.incrementsMinutes || 30;
+  const starts = [];
+  for (const [s,e] of blocks) {
+    let t = toMin(s), end = toMin(e);
+    while (t + duration <= end) { starts.push(t); t += inc; }
+  }
+
+  const today = new Date();
+  const daysOut = Math.floor((new Date(date+"T00:00:00Z") - new Date(today.toDateString()+"T00:00:00Z"))/86400000);
+  const windowDays = av.rules?.windowDays ?? 30;
+  const minNotice = av.rules?.minNoticeMinutes ?? 120;
+
+  const visible = starts.filter(m => {
+    if (daysOut < 0 || daysOut > windowDays) return false;
+    const startISO = addMinutes(date, fromMin(m), 0);
+    const diffMin = Math.floor((startISO - today)/60000);
+    if (diffMin < minNotice) return false;
+    return true;
+  });
+
+  const maxPerDay = av.rules?.maxPerDay || 999;
+  const limited = visible.slice(0, maxPerDay);
+  res.json({ slots: limited.map(fromMin) });
+});
