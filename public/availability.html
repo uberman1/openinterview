@@ -50,9 +50,7 @@
         <li><button data-tab="weekly" class="tab px-4 py-2 rounded-t-lg bg-primary text-white">Weekly Hours</button></li>
         <li><button data-tab="rules" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Rules</button></li>
         
-        <li><button data-tab="preview" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Preview</button></li>
-        
-      </ul>
+        </ul>
     </nav>
 
     <!-- WEEKLY (vertical layout) -->
@@ -173,7 +171,7 @@
         </div>
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Start time increments</h4>
-<p class="text-sm text-muted-light mb-3">The grid step for available times.</p>
+<p class="text-sm text-muted-light mb-3">Your interview slot intervals. If the grid step is 30 min, possible start times are 9:00, 9:30, 10:00, 10:30…</p>
           <div class="flex flex-wrap gap-2">
             <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="5"><span class="px-3 py-2 rounded-lg border inline-block">5 min</span></label>
             <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="10"><span class="px-3 py-2 rounded-lg border inline-block">10 min</span></label>
@@ -216,27 +214,7 @@
 
     
 
-    <section id="tab-preview" class="hidden">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 border border-subtle-light rounded-lg p-4">
-          <h4 class="font-semibold mb-3">What recruiters will see</h4>
-          <div class="grid grid-cols-7 gap-1 text-center text-sm mb-3">
-            <span class="font-medium">S</span><span class="font-medium">M</span><span class="font-medium">T</span><span class="font-medium">W</span><span class="font-medium">T</span><span class="font-medium">F</span><span class="font-medium">S</span>
-          </div>
-          <div class="grid grid-cols-7 gap-2 text-center">
-            <button class="h-10 rounded border hover:bg-subtle-light"> 5 </button>
-            <button class="h-10 rounded border hover:bg-subtle-light"> 6 </button>
-            <button class="h-10 rounded border hover:bg-subtle-light"> 7 </button>
-            <button class="h-10 rounded border hover:bg-subtle-light"> 8 </button>
-            <button class="h-10 rounded border hover:bg-subtle-light"> 9 </button>
-          </div>
-        </div>
-        <div class="border border-subtle-light rounded-lg p-4">
-          <h4 class="font-semibold mb-3">Times on selected date</h4>
-          <div id="previewSlots" class="flex flex-wrap gap-2"></div>
-        </div>
-      </div>
-    </section>
+    
 
     
 
