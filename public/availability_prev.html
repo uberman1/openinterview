@@ -49,9 +49,9 @@
       <ul class="flex flex-wrap gap-1">
         <li><button data-tab="weekly" class="tab px-4 py-2 rounded-t-lg bg-primary text-white">Weekly Hours</button></li>
         <li><button data-tab="rules" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Rules</button></li>
-        
+        <li><button data-tab="exceptions" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Exceptions</button></li>
         <li><button data-tab="preview" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Preview</button></li>
-        
+        <li><button data-tab="troubleshoot" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Troubleshoot</button></li>
       </ul>
     </nav>
 
@@ -153,7 +153,6 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Minimum scheduling notice</h4>
-<p class="text-sm text-muted-light mb-3">How far in advance someone must book. Prevents last-minute meetings.</p>
           <select id="minNotice" class="w-full rounded-lg">
             <option value="60">1 hour</option>
             <option value="120" selected>2 hours</option>
@@ -163,7 +162,6 @@
         </div>
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Scheduling window</h4>
-<p class="text-sm text-muted-light mb-3">How far into the future people can book.</p>
           <select id="windowDays" class="w-full rounded-lg">
             <option value="14">2 weeks</option>
             <option value="30" selected>30 days</option>
@@ -173,7 +171,6 @@
         </div>
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Start time increments</h4>
-<p class="text-sm text-muted-light mb-3">The grid step for available times.</p>
           <div class="flex flex-wrap gap-2">
             <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="5"><span class="px-3 py-2 rounded-lg border inline-block">5 min</span></label>
             <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="10"><span class="px-3 py-2 rounded-lg border inline-block">10 min</span></label>
@@ -184,7 +181,6 @@
         </div>
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Buffers</h4>
-<p class="text-sm text-muted-light mb-3">Automatic padding before and after each meeting.</p>
           <div class="grid grid-cols-2 gap-3">
             <div><label class="text-sm">Before (min)</label><input id="bufBefore" type="number" class="w-full rounded-lg" min="0" step="5" value="30"></div>
             <div><label class="text-sm">After (min)</label><input id="bufAfter" type="number" class="w-full rounded-lg" min="0" step="5" value="10"></div>
@@ -192,12 +188,10 @@
         </div>
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Daily meeting cap</h4>
-<p class="text-sm text-muted-light mb-3">Limit how many bookings you’ll accept per day.</p>
           <input id="maxPerDay" type="number" class="w-full rounded-lg" min="1" value="5">
         </div>
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Durations offered</h4>
-<p class="text-sm text-muted-light mb-3">Pick the durations available to book and choose a default.</p>
           <div id="durations" class="flex flex-wrap gap-2">
             <label class="cursor-pointer"><input class="sr-only" type="checkbox" value="15" checked><span class="px-3 py-2 rounded-lg border inline-block">15 min</span></label>
             <label class="cursor-pointer"><input class="sr-only" type="checkbox" value="30" checked><span class="px-3 py-2 rounded-lg border inline-block">30 min</span></label>
@@ -214,7 +208,35 @@
       </div>
     </section>
 
-    
+    <section id="tab-exceptions" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Calendar</h4>
+          <div class="h-64 border border-dashed rounded-lg flex items-center justify-center text-muted-light">Month grid placeholder (no external sync)</div>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4 space-y-3">
+          <h4 class="font-semibold">Manage exceptions</h4>
+          <div class="flex gap-2">
+            <input id="exDate" type="date" class="rounded-lg w-full">
+            <select id="exType" class="rounded-lg">
+              <option value="block">Block date</option>
+              <option value="custom">Custom hours</option>
+            </select>
+          </div>
+          <div id="exCustom" class="hidden">
+            <div class="flex gap-2 mt-2">
+              <input id="exStart" type="time" class="rounded-lg w-full">
+              <input id="exEnd" type="time" class="rounded-lg w-full">
+            </div>
+          </div>
+          <button id="addException" class="w-full bg-primary text-white rounded-lg py-2">Add</button>
+          <div class="pt-2">
+            <h5 class="font-semibold mb-2">List</h5>
+            <ul id="exList" class="space-y-2 text-sm"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section id="tab-preview" class="hidden">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -238,7 +260,23 @@
       </div>
     </section>
 
-    
+    <section id="tab-troubleshoot" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="border border-subtle-light rounded-lg p-4 space-y-3">
+          <h4 class="font-semibold">Check a slot</h4>
+          <input id="tsDate" type="date" class="rounded-lg w-full">
+          <input id="tsTime" type="time" class="rounded-lg w-full">
+          <select id="tsDuration" class="rounded-lg w-full">
+            <option>15</option><option selected>30</option><option>45</option><option>60</option>
+          </select>
+          <button id="runTroubleshoot" class="w-full bg-primary text-white rounded-lg py-2">Explain availability</button>
+        </div>
+        <div class="lg:col-span-2 border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-2">Result</h4>
+          <pre id="tsResult" class="text-sm text-muted-light whitespace-pre-wrap">—</pre>
+        </div>
+      </div>
+    </section>
 
   </div>
   <script type="module" src="/js/availability.js"></script>
