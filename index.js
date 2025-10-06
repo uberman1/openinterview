@@ -1,3 +1,6 @@
+import fs from "fs";
+import multer from "multer";
+import { fileTypeFromBuffer } from "file-type";
 
 import express from "express";
 import path from "path";
@@ -16,6 +19,11 @@ app.use(express.json());
 let db = JSON.parse(readFileSync(path.join(__dirname, "seed.json"), "utf8"));
 
 app.use(express.static(path.join(__dirname, "public")));
+
+/** Public shareable profile page */
+app.get("/u/:handle", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "public_profile.html"));
+});
 app.get("/", (_req, res) => res.redirect("/login.html"));
 
 // Auth
@@ -159,6 +167,65 @@ app.get("/api/public/profile/:handle", (req,res)=>{
   const resume = p.resumeFileId ? fileById(p.resumeFileId) : null;
   const attachments = (p.attachmentFileIds||[]).map(fileById).filter(Boolean);
   res.json({ ...p, resume, attachments });
+});
+
+// Upload directly to a profile (resume | attachment)
+const MAX_RESUME = (+process.env.MAX_RESUME_MB || 5) * 1024 * 1024;
+const MAX_ATTACHMENT = (+process.env.MAX_ATTACHMENT_MB || 25) * 1024 * 1024;
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fileSize: Math.max(MAX_ATTACHMENT, MAX_RESUME) } });
+
+function saveFile(buf, original, mime, userId) {
+  const ext = (original || "").includes(".") ? "." + original.split(".").pop() : "";
+  const fname = `${Date.now()}_${Math.random().toString(36).slice(2)}${ext}`;
+  const outDir = path.join(__dirname, "public", "uploads");
+  fs.mkdirSync(outDir, { recursive: true });
+  fs.writeFileSync(path.join(outDir, fname), buf);
+  const sizeMB = Math.round((buf.length / 1048576) * 10) / 10;
+  return { id: "f_" + fname, userId, name: original || "file" + ext, mime, sizeLabel: `${sizeMB}MB`, url: "/uploads/" + fname, uploadedAt: new Date().toISOString().slice(0,10) };
+}
+
+app.post("/api/upload/:kind(resume|attachment)/:profileId", upload.single("file"), async (req, res) => {
+  try {
+    const { kind, profileId } = req.params;
+    const p = db.profiles.find((x) => x.id === profileId);
+    if (!p) return res.status(404).send("Profile not found");
+    const buf = req.file?.buffer;
+    if (!buf) return res.status(400).send("No file");
+
+    const ALLOWED_MIME = new Set([
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "text/plain",
+      "application/rtf"
+    ]);
+    const ft = await fileTypeFromBuffer(buf).catch(() => null);
+    const mime = ft?.mime || req.file.mimetype;
+    if (!ALLOWED_MIME.has(mime)) return res.status(415).send("Unsupported file type");
+
+    const max = kind === "resume" ? MAX_RESUME : MAX_ATTACHMENT;
+    if (buf.length > max) return res.status(413).send(`File too large (max ${Math.round(max/1048576)} MB)`);
+
+    const rec = saveFile(buf, req.file.originalname, mime, p.userId);
+    db.files.push(rec);
+
+    if (kind === "resume") p.resumeFileId = rec.id;
+    else {
+      p.attachmentFileIds = p.attachmentFileIds || [];
+      if (!p.attachmentFileIds.includes(rec.id)) p.attachmentFileIds.push(rec.id);
+    }
+    res.json({ file: rec, profile: p });
+  } catch { res.status(500).send("Upload failed"); }
+});
+
+// Error handler for multer errors
+app.use((err, req, res, next) => {
+  if (err && err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(413).send(`File too large (max ${Math.round(err.limit/1048576)} MB)`);
+  }
+  if (err) return res.status(500).send("Server error");
+  next();
 });
 
 export default app;

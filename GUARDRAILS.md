@@ -1,17 +1,24 @@
-# GUARDRAILS — Module 2 (User)
+# GUARDRAILS — Module 2 (User) + Uploads Patch
 
 **Checksums (do not change without approval)**
 - `public/css/theme.css` — SHA256: `6e255506154d0a208e1c0e660bac49706c6199ded30348809510bed8de701675`
 - `public/profile.html` — SHA256: `dd65df31fe6f8600ecc82645d79d3edf2fd87365bceda02ab19581e990959f18`
 - `public/availability.html` — SHA256: `b184370a2d29ea26dd5f95576b47d5f8856e33c75d0018b6302867942f48a9bc`
 - `public/profiles.html` — SHA256: `43e23f5456ca166fb4bf2b84e690b813f4f52ef1e3ee232ea86d724cb3eeb3ed`
-- `public/profile_edit.html` — SHA256: `93694bf89cff27e967c84ab3197bd70ac0615d185a9311a79051a09dfc186bfc`
+- `public/profile_edit.html` — SHA256: `e2879d35c88257a21a78524f32f4ee2ba1b22598ce30fb336cad307a974a9853` (modified by patch)
 - `public/uploads.html` — SHA256: `40461d6f3d14c58e8561d09fab4e436c05cb3c94bf699fc9b57faf001c5e1bab`
 - `public/subscription.html` — SHA256: `c7194fc1c3a3f74b3fe02c5179f1939fca91860357152be8789ae2ce36a04e93`
 - `public/password.html` — SHA256: `e05b169d19456f2049f1ec4711b88b8da5788473ea0ee6e2e8cf8cc84e87f2d0`
+- `public/public_profile.html` — SHA256: `a3953943b11bd5ed60227efa3aaa99a1e2481e200573b5d085becfc05a603fc6` (new Tailwind profile)
+- `public/js/enhance_profile_edit.js` — SHA256: `831ef2de0b80a229baf90d6068489806245636d4a4bf700cf158c3e88bf2a5db` (upload enhancements)
 
 **Non-negotiables**
 1) White bg, black text, black buttons.
 2) Profiles are packages: per-profile resume, links, uploads.
 3) Any profile can be shared; default is optional.
 4) No global primary resume.
+
+**Upload Limits (Module 2 Patch)**
+- Resume: ≤5MB
+- Attachments: ≤25MB
+- Allowed types: PDF, DOCX, PPTX, RTF, TXT

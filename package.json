@@ -10,6 +10,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "file-type": "^21.0.0",
+    "multer": "^2.0.2",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
