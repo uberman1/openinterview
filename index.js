@@ -149,15 +149,6 @@ app.patch("/api/profiles/:id/resume", (req,res)=>{
 });
 
 // Availability
-app.get("/api/availability", (req,res)=>{
-  const { userId } = req.query;
-  res.json(db.availability[userId] || { weekly:{}, overrides:[] });
-});
-app.post("/api/availability", (req,res)=>{
-  const { userId, weekly, overrides } = req.body || {};
-  db.availability[userId] = { weekly: weekly||{}, overrides: overrides||[] };
-  res.json({ ok:true });
-});
 
 // Public profile assembly
 app.get("/api/public/profile/:handle", (req,res)=>{
@@ -228,14 +219,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-export default app;
-
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, '0.0.0.0', ()=> console.log("Server running on", PORT));
-}
-
-
 // ---- Availability helpers ----
 function toMin(t){ const [H,M]=t.split(':').map(Number); return H*60+M; }
 function fromMin(m){ const H=String(Math.floor(m/60)).padStart(2,'0'); const Mi=String(m%60).padStart(2,'0'); return H+':'+Mi; }
@@ -246,6 +229,30 @@ function addMinutes(dateStr, timeStr, mins){
   return new Date(dt.getTime() + mins*60000);
 }
 
+// Return availability for userId
+app.get("/api/availability", (req,res) => {
+  const userId = req.query.userId || "u1";
+  const found = db.availability.find(a=>a.userId===userId);
+  if (!found) {
+    return res.json({
+      userId,
+      timezone: "America/Los_Angeles",
+      weekly: { Mon:[], Tue:[], Wed:[], Thu:[], Fri:[], Sat:[], Sun:[] },
+      rules: { minNoticeMinutes:120, windowDays:30, incrementsMinutes:30, bufferBeforeMinutes:30, bufferAfterMinutes:10, maxPerDay:5, durations:[15,30,45], defaultDuration:30 },
+      exceptions: []
+    });
+  }
+  res.json(found);
+});
+
+app.post("/api/availability", (req,res) => {
+  const body = req.body || {};
+  const userId = body.userId || "u1";
+  const i = db.availability.findIndex(a=>a.userId===userId);
+  if (i === -1) db.availability.push(body);
+  else db.availability[i] = body;
+  res.json({ ok:true, userId });
+});
 
 // Generate bookable start times
 app.get("/api/slots", (req,res) => {
@@ -273,7 +280,9 @@ app.get("/api/slots", (req,res) => {
   }
 
   const today = new Date();
-  const daysOut = Math.floor((new Date(date+"T00:00:00Z") - new Date(today.toDateString()+"T00:00:00Z"))/86400000);
+  const todayMidnight = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+  const targetMidnight = new Date(date+"T00:00:00Z");
+  const daysOut = Math.floor((targetMidnight - todayMidnight) / 86400000);
   const windowDays = av.rules?.windowDays ?? 30;
   const minNotice = av.rules?.minNoticeMinutes ?? 120;
 
@@ -289,3 +298,13 @@ app.get("/api/slots", (req,res) => {
   const limited = visible.slice(0, maxPerDay);
   res.json({ slots: limited.map(fromMin) });
 });
+
+export default app;
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, '0.0.0.0', ()=> console.log("Server running on", PORT));
+}
+
+
+// ---- Availability helpers ----
