@@ -42,7 +42,6 @@ function showTab(name){
     b.classList.toggle('bg-primary', active);
     b.classList.toggle('text-white', active);
   });
-  if (name==='preview') renderPreview();
 }
 
 function renderWeekly(){
@@ -145,23 +144,11 @@ function bindRules(){
   $('#defaultDuration').addEventListener('change',e=>{ state.rules.defaultDuration=+e.target.value; });
 }
 
-function renderPreview(){
-  const wrap = $('#previewSlots'); wrap.innerHTML='';
-  const demo = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','1:00 PM','1:30 PM','2:00 PM','2:30 PM'];
-  demo.forEach(t=>{
-    const b = document.createElement('button');
-    b.className='px-3 py-2 rounded-lg border hover:bg-subtle-light'; b.textContent=t;
-    wrap.appendChild(b);
-  });
-}
-
-
 async function init(){
   await loadFromAPI();
   $$('.tab').forEach(b=> b.addEventListener('click',()=> showTab(b.dataset.tab)));
   bindWeekly(); renderWeekly();
   bindRules();
-  renderPreview();
   $('#btnSave').addEventListener('click', async ()=>{
     try{ await saveToAPI(); alert('Saved'); }catch(e){ alert('Save failed: '+e.message); }
   });
