@@ -115,7 +115,10 @@ function bindWeekly(){
 }
 
 function bindRules(){
-  $('#minNotice').value = state.rules.minNoticeMinutes;
+  if (!state.rules) state.rules = defaultState().rules;
+  const minNotice = $('#minNotice');
+  if (!minNotice) return;
+  minNotice.value = state.rules.minNoticeMinutes;
   $('#minNotice').addEventListener('change',e=>{ state.rules.minNoticeMinutes=+e.target.value; });
   $('#windowDays').value = state.rules.windowDays;
   $('#windowDays').addEventListener('change',e=>{ state.rules.windowDays=+e.target.value; });
@@ -152,48 +155,13 @@ function renderPreview(){
   });
 }
 
-function bindExceptions(){
-  const type = $('#exType'), custom = $('#exCustom');
-  type.addEventListener('change',()=> custom.classList.toggle('hidden', type.value!=='custom'));
-  $('#addException').addEventListener('click',()=>{
-    const date = $('#exDate').value;
-    if (!date) return alert('Pick a date');
-    if (type.value==='block') {
-      state.exceptions.push({date, type:'block'});
-    } else {
-      const s=$('#exStart').value, e=$('#exEnd').value;
-      if (!s || !e) return alert('Enter custom hours');
-      state.exceptions.push({date, type:'custom', blocks:[[s,e]]});
-    }
-    renderExceptions();
-  });
-}
-
-function renderExceptions(){
-  const ul=$('#exList'); ul.innerHTML='';
-  state.exceptions.forEach((ex,i)=>{
-    const li=document.createElement('li');
-    li.className='flex items-center justify-between border rounded px-2 py-1';
-    li.innerHTML = `<div><strong>${ex.date}</strong> — ${ex.type==='block'?'Blocked':`Custom: ${ex.blocks.map(b=>b.join('–')).join(', ')}`}</div>
-    <button class="px-2 py-1 border rounded remove">Remove</button>`;
-    li.querySelector('.remove').addEventListener('click',()=>{ state.exceptions.splice(i,1); renderExceptions(); });
-    ul.appendChild(li);
-  });
-}
 
 async function init(){
   await loadFromAPI();
   $$('.tab').forEach(b=> b.addEventListener('click',()=> showTab(b.dataset.tab)));
   bindWeekly(); renderWeekly();
   bindRules();
-  bindExceptions(); renderExceptions();
   renderPreview();
-  $('#runTroubleshoot').addEventListener('click', ()=>{
-    const date=$('#tsDate').value, time=$('#tsTime').value, dur=$('#tsDuration').value;
-    fetch(`/api/slots?userId=${encodeURIComponent(state.userId)}&date=${date}&duration=${dur}`)
-      .then(r=>r.json()).then(d=>$('#tsResult').textContent=JSON.stringify(d,null,2))
-      .catch(()=>$('#tsResult').textContent='Server error');
-  });
   $('#btnSave').addEventListener('click', async ()=>{
     try{ await saveToAPI(); alert('Saved'); }catch(e){ alert('Save failed: '+e.message); }
   });
