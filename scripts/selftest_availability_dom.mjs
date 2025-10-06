@@ -12,7 +12,6 @@ const ok=(cond,msg)=>{ if(cond){ pass++; console.log('✔',msg);} else { fail++;
   const $ = cheerio.load(res.text);
   ok($('button.tab:contains("Weekly Hours")').length>0, 'Weekly Hours tab present');
   ok($('button.tab:contains("Rules")').length>0, 'Rules tab present');
-  ok($('button.tab:contains("Troubleshoot")').length>0, 'Troubleshoot tab present');
   ok($('script[src="/js/availability.js"]').length>0, 'availability.js is referenced');
 
   console.log(`\nDOM Summary: ${pass} passed, ${fail} failed`);

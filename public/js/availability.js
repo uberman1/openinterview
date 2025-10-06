@@ -34,7 +34,7 @@ async function saveToAPI(){
 }
 
 function showTab(name){
-  ['weekly','rules','exceptions','preview','troubleshoot'].forEach(t=>{
+  ['weekly','rules','preview'].forEach(t=>{
     $('#tab-'+t).classList.toggle('hidden', t!==name);
   });
   $$('.tab').forEach(b=>{
