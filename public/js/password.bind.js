@@ -17,10 +17,10 @@
 
   // Header from home.html
   function injectHomeHeader(){
-    const container = q('header .container > div');
-    if (!container) return;
-    // Build the exact header used in home.html
-    const headerHTML = `
+    const header = q('header');
+    if (!header) return;
+    // Build the exact header content used in home.html
+    const headerContent = `
 <header class="flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4">
   <div class="flex items-center gap-4">
     <div class="h-6 w-6">
@@ -40,9 +40,7 @@
     <div class="aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat" data-avatar></div>
   </div>
 </header>`;
-    const wrapper = container.closest('header');
-    // Replace full header contents
-    if (wrapper){ wrapper.outerHTML = headerHTML; }
+    header.outerHTML = headerContent;
   }
 
   async function wireHeader(){
