@@ -18,6 +18,20 @@ app.use(express.json());
 
 let db = JSON.parse(readFileSync(path.join(__dirname, "seed.json"), "utf8"));
 
+// ---- Inject client binder for uploads.html (no file changes) ----
+/* UPLOADS_BIND_INJECT_BEFORE_STATIC */
+app.get('/uploads.html', (req,res) => {
+  const p = path.join(__dirname, 'public', 'uploads.html');
+  try{
+    const html = fs.readFileSync(p, 'utf8');
+    const injected = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(injected);
+  }catch(e){
+    res.status(500).send('Failed to load uploads.html');
+  }
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /** Public shareable profile page */
@@ -297,20 +311,6 @@ app.get("/api/slots", (req,res) => {
   const maxPerDay = av.rules?.maxPerDay || 999;
   const limited = visible.slice(0, maxPerDay);
   res.json({ slots: limited.map(fromMin) });
-});
-
-// ---- Inject client binder for uploads.html (no file changes) ----
-/* UPLOADS_BIND_INJECT */
-app.get('/uploads.html', (req,res) => {
-  const p = path.join(__dirname, 'public', 'uploads.html');
-  try{
-    const html = fs.readFileSync(p, 'utf8');
-    const injected = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
-    res.setHeader('Content-Type','text/html; charset=utf-8');
-    res.send(injected);
-  }catch(e){
-    res.status(500).send('Failed to load uploads.html');
-  }
 });
 
 export default app;
