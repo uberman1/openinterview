@@ -47,6 +47,21 @@ app.get('/home.html', serveHome);
 app.get('/profile.html', (req,res)=> res.redirect(302,'/home.html'));
 app.get('/profile', (req,res)=> res.redirect(302,'/home.html'));
 
+// ---- Serve /subscription(.html) with binder
+/* SUBSCRIPTION_BIND_INJECT */
+function serveSubscription(req,res){
+  const p = path.join(__dirname, 'public', 'subscription.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/subscription.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load subscription.html'); }
+}
+app.get('/subscription.html', serveSubscription);
+app.get('/subscription', serveSubscription);
+app.get('/billing', (req,res)=> res.redirect(302, '/subscription.html'));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /** Public shareable profile page */
