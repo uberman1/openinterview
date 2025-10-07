@@ -62,6 +62,21 @@ app.get('/subscription.html', serveSubscription);
 app.get('/subscription', serveSubscription);
 app.get('/billing', (req,res)=> res.redirect(302, '/subscription.html'));
 
+// ---- Serve /password(.html) with binder
+/* PASSWORD_BIND_INJECT */
+function servePassword(req,res){
+  const p = path.join(__dirname, 'public', 'password.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/password.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load password.html'); }
+}
+app.get('/password.html', servePassword);
+app.get('/password', servePassword);
+app.get('/settings/password', servePassword);
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /** Public shareable profile page */
