@@ -91,8 +91,6 @@ function serveProfiles(req,res){
 app.get('/profiles.html', serveProfiles);
 app.get('/profiles', serveProfiles);
 
-app.use(express.static(path.join(__dirname, "public")));
-
 // ---- Serve public profile with booking binder
 /* PUBLIC_PROFILE_BOOK_BIND */
 function servePublicProfile(req,res){
@@ -120,6 +118,8 @@ function serveBookingManage(req,res){
 }
 app.get('/booking_manage.html', serveBookingManage);
 app.get('/booking/manage/:token', serveBookingManage);
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (_req, res) => res.redirect("/login.html"));
 
