@@ -23,10 +23,11 @@ let db = JSON.parse(readFileSync(path.join(__dirname, "seed.json"), "utf8"));
 app.get('/uploads.html', (req,res) => {
   const p = path.join(__dirname, 'public', 'uploads.html');
   try{
-    const html = fs.readFileSync(p, 'utf8');
-    const injected = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/topmenu.unify.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
-    res.send(injected);
+    res.send(html);
   }catch(e){
     res.status(500).send('Failed to load uploads.html');
   }
@@ -39,6 +40,7 @@ function serveHome(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/topmenu.unify.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load home.html'); }
@@ -54,6 +56,7 @@ function serveSubscription(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/subscription.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/topmenu.unify.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load subscription.html'); }
@@ -69,6 +72,7 @@ function servePassword(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/password.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/topmenu.unify.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load password.html'); }
@@ -84,6 +88,7 @@ function serveProfiles(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/profiles.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/topmenu.unify.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load profiles.html'); }
