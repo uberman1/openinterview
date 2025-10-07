@@ -12,13 +12,90 @@
   const params = new URLSearchParams(location.search);
   let bookingId = params.get('bookingId');
   let token = params.get('token');
-  // If token not in query params, try to extract from path: /booking/manage/:token
-  if (!token && location.pathname.startsWith('/booking/manage/')) {
-    const parts = location.pathname.split('/');
-    token = parts[3]; // /booking/manage/:token
+  
+  function tryDecodeToken(encoded) {
+    function padBase64(str) {
+      // Add padding to make length multiple of 4
+      const pad = str.length % 4;
+      if (pad === 2) return str + '==';
+      if (pad === 3) return str + '=';
+      return str;
+    }
+    
+    function tryDecodeBase64(str) {
+      try {
+        const base64 = padBase64(str.replace(/-/g, '+').replace(/_/g, '/'));
+        return atob(base64);
+      } catch {
+        return null;
+      }
+    }
+    
+    // 1. Try JWT decode (header.payload.signature)
+    if (encoded.match(/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/)) {
+      const payload = encoded.split('.')[1];
+      const decoded = tryDecodeBase64(payload);
+      if (decoded) {
+        try {
+          const parsed = JSON.parse(decoded);
+          const bid = parsed.bookingId || parsed.id;
+          const tok = parsed.token;
+          // ONLY return if BOTH values are present
+          if (bid && tok) return { bookingId: bid, token: tok };
+        } catch {}
+      }
+    }
+    
+    // 2. Try base64 decode (single encoded JSON)
+    const decoded = tryDecodeBase64(encoded);
+    if (decoded) {
+      try {
+        const parsed = JSON.parse(decoded);
+        const bid = parsed.bookingId || parsed.id;
+        const tok = parsed.token;
+        // ONLY return if BOTH values are present
+        if (bid && tok) return { bookingId: bid, token: tok };
+      } catch {}
+    }
+    
+    // 3. Try colon delimiter (bookingId:token)
+    if (encoded.includes(':')) {
+      const [id, tok] = encoded.split(':', 2);
+      if (id && tok) return { bookingId: id, token: tok };
+    }
+    
+    // 4. Try hyphen delimiter (but not UUIDs)
+    if (encoded.includes('-') && !encoded.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+      const [id, tok] = encoded.split('-', 2);
+      if (id && tok) return { bookingId: id, token: tok };
+    }
+    
+    // 5. Try underscore delimiter
+    if (encoded.includes('_')) {
+      const [id, tok] = encoded.split('_', 2);
+      if (id && tok) return { bookingId: id, token: tok };
+    }
+    
+    // FALLBACK: Return null if we couldn't decode both values
+    return null;
   }
-  // bookingId might be in token (some systems encode both together)
-  if (!bookingId && token) bookingId = token;
+  
+  // If accessing via /booking/manage/:encodedData, extract from path
+  if ((!bookingId || !token) && location.pathname.startsWith('/booking/manage/')) {
+    const parts = location.pathname.split('/');
+    const encoded = parts[3];
+    if (!encoded) {
+      toast('Invalid booking link format.', false);
+      return;
+    }
+    const decoded = tryDecodeToken(encoded);
+    if (!decoded || !decoded.bookingId || !decoded.token) {
+      toast('Invalid booking link. Please use the link from your confirmation email.', false);
+      return;
+    }
+    if (!bookingId) bookingId = decoded.bookingId;
+    if (!token) token = decoded.token;
+  }
   async function fetchBooking(){
     const paths = [
       `/api/public/bookings/${bookingId || ''}?token=${encodeURIComponent(token||'')}`,
