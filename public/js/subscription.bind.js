@@ -51,10 +51,10 @@
       for (const it of items){
         const li = document.createElement('li');
         li.className = 'flex items-center justify-between py-3';
-        li.innerHTML = \`
-          <p class="text-sm text-primary/60 dark:text-white/60">\${it.date||''}</p>
-          <a class="text-sm font-medium text-primary dark:text-white hover:text-primary/80 dark:hover:text-white/80" href="\${it.invoice_url||'#'}" target="_blank" rel="noopener">Download Invoice</a>
-        \`;
+        li.innerHTML = `
+          <p class="text-sm text-primary/60 dark:text-white/60">${it.date||''}</p>
+          <a class="text-sm font-medium text-primary dark:text-white hover:text-primary/80 dark:hover:text-white/80" href="${it.invoice_url||'#'}" target="_blank" rel="noopener">Download Invoice</a>
+        `;
         list.appendChild(li);
       }
     }catch{}
