@@ -32,19 +32,20 @@ app.get('/uploads.html', (req,res) => {
   }
 });
 
-// ---- Inject binder for /home.html (preserve exact HTML)
+// ---- Serve /home.html with binder; alias /profile(.html) -> /home.html
 /* HOME_BIND_INJECT */
-app.get('/home.html', (req,res) => {
+function serveHome(req,res){
   const p = path.join(__dirname, 'public', 'home.html');
   try{
-    const html = fs.readFileSync(p, 'utf8');
-    const injected = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
-    res.send(injected);
-  }catch(e){
-    res.status(500).send('Failed to load home.html');
-  }
-});
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load home.html'); }
+}
+app.get('/home.html', serveHome);
+app.get('/profile.html', (req,res)=> res.redirect(302,'/home.html'));
+app.get('/profile', (req,res)=> res.redirect(302,'/home.html'));
 
 app.use(express.static(path.join(__dirname, "public")));
 
