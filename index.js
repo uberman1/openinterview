@@ -93,10 +93,34 @@ app.get('/profiles', serveProfiles);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-/** Public shareable profile page */
-app.get("/u/:handle", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "public_profile.html"));
-});
+// ---- Serve public profile with booking binder
+/* PUBLIC_PROFILE_BOOK_BIND */
+function servePublicProfile(req,res){
+  const p = path.join(__dirname, 'public', 'public_profile.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/public_profile.book.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(404).send('profile_public.html not found'); }
+}
+app.get('/u/:handle', servePublicProfile);
+app.get('/profile_public.html', servePublicProfile);
+
+// ---- Serve booking manage page with binder
+/* BOOKING_MANAGE_BIND */
+function serveBookingManage(req,res){
+  const p = path.join(__dirname, 'public', 'booking_manage.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/booking_manage.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load booking_manage.html'); }
+}
+app.get('/booking_manage.html', serveBookingManage);
+app.get('/booking/manage/:token', serveBookingManage);
+
 app.get("/", (_req, res) => res.redirect("/login.html"));
 
 // Auth
