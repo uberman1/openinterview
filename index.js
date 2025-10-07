@@ -26,6 +26,7 @@ app.get('/uploads.html', (req,res) => {
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){
@@ -41,6 +42,10 @@ function serveHome(req,res){
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/home.structure.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/avatar.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/attachments.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load home.html'); }
@@ -57,6 +62,7 @@ function serveSubscription(req,res){
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/subscription.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load subscription.html'); }
@@ -73,6 +79,7 @@ function servePassword(req,res){
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/password.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load password.html'); }
@@ -89,6 +96,7 @@ function serveProfiles(req,res){
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/profiles.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load profiles.html'); }
@@ -103,6 +111,7 @@ function serveAvailability(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load availability.html'); }
