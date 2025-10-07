@@ -1,0 +1,234 @@
+HEADER CODE FROM EACH PAGE
+========================================
+
+This file contains the header HTML code from each page, including:
+- Header menu/navigation
+- Logo
+- Avatar image
+- All spacing and styling related to the header
+
+
+========================================
+PAGE: home.html
+========================================
+
+<header class="flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4">
+  <div class="flex items-center gap-4">
+    <div class="h-6 w-6">
+      <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+      </svg>
+    </div>
+    <h2 class="text-lg font-bold">OpenInterview.me</h2>
+  </div>
+  <div class="flex flex-1 items-center justify-end gap-6">
+    <nav class="flex items-center gap-6">
+      <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="#">Home</a>
+      <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="#">Explore</a>
+      <a class="text-sm font-medium text-primary dark:text-white" href="#">My Profile</a>
+    </nav>
+    <button class="flex h-10 items-center justify-center rounded bg-primary px-4 text-sm font-bold text-white">New Interview</button>
+    <div class="aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE");'></div>
+  </div>
+</header>
+
+KEY FEATURES:
+- Spacing: px-10 py-4
+- Border: border-b border-primary/10
+- Layout: flex items-center justify-between
+- Logo: SVG icon (h-6 w-6) + text (text-lg font-bold)
+- Nav: gap-6, text-sm font-medium links
+- Button: "New Interview" (h-10, bg-primary, text-white)
+- Avatar: w-10 rounded-full with background-image
+
+
+========================================
+PAGE: uploads.html
+========================================
+
+<header class="border-b border-gray-200 dark:border-gray-700">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-4">
+      <a class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white" href="#">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+        </svg>
+        <span>OpenInterview.me</span>
+      </a>
+    </div>
+    <nav class="hidden items-center gap-6 md:flex">
+      <a class="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white" href="#">Profile</a>
+      <a class="text-sm font-semibold text-gray-900 dark:text-white" href="#">Uploads</a>
+      <a class="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white" href="#">Settings</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <div class="size-10 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-900" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjczIKujOw5vg__B-HhNpt73QmOApiySGTUq9ZKWWVIn-_xzMXST1qJfO7kMXt0FNHoLHFqqovrH4rc-Foe4JlrQOfPCGuFjqQXXn6BAPkOJGqmn-gzKmd9NHpzjMR7y3wWj8ss2oz6FBVwZKYa7_q_VLADjljNx1Dy39Yj4dzfRtIaW4ahpxSHxobayH4z7EFw_M6PibPBK9Hzd2B82BPCGXsvmSyJ0mtX9R3odzDo978amtD0rP_YUvtfTfcTSXPDd1vBydzkzg");'></div>
+    </div>
+  </div>
+</header>
+
+KEY FEATURES:
+- Spacing: px-6 py-4
+- Container: mx-auto max-w-7xl
+- Border: border-b border-gray-200 dark:border-gray-700
+- Layout: flex items-center justify-between
+- Logo: SVG icon (h-6 w-6) + span in link (text-lg font-semibold)
+- Nav: hidden md:flex gap-6, text-sm links
+- Avatar: size-10 rounded-full with border-2 and background-image
+
+
+========================================
+PAGE: subscription.html
+========================================
+
+<header class='w-full'>
+  <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+    <div class='flex justify-between items-center py-6 border-b border-primary/10 dark:border-primary/20'>
+      <div class='flex items-center'>
+        <h1 class='text-xl font-bold text-primary dark:text-white'>OpenInterview.me</h1>
+      </div>
+      <div class='flex items-center space-x-6'>
+        <nav class='hidden md:flex space-x-8'>
+          <a class='text-sm font-medium text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white transition-colors' href='#'>Home</a>
+          <a class='text-sm font-medium text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white transition-colors' href='#'>Interviews</a>
+          <a class='text-sm font-medium text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white transition-colors' href='#'>Pricing</a>
+        </nav>
+        <div class='w-8 h-8 rounded-full bg-primary/10 dark:bg-white/10'></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+KEY FEATURES:
+- Spacing: py-6, px-4 sm:px-6 lg:px-8 (responsive)
+- Container: container mx-auto
+- Border: border-b border-primary/10 dark:border-primary/20
+- Layout: flex justify-between items-center
+- Logo: h1 text-xl font-bold (text only, no icon)
+- Nav: hidden md:flex space-x-8, text-sm font-medium links
+- Avatar: w-8 h-8 rounded-full bg-primary/10 (solid color, no image)
+
+
+========================================
+PAGE: password.html
+========================================
+
+<header class="w-full border-b border-primary/10 dark:border-background-light/10">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a class="flex items-center gap-3" href="#">
+        <svg class="h-6 w-6 text-primary dark:text-background-light" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+        </svg>
+        <span class="text-xl font-bold">OpenInterview.me</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a class="text-sm font-medium hover:text-primary/70 dark:hover:text-background-light/70 transition-colors" href="#">Home</a>
+        <a class="text-sm font-medium hover:text-primary/70 dark:hover:text-background-light/70 transition-colors" href="#">About</a>
+        <a class="text-sm font-medium hover:text-primary/70 dark:hover:text-background-light/70 transition-colors" href="#">Contact</a>
+      </nav>
+      <div class="flex items-center">
+        <button class="bg-primary/5 dark:bg-background-light/5 text-primary dark:text-background-light px-6 py-2 rounded-lg text-sm font-semibold hover:bg-primary/10 dark:hover:bg-background-light/10 transition-colors">
+          Sign In
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+KEY FEATURES:
+- Spacing: h-20 fixed height, px-4 sm:px-6 lg:px-8
+- Container: container mx-auto
+- Border: border-b border-primary/10 dark:border-background-light/10
+- Layout: flex items-center justify-between
+- Logo: SVG icon (h-6 w-6) + span (text-xl font-bold) in link
+- Nav: hidden md:flex gap-8, text-sm font-medium links
+- Button: "Sign In" instead of avatar (px-6 py-2, rounded-lg)
+
+
+========================================
+PAGE: profiles.html
+========================================
+
+<header class="border-b border-subtle-light dark:border-subtle-dark">
+  <nav class="container mx-auto px-10 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="w-6 h-6 text-primary">
+        <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+        </svg>
+      </div>
+      <h1 class="text-lg font-bold">OpenInterview.me</h1>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Dashboard</a>
+      <a class="text-sm font-bold text-primary dark:text-white" href="#">Profiles</a>
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Templates</a>
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Questions</a>
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Settings</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="bg-primary text-background-light dark:text-background-dark text-sm font-bold py-2 px-4 rounded-lg hover:bg-opacity-80 transition-colors">New Profile</button>
+      <div class="w-10 h-10 rounded-full bg-subtle-light dark:bg-subtle-dark bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAirf4vzQwAdGVbZnWe4UdCI9ZKRfOfGiUDpL2v0hpb6a9NMDXrhE2nDtx7gMHeWn_-UjVDh0oqPrF4JkN8yLmSAieyK1AGYB32Jy3aAAfrrbbYFr3IutNuWeTL80FRgYCTJsR9Mnq2noP4pod-Q1G-r6hUcqliiuIMlgAbtdRWzxLgl0TWOYX2QJDa2ohQMEqwiT7SRelYEDdb-ajgKhxENyhy14b-xIerfYKnFwXcsYZj8e204_Ocvb3lKq8PUekhxJoYM2_Xa60");'></div>
+    </div>
+  </nav>
+</header>
+
+KEY FEATURES:
+- Spacing: px-10 py-4
+- Container: container mx-auto
+- Border: border-b border-subtle-light dark:border-subtle-dark
+- Layout: flex items-center justify-between
+- Logo: SVG icon (w-6 h-6) + h1 (text-lg font-bold)
+- Nav: hidden md:flex gap-8, text-sm font-medium/bold links (5 links)
+- Button: "New Profile" (py-2 px-4, rounded-lg)
+- Avatar: w-10 h-10 rounded-full with background-image
+
+
+========================================
+PAGE: availability.html
+========================================
+
+NOTE: This page has a different header structure - it's a page header, not a top navigation header.
+
+<header class="mb-8">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl sm:text-3xl font-bold">Availability</h1>
+    <div class="flex items-center gap-3">
+      <button id="btnRevert" class="px-4 py-2 rounded-lg border border-subtle-light hover:bg-subtle-light">Revert</button>
+      <button id="btnSave" class="px-4 py-2 rounded-lg bg-primary text-white">Save</button>
+    </div>
+  </div>
+  <p class="text-sm text-muted-light mt-2">Define weekly hours, rules, and exceptions. These settings power your public booking widget.</p>
+</header>
+
+KEY FEATURES:
+- No top navigation bar (different from other pages)
+- Layout: flex items-center justify-between
+- Title: h1 text-2xl sm:text-3xl font-bold
+- Buttons: "Revert" (border) and "Save" (bg-primary) - px-4 py-2 rounded-lg
+- Description: text-sm text-muted-light mt-2
+- No logo, no avatar, no navigation links
+
+
+========================================
+SUMMARY OF HEADER PATTERNS
+========================================
+
+COMMON ELEMENTS ACROSS PAGES:
+1. Logo: SVG icon (typically h-6 w-6 or size-6) + brand text
+2. Navigation: Hidden on mobile (hidden md:flex), gap-6 or gap-8
+3. Avatar: Typically w-10 h-10 rounded-full with background-image
+4. Spacing: Most use px-10 py-4 or px-6 py-4, with container mx-auto
+5. Border: border-b with opacity variations (border-primary/10, border-gray-200, etc.)
+
+VARIATIONS:
+- home.html: Has "New Interview" button + avatar
+- uploads.html: Different logo SVG, has border on avatar
+- subscription.html: No logo SVG, solid color avatar placeholder
+- password.html: Has "Sign In" button instead of avatar
+- profiles.html: Has "New Profile" button + avatar, 5 nav links
+- availability.html: Page header only, no top nav/logo/avatar
+
+DARK MODE:
+All pages support dark mode with appropriate dark: prefixes for colors and borders.
