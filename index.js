@@ -32,6 +32,20 @@ app.get('/uploads.html', (req,res) => {
   }
 });
 
+// ---- Inject binder for /home.html (preserve exact HTML)
+/* HOME_BIND_INJECT */
+app.get('/home.html', (req,res) => {
+  const p = path.join(__dirname, 'public', 'home.html');
+  try{
+    const html = fs.readFileSync(p, 'utf8');
+    const injected = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(injected);
+  }catch(e){
+    res.status(500).send('Failed to load home.html');
+  }
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /** Public shareable profile page */
