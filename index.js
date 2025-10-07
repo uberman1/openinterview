@@ -299,6 +299,20 @@ app.get("/api/slots", (req,res) => {
   res.json({ slots: limited.map(fromMin) });
 });
 
+// ---- Inject client binder for uploads.html (no file changes) ----
+/* UPLOADS_BIND_INJECT */
+app.get('/uploads.html', (req,res) => {
+  const p = path.join(__dirname, 'public', 'uploads.html');
+  try{
+    const html = fs.readFileSync(p, 'utf8');
+    const injected = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(injected);
+  }catch(e){
+    res.status(500).send('Failed to load uploads.html');
+  }
+});
+
 export default app;
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
