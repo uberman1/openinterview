@@ -11,9 +11,9 @@ import * as cheerio from 'cheerio';
     ok([200,404].includes(r.status), `GET ${p} returns 200/404`);
     if (r.status===200){
       const $ = cheerio.load(r.text);
-      ok($('script[src="/js/topmenu.unify.bind.js"]').length===1, `${p} includes topmenu binder`);
+      ok($('script[src="/js/header.unify.v5.bind.js"]').length===1, `${p} includes header binder v5`);
     }
   }
-  console.log(`\nTop Menu v4 tests: ${pass} passed, ${fail} failed`);
+  console.log(`\nHeader Unifier v5 tests: ${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 })();
