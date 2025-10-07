@@ -96,6 +96,20 @@ function serveProfiles(req,res){
 app.get('/profiles.html', serveProfiles);
 app.get('/profiles', serveProfiles);
 
+// ---- Serve /availability.html with topmenu binder
+/* AVAILABILITY_TOPMENU_BIND */
+function serveAvailability(req,res){
+  const p = path.join(__dirname, 'public', 'availability.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/topmenu.unify.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load availability.html'); }
+}
+app.get('/availability.html', serveAvailability);
+app.get('/availability', serveAvailability);
+
 // ---- Serve public profile with booking binder
 /* PUBLIC_PROFILE_BOOK_BIND */
 function servePublicProfile(req,res){
