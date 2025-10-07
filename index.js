@@ -77,6 +77,20 @@ app.get('/password.html', servePassword);
 app.get('/password', servePassword);
 app.get('/settings/password', servePassword);
 
+// ---- Serve /profiles(.html) with binder
+/* PROFILES_BIND_INJECT */
+function serveProfiles(req,res){
+  const p = path.join(__dirname, 'public', 'profiles.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/profiles.bind.js" defer></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load profiles.html'); }
+}
+app.get('/profiles.html', serveProfiles);
+app.get('/profiles', serveProfiles);
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /** Public shareable profile page */
