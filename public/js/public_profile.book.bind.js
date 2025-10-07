@@ -113,7 +113,7 @@
       const handle = m ? decodeURIComponent(m[1]) : null;
       try{
         const res = await postBooking({ handle, date: dt.toISOString().slice(0,10), start: start.toISOString(), duration, recruiter:{ email: em }, timezone: tz, source:'profile-share' });
-        const manage = res?.manageUrl || res?.manage_url || (res?.bookingId ? `/booking_manage.html?bookingId=${encodeURIComponent(res.bookingId)}` : null);
+        const manage = res?.manageUrl || res?.manage_url || (res?.bookingId ? `/booking_manage.html?bookingId=${encodeURIComponent(res.bookingId)}${res?.token ? '&token=' + encodeURIComponent(res.token) : ''}` : null);
         const ics = res?.icsUrl || res?.ics_url;
         renderSuccess({ candidate, dateObj: dt, startObj: start, durationMin: duration, manageUrl: manage, icsUrl: ics });
       }catch(err){ toast('Could not book this slot. Try another time.', false); }

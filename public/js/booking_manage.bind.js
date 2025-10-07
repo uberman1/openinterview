@@ -10,8 +10,15 @@
     setTimeout(()=>n.remove(), 2200);
   }
   const params = new URLSearchParams(location.search);
-  const bookingId = params.get('bookingId');
-  const token = params.get('token');
+  let bookingId = params.get('bookingId');
+  let token = params.get('token');
+  // If token not in query params, try to extract from path: /booking/manage/:token
+  if (!token && location.pathname.startsWith('/booking/manage/')) {
+    const parts = location.pathname.split('/');
+    token = parts[3]; // /booking/manage/:token
+  }
+  // bookingId might be in token (some systems encode both together)
+  if (!bookingId && token) bookingId = token;
   async function fetchBooking(){
     const paths = [
       `/api/public/bookings/${bookingId || ''}?token=${encodeURIComponent(token||'')}`,
