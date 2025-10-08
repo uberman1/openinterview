@@ -1,0 +1,14 @@
+{
+  "profile": {
+    "userId": "user_123",
+    "name": "Test User",
+    "headline": "Product Manager \u00b7 OpenInterview"
+  },
+  "availability": {
+    "slots": [
+      "2025-10-20T14:00:00Z",
+      "2025-10-20T16:30:00Z",
+      "2025-10-21T09:00:00Z"
+    ]
+  }
+}
