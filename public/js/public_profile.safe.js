@@ -91,22 +91,31 @@
     }
 
     const data = await apiJSON(`/api/availability?userId=${encodeURIComponent(profile.userId)}`);
-    if (!data || !Array.isArray(data.slots) || data.slots.length === 0) {
+    if (!data || !data.weekly) {
       friendlyEmpty(slotWrap, "No available time slots.");
       return;
     }
 
-    // Minimal rendering (avoid styling conflicts)
-    data.slots.forEach((iso) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "px-3 py-2 rounded border text-sm";
-      try {
-        const d = new Date(iso);
-        btn.textContent = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
-      } catch { btn.textContent = iso; }
-      slotWrap.appendChild(btn);
+    // Extract slots from weekly schedule (matching original logic)
+    const slots = [];
+    ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].forEach(day => {
+      const times = data.weekly[day] || [];
+      times.forEach(time => {
+        const label = document.createElement("label");
+        label.className = "cursor-pointer";
+        label.innerHTML = `<input class="sr-only peer" name="time" type="radio" value="${time}"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">${time}</span>`;
+        slots.push(label);
+      });
     });
+
+    slotWrap.innerHTML = '';
+    
+    // Show up to 8 slots (matching original)
+    slots.slice(0, 8).forEach(slot => slotWrap.appendChild(slot));
+    
+    if (!slots.length) {
+      slotWrap.innerHTML = '<span class="text-sm text-muted-light dark:text-muted-dark">No slots available</span>';
+    }
   }
 
   // ------------ Profile bootstrap (non-fatal) ------------
@@ -128,13 +137,116 @@
     const handle = extractHandleFromURL();
     const profile = await apiJSON(`/api/public/profile/${encodeURIComponent(handle)}`);
 
-    // Render minimal shell info if desired (non-fatal if null)
-    const nameEl = qs("#profileName") || qs('[data-role="name"]');
-    if (nameEl) {
-      nameEl.textContent = profile?.name || handle;
+    if (!profile) {
+      console.warn("[public_profile.safe] No profile data available");
+      return;
     }
 
+    // Populate all DOM elements (matching original inline script behavior)
+    const setText = (sel, val) => { const el = qs(sel); if (el) el.textContent = val || ''; };
+    const setHTML = (sel, val) => { const el = qs(sel); if (el) el.innerHTML = val || ''; };
+    
+    // Hero section
+    setText('#heroName', profile.name || handle);
+    setText('#heroTitle', profile.title || '');
+    
+    // Sidebar section
+    setText('#sideName', profile.name || handle);
+    setText('#sideTitle', profile.title || '');
+    setText('#sideCity', profile.city || '');
+    setText('#sideAbout', profile.about || '');
+    
+    // CV/Resume section
+    setText('#cvName', profile.name || handle);
+    setText('#cvTitle', profile.title || '');
+    setHTML('#cvMeta', profile.city ? `<p>${profile.city}</p>` : '');
+    setText('#aboutText', profile.about || '');
+    
+    // Avatar
+    if (profile.avatar) {
+      const avatarEl = qs('#avatar');
+      if (avatarEl) avatarEl.src = profile.avatar;
+    }
+    
+    // Video/Hero background (YouTube thumbnail extraction)
+    if (profile.video) {
+      const ytId = extractYouTubeId(profile.video);
+      if (ytId) {
+        const heroBg = qs('#heroBg');
+        if (heroBg) {
+          heroBg.style.backgroundImage = `url("https://img.youtube.com/vi/${ytId}/maxresdefault.jpg")`;
+        }
+      }
+    }
+    
+    // Attachments and links
+    renderAttachments(profile);
+    renderHighlights(profile);
+
     await initCalendar(profile);
+  }
+  
+  function extractYouTubeId(url) {
+    try {
+      const u = new URL(url);
+      if (u.hostname.includes('youtu.be')) return u.pathname.slice(1);
+      if (u.hostname.includes('youtube.com')) return u.searchParams.get('v');
+    } catch { }
+    return null;
+  }
+  
+  function renderAttachments(profile) {
+    const wrap = qs('#attachmentsList');
+    if (!wrap) return;
+    
+    wrap.innerHTML = '';
+    
+    const createLink = (label, href, isDownload) => {
+      const a = document.createElement('a');
+      a.className = 'flex items-center justify-between p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors';
+      a.href = href || '#';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      const icon = isDownload ? 
+        '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>' :
+        '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>';
+      a.innerHTML = `<span class="font-medium">${label}</span>${icon}`;
+      return a;
+    };
+    
+    if (profile.resume) {
+      wrap.appendChild(createLink(profile.resume.name || 'Resume', profile.resume.url, true));
+    }
+    
+    (profile.links || []).forEach(l => {
+      wrap.appendChild(createLink(l.label || l.href, l.href, false));
+    });
+    
+    (profile.attachments || []).forEach(f => {
+      wrap.appendChild(createLink(f.name, f.url, false));
+    });
+    
+    if (!wrap.children.length) {
+      wrap.innerHTML = '<div class="text-muted-light dark:text-muted-dark">No attachments</div>';
+    }
+  }
+  
+  function renderHighlights(profile) {
+    const list = qs('#highlightsList');
+    if (!list) return;
+    
+    list.innerHTML = '';
+    
+    (profile.highlights || []).forEach(text => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start';
+      li.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark">' + text + '</p>';
+      list.appendChild(li);
+    });
+    
+    if (!list.children.length) {
+      list.innerHTML = '<li class="text-muted-light dark:text-muted-dark">No highlights</li>';
+    }
   }
 
   onReady(() => {
