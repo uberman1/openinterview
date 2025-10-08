@@ -1,0 +1,43 @@
+<!-- OI-UI-Scroll-Hero-v1:START -->
+<script>
+(function(){
+  const scroller = document.getElementById('below-resume-scroll') || window;
+  const hero = document.getElementById('heroWrapper');
+  const heroInner = document.getElementById('heroInner');
+  if(!hero || !heroInner) return;
+
+  let baseHeight = 0;
+  const targetRatio = 0.75;   // 75% shrink target
+  const threshold = 240;      // px to reach target
+
+  const measure = () => {
+    baseHeight = hero.offsetHeight || hero.getBoundingClientRect().height || 0;
+    hero.style.setProperty('--hero-h', baseHeight + 'px');
+    hero.style.setProperty('--hero-scale', '1');
+  };
+  window.addEventListener('load', measure);
+  window.addEventListener('resize', measure);
+
+  let ticking = false;
+  const getScrollTop = () =>
+    scroller === window
+      ? window.scrollY || document.documentElement.scrollTop || 0
+      : scroller.scrollTop || 0;
+
+  const onScroll = () => {
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(()=>{
+      const y = getScrollTop();
+      const p = Math.max(0, Math.min(1, y / threshold)); // 0..1
+      const h = Math.round(baseHeight * (1 + (targetRatio - 1) * p));
+      const s = 1 + (targetRatio - 1) * p;
+      hero.style.setProperty('--hero-h', h + 'px');
+      hero.style.setProperty('--hero-scale', s.toFixed(3));
+      ticking = false;
+    });
+  };
+  (scroller===window?window:scroller).addEventListener('scroll', onScroll, {passive:true});
+})();
+</script>
+<!-- OI-UI-Scroll-Hero-v1:END -->

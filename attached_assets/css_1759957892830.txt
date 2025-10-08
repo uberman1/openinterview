@@ -1,0 +1,19 @@
+/* OI-UI-Scroll-Hero-v1:START */
+html { scrollbar-gutter: stable both-edges; }
+
+#heroWrapper {
+  height: var(--hero-h);
+  transition: height 160ms linear;
+  contain: layout paint;
+}
+#heroWrapper > .absolute {
+  transform: scale(var(--hero-scale));
+  transform-origin: center center;
+  transition: transform 160ms linear;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  #heroWrapper { transition: none; }
+  #heroWrapper > .absolute { transition: none; }
+}
+/* OI-UI-Scroll-Hero-v1:END */

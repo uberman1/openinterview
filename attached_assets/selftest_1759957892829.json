@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "name": "Guardrail markers present (CSS)",
+      "must_contain": [
+        "/* OI-UI-Scroll-Hero-v1:START */",
+        "/* OI-UI-Scroll-Hero-v1:END */"
+      ]
+    },
+    {
+      "name": "Guardrail markers present (JS)",
+      "must_contain": [
+        "<!-- OI-UI-Scroll-Hero-v1:START -->",
+        "<!-- OI-UI-Scroll-Hero-v1:END -->"
+      ]
+    },
+    {
+      "name": "Hero wrapper IDs & sticky",
+      "must_contain": [
+        "id=\"heroWrapper\"",
+        "lg:sticky",
+        "lg:top-0"
+      ]
+    },
+    {
+      "name": "Hero inner overlay ID",
+      "must_contain": [
+        "id=\"heroInner\""
+      ]
+    },
+    {
+      "name": "Below-resume scroll container exists",
+      "must_contain": [
+        "id=\"below-resume-scroll\""
+      ]
+    },
+    {
+      "name": "JS uses 75% target",
+      "must_contain": [
+        "targetRatio = 0.75"
+      ]
+    },
+    {
+      "name": "Threshold is 240px",
+      "must_contain": [
+        "threshold = 240"
+      ]
+    }
+  ]
+}
