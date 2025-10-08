@@ -134,6 +134,19 @@ function servePublicProfile(req,res){
 app.get('/u/:handle', servePublicProfile);
 app.get('/profile_public.html', servePublicProfile);
 
+// ---- Serve profile v2 (test page with hero shrink on scroll)
+/* PROFILE_V2_ROUTE */
+function serveProfileV2(req,res){
+  const p = path.join(__dirname, 'public', 'profile_pagev2.html');
+  try{
+    const html = fs.readFileSync(p, 'utf8');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(404).send('profile_pagev2.html not found'); }
+}
+app.get('/profile_pagev2.html', serveProfileV2);
+app.get('/v2/:handle', serveProfileV2);
+
 // ---- Serve booking manage page with binder
 /* BOOKING_MANAGE_BIND */
 function serveBookingManage(req,res){
