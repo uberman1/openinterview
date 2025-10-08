@@ -47,31 +47,6 @@
       ]
     },
     {
-      "id": "p_test",
-      "userId": "u1",
-      "handle": "testuser",
-      "isDefault": false,
-      "title": "Product Manager",
-      "city": "New York, NY",
-      "about": "Test profile for development and demos.",
-      "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "links": [
-        {
-          "label": "Website",
-          "href": "https://example.com"
-        }
-      ],
-      "resumeFileId": "f_resume_01",
-      "attachmentFileIds": [
-        "f_case_01"
-      ],
-      "highlights": [
-        "Cross-functional leadership",
-        "Data-driven decision making",
-        "Agile methodology"
-      ]
-    },
-    {
       "id": "p2",
       "userId": "u1",
       "handle": "ethan-ic",
