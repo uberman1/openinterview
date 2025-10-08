@@ -134,7 +134,20 @@ function servePublicProfile(req,res){
 app.get('/u/:handle', servePublicProfile);
 app.get('/profile_public.html', servePublicProfile);
 
-// ---- Serve profile v2 (test page with hero shrink on scroll)
+// ---- Serve profiles v2 list page
+/* PROFILES_V2_ROUTE */
+function serveProfilesV2(req,res){
+  const p = path.join(__dirname, 'public', 'profiles_v2.html');
+  try{
+    const html = fs.readFileSync(p, 'utf8');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(404).send('profiles_v2.html not found'); }
+}
+app.get('/profiles_v2.html', serveProfilesV2);
+app.get('/profiles_v2', serveProfilesV2);
+
+// ---- Serve profile v2 detail page (uses static JSON data)
 /* PROFILE_V2_ROUTE */
 function serveProfileV2(req,res){
   const p = path.join(__dirname, 'public', 'profile_pagev2.html');
