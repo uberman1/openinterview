@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'/>
+<meta name='viewport' content='width=device-width,initial-scale=1.0'/>
+<title>OpenInterview.me - Shareable Profile</title>
+<script src='https://cdn.tailwindcss.com'></script>
+</head>
+<body class='bg-background-light dark:bg-background-dark font-display text-primary dark:text-white overflow-hidden'>
+<main class='h-screen'>
+  <div class='grid grid-cols-1 lg:grid-cols-12 gap-6 h-full px-6 py-6'>
+    <!-- Left: Video + Scrollable content -->
+    <section class='lg:col-span-8 flex flex-col overflow-hidden rounded-lg bg-white dark:bg-primary/5'>
+      <div class='sticky top-0 z-10 bg-black'>
+        <div class='aspect-video w-full'>
+          <video class='w-full h-full' controls>
+            <source src='sample.mp4' type='video/mp4'>
+          </video>
+        </div>
+      </div>
+      <div class='min-h-0 flex-1 overflow-y-auto overscroll-contain'>
+        <div class='p-4 space-y-8'>
+          <section id='attachments'>
+            <h2 class='text-lg font-semibold mb-3'>Attachments</h2>
+            <ul class='list-disc pl-6 text-sm text-primary/70 dark:text-white/70'>
+              <li>Attachment A.pdf</li>
+              <li>Attachment B.docx</li>
+            </ul>
+          </section>
+          <section id='highlights'>
+            <h2 class='text-lg font-semibold mb-3'>Highlights</h2>
+            <p class='text-sm text-primary/70 dark:text-white/70'>Key accomplishments, skills, or projects go here.</p>
+          </section>
+          <section id='resume'>
+            <h2 class='text-lg font-semibold mb-3'>Resume</h2>
+            <p class='text-sm text-primary/70 dark:text-white/70'>Candidate resume details or embedded viewer.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+    <!-- Right: Sticky schedule + profile summary -->
+    <aside class='lg:col-span-4'>
+      <div class='sticky top-6 space-y-6'>
+        <div class='rounded-lg bg-white dark:bg-primary/5 p-4'>
+          <h3 class='text-lg font-semibold mb-3'>Schedule</h3>
+          <p class='text-sm text-primary/70 dark:text-white/70'>Booking interface...</p>
+        </div>
+        <div class='rounded-lg bg-white dark:bg-primary/5 p-4'>
+          <h3 class='text-lg font-semibold mb-3'>Profile Summary</h3>
+          <p class='text-sm text-primary/70 dark:text-white/70'>Candidate overview...</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+</body>
+</html>

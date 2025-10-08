@@ -1,0 +1,19 @@
+{
+  "module": "OI-Shareable-Scroll",
+  "owner": "OpenInterview",
+  "checks": [
+    {
+      "id": "files.present",
+      "desc": "Patch files exist"
+    },
+    {
+      "id": "guardrails.verify",
+      "desc": "Allowed paths only"
+    },
+    {
+      "id": "frontend.tests",
+      "desc": "Shareable page scroll area works"
+    }
+  ],
+  "status": "PENDING"
+}

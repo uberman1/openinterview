@@ -1,0 +1,11 @@
+{
+  "allowed_write_paths": [
+    "client/public/shareable.html",
+    "guardrails/guardrails.config.json",
+    "guardrails/verify-guardrails.cjs",
+    "guardrails/apply_patch.mjs",
+    "tests/frontend/shareable-scroll.spec.mjs",
+    "tests/selftest.mod-oi-shareable-scroll.json",
+    "README.md"
+  ]
+}
