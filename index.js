@@ -126,9 +126,12 @@ function servePublicProfile(req,res){
   const p = path.join(__dirname, 'public', 'public_profile.html');
   try{
     let html = fs.readFileSync(p, 'utf8');
+    // Comment out conflicting binders (scroll.bind.js and hero-shrink.bind.js)
+    html = html.replace(/<script[^>]*src="[^"]*public_profile\.scroll\.bind\.js"[^>]*>/g, '<!-- $& (disabled: conflicts with safe.js) -->');
+    html = html.replace(/<script[^>]*src="[^"]*public_profile\.hero-shrink\.bind\.js"[^>]*>/g, '<!-- $& (disabled: conflicts with safe.js) -->');
+    // Inject safe consolidated binder and keep book binder
     html = html.replace('</body>', '<script src="/js/public_profile.book.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/public_profile.scroll.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/public_profile.hero-shrink.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/public_profile.safe.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(404).send('profile_public.html not found'); }
