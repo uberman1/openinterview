@@ -127,6 +127,7 @@ function servePublicProfile(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/public_profile.book.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/public_profile.scroll.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(404).send('profile_public.html not found'); }
