@@ -112,6 +112,7 @@ function serveAvailability(req,res){
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/availability.home.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load availability.html'); }
