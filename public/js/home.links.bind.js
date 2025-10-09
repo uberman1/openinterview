@@ -16,17 +16,16 @@
     };
   }
 
-  function insertLinkBar(headingText, linkText, onClick) {
+  function wrapHeaderWithLink(headingText, linkText, onClick) {
     const h2 = $all('h1, h2, h3').find(h => h.textContent.trim().toLowerCase() === headingText.toLowerCase());
     if (!h2) return;
+    
     const dupId = `section-link-${headingText.toLowerCase().replace(/\s+/g,'-')}`;
     if (document.getElementById(dupId)) return;
-    const bar = document.createElement('div');
-    bar.style.display = 'flex';
-    bar.style.justifyContent = 'flex-end';
-    bar.style.alignItems = 'center';
-    bar.style.marginTop = '4px';
-    bar.style.marginBottom = '6px';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mb-4 flex items-center justify-between';
+    
     const a = document.createElement('a');
     a.id = dupId;
     a.href = '#';
@@ -41,8 +40,10 @@
     a.addEventListener('mouseenter', () => a.style.textDecoration = 'underline');
     a.addEventListener('mouseleave', () => a.style.textDecoration = 'none');
     a.addEventListener('click', (e) => { e.preventDefault(); onClick?.(); });
-    bar.appendChild(a);
-    h2.insertAdjacentElement('afterend', bar);
+    
+    h2.parentNode.insertBefore(wrapper, h2);
+    wrapper.appendChild(h2);
+    wrapper.appendChild(a);
   }
 
   function ensureHiddenFileInput(id) {
@@ -58,7 +59,7 @@
   }
 
   function init() {
-    insertLinkBar('My Interviews', 'Create New', () => {
+    wrapHeaderWithLink('My Interviews', 'Create New', () => {
       if (typeof window.startNewProfileFlow === 'function') {
         window.startNewProfileFlow();
       } else {
@@ -66,12 +67,12 @@
       }
     });
 
-    insertLinkBar('My Resumes', 'Add New', () => {
+    wrapHeaderWithLink('My Resumes', 'Add New', () => {
       const input = ensureHiddenFileInput('resume-file-input');
       input.click();
     });
 
-    insertLinkBar('Attachments', 'Add New', () => {
+    wrapHeaderWithLink('Attachments', 'Add New', () => {
       const input = ensureHiddenFileInput('attachment-file-input');
       input.click();
     });
