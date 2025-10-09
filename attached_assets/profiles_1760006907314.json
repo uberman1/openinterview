@@ -1,0 +1,111 @@
+[
+  {
+    "id": "alex-johnson",
+    "name": "Alex Johnson",
+    "title": "Product Manager",
+    "location": "Atlanta, GA",
+    "avatar_url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBOyBBUWv-aZFP72bm6P1T0ooUqEElaCh-Z96b7war0IQSiII9PCL1cbQ3i46GqnnWPy4YZtRhZ8FfYw8hdnctP4i1UtYTsDYv8cqwt99zRPuo-o0W4JsZ6LYMBJxzjLzZmN94uXVV8j3h5eatY5GgIacHoEHFgW16iTY1_ddWTvBf8uRGO0-5FbIqgtP1XbJZJ-IgkJYlcTkQdKghrCgOQ9uZ9Hm36hxOzOFQWoM4BoLGXCCdnZYsLl12-E-VKce8Z3uml36Ei8c4",
+    "cover_image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk",
+    "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "about": "Product leader focused on 0\u21921 launches, growth loops, and AI-assisted workflows.",
+    "highlights": [
+      "Launched 3 products to $100k+ ARR",
+      "Cut onboarding time by 45% with AI automations",
+      "Led cross-functional teams of 8\u201312"
+    ],
+    "skills": [
+      "Product Strategy",
+      "User Research",
+      "A/B Testing",
+      "SQL",
+      "Prompt Engineering"
+    ],
+    "attachments": [
+      {
+        "label": "Resume",
+        "href": "#"
+      },
+      {
+        "label": "Portfolio",
+        "href": "#"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/"
+      }
+    ]
+  },
+  {
+    "id": "taylor-rivera",
+    "name": "Taylor Rivera",
+    "title": "Full-Stack Engineer",
+    "location": "New York, NY",
+    "avatar_url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBOyBBUWv-aZFP72bm6P1T0ooUqEElaCh-Z96b7war0IQSiII9PCL1cbQ3i46GqnnWPy4YZtRhZ8FfYw8hdnctP4i1UtYTsDYv8cqwt99zRPuo-o0W4JsZ6LYMBJxzjLzZmN94uXVV8j3h5eatY5GgIacHoEHFgW16iTY1_ddWTvBf8uRGO0-5FbIqgtP1XbJZJ-IgkJYlcTkQdKghrCgOQ9uZ9Hm36hxOzOFQWoM4BoLGXCCdnZYsLl12-E-VKce8Z3uml36Ei8c4",
+    "cover_image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk",
+    "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "about": "Engineer specializing in TypeScript, React, and serverless backends with pragmatic DX.",
+    "highlights": [
+      "99.95% uptime on serverless APIs",
+      "Built internal design-system with 40+ components",
+      "Drove Core Web Vitals to all-green"
+    ],
+    "skills": [
+      "TypeScript",
+      "React",
+      "Node",
+      "Postgres",
+      "Supabase",
+      "TailwindCSS"
+    ],
+    "attachments": [
+      {
+        "label": "Resume",
+        "href": "#"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/"
+      },
+      {
+        "label": "Website",
+        "href": "#"
+      }
+    ]
+  },
+  {
+    "id": "priya-singh",
+    "name": "Priya Singh",
+    "title": "Data Analyst",
+    "location": "Austin, TX",
+    "avatar_url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBOyBBUWv-aZFP72bm6P1T0ooUqEElaCh-Z96b7war0IQSiII9PCL1cbQ3i46GqnnWPy4YZtRhZ8FfYw8hdnctP4i1UtYTsDYv8cqwt99zRPuo-o0W4JsZ6LYMBJxzjLzZmN94uXVV8j3h5eatY5GgIacHoEHFgW16iTY1_ddWTvBf8uRGO0-5FbIqgtP1XbJZJ-IgkJYlcTkQdKghrCgOQ9uZ9Hm36hxOzOFQWoM4BoLGXCCdnZYsLl12-E-VKce8Z3uml36Ei8c4",
+    "cover_image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk",
+    "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "about": "Analyst focused on product analytics, cohort models, and revenue attribution.",
+    "highlights": [
+      "Built pCM90 forecast improving accuracy by 12%",
+      "Designed self-serve dashboards used by 50+ stakeholders",
+      "Owner: experimentation taxonomy & guardrails"
+    ],
+    "skills": [
+      "SQL",
+      "Python",
+      "Tableau",
+      "Experimentation",
+      "Statistics"
+    ],
+    "attachments": [
+      {
+        "label": "Resume",
+        "href": "#"
+      },
+      {
+        "label": "Kaggle",
+        "href": "https://www.kaggle.com/"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/"
+      }
+    ]
+  }
+]
