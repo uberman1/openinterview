@@ -1,0 +1,25 @@
+{
+  "sections": [
+    {
+      "major": 3,
+      "rows": [
+        {
+          "version": "3.1",
+          "description": "Base v2 layout; dynamic click-to-play video; scrollable Attachments & Highlights; original calendar restored.",
+          "page": "profile_pagev2.html",
+          "code": "code/profile_v3_1.txt",
+          "timestamp": "2025-10-09"
+        }
+      ]
+    },
+    {
+      "major": 2,
+      "rows": []
+    },
+    {
+      "major": 1,
+      "rows": []
+    }
+  ],
+  "latest_major": 3
+}
