@@ -47,6 +47,7 @@ function serveHome(req,res){
     html = html.replace('</body>', '<script src="/js/avatar.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/attachments.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/home.upcoming.contact.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script src="/js/home.links.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load home.html'); }
