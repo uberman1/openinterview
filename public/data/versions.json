@@ -1,6 +1,18 @@
 {
   "sections": [
     {
+      "major": 4,
+      "rows": [
+        {
+          "version": "4.1",
+          "description": "Self-deploying Express server; PDF.js resume pagination; functional calendar ICS generation; attachment downloads; guardrails UI protection system; Jest unit tests with JSDOM.",
+          "page": "profile_v4_1_package/public/index.html",
+          "code": "profile_v4_1_package/",
+          "timestamp": "2025-10-09"
+        }
+      ]
+    },
+    {
       "major": 3,
       "rows": [
         {
@@ -21,5 +33,5 @@
       "rows": []
     }
   ],
-  "latest_major": 3
+  "latest_major": 4
 }
