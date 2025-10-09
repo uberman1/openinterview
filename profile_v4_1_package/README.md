@@ -7,12 +7,28 @@ This package contains a **self-deploying** Node static server for the Profile pa
 - **Guardrails** to prevent UI changes
 - **Unit tests** (Jest + jsdom) with remediation suggestions
 
-## Quick Start (Replit or local)
-1. Import the ZIP into Replit (Node.js template recommended) or unzip locally.
-2. In the shell: `npm i`
-3. Run tests & guardrails: `npm test`
-4. Start the server: `npm start`
-   - Visit http://localhost:3000
+## Quick Start (Separate Server on Port 3000)
+
+**This package runs independently from the main OpenInterview app (port 5000).**
+
+### Method 1: Using the start script
+```bash
+cd profile_v4_1_package
+./start.sh
+```
+
+### Method 2: Direct commands
+```bash
+cd profile_v4_1_package
+npm i          # Install dependencies (first time only)
+npm test       # Run tests & guardrails
+npm start      # Start server on port 3000
+```
+
+### Access Points
+- **Direct v4.1 Access:** http://localhost:3000
+- **Via Versions Index:** http://localhost:5000/profiles_v2.html (click "page" link for v4.1)
+- **Main App:** http://localhost:5000
 
 ## Files to Customize
 - `public/index.html`: DO NOT change UI classes/structure. Only substitute file URLs in `data-file-url` and `data-resume-url`.
