@@ -6,7 +6,7 @@
         {
           "version": "4.1",
           "description": "Self-deploying Express server; PDF.js resume pagination; functional calendar ICS generation; attachment downloads; guardrails UI protection system; Jest unit tests with JSDOM.",
-          "page": "http://localhost:3000",
+          "page": "profile_v4_1_package/public/index.html",
           "code": "profile_v4_1_package/",
           "timestamp": "2025-10-09"
         }
