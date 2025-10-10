@@ -249,7 +249,11 @@ app.delete("/api/files/:id", (req,res)=>{
 // Profiles (package owns resume, links, attachments)
 app.get("/api/profiles", (req,res)=>{
   const { userId } = req.query;
-  res.json(db.profiles.filter(p=>p.userId===userId));
+  if (userId) {
+    res.json(db.profiles.filter(p=>p.userId===userId));
+  } else {
+    res.json(db.profiles);
+  }
 });
 app.get("/api/profiles/default", (req,res)=>{
   const { userId } = req.query;
