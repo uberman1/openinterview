@@ -176,6 +176,9 @@ function serveBookingManage(req,res){
 app.get('/booking_manage.html', serveBookingManage);
 app.get('/booking/manage/:token', serveBookingManage);
 
+// Serve test output files
+app.use('/test_output', express.static(path.join(__dirname, "test_output")));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (_req, res) => res.redirect("/login.html"));
