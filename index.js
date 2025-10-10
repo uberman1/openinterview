@@ -179,6 +179,9 @@ app.get('/booking/manage/:token', serveBookingManage);
 // Serve test output files
 app.use('/test_output', express.static(path.join(__dirname, "test_output")));
 
+// Serve QA artifacts
+app.use('/qa', express.static(path.join(__dirname, "qa")));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (_req, res) => res.redirect("/login.html"));
