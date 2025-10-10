@@ -24,6 +24,10 @@
       "title": "Senior Product Designer",
       "city": "San Francisco, CA",
       "about": "Experienced product designer with a strong track record in SaaS and B2B.",
+      "summary": "Experienced product designer with 7+ years in SaaS and B2B, strong track record in user-centered design",
+      "status": "active",
+      "created_at": "2025-09-15T10:00:00Z",
+      "updated_at": "2025-10-09T14:30:00Z",
       "video": "",
       "links": [
         {
@@ -54,6 +58,10 @@
       "title": "Interaction Designer",
       "city": "Remote",
       "about": "IC track profile for hands-on roles.",
+      "summary": "IC track designer focused on rapid prototyping and design systems implementation",
+      "status": "draft",
+      "created_at": "2025-09-20T15:00:00Z",
+      "updated_at": "2025-10-05T09:00:00Z",
       "video": "",
       "links": [
         {
