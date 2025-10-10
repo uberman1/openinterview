@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenInterview.me — QA Test Index (Minimal)</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial}
+    .section-title{scroll-margin-top:96px}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    .chip{font-size:12px;border:1px solid #e5e7eb;border-radius:9999px;padding:2px 8px;display:inline-block}
+    .link{color:#111827;text-decoration:underline}
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+  <header class="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-semibold">OpenInterview.me — Testing & QA Index</h1>
+      <nav class="flex items-center gap-3 text-sm">
+        <a href="#home" class="chip">Home</a>
+        <a href="#shareable-profile" class="chip">Shareable Profile</a>
+        <a href="#profile-edit" class="chip">Profile Edit Flow</a>
+        <a href="#availability" class="chip">Availability</a>
+        <a href="#booking" class="chip">Booking</a>
+        <a href="#interviews" class="chip">My Interviews</a>
+        <a href="#resumes" class="chip">My Resumes</a>
+        <a href="#attachments" class="chip">Attachments</a>
+        <a href="#admin" class="chip">Admin Console</a>
+        <a href="#auth" class="chip">Login / Registration</a>
+        <a href="#browse" class="chip">Browse</a>
+        <a href="#packages" class="chip">Profile Packages</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+    <section id="instructions" class="space-y-4">
+      <h2 class="text-xl font-semibold">How to use this page</h2>
+      <ol class="list-decimal pl-6 space-y-2 text-sm text-gray-700">
+        <li>Minimal bundle: only this file (+ optional README). No extra QA files created, so it stays under Replit's 20-file limit.</li>
+        <li>Each section tracks page versions. Append new rows when you publish a change or run tests.</li>
+        <li><span class="mono">code</span> and <span class="mono">test</span> columns can point to: <em>external links</em>, <em>data URLs</em>, or <em>temporary placeholders</em>.</li>
+      </ol>
+      <div class="text-xs text-gray-500 space-y-1">
+        <p><strong>Tip:</strong> Click “Add Row” in any section to quickly append a new version line (data is saved to <span class="mono">localStorage</span> so it persists between reloads in your QA session).</p>
+      </div>
+    </section>
+
+    <template id="table-template">
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold section-title"></h2>
+          <button class="add-row px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50">Add Row</button>
+        </div>
+        <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr class="text-left text-sm">
+              <th class="px-4 py-2 w-28">version</th>
+              <th class="px-4 py-2">description</th>
+              <th class="px-4 py-2 w-40">link</th>
+              <th class="px-4 py-2 w-48">code</th>
+              <th class="px-4 py-2 w-48">test</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 text-sm"></tbody>
+        </table>
+      </div>
+    </template>
+
+    <section class="pt-4 border-t border-gray-200">
+      <h2 class="text-xl font-semibold">Changelog Notes</h2>
+      <ul class="list-disc pl-6 text-sm text-gray-700" id="changelog">
+        <li>2025-10-10: Created minimal <span class="mono">test.html</span> QA index (no extra files) with editable rows and local persistence.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="max-w-6xl mx-auto px-4 py-10 text-xs text-gray-500">
+    <p>OpenInterview.me QA · Minimal index. Update rows as you test; save artifacts externally or as data URLs.</p>
+  </footer>
+
+  <script>
+    const PAGE_SECTIONS = [
+      ['home', 'Home (home.html)'],
+      ['shareable-profile', 'Shareable Profile (profile.html / profile_v2.html / profile_v4.x)'],
+      ['profile-edit', 'Profile Edit Flow (inline editing, uploads, highlights)'],
+      ['availability', 'Availability (availability.html)'],
+      ['booking', 'Booking / Scheduling (booking.html)'],
+      ['interviews', 'My Interviews (dashboard sections, actions)'],
+      ['resumes', 'My Resumes (uploads, parsing, avatar updates)'],
+      ['attachments', 'Attachments (uploads, listing)'],
+      ['admin', 'Admin Console (/#/admin, settings, users)'],
+      ['auth', 'Login / Registration (Google Auth, session state)'],
+      ['browse', 'Browse (/#/browse, pagination, search)'],
+      ['packages', 'Profile Packages (v2 test page, v4.1 package, static serving)'],
+    ];
+
+    const STORAGE_KEY = 'oi_qa_index_v1';
+
+    function getData(){
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e){ return {}; }
+    }
+    function setData(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function seedIfEmpty(data){
+      if(Object.keys(data).length) return data;
+      const seed = {};
+      PAGE_SECTIONS.forEach(([id]) => seed[id] = []);
+      seed['home'].push({version:'v0.1.0', description:'Baseline layout indexed for QA', link:'/home.html', code:'data:text/plain,Add%20code%20link%20or%20external%20URL', test:'data:text/plain,Add%20test%20results%20link'});
+      seed['shareable-profile'].push({version:'v2.0.0', description:'Profile v2 test page (scrolling sections + dynamic video sizing)', link:'/profile_pagev2.html', code:'data:text/plain,profile%20source%20placeholder', test:'data:text/plain,tests%20placeholder'});
+      seed['availability'].push({version:'v0.1.0', description:'Calendar visible, save & Home button behavior', link:'/availability.html', code:'data:text/plain,availability%20source%20placeholder', test:'data:text/plain,tests%20placeholder'});
+      seed['packages'].push({version:'v4.1.0', description:'Static package (public/index.html) — fix for Cannot GET /... via static serving', link:'/profile_v4_1_package/public/index.html', code:'data:text/plain,package%20notes%20placeholder', test:'data:text/plain,tests%20placeholder'});
+      return seed;
+    }
+
+    function makeRow(row, tbody){
+      const tr = document.createElement('tr');
+      tr.innerHTML = \`
+        <td class="px-4 py-2 mono">\${row.version || '-'}</td>
+        <td class="px-4 py-2">\${row.description || ''}</td>
+        <td class="px-4 py-2"><a class="link" href="\${row.link || '#'}" target="_blank">open</a></td>
+        <td class="px-4 py-2"><a class="link" href="\${row.code || '#'}" target="_blank">source.txt</a></td>
+        <td class="px-4 py-2"><a class="link" href="\${row.test || '#'}" target="_blank">tests.txt</a></td>
+      \`;
+      tbody.appendChild(tr);
+    }
+
+    function addRowPrompt(sectionId){
+      const version = prompt('Version (e.g., v0.1.1):') || '';
+      const description = prompt('Description of changes:') || '';
+      const link = prompt('Runnable page URL (absolute or relative):', '#') || '#';
+      const code = prompt('Code snapshot URL (txt, data URL, or external):', 'data:text/plain,code%20placeholder') || 'data:text/plain,code%20placeholder';
+      const test = prompt('Test results URL (txt, data URL, or external):', 'data:text/plain,tests%20placeholder') || 'data:text/plain,tests%20placeholder';
+
+      const data = getData();
+      data[sectionId] = data[sectionId] || [];
+      data[sectionId].push({version, description, link, code, test});
+      setData(data);
+      location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = seedIfEmpty(getData());
+      setData(data);
+
+      const tpl = document.getElementById('table-template');
+      const main = document.querySelector('main');
+
+      PAGE_SECTIONS.forEach(([id, title]) => {
+        const block = tpl.content.firstElementChild.cloneNode(true);
+        block.querySelector('h2').textContent = title;
+        block.querySelector('.add-row').addEventListener('click', () => addRowPrompt(id));
+        const tbody = block.querySelector('tbody');
+        (data[id] || []).forEach(row => makeRow(row, tbody));
+        block.id = id;
+        main.insertBefore(block, main.lastElementChild);
+      });
+    });
+  </script>
+</body>
+</html>
