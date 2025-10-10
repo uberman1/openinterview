@@ -94,17 +94,20 @@
         profiles.forEach(p => {
           const tr = document.createElement('tr');
           tr.className = 'border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700';
+          tr.setAttribute('data-testid', `row-profile-${p.id}`);
 
           const tdTitle = document.createElement('td');
           tdTitle.className = 'px-6 py-4 font-medium';
+          tdTitle.setAttribute('data-testid', `text-title-${p.id}`);
           tdTitle.textContent = titleFromProfile(p);
 
           const tdStatus = document.createElement('td');
           tdStatus.className = 'px-6 py-4';
-          tdStatus.innerHTML = `<span class="badge">${p.status || 'draft'}</span>`;
+          tdStatus.innerHTML = `<span class="badge" data-testid="badge-status-${p.id}">${p.status || 'draft'}</span>`;
 
           const tdUpdated = document.createElement('td');
           tdUpdated.className = 'px-6 py-4 text-sm text-gray-600 dark:text-gray-400';
+          tdUpdated.setAttribute('data-testid', `text-updated-${p.id}`);
           const d = new Date(p.updated_at || p.created_at);
           tdUpdated.textContent = isNaN(d) ? '' : d.toLocaleString();
 
@@ -115,6 +118,7 @@
           testLink.target = '_blank';
           testLink.rel = 'noopener';
           testLink.className = 'link-style text-sm';
+          testLink.setAttribute('data-testid', `link-test-${p.id}`);
           testLink.textContent = 'View test output';
           tdTest.appendChild(testLink);
 
@@ -123,6 +127,7 @@
           const openLink = document.createElement('a');
           openLink.href = `/profile/${p.id}`;
           openLink.className = 'link-style text-sm';
+          openLink.setAttribute('data-testid', `link-open-${p.id}`);
           openLink.textContent = 'Open';
           tdActions.appendChild(openLink);
 
