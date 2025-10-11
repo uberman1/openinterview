@@ -4,6 +4,20 @@
 
 OpenInterview is a modular development framework emphasizing a mock-first architecture for rapid prototyping and iterative integration of services. It's a full-stack TypeScript application with an Express backend, React frontend, and PostgreSQL database. The core purpose is to enable developers to build and validate features using local mocks before seamlessly swapping in production integrations via feature flags, adhering to a "replit-deployment model" that prioritizes configuration over code rewrites for integration. The project's ambition is to provide a robust, scalable platform for interview management, leveraging modern web technologies and a clear separation of concerns.
 
+## Recent Changes
+
+**Bundle A v0.2.0 - Security & Production Hardening (October 2025)**
+- Deployed production-ready security, Stripe, and notification provider adapters
+- **Security Extension** (`backend/addons/security_ext.py`): CSRF protection with HMAC-SHA256, rate limiting (5 req/60sec), session management with configurable TTL
+- **Stripe Live Extension** (`backend/addons/stripe_ext_live.py`): Checkout integration, webhook signature verification, test mode support
+- **Notify Provider** (`backend/addons/notify_provider.py`): Mock email provider with file-based outbox, extensible for production (Resend, etc.)
+- Backend integration: SessionMiddleware added, routers wired into main.py, itsdangerous dependency installed
+- Environment configuration: AUTH_RATE_LIMIT, AUTH_RATE_WINDOW_SEC, SESSION_TTL_SEC, CSRF_SECRET, STRIPE_TEST, STRIPE_SIGNING_SECRET, NOTIFY_MODE
+- Test packs created: auth_pack_v0_2_0 (CSRF, rate limit, session touch), subscription_pack_v0_2_0 (webhook signatures), notify_pack_v0_2_0 (OTP/generic email, outbox tracking)
+- Release gate integration: patch_run_all.py orchestrator for Bundle A validation
+- Manual verification procedures documented in BUNDLE_A_INTEGRATION.md
+- Known limitation: Replit environment process constraints prevent automated Playwright testing with persistent backend; manual testing or requests-based alternative recommended
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
