@@ -3,20 +3,20 @@
     {
       "name": "plans-default",
       "url": "/subscription_test.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     },
     {
       "name": "success-default",
       "url": "/subscription/success.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     },
     {
       "name": "canceled-default",
       "url": "/subscription/canceled.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     }
   ],
   "status": "PASS"
