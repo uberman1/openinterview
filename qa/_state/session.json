@@ -17,5 +17,11 @@
       "status": "confirmed",
       "booked_at": "2025-10-11T15:46:08Z"
     }
+  },
+  "shareable_profile": {
+    "profile_id": "jordan-lee",
+    "link_copied": true,
+    "sections_toggled": true,
+    "last_viewed": "2025-10-11T16:05:31Z"
   }
 }

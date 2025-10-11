@@ -1,0 +1,35 @@
+✅ Shareable Profile Pack v0.1.0 Deployment Summary
+
+Status: 100% PASS (all 5 test suites)
+- Contract: PASS (12/12 selectors)
+- Behavior: PASS (2 workflows: copy link, toggle sections)
+- A11y: PASS (semantic HTML, ARIA, live regions)
+- Security: PASS (CSP, no token/email leaks)
+- Visual: PASS (1 baseline)
+
+Cross-Pack Dependencies:
+- Subscription Pack → Shareable Profile Pack (enforced via prereq_subscription_active())
+
+E2E State Updates:
+- qa/_state/session.json now tracks: password_reset, subscription, availability, shareable_profile
+
+Key Features:
+- Clipboard API with permissions for headless testing
+- Collapsible sections with ARIA state management
+- Responsive design (mobile/desktop viewports)
+- CSP headers and security compliance
+- Visual regression baseline (profile-default)
+
+Technical Fixes Applied:
+1. Granted clipboard-read/clipboard-write permissions to browser context
+2. Fixed expect_has_class to use state="attached" for hidden elements
+3. Updated helpers.py to use "public/test2.html" path
+4. Added diff_images function for visual regression testing
+5. Fixed section ID to "shareable-profile" (hyphenated)
+
+Artifacts:
+- Test results: qa/shareable_profile/v0.1.0/tests.txt
+- Baseline: qa/shareable_profile/v0.1.0/baselines/profile-default.png
+- test2.html: Updated with v0.1.0 row
+
+Guardrails: ✅ Verified (13/13 files match)
