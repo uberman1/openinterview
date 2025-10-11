@@ -1,0 +1,61 @@
+page: availability
+version: v0.1.0
+section_id: availability
+url: /availability_test.html
+
+headers:
+  expect_csp: true
+  allow_meta_csp: true
+
+dom:
+  must_exist:
+    - css: "main#content"
+    - css: "#tz_select"
+    - css: "input#date"
+    - css: "div#slots"
+    - css: "button.slot[data-slot='09:00']"
+    - css: "#confirm_btn"
+    - css: "#cancel_btn"
+    - css: "div#errors[role='alert'][aria-live='assertive']"
+    - css: "a#back_to_home"
+
+a11y:
+  ruleset: wcag2aa
+  max_serious: 0
+  max_critical: 0
+
+visual:
+  baselines:
+    - name: slots-default
+      url: /availability_test.html
+      selector: "main"
+      viewport: { width: 1280, height: 900 }
+    - name: success-default
+      url: /availability/success.html
+      selector: "main"
+      viewport: { width: 1280, height: 900 }
+    - name: canceled-default
+      url: /availability/canceled.html
+      selector: "main"
+      viewport: { width: 1280, height: 900 }
+  threshold: 0.001
+
+responsive:
+  viewports:
+    - { width: 375, height: 812, name: mobile }
+    - { width: 1280, height: 900, name: desktop }
+
+workflows:
+  - id: AV-BOOK-HAPPY
+    steps:
+      - visit: /availability_test.html
+      - type: { selector: "#date", text: "2025-10-15" }
+      - click: "button.slot[data-slot='10:00']"
+      - wait_for: { selector: "#confirm_btn:not([disabled])", timeout_ms: 3000 }
+      - click: "#confirm_btn"
+      - expect_url_contains: "/availability/success"
+  - id: AV-CANCEL
+    steps:
+      - visit: /availability_test.html
+      - click: "#cancel_btn"
+      - expect_url_contains: "/availability/canceled"
