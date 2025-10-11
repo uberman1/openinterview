@@ -1,0 +1,23 @@
+{
+  "dom": {
+    "failures": [
+      "Missing id #password-form for selector: form#password-form",
+      "Missing id #email for selector: input#email[type=\"email\"]",
+      "Missing id #token for selector: input#token",
+      "Missing id #new_password for selector: input#new_password[type=\"password\"]",
+      "Missing id #confirm_password for selector: input#confirm_password[type=\"password\"]",
+      "Missing id #toggle_pw for selector: button#toggle_pw[aria-controls=\"new_password\"]",
+      "Missing id #submit_btn for selector: button#submit_btn",
+      "Missing id #pw_strength for selector: div#pw_strength[aria-live=\"polite\"]",
+      "Missing id #pw_rules for selector: p#pw_rules",
+      "Missing id #errors for selector: div#errors[role=\"alert\"][aria-live=\"assertive\"]",
+      "Missing id #back_to_login for selector: a#back_to_login[href^=\"/login\"]"
+    ]
+  },
+  "headers": {
+    "failures": [
+      "CSP not found in response headers or meta"
+    ]
+  },
+  "status": "FAIL"
+}

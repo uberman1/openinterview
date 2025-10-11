@@ -1,0 +1,33 @@
+{
+  "workflows": [
+    {
+      "id": "PW-RESET-HAPPY",
+      "steps": [
+        {
+          "visit": "/password.html"
+        }
+      ],
+      "status": "FAIL",
+      "error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#email\")\n"
+    }
+  ],
+  "responsive": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "name": "mobile"
+      },
+      "status": "FAIL"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "name": "desktop"
+      },
+      "status": "FAIL"
+    }
+  ],
+  "status": "FAIL"
+}

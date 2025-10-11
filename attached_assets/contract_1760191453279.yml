@@ -1,0 +1,51 @@
+page: password
+version: v0.1.4
+section_id: password
+url: /password.html
+
+headers:
+  expect_csp: true
+  allow_meta_csp: true
+
+dom:
+  must_exist:
+    - css: form#password-form
+    - css: input#email[type="email"]
+    - css: input#token
+    - css: input#new_password[type="password"]
+    - css: input#confirm_password[type="password"]
+    - css: button#toggle_pw[aria-controls="new_password"]
+    - css: button#submit_btn
+    - css: div#pw_strength[aria-live="polite"]
+    - css: p#pw_rules
+    - css: div#errors[role="alert"][aria-live="assertive"]
+    - css: a#back_to_login[href^="/login"]
+
+a11y:
+  ruleset: wcag2aa
+  max_serious: 0
+  max_critical: 0
+
+visual:
+  baselines:
+    - name: form-default
+      selector: main
+      viewport: { width: 1280, height: 900 }
+  threshold: 0.001
+
+responsive:
+  viewports:
+    - { width: 375, height: 812, name: mobile }
+    - { width: 1280, height: 900, name: desktop }
+
+workflows:
+  - id: PW-RESET-HAPPY
+    steps:
+      - visit: /password.html
+      - type: { selector: "#email", text: "qa@example.com" }
+      - type: { selector: "#token", text: "123456" }
+      - type: { selector: "#new_password", text: "Aa!23456" }
+      - type: { selector: "#confirm_password", text: "Aa!23456" }
+      - wait_for: { selector: "#submit_btn:not([disabled])", timeout_ms: 2000 }
+      - click: "#submit_btn"
+      - expect_url_contains: "/password/success"

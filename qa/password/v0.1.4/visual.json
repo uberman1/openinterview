@@ -1,0 +1,14 @@
+{
+  "shots": [
+    {
+      "name": "form-default",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "diff_ratio": 0.0,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}
