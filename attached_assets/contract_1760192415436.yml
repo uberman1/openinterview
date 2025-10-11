@@ -29,7 +29,7 @@ a11y:
 visual:
   baselines:
     - name: form-default
-      selector: body
+      selector: main
       viewport: { width: 1280, height: 900 }
   threshold: 0.001
 
@@ -47,3 +47,5 @@ workflows:
       - type: { selector: "#new_password", text: "Aa!23456" }
       - type: { selector: "#confirm_password", text: "Aa!23456" }
       - wait_for: { selector: "#submit_btn:not([disabled])", timeout_ms: 2000 }
+      - click: "#submit_btn"
+      - expect_url_contains: "/password/success"

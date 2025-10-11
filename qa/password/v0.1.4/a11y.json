@@ -1,13 +1,38 @@
 {
   "violations": [
     {
-      "id": "color-contrast",
-      "impact": "serious",
-      "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "id": "landmark-one-main",
+      "impact": "moderate",
+      "description": "Ensures the document has a main landmark",
       "nodes": [
-        "p"
+        "html"
+      ]
+    },
+    {
+      "id": "page-has-heading-one",
+      "impact": "moderate",
+      "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+      "nodes": [
+        "html"
+      ]
+    },
+    {
+      "id": "region",
+      "impact": "moderate",
+      "description": "Ensures all page content is contained by landmarks",
+      "nodes": [
+        "#back_to_login",
+        "label[for=\"email\"]",
+        "#email",
+        "label[for=\"token\"]",
+        "#token",
+        "label[for=\"new_password\"]",
+        "#new_password",
+        "label[for=\"confirm_password\"]",
+        "#confirm_password",
+        "#pw_rules"
       ]
     }
   ],
-  "status": "FAIL"
+  "status": "PASS"
 }

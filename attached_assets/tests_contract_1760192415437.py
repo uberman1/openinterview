@@ -9,18 +9,13 @@ def check_dom_selectors(html, selectors):
     for item in selectors:
         sel = item.get("css")
         id_m = re.search(r"#([A-Za-z0-9_\-:]+)", sel)
-        # Handle both exact match [attr="value"] and starts-with [attr^="value"]
-        attrs = re.findall(r'\[([^\]=^]+)([=^]*)=\"([^\"]+)\"\]', sel)
-        if id_m and re.search(r'id=[\"\']'+re.escape(id_m.group(1))+r'[\"\']', html, re.I) is None:
+        attrs = re.findall(r'\[([^\]=]+)=\"([^\"]+)\"\]', sel)
+        if id_m and re.search(r'id=\[\"\']'+re.escape(id_m.group(1))+r'\[\"\']', html, re.I) is None:
             failures.append(f"Missing id #{id_m.group(1)} for selector: {sel}")
             continue
-        for attr_name, op, attr_val in attrs:
-            if op == '^':  # starts-with
-                if not re.search(rf'{re.escape(attr_name)}=[\"\'][^\"\']*{re.escape(attr_val)}', html, re.I):
-                    failures.append(f"Missing attr [{attr_name}^=\"{attr_val}\"] for selector: {sel}")
-            else:  # exact match
-                if re.search(rf'{re.escape(attr_name)}=[\"\'{re.escape(attr_val)}[\"\']', html, re.I) is None:
-                    failures.append(f"Missing attr [{attr_name}=\"{attr_val}\"] for selector: {sel}")
+        for k,v in attrs:
+            if re.search(rf'{re.escape(k)}=\[\"\']{re.escape(v)}[\"\']', html, re.I) is None:
+                failures.append(f"Missing attr [{k}=\"{v}\"] for selector: {sel}")
     return failures
 
 def run(page_html_path, response_headers, contract, artifact_dir):

@@ -5,15 +5,13 @@ from password_pack.helpers import ensure_dir, diff_images
 def load_contract():
     with open("password_pack/contract.yml","r",encoding="utf-8") as f: return yaml.safe_load(f)
 
-def run_visual(base_url, contract, outdir, chromium_path=None):
+def run_visual(base_url, contract, outdir):
     os.makedirs(outdir, exist_ok=True)
     results = {"shots": [], "status":"PASS"}
     threshold = float(contract.get("visual",{}).get("threshold", 0.001))
 
     with sync_playwright() as pw:
-        launch_opts = {"headless": True}
-        if chromium_path: launch_opts["executable_path"] = chromium_path
-        browser = pw.chromium.launch(**launch_opts); context = browser.new_context(); page = context.new_page()
+        browser = pw.chromium.launch(); context = browser.new_context(); page = context.new_page()
 
         for item in contract.get("visual",{}).get("baselines",[]):
             vp = item.get("viewport", {"width":1280,"height":900})

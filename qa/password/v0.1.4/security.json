@@ -1,7 +1,4 @@
 {
-  "issues": [
-    "Missing CSRF token input",
-    "CSP not found in headers or meta"
-  ],
-  "status": "FAIL"
+  "issues": [],
+  "status": "PASS"
 }

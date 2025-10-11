@@ -1,7 +1,7 @@
 Status: FAIL
-contract: FAIL
+contract: PASS
 behavior: FAIL
-a11y: FAIL
-security: FAIL
-visual: PASS
-Timestamp: 2025-10-11T14:12:24.918280Z
+a11y: PASS
+security: PASS
+visual: FAIL
+Timestamp: 2025-10-11T14:24:15.834051Z

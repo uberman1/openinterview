@@ -4,14 +4,12 @@ from playwright.sync_api import sync_playwright
 def load_contract():
     with open("password_pack/contract.yml","r",encoding="utf-8") as f: return yaml.safe_load(f)
 
-def run_workflows(base_url, contract, outdir, chromium_path=None):
+def run_workflows(base_url, contract, outdir):
     os.makedirs(outdir, exist_ok=True)
     results = {"workflows": [], "responsive": [], "status":"PASS"}
 
     with sync_playwright() as pw:
-        launch_opts = {"headless": True}
-        if chromium_path: launch_opts["executable_path"] = chromium_path
-        browser = pw.chromium.launch(**launch_opts); context = browser.new_context(); page = context.new_page()
+        browser = pw.chromium.launch(); context = browser.new_context(); page = context.new_page()
 
         for wf in contract.get("workflows", []):
             wf_res = {"id": wf["id"], "steps": [], "status":"PASS"}

@@ -4,11 +4,33 @@
       "id": "PW-RESET-HAPPY",
       "steps": [
         {
-          "visit": "/password.html"
+          "visit": "/password_reset.html"
+        },
+        {
+          "type": {
+            "selector": "#email"
+          }
+        },
+        {
+          "type": {
+            "selector": "#token"
+          }
+        },
+        {
+          "type": {
+            "selector": "#new_password"
+          }
+        },
+        {
+          "type": {
+            "selector": "#confirm_password"
+          }
+        },
+        {
+          "wait_for": "#submit_btn:not([disabled])"
         }
       ],
-      "status": "FAIL",
-      "error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#email\")\n"
+      "status": "PASS"
     }
   ],
   "responsive": [

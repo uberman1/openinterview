@@ -4,13 +4,11 @@ from playwright.sync_api import sync_playwright
 def load_contract():
     with open("password_pack/contract.yml","r",encoding="utf-8") as f: return yaml.safe_load(f)
 
-def run_security(base_url, contract, outdir, chromium_path=None):
+def run_security(base_url, contract, outdir):
     os.makedirs(outdir, exist_ok=True)
     results = {"issues": [], "status":"PASS"}
     with sync_playwright() as pw:
-        launch_opts = {"headless": True}
-        if chromium_path: launch_opts["executable_path"] = chromium_path
-        browser = pw.chromium.launch(**launch_opts); context = browser.new_context(); page = context.new_page()
+        browser = pw.chromium.launch(); context = browser.new_context(); page = context.new_page()
         resp = page.goto(base_url + contract["url"])
         headers = {k.lower(): v for k,v in (resp.headers.items() if resp else [])}; html = page.content()
         if re.search(r'name=[\"\']csrf_token[\"\']', html, re.I) is None: results["issues"].append("Missing CSRF token input")

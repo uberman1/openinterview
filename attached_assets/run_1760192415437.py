@@ -29,20 +29,22 @@ def consolidate_txt(outdir, status_map):
     return path
 
 def main():
-    chromium_path = subprocess.run(["which", "chromium"], capture_output=True, text=True).stdout.strip() or None
+    try:
+        subprocess.run([sys.executable,"-m","playwright","install","--with-deps","chromium"], check=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    except Exception as e:
+        print("WARN: playwright install failed:", e)
 
     contract = load_contract(); version = contract["version"]; section_id = contract.get("section_id","password")
     outdir = ensure_dirs(version)
 
-    base_url = os.environ.get("OI_BASE_URL","http://127.0.0.1:5000")
+    base_url = os.environ.get("OI_BASE_URL","http://127.0.0.1:8000")
     page_fs_path = os.path.join("public","password_reset.html")
 
+    # Grab rendered source and headers
     from playwright.sync_api import sync_playwright
     resp_headers = {}
     with sync_playwright() as pw:
-        launch_opts = {"headless": True}
-        if chromium_path: launch_opts["executable_path"] = chromium_path
-        browser = pw.chromium.launch(**launch_opts); ctx = browser.new_context(); page = ctx.new_page()
+        browser = pw.chromium.launch(); ctx = browser.new_context(); page = ctx.new_page()
         r = page.goto(base_url + contract["url"])
         if r: resp_headers = r.headers
         html_now = page.content()
@@ -54,16 +56,16 @@ def main():
     contract_res = run_contract(page_fs_path, {k.lower():v for k,v in resp_headers.items()}, contract, outdir)
 
     from password_pack.tests_behavior import run_workflows
-    behavior_res = run_workflows(base_url, contract, outdir, chromium_path)
+    behavior_res = run_workflows(base_url, contract, outdir)
 
     from password_pack.tests_a11y import run_a11y
-    a11y_res = run_a11y(base_url, contract, outdir, chromium_path)
+    a11y_res = run_a11y(base_url, contract, outdir)
 
     from password_pack.tests_security import run_security
-    sec_res = run_security(base_url, contract, outdir, chromium_path)
+    sec_res = run_security(base_url, contract, outdir)
 
     from password_pack.tests_visual import run_visual
-    vis_res = run_visual(base_url, contract, outdir, chromium_path)
+    vis_res = run_visual(base_url, contract, outdir)
 
     from password_pack.helpers import snapshot_source
     snapshot_source(page_fs_path, os.path.join(outdir,"password.html.txt"))
@@ -71,7 +73,7 @@ def main():
     status_map = {"contract": contract_res["status"], "behavior": behavior_res["status"], "a11y": a11y_res["status"], "security": sec_res["status"], "visual": vis_res["status"]}
     tests_txt_path = consolidate_txt(outdir, status_map)
 
-    updated = update_test2(section_id, version, "Password Reset page tested (Option A, v0.1.4).", contract["url"], f"/{outdir}/password.html.txt", f"/{outdir}/tests.txt", "public/test2.html")
+    updated = update_test2(section_id, version, "Password Reset page tested (Option A, v0.1.4).", contract["url"], f"/{outdir}/password.html.txt", f"/{outdir}/tests.txt", "test2.html")
     print("Updated test2:", updated); print("Artifacts:", tests_txt_path, os.path.join(outdir,"password.html.txt"))
 
 if __name__ == "__main__":

@@ -6,9 +6,9 @@
         "width": 1280,
         "height": 900
       },
-      "diff_ratio": 0.0,
-      "status": "PASS"
+      "diff_ratio": 1.0,
+      "status": "FAIL"
     }
   ],
-  "status": "PASS"
+  "status": "FAIL"
 }
