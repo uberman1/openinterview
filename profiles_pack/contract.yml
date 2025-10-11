@@ -1,0 +1,68 @@
+page: profiles
+version: v0.1.0
+section_id: profiles
+url: /profiles_test.html
+
+headers:
+  expect_csp: true
+  allow_meta_csp: true
+
+dom:
+  must_exist:
+    - css: "main#content"
+    - css: "#page_h1"
+    - css: "#errors[role='alert'][aria-live='assertive']"
+    - css: "#profiles_container"
+    - css: "table#profiles_table"
+    - css: "tbody#profiles_tbody"
+    - css: "#new_profile_btn"
+    - css: "form#profile_form"
+    - css: "#name"
+    - css: "#role"
+    - css: "#save_btn"
+    - css: "#publish_btn"
+    - css: "#form_status[role='status']"
+    - css: "a#back_to_home"
+
+a11y:
+  ruleset: wcag2aa
+  max_serious: 0
+  max_critical: 0
+
+visual:
+  baselines:
+    - name: profiles-default
+      url: /profiles_test.html
+      selector: "main"
+      viewport: { width: 1280, height: 900 }
+  threshold: 0.001
+
+responsive:
+  viewports:
+    - { width: 375, height: 812, name: mobile }
+    - { width: 1280, height: 900, name: desktop }
+
+workflows:
+  - id: PF-LIST-VISIBLE-AFTER-LOAD
+    steps:
+      - visit: /profiles_test.html
+      - wait_for_selector: { selector: "table#profiles_table", timeout_ms: 4000 }
+      - expect_visible: { selector: "table#profiles_table" }
+      - expect_row_count_gte: { selector: "#profiles_tbody tr", count: 1 }
+
+  - id: PF-CREATE-SAVE-PUBLISH
+    steps:
+      - visit: /profiles_test.html
+      - fill: { selector: "#name", value: "Ava Trent" }
+      - fill: { selector: "#role", value: "Data Scientist" }
+      - click: "#save_btn"
+      - wait_for_text: { selector: "#form_status", contains: "Saved", timeout_ms: 3000 }
+      - click: "#publish_btn"
+      - wait_for_text: { selector: "#form_status", contains: "Published", timeout_ms: 3000 }
+
+  - id: PF-NO-DISAPPEAR-POST-HYDRATE
+    steps:
+      - visit: /profiles_test.html
+      - wait_for_selector: { selector: "table#profiles_table", timeout_ms: 4000 }
+      - sleep_ms: 800
+      - expect_visible: { selector: "table#profiles_table" }
