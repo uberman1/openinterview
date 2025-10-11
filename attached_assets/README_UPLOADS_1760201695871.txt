@@ -1,0 +1,29 @@
+OPENINTERVIEW — Uploads Pack v0.1.0
+
+Delivers
+- /public/uploads_test.html: client-side upload UX with size limit (5MB), progress, cancel, error/live regions
+- uploads_pack/run.py: Playwright tests (contract, behavior, a11y, security, visual)
+- Auto-updates test2.html (section id "Uploads") with a v0.1.0 row
+
+Install & Run (Replit)
+1) unzip at repo root:
+   unzip uploads_pack_v0.1.0.zip -d .
+
+2) install deps:
+   pip install -r uploads_pack/requirements.txt
+   python -m playwright install --with-deps chromium
+
+3) optional: point to hosted preview
+   # export OI_BASE_URL="https://<replit-preview-domain>"
+
+4) run tests:
+   python uploads_pack/run.py
+
+Artifacts
+- qa/uploads/v0.1.0/tests.txt
+- qa/uploads/v0.1.0/uploads.html.txt
+- qa/uploads/v0.1.0/baselines/uploads-default.png
+
+Notes
+- No backend or external storage is used; files are simulated for QA (localStorage index).
+- If a Profiles record exists, uploading an image updates its avatar reference (integration guard).
