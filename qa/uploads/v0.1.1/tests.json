@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "suites": [
+    {
+      "contract": "PASS",
+      "count": 7
+    },
+    {
+      "security": "PASS"
+    },
+    {
+      "a11y": "PASS"
+    },
+    {
+      "behavior-happy": "PASS"
+    },
+    {
+      "behavior-large": "PASS"
+    },
+    {
+      "behavior-cancel": "PASS"
+    },
+    {
+      "behavior-mime-mismatch": "PASS"
+    },
+    {
+      "integration-avatar": "PASS"
+    },
+    {
+      "visual": "PASS",
+      "baseline": "uploads-default.png"
+    }
+  ],
+  "timestamp": "2025-10-11T17:16:51.779199+00:00"
+}
