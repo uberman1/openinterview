@@ -1,0 +1,8 @@
+
+OpenAPI is served dynamically by FastAPI:
+- /openapi.json
+- /docs (Swagger UI)
+- /redoc
+
+If you need a static file, run the server and curl:
+curl http://127.0.0.1:8000/openapi.json > openapi.json
