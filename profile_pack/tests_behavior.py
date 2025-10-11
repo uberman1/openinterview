@@ -21,7 +21,7 @@ def run_workflows(base_url, contract, outdir, chromium_path=None):
         launch_opts = {"headless": True}
         if chromium_path: launch_opts["executable_path"] = chromium_path
         browser = pw.chromium.launch(**launch_opts)
-        context = browser.new_context()
+        context = browser.new_context(permissions=["clipboard-read", "clipboard-write"])
         page = context.new_page()
 
         all_ok = True
@@ -41,7 +41,7 @@ def run_workflows(base_url, contract, outdir, chromium_path=None):
                         wf_res["steps"].append({"wait_for_text": contains})
                     elif "expect_has_class" in step:
                         p = step["expect_has_class"]; sel = p["selector"]; cls = p["class"]
-                        page.wait_for_selector(sel, timeout=3000)
+                        page.wait_for_selector(sel, state="attached", timeout=3000)
                         classes = page.get_attribute(sel, "class") or ""
                         if cls not in classes.split(): raise AssertionError(f"{sel} missing class {cls}")
                         wf_res["steps"].append({"expect_has_class": {"selector": sel, "class": cls}})

@@ -1,0 +1,11 @@
+{
+  "shots": [
+    {
+      "name": "profile-default",
+      "url": "/shareable_profile_test.html",
+      "baseline_created": true,
+      "status": "WARN"
+    }
+  ],
+  "status": "PASS"
+}
