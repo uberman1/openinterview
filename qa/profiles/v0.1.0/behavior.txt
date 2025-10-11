@@ -1,0 +1,96 @@
+{
+  "workflows": [
+    {
+      "id": "PF-LIST-VISIBLE-AFTER-LOAD",
+      "steps": [
+        {
+          "visit": "/profiles_test.html"
+        },
+        {
+          "wait_for_selector": "table#profiles_table"
+        },
+        {
+          "expect_visible": "table#profiles_table"
+        },
+        {
+          "expect_row_count_gte": {
+            "selector": "#profiles_tbody tr",
+            "count": 1
+          }
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "PF-CREATE-SAVE-PUBLISH",
+      "steps": [
+        {
+          "visit": "/profiles_test.html"
+        },
+        {
+          "fill": {
+            "selector": "#name",
+            "value": "Ava Trent"
+          }
+        },
+        {
+          "fill": {
+            "selector": "#role",
+            "value": "Data Scientist"
+          }
+        },
+        {
+          "click": "#save_btn"
+        },
+        {
+          "wait_for_text": "Saved"
+        },
+        {
+          "click": "#publish_btn"
+        },
+        {
+          "wait_for_text": "Published"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "PF-NO-DISAPPEAR-POST-HYDRATE",
+      "steps": [
+        {
+          "visit": "/profiles_test.html"
+        },
+        {
+          "wait_for_selector": "table#profiles_table"
+        },
+        {
+          "sleep_ms": 800
+        },
+        {
+          "expect_visible": "table#profiles_table"
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "responsive": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "name": "mobile"
+      },
+      "status": "PASS"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "name": "desktop"
+      },
+      "status": "PASS"
+    }
+  ],
+  "console_errors": [],
+  "status": "PASS"
+}

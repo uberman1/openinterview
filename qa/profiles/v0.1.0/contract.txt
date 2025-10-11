@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "css": "main#content",
+      "status": "PASS"
+    },
+    {
+      "css": "#page_h1",
+      "status": "PASS"
+    },
+    {
+      "css": "#errors[role='alert'][aria-live='assertive']",
+      "status": "PASS"
+    },
+    {
+      "css": "#profiles_container",
+      "status": "PASS"
+    },
+    {
+      "css": "table#profiles_table",
+      "status": "PASS"
+    },
+    {
+      "css": "tbody#profiles_tbody",
+      "status": "PASS"
+    },
+    {
+      "css": "#new_profile_btn",
+      "status": "PASS"
+    },
+    {
+      "css": "form#profile_form",
+      "status": "PASS"
+    },
+    {
+      "css": "#name",
+      "status": "PASS"
+    },
+    {
+      "css": "#role",
+      "status": "PASS"
+    },
+    {
+      "css": "#save_btn",
+      "status": "PASS"
+    },
+    {
+      "css": "#publish_btn",
+      "status": "PASS"
+    },
+    {
+      "css": "#form_status[role='status']",
+      "status": "PASS"
+    },
+    {
+      "css": "a#back_to_home",
+      "status": "PASS"
+    }
+  ]
+}

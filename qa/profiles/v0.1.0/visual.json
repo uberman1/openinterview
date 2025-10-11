@@ -1,0 +1,11 @@
+{
+  "shots": [
+    {
+      "name": "profiles-default",
+      "url": "/profiles_test.html",
+      "baseline_created": true,
+      "status": "WARN"
+    }
+  ],
+  "status": "PASS"
+}
