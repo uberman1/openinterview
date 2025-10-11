@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "css": "main#content",
+      "status": "PASS"
+    },
+    {
+      "css": "#tz_select",
+      "status": "PASS"
+    },
+    {
+      "css": "input#date",
+      "status": "PASS"
+    },
+    {
+      "css": "div#slots",
+      "status": "PASS"
+    },
+    {
+      "css": "button.slot[data-slot='09:00']",
+      "status": "PASS"
+    },
+    {
+      "css": "#confirm_btn",
+      "status": "PASS"
+    },
+    {
+      "css": "#cancel_btn",
+      "status": "PASS"
+    },
+    {
+      "css": "div#errors[role='alert'][aria-live='assertive']",
+      "status": "PASS"
+    },
+    {
+      "css": "a#back_to_home",
+      "status": "PASS"
+    }
+  ]
+}

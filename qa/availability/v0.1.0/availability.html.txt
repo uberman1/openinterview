@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Availability — OpenInterview</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; }
+    header, main { max-width: 960px; margin: 0 auto; padding: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 10px; }
+    .slot { padding:10px; border:1px solid #111; border-radius:8px; cursor:pointer; background:#fff; }
+    .slot[aria-pressed="true"] { background:#111; color:#fff; }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
+    .btn { padding:10px 14px; border-radius:8px; border:1px solid #111; background:#111; color:#fff; cursor:pointer; }
+    .btn.secondary { background:#fff; color:#111; }
+    .muted { color:#666; font-size: 14px; }
+    .status { background:#f5f5f5; padding:12px; border-radius:8px; margin-top:12px; }
+    .sr-only { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+  </style>
+</head>
+<body>
+  <header>
+    <a id="back_to_home" href="/" class="muted">&larr; Home</a>
+    <h1>Book a time</h1>
+    <div class="row">
+      <label for="tz_select">Timezone</label>
+      <select id="tz_select" aria-label="Timezone">
+        <option value="America/New_York" selected>America/New_York</option>
+        <option value="UTC">UTC</option>
+      </select>
+      <label for="date">Date</label>
+      <input id="date" type="date" aria-label="Date"/>
+    </div>
+  </header>
+
+  <main id="content">
+    <h2 class="sr-only">Available time slots</h2>
+    <div id="slots" class="grid" role="group" aria-label="Available time slots">
+      <button class="slot" data-slot="09:00" aria-pressed="false">09:00</button>
+      <button class="slot" data-slot="09:30" aria-pressed="false">09:30</button>
+      <button class="slot" data-slot="10:00" aria-pressed="false">10:00</button>
+      <button class="slot" data-slot="10:30" aria-pressed="false">10:30</button>
+      <button class="slot" data-slot="11:00" aria-pressed="false">11:00</button>
+      <button class="slot" data-slot="11:30" aria-pressed="false">11:30</button>
+    </div>
+
+    <div class="status" role="status" aria-live="polite" id="status_line">
+      Select a date and a time to continue.
+    </div>
+
+    <div class="row" style="margin-top:12px;">
+      <button id="confirm_btn" class="btn" disabled>Confirm</button>
+      <button id="cancel_btn" class="btn secondary">Cancel</button>
+    </div>
+
+    <div id="errors" class="muted" role="alert" aria-live="assertive"></div>
+  </main>
+
+  <footer style="max-width:960px;margin:24px auto;padding:0 16px;">
+    <p class="muted">Your timezone is used only to calculate appointment times.</p>
+  </footer>
+
+  <script>
+    const dateEl = document.getElementById('date');
+    const slots = Array.from(document.querySelectorAll('.slot'));
+    const confirmBtn = document.getElementById('confirm_btn');
+    const cancelBtn = document.getElementById('cancel_btn');
+    const statusLine = document.getElementById('status_line');
+
+    let selectedSlot = null;
+    slots.forEach(b => b.addEventListener('click', () => {
+      slots.forEach(x => x.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true');
+      selectedSlot = b.dataset.slot;
+      updateState();
+    }));
+
+    dateEl.addEventListener('change', updateState);
+
+    function updateState(){
+      const ready = !!dateEl.value && !!selectedSlot;
+      confirmBtn.disabled = !ready;
+      statusLine.textContent = ready ? `Ready to book ${dateEl.value} at ${selectedSlot}` : 'Select a date and a time to continue.';
+    }
+
+    confirmBtn.addEventListener('click', () => {
+      if(confirmBtn.disabled) return;
+      window.location.href = '/availability/success.html';
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      window.location.href = '/availability/canceled.html';
+    });
+  </script>
+</body>
+</html>

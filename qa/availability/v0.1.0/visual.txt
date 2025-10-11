@@ -1,0 +1,23 @@
+{
+  "shots": [
+    {
+      "name": "slots-default",
+      "url": "/availability_test.html",
+      "baseline_created": true,
+      "status": "WARN"
+    },
+    {
+      "name": "success-default",
+      "url": "/availability/success.html",
+      "baseline_created": true,
+      "status": "WARN"
+    },
+    {
+      "name": "canceled-default",
+      "url": "/availability/canceled.html",
+      "baseline_created": true,
+      "status": "WARN"
+    }
+  ],
+  "status": "PASS"
+}
