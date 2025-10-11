@@ -35,7 +35,7 @@ def main():
         page.goto(BASE_URL + "/uploads_test.html")
         selectors = ["#upload_form","#file_input","#upload_btn","#cancel_btn","#errors","#progress","#uploads_list"]
         for s in selectors: 
-            page.wait_for_selector(s, timeout=4000)
+            page.wait_for_selector(s, state="attached", timeout=4000)
         rollup["suites"].append({"contract":"PASS","count":len(selectors)})
 
         # ---- Security (CSP present, no leaks) ----

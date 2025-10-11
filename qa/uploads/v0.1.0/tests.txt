@@ -1,0 +1,33 @@
+Status: PASS
+Suites: 8
+Timestamp: 2025-10-11T16:59:45.140512+00:00
+
+Details:
+[
+  {
+    "contract": "PASS",
+    "count": 7
+  },
+  {
+    "security": "PASS"
+  },
+  {
+    "a11y": "PASS"
+  },
+  {
+    "behavior-happy": "PASS"
+  },
+  {
+    "behavior-large": "PASS"
+  },
+  {
+    "behavior-cancel": "PASS"
+  },
+  {
+    "integration-avatar": "WARN: no profiles_list available"
+  },
+  {
+    "visual": "PASS",
+    "baseline": "uploads-default.png"
+  }
+]
