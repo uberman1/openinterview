@@ -41,9 +41,11 @@
       "name": "tiny.png",
       "size": 2048,
       "type": "image/png",
-      "uploaded_at": "2025-10-11T16:59:45Z"
+      "uploaded_at": "2025-10-11T17:16:51Z"
     },
-    "features_validated": ["size_check", "progress_bar", "cancel", "avatar_integration"],
-    "max_size_mb": 5
+    "features_validated": ["size_check", "mime_validation", "progress_bar", "cancel", "avatar_integration"],
+    "max_size_mb": 5,
+    "mime_types_allowed": ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "application/pdf"],
+    "version": "v0.1.1"
   }
 }

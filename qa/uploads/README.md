@@ -1,13 +1,19 @@
 # Uploads Test Pack
 
-**Version:** v0.1.0  
+**Version:** v0.1.1 (Latest) | [v0.1.0](#version-history)  
 **Pack ID:** uploads  
 **Page:** `/uploads_test.html`  
 **Test Runner:** `PYTHONPATH=. python uploads_pack/run.py`
 
 ## Overview
 
-The Uploads Pack validates client-side file upload functionality with size validation, progress tracking, cancel capability, and cross-pack avatar integration. This pack simulates file uploads using localStorage without requiring backend infrastructure, making it ideal for QA testing of upload UX flows.
+The Uploads Pack validates client-side file upload functionality with size validation, **MIME type/extension validation**, progress tracking, cancel capability, and cross-pack avatar integration. This pack simulates file uploads using localStorage without requiring backend infrastructure, making it ideal for QA testing of upload UX flows.
+
+**v0.1.1 Highlights:**
+- ✅ MIME type + extension validation (prevents disguised files)
+- ✅ Auto-preseed profiles_list for avatar integration PASS
+- ✅ Cross-pack state mirroring from `qa/_state/session.json`
+- ✅ New test: MIME-mismatch rejection workflow
 
 ## Test Coverage
 
@@ -32,7 +38,7 @@ The Uploads Pack validates client-side file upload functionality with size valid
 - **Progress Indicator**: `aria-label="Progress"` with dynamic `aria-hidden` state
 - **Semantic Structure**: Main content landmark (`#content`)
 
-### Behavior Tests (3 workflows + 1 integration)
+### Behavior Tests (4 workflows + 1 integration)
 
 #### 1. Happy Path Upload
 - Select file (tiny.png, 2KB)
@@ -53,10 +59,17 @@ The Uploads Pack validates client-side file upload functionality with size valid
 - Click Cancel button
 - Verify "Upload canceled" message
 
-#### 4. Avatar Integration (Cross-Pack)
+#### 4. MIME-Mismatch Rejection (v0.1.1+)
+- Select file with .png extension but non-image MIME type
+- Click Upload button
+- Verify "Unsupported file type" error message
+- Confirms both extension AND MIME type validation
+
+#### 5. Avatar Integration (Cross-Pack)
 - Upload image file
 - Check if `profiles_list[0].avatar` updated in localStorage
-- Status: WARN if no profiles_list available (acceptable)
+- **v0.1.0**: Status WARN if no profiles_list available
+- **v0.1.1**: Status PASS (auto-preseeded from E2E state)
 
 ### Visual Tests (1 baseline)
 - **uploads-default**: Full page screenshot at initial state
@@ -214,13 +227,21 @@ function updateAvatarIfImage(file) {
 
 ## Version History
 
+### v0.1.1 (2025-10-11) - **Current**
+- **MIME Validation**: Added dual MIME type + extension check to prevent disguised files
+- **Auto-Preseed**: Mirrors `qa/_state/session.json` into localStorage for cross-pack data
+- **Avatar Integration PASS**: profiles_list auto-created if missing (eliminates WARN status)
+- **New Workflow**: MIME-mismatch test validates ".png" with non-image type rejection
+- **9 test suites**: All PASS (no more WARN on avatar integration)
+- **Breaking Change**: None (backward compatible with v0.1.0 page)
+
 ### v0.1.0 (2025-10-11)
 - Initial release
 - 3 core workflows: happy path, size validation, cancel
-- Avatar integration with profiles pack
+- Avatar integration with profiles pack (WARN if no profiles_list)
 - 1 visual baseline
 - Client-side simulation using localStorage
-- 8 test suites with 100% pass rate
+- 8 test suites (7 PASS, 1 WARN)
 
 ## Related Packs
 
