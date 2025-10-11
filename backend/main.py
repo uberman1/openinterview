@@ -7,7 +7,7 @@ import os, secrets, string
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, Text, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from dotenv import load_dotenv
-from backend.addons.auth_ext import router as auth_ext_router
+from addons.auth_ext import router as auth_ext_router
 
 load_dotenv(override=True)
 
