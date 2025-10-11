@@ -7,6 +7,7 @@ import os, secrets, string
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, Text, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from dotenv import load_dotenv
+from backend.addons.auth_ext import router as auth_ext_router
 
 load_dotenv(override=True)
 
@@ -63,6 +64,7 @@ class Upload(Base):
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="OpenInterview MVP API", version="0.1.0")
+app.include_router(auth_ext_router)
 
 app.add_middleware(
     CORSMiddleware,
