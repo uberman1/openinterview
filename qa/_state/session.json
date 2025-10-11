@@ -8,7 +8,7 @@
     "plan": "pro",
     "status": "active",
     "activated_at": "2025-10-11T12:30:00Z",
-    "timestamp": "2025-10-11T19:28:05.078485+00:00"
+    "timestamp": "2025-10-11T19:30:54.584560+00:00"
   },
   "availability": {
     "booking_count": 1,
@@ -68,6 +68,6 @@
   },
   "security": {
     "reset": true,
-    "timestamp": "2025-10-11T19:27:50.170381+00:00"
+    "timestamp": "2025-10-11T19:30:41.763983+00:00"
   }
 }
