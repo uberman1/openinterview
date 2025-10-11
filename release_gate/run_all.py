@@ -10,6 +10,7 @@ PACKS = [
     ("profiles", "python profiles_pack/run.py"),
     ("uploads", "python uploads_pack/run.py"),
     ("home", "python home_pack/run.py"),
+    ("auth", "python auth_pack/run.py"),
 ]
 
 def run(cmd):

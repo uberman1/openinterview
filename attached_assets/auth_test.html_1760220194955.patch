@@ -1,0 +1,5 @@
+--- a/public/auth_test.html
++++ b/public/auth_test.html
+@@
+-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:8000 https://preview.replit.app">
++<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self'">

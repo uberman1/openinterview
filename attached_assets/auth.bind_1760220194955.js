@@ -1,3 +1,4 @@
+
 (function(){
   const $ = (id)=>document.getElementById(id);
   // Prefer explicit qa_api_base, otherwise SAME ORIGIN.

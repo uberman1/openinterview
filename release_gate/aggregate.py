@@ -10,7 +10,7 @@ def read_json(path, default=None):
 def find_latest_tests():
     results = {}
     # look for qa/<pack>/<version>/tests.txt or tests.json
-    for pack in ["password","subscription","availability","shareable_profile","profiles","uploads","home"]:
+    for pack in ["password","subscription","availability","shareable_profile","profiles","uploads","home","auth"]:
         base = os.path.join("qa", pack)
         if not os.path.isdir(base):
             continue

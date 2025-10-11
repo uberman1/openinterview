@@ -2,7 +2,7 @@
 import pathlib, re, json
 from auth_pack.tests import run_all
 
-VERSION = "v0.1.0"
+VERSION = "v0.1.1"
 SECTION = "auth"
 PAGE_URL = "/public/auth_test.html"
 
