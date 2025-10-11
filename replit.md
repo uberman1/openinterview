@@ -8,6 +8,22 @@ This is a full-stack TypeScript application with an Express backend, React front
 
 ## Recent Changes
 
+**Notifications & Email Pack v0.1.0 - QA Integration (October 2025)**
+- Integrated mock-first notifications testing pack into release gate orchestration
+- Backend notification extension (`backend/addons/notify_ext.py`) with 3 endpoints:
+  - POST /api/notify/send - Generic email with template support
+  - POST /api/notify/otp - OTP email with HMAC-SHA256 signed verification tokens
+  - GET /api/notify/outbox - List sent notifications
+- Comprehensive test suite: contract (6 selectors), behavior (otp + generic flows), a11y (live region), security (CSP + email leakage check), visual (baseline)
+- Mock mode with file-based outbox storage in `qa/notify/outbox/`
+- State tracking integration with `qa/_state/session.json`
+- Frontend test harness: `public/notify_test.html` with same-origin binder (`notify.bind.js`)
+- System chromium integration for headless Playwright testing
+- Release gate expanded to 9 packs (password, subscription, availability, shareable_profile, profiles, uploads, home, auth, notify)
+- All notify pack tests achieving 100% PASS rate
+- Test artifacts: `qa/notify/v0.1.0/` with tests.json, tests.txt, and visual baselines
+- New files: `notify_pack/tests.py`, `notify_pack/run.py`, `public/notify_test.html`, `public/notify.bind.js`, `backend/addons/notify_ext.py`
+
 **Auth & Session Pack v0.1.1 - QA Integration (October 2025)**
 - Integrated passwordless OTP authentication testing pack into release gate orchestration
 - Backend auth extension (`backend/addons/auth_ext.py`) with 5 endpoints: signup, verify, logout, session, csrf
