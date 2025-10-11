@@ -1,0 +1,14 @@
+{
+  "shots": [
+    {
+      "name": "form-default",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "baseline_created": true,
+      "status": "WARN"
+    }
+  ],
+  "status": "PASS"
+}
