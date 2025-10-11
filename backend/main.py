@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, Text, Fo
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 DATABASE_URL = os.getenv("DATABASE_URL","sqlite:///./app.db")
 STRIPE_MODE = os.getenv("STRIPE_MODE","mock")
