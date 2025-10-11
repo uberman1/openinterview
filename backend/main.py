@@ -2,6 +2,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
 import os, secrets, string
@@ -73,6 +74,7 @@ app.include_router(notify_ext_router)
 app.include_router(security_ext_router)
 app.include_router(stripe_ext_live_router)
 
+app.add_middleware(SessionMiddleware, secret_key=os.getenv("SESSION_SECRET", "dev-secret-key"))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:8000", "http://127.0.0.1:8000"],
