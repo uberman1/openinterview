@@ -1,0 +1,25 @@
+{
+  "shots": [
+    {
+      "name": "form-default",
+      "url": "/password_reset.html",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "baseline_created": true,
+      "status": "WARN"
+    },
+    {
+      "name": "success-default",
+      "url": "/password/success.html",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "baseline_created": true,
+      "status": "WARN"
+    }
+  ],
+  "status": "PASS"
+}
