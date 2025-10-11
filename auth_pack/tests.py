@@ -7,6 +7,7 @@ VERSION = "v0.1.0"
 def _result(status, details): return {"status": status, "details": details}
 
 def run_contract(page, results):
+    page.goto("http://localhost:8000/public/auth_test.html")
     for sel in ["#email","#invite","#signup_btn","#verify_group","#code","#verify_btn","#session_btn","#logout_btn","#status"]:
         expect(page.locator(sel)).to_be_attached()
     results["contract"] = _result("PASS", {"selectors": 9})
@@ -18,10 +19,11 @@ def run_behavior(page, results):
     page.locator("#email").fill("qa_tester@example.com")
     page.locator("#invite").fill("ALPHA2025")
     page.locator("#signup_btn").click()
-    expect(page.locator("#verify_group")).to_be_visible()
+    expect(page.locator("#verify_group")).to_be_visible(timeout=10000)
     page.locator("#code").fill("123456")
     page.locator("#verify_btn").click()
-    results["behavior"] = _result("PASS", {"flows": ["signup","verify_clicks"]})
+    expect(page.locator("#status")).to_contain_text("Logged in", timeout=10000)
+    results["behavior"] = _result("PASS", {"flows": ["signup","verify","login"]})
 
 def run_a11y(page, results):
     page.goto("http://localhost:8000/public/auth_test.html")
@@ -41,10 +43,16 @@ def run_visual(page, results, artefacts):
     results["visual"] = _result("PASS", {"baseline": str(path)})
 
 def run_all():
+    import subprocess
+    chromium_path = subprocess.run(["which", "chromium"], capture_output=True, text=True).stdout.strip() or None
+    
     artefacts = artifacts_dir(VERSION)
     results = {}
     with sync_playwright() as p:
-        browser = p.chromium.launch(args=["--no-sandbox"], headless=True)
+        launch_opts = {"headless": True}
+        if chromium_path:
+            launch_opts["executable_path"] = chromium_path
+        browser = p.chromium.launch(**launch_opts)
         page = browser.new_page()
         run_contract(page, results)
         run_behavior(page, results)

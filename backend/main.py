@@ -1,6 +1,7 @@
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional, List
 import os, secrets, string
@@ -226,3 +227,5 @@ def get_upload(upload_id: int):
     if not rec:
         raise HTTPException(status_code=404, detail="Not Found")
     return {"id": rec.id, "filename": rec.filename, "mime": rec.mime, "size": rec.size}
+
+app.mount("/public", StaticFiles(directory="../public"), name="public")
