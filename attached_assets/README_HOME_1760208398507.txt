@@ -1,0 +1,28 @@
+OPENINTERVIEW — Home Pack v0.1.0
+
+Delivers
+- /public/home_test.html — QA Home surface:
+  * System readiness banner (reads qa/_state/session.json mirrored into localStorage)
+  * Nav to all feature pages
+  * A11y live region + details panel
+
+- home_pack/run.py — Playwright test runner with 5 suites:
+  * Contract, Security, A11y, Behavior, Visual
+
+- Auto-updates test2.html (section id "Home") with a v0.1.0 row.
+
+Install & Run (Replit)
+1) unzip:
+   unzip home_pack_v0.1.0.zip -d .
+2) deps:
+   pip install -r home_pack/requirements.txt
+   python -m playwright install --with-deps chromium
+3) (optional) OI_BASE_URL for hosted preview:
+   # export OI_BASE_URL="https://<replit-preview-domain>"
+4) run:
+   python home_pack/run.py
+
+Artifacts
+- qa/home/v0.1.0/tests.txt
+- qa/home/v0.1.0/home.html.txt
+- qa/home/v0.1.0/baselines/home-default.png
