@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Uploads — OpenInterview</title>
+  <title>Uploads — OpenInterview (v0.1.1)</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
   <style>
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:#fff; color:#111; }
@@ -24,7 +24,7 @@
   <header>
     <a id="back_to_home" href="/" class="muted">&larr; Home</a>
     <h1 id="page_h1">Uploads</h1>
-    <p class="muted">Upload a file (image/pdf). Large files are rejected client-side. Progress and cancel included.</p>
+    <p class="muted">Upload an image or PDF. Large files are rejected. Progress and cancel included.</p>
   </header>
 
   <main id="content">
@@ -61,6 +61,9 @@ const progress = document.getElementById('progress');
 const bar = document.getElementById('bar');
 const list = document.getElementById('uploads_list');
 
+const ALLOWED_TYPES = ['image/png','image/jpeg','image/jpg','image/gif','image/webp','application/pdf'];
+const ALLOWED_EXTS = ['png','jpg','jpeg','gif','webp','pdf'];
+
 function getUploads(){
   try { return JSON.parse(localStorage.getItem('uploads')||'[]'); } catch(e){ return []; }
 }
@@ -89,9 +92,16 @@ function startProgress(){
   progress.setAttribute('aria-hidden','false');
   bar.style.width = '0%';
 }
+function isAllowed(file){
+  const name = (file.name||'').toLowerCase();
+  const ext = name.split('.').pop();
+  const type = (file.type||'').toLowerCase();
+  const byType = ALLOWED_TYPES.includes(type);
+  const byExt = ALLOWED_EXTS.includes(ext);
+  return byType && byExt;
+}
 function updateAvatarIfImage(file){
   if (!file.type || !file.type.startsWith('image/')) return;
-  // If a profiles_list exists, set avatar on the first record
   try {
     const list = JSON.parse(localStorage.getItem('profiles_list')||'[]');
     if (list && list.length){
@@ -116,6 +126,7 @@ document.getElementById('upload_btn').addEventListener('click', ()=>{
   if (!f){ setError('Please choose a file'); return; }
   const sizeMB = f.size / (1024*1024);
   if (sizeMB > MAX_MB){ setError('File too large (max 5 MB)'); return; }
+  if (!isAllowed(f)){ setError('Unsupported file type'); return; }
   uploading = true;
   startProgress();
   let pct = 0;
