@@ -1,11 +1,21 @@
 {
-  "security": {
-    "reset": true,
-    "timestamp": "2025-10-11T14:57:30.031691+00:00"
+  "password_reset": {
+    "email": "testuser@example.com",
+    "reset_at": "2025-10-11T12:00:00Z",
+    "status": "completed"
   },
   "subscription": {
-    "status": "active",
     "plan": "pro",
-    "timestamp": "2025-10-11T15:37:00.504559+00:00"
+    "status": "active",
+    "activated_at": "2025-10-11T12:30:00Z"
+  },
+  "availability": {
+    "booking_count": 1,
+    "last_booking": {
+      "date": "2025-10-15",
+      "slot": "10:00",
+      "status": "confirmed",
+      "booked_at": "2025-10-11T15:46:08Z"
+    }
   }
 }
