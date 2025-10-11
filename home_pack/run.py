@@ -83,9 +83,9 @@ Suites: {len(roll['suites'])}
 Details:
 {json.dumps(roll['suites'], indent=2)}""")
     write(outdir, "home.html.txt", "<snapshot marker>")
-    update_test_index("Home", "v0.1.0", "✅ Home: readiness banner + nav smoke (6 pages) + visual (1 baseline)", "/home_test.html",
+    updated = update_test_index("Home", "v0.1.0", "✅ Home: readiness banner + nav smoke (6 pages) + visual (1 baseline)", "/home_test.html",
                       "/qa/home/v0.1.0/home.html.txt", "/qa/home/v0.1.0/tests.txt")
-    print(f"Updated test2: {update_test_index('Home', 'v0.1.0', '✅ Home: readiness banner + nav smoke (6 pages) + visual (1 baseline)', '/home_test.html', '/qa/home/v0.1.0/home.html.txt', '/qa/home/v0.1.0/tests.txt')}")
+    print(f"Updated test2: {updated}")
     print(f"Artifacts: {outdir}/tests.txt")
     print(json.dumps(roll, indent=2))
 
