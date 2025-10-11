@@ -51,6 +51,37 @@ export OI_BASE_URL="https://preview.replit.app"
 PYTHONPATH=. python release_gate/run_all.py
 ```
 
+## API Testing Backend
+
+The repository includes a FastAPI testing backend (`backend/`) for running QA packs against real HTTP endpoints.
+
+### Start the API Server
+
+```bash
+# From repository root
+bash scripts/serve_api.sh
+```
+
+The API will start on `http://127.0.0.1:8000`
+
+### Run Release Gate with API Mode
+
+```bash
+# In a separate terminal
+export HOME_API=1
+export HEALTH_URL="http://127.0.0.1:8000/health"
+PYTHONPATH=. python release_gate/run_all.py
+```
+
+This enables:
+- Backend health checking before pack execution
+- Real API endpoint validation
+- End-to-end flow testing with actual HTTP calls
+
+**API Documentation:** Visit http://127.0.0.1:8000/docs once the server is running
+
+See `backend/README.md` for complete API documentation.
+
 ## Installation
 
 ### Prerequisites
