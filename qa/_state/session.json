@@ -23,5 +23,16 @@
     "link_copied": true,
     "sections_toggled": true,
     "last_viewed": "2025-10-11T16:05:31Z"
+  },
+  "profiles": {
+    "profile_count": 2,
+    "last_created": {
+      "name": "Ava Trent",
+      "role": "Data Scientist",
+      "status": "Published",
+      "created_at": "2025-10-11T16:34:40Z"
+    },
+    "table_visible": true,
+    "workflows_validated": ["PF-LIST-VISIBLE-AFTER-LOAD", "PF-CREATE-SAVE-PUBLISH", "PF-NO-DISAPPEAR-POST-HYDRATE"]
   }
 }
