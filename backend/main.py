@@ -10,6 +10,8 @@ from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from dotenv import load_dotenv
 from addons.auth_ext import router as auth_ext_router
 from addons.notify_ext import router as notify_ext_router
+from addons.security_ext import router as security_ext_router
+from addons.stripe_ext_live import router as stripe_ext_live_router
 
 load_dotenv(override=True)
 
@@ -68,6 +70,8 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="OpenInterview MVP API", version="0.1.0")
 app.include_router(auth_ext_router)
 app.include_router(notify_ext_router)
+app.include_router(security_ext_router)
+app.include_router(stripe_ext_live_router)
 
 app.add_middleware(
     CORSMiddleware,
