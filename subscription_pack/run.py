@@ -56,7 +56,8 @@ Timestamp: {rollup["timestamp"]}"""
     with open(os.path.join(outdir,"subscription.html.txt"),"w",encoding="utf-8") as f: f.write(html)
 
     # Append row into test2.html under <section id="subscription">
-    description = "✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)"
+    mock_note = " (mock)" if os.environ.get("STRIPE_MOCK") == "1" else ""
+    description = "✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)" + mock_note
     page_url = contract["url"]
     code_path = f"/qa/subscription/{contract['version']}/subscription.html.txt"
     test_path = f"/qa/subscription/{contract['version']}/tests.txt"

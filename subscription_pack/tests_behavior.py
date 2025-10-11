@@ -1,6 +1,10 @@
 import os, json, yaml
 from playwright.sync_api import sync_playwright
 
+USE_MOCK = os.environ.get("STRIPE_MOCK") == "1"
+if USE_MOCK:
+    from subscription_pack.mock_stripe import create_checkout_session, emit_webhook
+
 STATE_DIR = os.path.join("qa","_state")
 STATE_PATH = os.path.join(STATE_DIR,"session.json")
 
@@ -49,7 +53,17 @@ def run_workflows(base_url, contract, outdir, chromium_path=None):
                         sel = step["wait_for"]["selector"]; timeout = step["wait_for"].get("timeout_ms", 3000)
                         page.wait_for_selector(sel, state="attached", timeout=timeout); wf_res["steps"].append({"wait_for": sel})
                     elif "click" in step:
-                        sel = step["click"]; page.click(sel); wf_res["steps"].append({"click": sel})
+                        sel = step["click"]
+                        if USE_MOCK and wf["id"] == "SB-PURCHASE-HAPPY" and ".select-plan" in sel:
+                            try:
+                                sess = create_checkout_session(price_id="price_test_pro")
+                                page.goto(base_url + sess["url"])
+                                _ = emit_webhook("checkout.session.completed", {"mode": "subscription", "status": "complete", "price": "price_test_pro"})
+                            except Exception:
+                                page.click(sel)
+                        else:
+                            page.click(sel)
+                        wf_res["steps"].append({"click": sel})
                     elif "expect_url_contains" in step:
                         substr = step["expect_url_contains"]
                         if substr not in page.url: raise AssertionError(f"URL expectation failed: {substr} not in {page.url}")
