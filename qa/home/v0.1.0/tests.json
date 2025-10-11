@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "suites": [
+    {
+      "contract": "PASS",
+      "count": 9
+    },
+    {
+      "security": "PASS"
+    },
+    {
+      "a11y": "PASS"
+    },
+    {
+      "behavior-readiness": "PASS",
+      "label": "System Ready"
+    },
+    {
+      "behavior-nav-hrefs": "PASS",
+      "count": 6
+    },
+    {
+      "visual": "PASS",
+      "baseline": "home-default.png"
+    }
+  ]
+}

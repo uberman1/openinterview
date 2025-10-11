@@ -2,7 +2,7 @@ import os, json
 from playwright.sync_api import sync_playwright, expect
 from home_pack.helpers import ensure_dir, update_test_index
 
-BASE_URL = os.environ.get("OI_BASE_URL", "http://127.0.0.1:8000")
+BASE_URL = os.environ.get("OI_BASE_URL", "http://127.0.0.1:5000")
 CHROMIUM_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium"
 
 def write(outdir, name, data):
