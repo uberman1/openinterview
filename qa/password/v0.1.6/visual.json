@@ -7,8 +7,8 @@
         "width": 1280,
         "height": 900
       },
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     },
     {
       "name": "success-default",
@@ -17,8 +17,8 @@
         "width": 1280,
         "height": 900
       },
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     }
   ],
   "status": "PASS"

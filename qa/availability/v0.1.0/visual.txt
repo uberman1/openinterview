@@ -3,20 +3,20 @@
     {
       "name": "slots-default",
       "url": "/availability_test.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     },
     {
       "name": "success-default",
       "url": "/availability/success.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     },
     {
       "name": "canceled-default",
       "url": "/availability/canceled.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     }
   ],
   "status": "PASS"

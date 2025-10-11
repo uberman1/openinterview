@@ -6,7 +6,7 @@ PACKS = [
     ("password", "python password_pack/run.py"),
     ("subscription", "python subscription_pack/run.py"),
     ("availability", "python availability_pack/run.py"),
-    ("shareable_profile", "python shareable_profile_pack/run.py"),
+    ("shareable_profile", "python profile_pack/run.py"),  # profile_pack outputs to qa/shareable_profile
     ("profiles", "python profiles_pack/run.py"),
     ("uploads", "python uploads_pack/run.py"),
     ("home", "python home_pack/run.py"),

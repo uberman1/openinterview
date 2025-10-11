@@ -3,8 +3,8 @@
     {
       "name": "profiles-default",
       "url": "/profiles_test.html",
-      "baseline_created": true,
-      "status": "WARN"
+      "diff_ratio": 0.0,
+      "status": "PASS"
     }
   ],
   "status": "PASS"

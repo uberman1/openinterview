@@ -7,7 +7,8 @@
   "subscription": {
     "plan": "pro",
     "status": "active",
-    "activated_at": "2025-10-11T12:30:00Z"
+    "activated_at": "2025-10-11T12:30:00Z",
+    "timestamp": "2025-10-11T19:28:05.078485+00:00"
   },
   "availability": {
     "booking_count": 1,
@@ -33,7 +34,11 @@
       "created_at": "2025-10-11T16:34:40Z"
     },
     "table_visible": true,
-    "workflows_validated": ["PF-LIST-VISIBLE-AFTER-LOAD", "PF-CREATE-SAVE-PUBLISH", "PF-NO-DISAPPEAR-POST-HYDRATE"]
+    "workflows_validated": [
+      "PF-LIST-VISIBLE-AFTER-LOAD",
+      "PF-CREATE-SAVE-PUBLISH",
+      "PF-NO-DISAPPEAR-POST-HYDRATE"
+    ]
   },
   "uploads": {
     "upload_count": 1,
@@ -43,9 +48,26 @@
       "type": "image/png",
       "uploaded_at": "2025-10-11T17:16:51Z"
     },
-    "features_validated": ["size_check", "mime_validation", "progress_bar", "cancel", "avatar_integration"],
+    "features_validated": [
+      "size_check",
+      "mime_validation",
+      "progress_bar",
+      "cancel",
+      "avatar_integration"
+    ],
     "max_size_mb": 5,
-    "mime_types_allowed": ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "application/pdf"],
+    "mime_types_allowed": [
+      "image/png",
+      "image/jpeg",
+      "image/jpg",
+      "image/gif",
+      "image/webp",
+      "application/pdf"
+    ],
     "version": "v0.1.1"
+  },
+  "security": {
+    "reset": true,
+    "timestamp": "2025-10-11T19:27:50.170381+00:00"
   }
 }
