@@ -1,0 +1,23 @@
+{
+  "shots": [
+    {
+      "name": "plans-default",
+      "url": "/subscription_test.html",
+      "baseline_created": true,
+      "status": "WARN"
+    },
+    {
+      "name": "success-default",
+      "url": "/subscription/success.html",
+      "baseline_created": true,
+      "status": "WARN"
+    },
+    {
+      "name": "canceled-default",
+      "url": "/subscription/canceled.html",
+      "baseline_created": true,
+      "status": "WARN"
+    }
+  ],
+  "status": "PASS"
+}

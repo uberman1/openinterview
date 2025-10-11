@@ -1,0 +1,58 @@
+page: subscription
+version: v0.1.0
+section_id: subscription
+url: /subscription_test.html
+
+headers:
+  expect_csp: true
+  allow_meta_csp: true
+
+dom:
+  must_exist:
+    - css: "main#content"
+    - css: "#billing_toggle"
+    - css: ".card[data-plan='starter'] .select-plan"
+    - css: ".card[data-plan='pro'] .select-plan"
+    - css: ".card[data-plan='team'] .select-plan"
+    - css: "#pm_brand"
+    - css: "#pm_last4"
+    - css: "#manage_billing"
+    - css: "#cancel_plan"
+
+a11y:
+  ruleset: wcag2aa
+  max_serious: 0
+  max_critical: 0
+
+visual:
+  baselines:
+    - name: plans-default
+      url: /subscription_test.html
+      selector: body
+      viewport: { width: 1280, height: 900 }
+    - name: success-default
+      url: /subscription/success.html
+      selector: body
+      viewport: { width: 1280, height: 900 }
+    - name: canceled-default
+      url: /subscription/canceled.html
+      selector: body
+      viewport: { width: 1280, height: 900 }
+  threshold: 0.001
+
+responsive:
+  viewports:
+    - { width: 375, height: 812, name: mobile }
+    - { width: 1280, height: 900, name: desktop }
+
+workflows:
+  - id: SB-PURCHASE-HAPPY
+    steps:
+      - visit: /subscription_test.html
+      - click: ".card[data-plan='pro'] .select-plan"
+      - expect_url_contains: "/subscription/success"
+  - id: SB-CANCEL-AT-PERIOD-END
+    steps:
+      - visit: /subscription_test.html
+      - click: "#cancel_plan"
+      - expect_url_contains: "/subscription/canceled"
