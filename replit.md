@@ -8,6 +8,18 @@ This is a full-stack TypeScript application with an Express backend, React front
 
 ## Recent Changes
 
+**Auth & Session Pack v0.1.1 - QA Integration (October 2025)**
+- Integrated passwordless OTP authentication testing pack into release gate orchestration
+- Backend auth extension (`backend/addons/auth_ext.py`) with 5 endpoints: signup, verify, logout, session, csrf
+- Comprehensive test suite: contract (9 selectors), behavior (signup flow with async wait), a11y (live region), security (CSP), visual (baseline)
+- Same-origin security: CORS restricted to `["http://localhost:8000", "http://127.0.0.1:8000"]` with credentials enabled
+- Frontend test harness: `public/auth_test.html` with same-origin binder (`auth.bind.js`) using `window.location.origin`
+- System chromium integration with executable_path for headless Playwright testing
+- Release gate expanded to 8 packs (password, subscription, availability, shareable_profile, profiles, uploads, home, auth)
+- All packs achieving 100% PASS rate in CI/CD validation
+- Test artifacts: `qa/auth/v0.1.1/` with tests.json, tests.txt, and visual baselines
+- New files: `auth_pack/tests.py`, `auth_pack/run.py`, `public/auth_test.html`, `public/auth.bind.js`, `scripts/patch_backend_cors.sh`
+
 **Module 12 - Admin Console UI and Feature Flags (October 2025)**
 - Added feature flags storage system (`/server/flags.store.ts`) with 5 flags: enableEmails, enablePayments, enableCloudStorage, enableSupabase, enableVideoPipeline
 - Implemented admin console routes (`/server/admin.console.routes.ts`):
