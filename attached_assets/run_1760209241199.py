@@ -2,8 +2,7 @@ import os, json
 from playwright.sync_api import sync_playwright, expect
 from home_pack.helpers import ensure_dir, update_test_index
 
-BASE_URL = os.environ.get("OI_BASE_URL", "http://127.0.0.1:5000")
-CHROMIUM_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium"
+BASE_URL = os.environ.get("OI_BASE_URL", "http://127.0.0.1:8000")
 HOME_API = os.environ.get("HOME_API", "0")  # '1' enables API-mode
 HEALTH_URL = os.environ.get("HEALTH_URL")   # e.g., https://<preview>/health
 
@@ -46,7 +45,7 @@ def main():
     roll = {"status":"PASS","suites":[],"version":"v0.1.1","api_mode": HOME_API=="1"}
 
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(executable_path=CHROMIUM_PATH)
+        browser = pw.chromium.launch()
         ctx = browser.new_context()
         page = ctx.new_page()
 
@@ -109,23 +108,15 @@ def main():
 
         ctx.close(); browser.close()
 
+    write(outdir, "tests.txt", roll)
     write(outdir, "tests.json", roll)
-    write(outdir, "tests.txt", f"""Status: {roll['status']}
-Suites: {len(roll['suites'])}
-Version: {roll['version']}
-API Mode: {roll['api_mode']}
-
-Details:
-{json.dumps(roll['suites'], indent=2)}""")
     write(outdir, "home.html.txt", "<snapshot marker>")
 
     # Update test2.html
-    description = "✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)"
-    updated = update_test_index("Home", "v0.1.1", description, "/home_test.html",
+    description = "Home QA surface: readiness banner + nav smoke + visual baseline + optional API-mode health"
+    update_test_index("Home", "v0.1.1", description, "/home_test.html",
                       "/qa/home/v0.1.1/home.html.txt", "/qa/home/v0.1.1/tests.txt")
-    
-    print(f"Updated test2: {updated}")
-    print(f"Artifacts: {outdir}/tests.txt")
+
     print(json.dumps(roll, indent=2))
 
 if __name__ == "__main__":
