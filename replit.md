@@ -6,6 +6,17 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Stage 5 v0.5.0 - Pilot & UAT (October 2025)**
+- Deployed UAT/pilot quality gate with structured feedback capture
+- **UAT Hub** (`public/uat_hub.html`): Web-based feedback form with localStorage persistence
+- **Prerequisite Validation**: Checks Bundle A/B/C artifacts exist
+- **Health Check**: Optional /health endpoint validation with EXPECT_LIVE enforcement
+- **Feedback Export** (`stage5/export_feedback.py`): Export localStorage to individual JSON files
+- **Artifact Collection**: Machine-readable (summary.json) and human-readable (tests.txt) results in qa/stage5/v0.5.0/
+- Infrastructure tracking: test2.html updated with "UAT – Stage 5" section
+- Release gate integration: Runs after Stage 4 in complete pipeline
+- Documentation: README_STAGE5.md (quick reference), stage5/README.md (comprehensive), STAGE5_COMPLETE.md (summary)
+
 **Stage 4 v0.4.0 - Production Go-Live Readiness (October 2025)**
 - Deployed final production go-live validation gate
 - **Health Contract** (`stage4/run_stage4.py`): /health endpoint validation with latency tracking

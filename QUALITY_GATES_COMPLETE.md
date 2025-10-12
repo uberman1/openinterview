@@ -16,9 +16,57 @@
 | **Bundle C** | Governance | Multi-tenant | requests | 13+ tests | ✅ PASS |
 | **Stage 3** | Staging Pilot | API Mode | requests | 5 checks | ✅ READY |
 | **Stage 4** | Go-Live | Production | requests | 4 checks | ✅ READY |
+| **Stage 5** | UAT/Pilot | Feedback | Python | 3 checks | ✅ READY |
 | **Packs 1-9** | Features | E2E | Playwright | 45+ tests | ✅ READY |
 
-**Total:** 90+ automated tests + 13 protected files + 5 smoke checks + 4 go-live checks across 13 release gate packs + 3 quality stages!
+**Total:** 120+ quality checks (13 files + 90+ tests + 5 smoke + 4 go-live + 3 UAT) across 13 release gate packs + 4 quality stages!
+
+---
+
+## 🚀 Stage 5 - Pilot & UAT
+
+### Overview
+UAT/pilot quality gate with structured feedback capture for real user testing.
+
+### UAT Checks (3 categories)
+- **Prerequisite Validation:** Checks Bundle A/B/C artifacts exist
+- **Health Check (Optional):** `/health` endpoint validation with EXPECT_LIVE enforcement
+- **Feedback Tracking:** Scans and reports UAT feedback count
+
+### Features
+- ✅ UAT hub page (`/uat_hub.html`) for feedback capture
+- ✅ localStorage persistence with export to JSON
+- ✅ Structured feedback fields (tester, feature, flow, rating, notes)
+- ✅ Prerequisite artifact validation
+- ✅ Optional health checking
+- ✅ Release gate integration
+- ✅ CI/CD workflow
+
+### Results
+```json
+{
+  "stage": "5",
+  "version": "v0.5.0",
+  "status": "PASS",
+  "prereqs": {"ok": true, "msg": "All prerequisite artifacts present"},
+  "health": {"enabled": true, "healthy": true},
+  "uat_hub": {"count": 3}
+}
+```
+
+### Usage
+```bash
+# Run Stage 5 with health check
+export HEALTH_URL="http://127.0.0.1:8000/health"
+export EXPECT_LIVE=1
+PYTHONPATH=. python stage5/run_stage5.py
+
+# Open UAT hub for feedback
+# Navigate to: /uat_hub.html
+
+# Export feedback
+python stage5/export_feedback.py
+```
 
 ---
 
