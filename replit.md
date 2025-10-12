@@ -6,6 +6,16 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Stage 7 v0.7.0 - UAT Launch Pack (October 2025)**
+- Deployed comprehensive UAT readiness validation with end-to-end smoke tests
+- **Critical Flows** (`stage7/tests_api/smoke_critical_flows.py`): 10 E2E tests (auth, Stripe, profiles, availability, uploads, notifications)
+- **Governance Checks** (`stage7/tests_api/governance_checks.py`): 3 operational tests (extended health, Prometheus metrics, audit export)
+- **Backend Integration** (`stage7/patch_backend_imports.py`): Auto-patch helper for Stage 6 routers
+- **UAT Orchestrator** (`stage7/run_stage7.py`): Complete flow validation with artifact tracking
+- **Status Dashboard** (`public/stage7_status.html`): UAT readiness display
+- Release gate integration: Runs after Stage 6 as final pre-UAT validation
+- Documentation: README_STAGE7.md (quick reference), stage7/README.md (comprehensive), STAGE7_COMPLETE.md (summary)
+
 **Stage 6 v0.6.0 - Provider Sandbox & Shadow-Mode (October 2025)**
 - Deployed provider sandbox testing with mock-first defaults
 - **Provider Flags** (`backend/addons/provider_flags.py`): Centralized feature flag system
