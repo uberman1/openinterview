@@ -6,6 +6,17 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Stage 6 v0.6.0 - Provider Sandbox & Shadow-Mode (October 2025)**
+- Deployed provider sandbox testing with mock-first defaults
+- **Provider Flags** (`backend/addons/provider_flags.py`): Centralized feature flag system
+- **Stripe Sandbox** (`backend/addons/stripe_live_ext.py`): Checkout and webhook endpoints with test mode
+- **Notify Sandbox** (`backend/addons/notify_live_ext.py`): Email provider with file outbox and sandbox mode
+- **Smoke Tests** (`stage6/tests_api/`): Requests-based Stripe and notify validation
+- **Shadow-Mode**: Optional parallel validation (FEATURE_SHADOW_CALLS=1)
+- **Status Dashboard** (`public/stage6_status.html`): Feature flag display and usage instructions
+- Release gate integration: Runs after Stage 5 in complete pipeline
+- Documentation: README_STAGE6.md (quick reference), stage6/README.md (comprehensive), STAGE6_COMPLETE.md (summary)
+
 **Stage 5 v0.5.0 - Pilot & UAT (October 2025)**
 - Deployed UAT/pilot quality gate with structured feedback capture
 - **UAT Hub** (`public/uat_hub.html`): Web-based feedback form with localStorage persistence

@@ -17,9 +17,59 @@
 | **Stage 3** | Staging Pilot | API Mode | requests | 5 checks | ✅ READY |
 | **Stage 4** | Go-Live | Production | requests | 4 checks | ✅ READY |
 | **Stage 5** | UAT/Pilot | Feedback | Python | 3 checks | ✅ READY |
+| **Stage 6** | Providers | Sandbox | requests | 2 checks | ✅ READY |
 | **Packs 1-9** | Features | E2E | Playwright | 45+ tests | ✅ READY |
 
-**Total:** 120+ quality checks (13 files + 90+ tests + 5 smoke + 4 go-live + 3 UAT) across 13 release gate packs + 4 quality stages!
+**Total:** 125+ quality checks (13 files + 90+ tests + 5 smoke + 4 go-live + 3 UAT + 2 provider) across 13 release gate packs + 5 quality stages!
+
+---
+
+## 🚀 Stage 6 - Provider Sandbox & Shadow-Mode
+
+### Overview
+Provider sandbox testing with mock-first defaults and optional shadow-mode validation.
+
+### Provider Checks (2 categories)
+- **Stripe Sandbox**: Checkout endpoint, webhook echo, mode detection
+- **Notify Sandbox**: Send endpoint, outbox validation, path tracking
+
+### Features
+- ✅ Feature flags system (mock-first defaults)
+- ✅ Stripe sandbox adapter (test mode, no real charges)
+- ✅ Email/notify adapter (file outbox, sandbox mode)
+- ✅ Shadow-mode validation (parallel calls, log-only)
+- ✅ Status dashboard (`/stage6_status.html`)
+- ✅ Requests-based smoke tests
+- ✅ Release gate integration
+
+### Results
+```json
+{
+  "stage6_v0_6_0": {
+    "stripe_sandbox": {
+      "status": "PASS",
+      "details": {"checkout_url": "https://sandbox.stripe.com/checkout/session/test"}
+    },
+    "notify_sandbox": {
+      "status": "PASS",
+      "details": {"outbox_path": "qa/notify/outbox/1697123456_generic.json"}
+    }
+  },
+  "status": "PASS"
+}
+```
+
+### Usage
+```bash
+# Run Stage 6 with sandbox mode
+export OI_BASE_URL="http://127.0.0.1:8000"
+export STRIPE_TEST=1
+export NOTIFY_MODE=sandbox
+PYTHONPATH=. python stage6/run_stage6.py
+
+# View status dashboard
+# Navigate to: /stage6_status.html
+```
 
 ---
 
