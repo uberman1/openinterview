@@ -1,8 +1,8 @@
-# Bundles A & B v0.2.0 - Complete Integration ✅
+# Bundles A, B & C v0.2.0 - Complete Integration ✅
 
 ## Overview
 
-Both Bundle A (API/Backend) and Bundle B (UI/Frontend) v0.2.0 have been successfully integrated, providing **full-stack quality assurance** from API contracts to user experience. The release gate now includes 11 comprehensive test packs covering security, payments, notifications, accessibility, performance, responsive design, and error handling.
+All three quality bundles (A: API Security, B: UI Quality, C: Governance) v0.2.0 have been successfully integrated, providing **comprehensive enterprise-grade quality assurance** from API security to user experience to multi-tenant governance. The release gate now includes 12 comprehensive test packs covering security, payments, notifications, accessibility, performance, responsive design, organizations, audit logging, and metrics.
 
 ## 📦 Bundle A v0.2.0 - API Quality Gate
 
@@ -41,9 +41,27 @@ Both Bundle A (API/Backend) and Bundle B (UI/Frontend) v0.2.0 have been successf
 - ✅ Infrastructure tracking: "Quality Gate – UI" in test2.html
 - ✅ CI/CD: `ci/snippets/bundle_b_quality_gate.yml`
 
+## 🏢 Bundle C v0.2.0 - Governance Extensions
+
+### Components
+- 🏢 **Organization Management** - Multi-tenant orgs with RBAC
+- 📋 **Audit Log** - Blockchain-inspired hash chain with PII redaction
+- 📊 **Metrics** - Prometheus-compatible observability
+
+### Test Suite (requests-based)
+- `org_test.py` - Organization CRUD, invitations, RBAC enforcement
+- `audit_test.py` - Hash chain integrity, PII redaction validation
+- `metrics_test.py` - Prometheus metrics, extended health checks
+
+### Integration
+- ✅ Release gate pack #12
+- ✅ Artifact saving: `qa/bundle_c/v0.2.0/`
+- ✅ Infrastructure tracking: "Quality Gate – Governance" in test2.html
+- ✅ CI/CD: `ci/snippets/bundle_c_quality_gate.yml`
+
 ## 🔄 Release Gate Overview
 
-### Complete Pack List (11 total)
+### Complete Pack List (12 total)
 
 1. **password** - Password reset functionality
 2. **subscription** - Subscription management
@@ -56,6 +74,7 @@ Both Bundle A (API/Backend) and Bundle B (UI/Frontend) v0.2.0 have been successf
 9. **notify** - Notification system
 10. **bundle_a** - API quality gate (security, Stripe, email)
 11. **bundle_b** - UI quality gate (a11y, perf, responsive, errors)
+12. **bundle_c** - Governance gate (org, audit, metrics)
 
 ### Running the Full Gate
 
@@ -75,9 +94,10 @@ PYTHONPATH=. python release_gate/run_all.py
 |-------|--------|------|-------|-------|
 | **API** | Bundle A | requests | 7 | ~10s |
 | **UI** | Bundle B | Playwright | 28+ | ~30s |
+| **Governance** | Bundle C | requests | 13+ | ~10s |
 | **Feature** | Packs 1-9 | Playwright | 45+ | ~5min |
 
-**Total:** 80+ automated tests across API, UI, and features
+**Total:** 90+ automated tests across API, UI, governance, and features
 
 ## 🎯 Quality Matrix
 
@@ -87,6 +107,9 @@ PYTHONPATH=. python release_gate/run_all.py
 | Security | CSRF, rate limit, sessions | ✅ |
 | Payments | Webhook signatures | ✅ |
 | Notifications | Email templates | ✅ |
+| Organizations | CRUD, RBAC, invitations | ✅ |
+| Audit | Hash chain, PII redaction | ✅ |
+| Metrics | Prometheus, health checks | ✅ |
 
 ### Frontend (Bundle B)
 | Category | Pages | Status |
@@ -99,7 +122,7 @@ PYTHONPATH=. python release_gate/run_all.py
 ## 📁 Complete File Structure
 
 ```
-bundle_a/                          # API Quality Gate
+bundle_a/                          # API Security Gate
 ├── tests_api/
 │   ├── security_test.py
 │   ├── stripe_test.py
@@ -120,30 +143,51 @@ bundle_b/                          # UI Quality Gate
 ├── requirements.txt               # playwright==1.47.2
 └── README.md
 
+bundle_c/                          # Governance Gate
+├── tests_api/
+│   ├── org_test.py
+│   ├── audit_test.py
+│   └── metrics_test.py
+├── run_bundle_c_tests.py
+├── requirements.txt               # requests==2.32.3
+└── README.md
+
 qa/
 ├── bundle_a/v0.2.0/
 │   ├── tests.json
 │   └── tests.txt
-└── bundle_b/v0.2.0/
-    └── tests.json
+├── bundle_b/v0.2.0/
+│   └── tests.json
+└── bundle_c/v0.2.0/
+    ├── tests.json
+    └── tests.txt
 
 scripts/
 ├── apply_bundle_a_gate_patch.py
-├── update_test2_index.py          # Bundle A infra
-├── update_test2_index_bundle_b.py # Bundle B UI
+├── apply_bundle_c_gate_patch.py
+├── update_test2_index.py              # Bundle A infra
+├── update_test2_index_bundle_b.py     # Bundle B UI
+├── update_test2_index_bundle_c.py     # Bundle C governance
 └── start_backend_foreground.sh
 
 ci/snippets/
-├── bundle_a_gate.yml              # API tests
-└── bundle_b_quality_gate.yml      # UI tests
+├── bundle_a_gate.yml                  # API security tests
+├── bundle_b_quality_gate.yml          # UI tests
+└── bundle_c_quality_gate.yml          # Governance tests
+
+backend/addons/
+├── org_ext.py                         # Organization RBAC
+├── audit_ext.py                       # Audit hash chain
+└── metrics_ext.py                     # Prometheus metrics
 
 public/
-└── test2.html                     # Infrastructure tracking
+└── test2.html                         # Infrastructure tracking
     ├── Release Gate – Infra (Bundle A)
-    └── Quality Gate – UI (Bundle B)
+    ├── Quality Gate – UI (Bundle B)
+    └── Quality Gate – Governance (Bundle C)
 
 release_gate/
-└── run_all.py                     # 11 packs total
+└── run_all.py                         # 12 packs total
 ```
 
 ## 🚀 Quick Start

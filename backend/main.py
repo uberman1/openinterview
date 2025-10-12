@@ -1,5 +1,8 @@
 
 from fastapi import FastAPI, HTTPException, Request
+from addons.org_ext import router as org_router
+from addons.audit_ext import router as audit_router
+from addons.metrics_ext import router as metrics_router
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
@@ -238,3 +241,7 @@ def get_upload(upload_id: int):
     return {"id": rec.id, "filename": rec.filename, "mime": rec.mime, "size": rec.size}
 
 app.mount("/public", StaticFiles(directory="../public"), name="public")
+
+app.include_router(org_router)
+app.include_router(audit_router)
+app.include_router(metrics_router)

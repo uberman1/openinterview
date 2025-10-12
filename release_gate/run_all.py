@@ -15,6 +15,7 @@ PACKS = [
 
     ("bundle_a", "python bundle_a/run_bundle_a_tests.py"),
     ("bundle_b", "python bundle_b/run_bundle_b_tests.py"),
+    ("bundle_c", "python bundle_c/run_bundle_c_tests.py"),
 ]
 
 def run(cmd):

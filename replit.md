@@ -6,6 +6,18 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Bundle C v0.2.0 - Governance Extensions (October 2025)**
+- Deployed enterprise-grade governance features for multi-tenant applications
+- **Organization Extension** (`backend/addons/org_ext.py`): Multi-tenant orgs with RBAC (owner/admin/member), invitations, role management
+- **Audit Extension** (`backend/addons/audit_ext.py`): Blockchain-inspired hash chain audit log with SHA-256 integrity, PII redaction
+- **Metrics Extension** (`backend/addons/metrics_ext.py`): Prometheus-compatible metrics, extended health endpoint with uptime
+- Backend integration: org_router, audit_router, metrics_router wired into main.py
+- Requests-based test suite: bundle_c/tests_api with org_test (RBAC), audit_test (hash chain), metrics_test (Prometheus)
+- Release gate integration: Bundle C added as 12th pack in run_all.py
+- Infrastructure tracking: test2.html updated with "Quality Gate – Governance" section
+- CI/CD snippet: bundle_c_quality_gate.yml for GitHub Actions automation
+- Documentation: BUNDLE_C_INTEGRATION.md with comprehensive governance guide
+
 **Bundle B v0.2.0 - UI Quality Gate (October 2025)**
 - Deployed Playwright-based UI quality gate with comprehensive frontend testing
 - **Accessibility Tests** (`bundle_b/tests_ui/a11y_smoke.py`): ARIA landmarks, semantic HTML, screen reader compatibility across 7 test pages

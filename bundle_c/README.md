@@ -1,0 +1,23 @@
+# Bundle C v0.2.0 — Organizations, Audit, Metrics
+
+## Quick Start
+1) Patch backend to include routers:
+   ```bash
+   python scripts/apply_bundle_c_gate_patch.py
+   ```
+2) Start backend (in another terminal):
+   ```bash
+   cd backend && uvicorn main:app --host 0.0.0.0 --port 8000
+   ```
+3) Run tests:
+   ```bash
+   PYTHONPATH=. python bundle_c/run_bundle_c_tests.py
+   ```
+4) Add row to test2.html:
+   ```bash
+   python scripts/update_test2_index_bundle_c.py
+   ```
+5) Wire into Release Gate:
+   ```bash
+   python scripts/update_release_gate_for_bundle_c.py
+   ```
