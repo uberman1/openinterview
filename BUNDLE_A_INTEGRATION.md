@@ -54,14 +54,41 @@ STRIPE_SIGNING_SECRET=whsec_dev
 NOTIFY_MODE=mock
 ```
 
-## 📋 Manual Verification Steps
+## 🚀 Running Bundle A Tests
 
-### Start Backend
+### Method 1: Requests-Based API Tests (Recommended)
+
+The `/bundle_a` directory contains pure HTTP tests using the `requests` library, avoiding Playwright/browser process constraints.
+
+**Step 1: Start Backend** (in terminal 1 or separate workflow)
+```bash
+bash scripts/start_backend_foreground.sh
+# Or manually:
+cd backend && uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+**Step 2: Run Tests** (in terminal 2)
+```bash
+# All Bundle A tests
+PYTHONPATH=. python bundle_a/run_bundle_a_tests.py
+
+# Individual test modules
+PYTHONPATH=. python bundle_a/tests_api/security_test.py
+PYTHONPATH=. python bundle_a/tests_api/stripe_test.py
+PYTHONPATH=. python bundle_a/tests_api/notify_test.py
+
+# Via release gate
+PYTHONPATH=. python release_gate/patch_run_all.py
+```
+
+### Method 2: Manual cURL Tests
+
+**Start Backend**
 ```bash
 cd backend && uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-### Test Security Extension
+**Test Security Extension**
 ```bash
 # CSRF Token
 curl http://localhost:8000/api/security/csrf
@@ -126,15 +153,36 @@ cat qa/notify/outbox/*.json | jq
 - Tests: OTP email send, generic email send, outbox growth verification
 - Requirements: System chromium, running backend on port 8000
 
-## ⚠️ Known Limitations
+## ⚠️ Known Limitations & Solutions
 
-### Environment Constraints
-The Replit environment has process management constraints that prevent background FastAPI backends from persisting when Playwright/Chromium launches. This affects automated test execution via `patch_run_all.py`.
+### Environment Process Constraints
+The Replit environment has process management constraints where background processes (started with `nohup`, `&`, or `subprocess`) may terminate unexpectedly. This particularly affects combinations of:
+- FastAPI backend running in background
+- Concurrent Python test execution
+- Any process spawning (including `requests` library in some cases)
 
-**Workaround Options:**
-1. **Manual Testing:** Start backend manually, run tests in separate terminal
-2. **Alternative Test Framework:** Use `requests` library instead of Playwright for API testing
-3. **Integration into Existing Packs:** Merge Bundle A tests into existing auth/notify/subscription packs
+### ✅ Implemented Solutions
+
+**Bundle A Requests-Based Tests** (`/bundle_a`)
+- Pure HTTP tests using `requests` library (no Playwright/Chromium)
+- Requires manual backend startup in separate terminal/workflow
+- Tests: `security_test.py`, `stripe_test.py`, `notify_test.py`
+- Main runner: `bundle_a/run_bundle_a_tests.py`
+- Release gate: `release_gate/patch_run_all.py`
+
+### 📝 Recommended Testing Workflow
+
+**Option 1: Two-Terminal Approach**
+1. Terminal 1: `bash scripts/start_backend_foreground.sh`
+2. Terminal 2: `PYTHONPATH=. python bundle_a/run_bundle_a_tests.py`
+
+**Option 2: Manual Verification**
+1. Start backend: `cd backend && uvicorn main:app --host 0.0.0.0 --port 8000`
+2. Use cURL commands documented above to test endpoints
+
+**Option 3: External CI/CD**
+- GitHub Actions, GitLab CI, or other runners without these constraints
+- Automated testing in production-like environments
 
 ## 🚀 Production Deployment Checklist
 
