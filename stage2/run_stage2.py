@@ -51,6 +51,14 @@ def main():
     
     # Generate summary
     results_file = 'qa/stage2/verification_results.json'
+    results = {
+        'status': 'UNKNOWN',
+        'total': 0,
+        'passed': 0,
+        'violations': 0,
+        'missing': 0
+    }
+    
     if os.path.exists(results_file):
         with open(results_file) as f:
             results = json.load(f)
