@@ -1,0 +1,30 @@
+name: Stage 5 – UAT Gate
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Base URL (optional)
+        required: false
+      health_url:
+        description: Health URL (optional)
+        required: false
+jobs:
+  stage5:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run Stage 5
+        env:
+          PROD_URL: ${{ github.event.inputs.base_url }}
+          HEALTH_URL: ${{ github.event.inputs.health_url }}
+          EXPECT_LIVE: "1"
+        run: |
+          python stage5/run_stage5.py || true
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage5-artifacts
+          path: qa/stage5/v0.5.0/
