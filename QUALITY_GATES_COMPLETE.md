@@ -14,9 +14,57 @@
 | **Bundle A** | API Security | Backend | requests | 7 tests | ✅ PASS |
 | **Bundle B** | UI Quality | Frontend | Playwright | 28+ tests | ✅ PASS |
 | **Bundle C** | Governance | Multi-tenant | requests | 13+ tests | ✅ PASS |
+| **Stage 3** | Staging Pilot | API Mode | requests | 5+ checks | ✅ READY |
 | **Packs 1-9** | Features | E2E | Playwright | 45+ tests | ✅ READY |
 
-**Total:** 90+ automated tests + 13 protected files across 12 release gate packs!
+**Total:** 90+ automated tests + 13 protected files + 5 smoke checks across 13 release gate packs + 2 quality stages!
+
+---
+
+## 🚀 Stage 3 - Staging Pilot & Production Hardening
+
+### Overview
+Production readiness validation through API-mode testing and smoke checks.
+
+### Smoke Tests (5 checks)
+- **Health Check:** `/health` endpoint validation
+- **Auth CSRF:** `/api/auth/csrf` endpoint
+- **Security CSRF:** `/api/security/csrf` endpoint
+- **Stripe Webhook:** Signature validation (negative test)
+- **Notify Outbox:** `/api/notify/outbox` endpoint
+
+### Features
+- ✅ Requests-based smoke tests
+- ✅ Release gate integration (API mode)
+- ✅ Comprehensive artifact collection
+- ✅ Infrastructure tracking (test2.html)
+- ✅ CI/CD workflow (GitHub Actions)
+- ✅ Pilot checklist & rollout plan
+- ✅ Monitoring setup guidelines
+
+### Results
+```json
+{
+  "stage": "stage3_v0_3_0",
+  "status": "READY",
+  "smoke": {
+    "status": "READY",
+    "checks": 5
+  },
+  "release_gate_exit_code": 0
+}
+```
+
+### Usage
+```bash
+# Start backend
+bash scripts/serve_api.sh
+
+# Run Stage 3
+export HOME_API=1
+export OI_BASE_URL="http://127.0.0.1:8000"
+PYTHONPATH=. python stage3/run_stage3.py
+```
 
 ---
 

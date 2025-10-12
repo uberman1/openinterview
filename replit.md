@@ -6,6 +6,16 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Stage 3 v0.3.0 - Staging Pilot & Production Hardening (October 2025)**
+- Deployed production readiness validation with API-mode testing
+- **Smoke Tests** (`stage3/smoke_tests.py`): 5 critical endpoint checks (health, auth CSRF, security CSRF, Stripe webhook, notify outbox)
+- **Release Gate Integration**: Full 12-pack validation in API mode (HOME_API=1)
+- **Artifact Collection**: Comprehensive results saved to qa/stage3/v0.3.0/ (smoke_results.json, summary.json, release gate logs)
+- **Pilot Resources**: Checklist, rollout plan, monitoring setup guidelines
+- Infrastructure tracking: test2.html updated with "Stage 3 – Staging Pilot" section
+- CI/CD snippet: stage3_pipeline.yml for GitHub Actions automation
+- Documentation: README_STAGE3.md (quick reference), stage3/README.md (comprehensive), STAGE3_COMPLETE.md (summary)
+
 **Stage 2 v0.2.0 - Guardrails Quality Gate (October 2025)**
 - Deployed byte-level file protection for 13 critical UI files
 - **Guardrails System** (`stage2/`): SHA-256 hash verification, baseline locking, violation detection
