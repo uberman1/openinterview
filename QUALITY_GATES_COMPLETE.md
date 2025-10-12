@@ -14,10 +14,56 @@
 | **Bundle A** | API Security | Backend | requests | 7 tests | ✅ PASS |
 | **Bundle B** | UI Quality | Frontend | Playwright | 28+ tests | ✅ PASS |
 | **Bundle C** | Governance | Multi-tenant | requests | 13+ tests | ✅ PASS |
-| **Stage 3** | Staging Pilot | API Mode | requests | 5+ checks | ✅ READY |
+| **Stage 3** | Staging Pilot | API Mode | requests | 5 checks | ✅ READY |
+| **Stage 4** | Go-Live | Production | requests | 4 checks | ✅ READY |
 | **Packs 1-9** | Features | E2E | Playwright | 45+ tests | ✅ READY |
 
-**Total:** 90+ automated tests + 13 protected files + 5 smoke checks across 13 release gate packs + 2 quality stages!
+**Total:** 90+ automated tests + 13 protected files + 5 smoke checks + 4 go-live checks across 13 release gate packs + 3 quality stages!
+
+---
+
+## 🚀 Stage 4 - Production Go-Live Readiness
+
+### Overview
+Final production validation gate with health, performance, security, and provider checks.
+
+### Go-Live Checks (4 categories)
+- **Health Contract:** `/health` endpoint validation (HTTP 200, accepted JSON format)
+- **Canary Pings:** 5 consecutive requests, p95 latency SLO < 1000ms
+- **Root Headers:** CSP header presence on base URL
+- **Provider Guard:** Stripe and email configuration validation
+
+### Features
+- ✅ Health contract validation with latency tracking
+- ✅ Performance SLO (p95 < 1000ms)
+- ✅ Security header checks (CSP)
+- ✅ Provider configuration guard (EXPECT_LIVE mode)
+- ✅ Comprehensive artifacts (JSON + TXT)
+- ✅ Infrastructure tracking (test2.html)
+- ✅ CI/CD workflow (workflow dispatch)
+
+### Results
+```json
+{
+  "stage": "Stage 4 – Production Go-Live Readiness",
+  "status": "PASS",
+  "checks": {
+    "health": {"ok": true, "latency_ms": 45.23},
+    "canary": {"oks": 5, "p95_ms": 52.15},
+    "root_headers": {"csp_present": true},
+    "provider_issues": []
+  }
+}
+```
+
+### Usage
+```bash
+# Run against production/staging
+export PROD_URL="https://yourapp.com"
+export EXPECT_LIVE=1
+export ALLOW_PROVIDER_MOCK=0
+PYTHONPATH=. python stage4/run_stage4.py
+```
 
 ---
 

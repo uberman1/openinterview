@@ -6,6 +6,17 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Stage 4 v0.4.0 - Production Go-Live Readiness (October 2025)**
+- Deployed final production go-live validation gate
+- **Health Contract** (`stage4/run_stage4.py`): /health endpoint validation with latency tracking
+- **Canary Pings**: 5 consecutive requests with p95 latency SLO (< 1000ms)
+- **Security Headers**: CSP header validation on root endpoint
+- **Provider Guard**: Stripe and email provider configuration checks (EXPECT_LIVE mode)
+- **Artifact Collection**: Machine-readable (summary.json) and human-readable (tests.txt) results in qa/stage4/v0.4.0/
+- Infrastructure tracking: test2.html updated with "Stage 4 – Production Go-Live" section
+- CI/CD snippet: stage4_pipeline.yml for GitHub Actions with workflow dispatch
+- Documentation: README_STAGE4.md (quick reference), stage4/README.md (comprehensive), STAGE4_COMPLETE.md (summary)
+
 **Stage 3 v0.3.0 - Staging Pilot & Production Hardening (October 2025)**
 - Deployed production readiness validation with API-mode testing
 - **Smoke Tests** (`stage3/smoke_tests.py`): 5 critical endpoint checks (health, auth CSRF, security CSRF, Stripe webhook, notify outbox)
