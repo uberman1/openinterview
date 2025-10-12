@@ -6,6 +6,17 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Bundle B v0.2.0 - UI Quality Gate (October 2025)**
+- Deployed Playwright-based UI quality gate with comprehensive frontend testing
+- **Accessibility Tests** (`bundle_b/tests_ui/a11y_smoke.py`): ARIA landmarks, semantic HTML, screen reader compatibility across 7 test pages
+- **Performance Tests** (`bundle_b/tests_ui/perf_smoke.py`): DOMContentLoaded (<2.5s) and Load (<3.5s) metrics validation
+- **Responsive Tests** (`bundle_b/tests_ui/responsive_smoke.py`): Mobile (375x812) and desktop (1280x900) layout validation, no horizontal overflow
+- **Error State Tests** (`bundle_b/tests_ui/error_state_smoke.py`): Graceful degradation and user feedback validation
+- Release gate integration: Bundle B added as 11th pack in run_all.py
+- Infrastructure tracking: test2.html updated with "Quality Gate – UI" section
+- CI/CD snippet: bundle_b_quality_gate.yml for GitHub Actions automation
+- Documentation: BUNDLE_B_INTEGRATION.md with comprehensive testing guide
+
 **Bundle A v0.2.0 - Security & Production Hardening (October 2025)**
 - Deployed production-ready security, Stripe, and notification provider adapters
 - **Security Extension** (`backend/addons/security_ext.py`): CSRF protection with HMAC-SHA256, rate limiting (5 req/60sec), session management with configurable TTL
@@ -13,10 +24,10 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 - **Notify Provider** (`backend/addons/notify_provider.py`): Mock email provider with file-based outbox, extensible for production (Resend, etc.)
 - Backend integration: SessionMiddleware added, routers wired into main.py, itsdangerous dependency installed
 - Environment configuration: AUTH_RATE_LIMIT, AUTH_RATE_WINDOW_SEC, SESSION_TTL_SEC, CSRF_SECRET, STRIPE_TEST, STRIPE_SIGNING_SECRET, NOTIFY_MODE
-- Test packs created: auth_pack_v0_2_0 (CSRF, rate limit, session touch), subscription_pack_v0_2_0 (webhook signatures), notify_pack_v0_2_0 (OTP/generic email, outbox tracking)
-- Release gate integration: patch_run_all.py orchestrator for Bundle A validation
+- Requests-based test suite: bundle_a/tests_api with security_test, stripe_test, notify_test (no Playwright dependencies)
+- Release gate integration: Bundle A added as 10th pack, artifact saving with run_and_save.sh
+- Infrastructure tracking: test2.html updated with "Release Gate – Infra" section
 - Manual verification procedures documented in BUNDLE_A_INTEGRATION.md
-- Known limitation: Replit environment process constraints prevent automated Playwright testing with persistent backend; manual testing or requests-based alternative recommended
 
 ## User Preferences
 

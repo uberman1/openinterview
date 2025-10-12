@@ -14,6 +14,7 @@ PACKS = [
     ("notify", "python notify_pack/run.py"),
 
     ("bundle_a", "python bundle_a/run_bundle_a_tests.py"),
+    ("bundle_b", "python bundle_b/run_bundle_b_tests.py"),
 ]
 
 def run(cmd):

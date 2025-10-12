@@ -1,0 +1,12 @@
+- name: Install Bundle B deps
+  run: |
+    pip install -r bundle_b/requirements.txt
+    python -m playwright install --with-deps chromium
+- name: Run Bundle B tests
+  run: |
+    PYTHONPATH=. python bundle_b/run_bundle_b_tests.py | tee qa/bundle_b/v0.2.0/tests.json
+- name: Upload Bundle B results
+  uses: actions/upload-artifact@v4
+  with:
+    name: bundle-b-v0-2-0-results
+    path: qa/bundle_b/v0.2.0/tests.json
