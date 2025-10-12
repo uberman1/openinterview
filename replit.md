@@ -6,6 +6,15 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
+**Stage 2 v0.2.0 - Guardrails Quality Gate (October 2025)**
+- Deployed byte-level file protection for 13 critical UI files
+- **Guardrails System** (`stage2/`): SHA-256 hash verification, baseline locking, violation detection
+- **Protected Files**: 10 HTML files, 1 CSS file, 2 JavaScript files
+- **Verification Scripts**: lock_baselines.py (create hashes), verify_guardrails.py (check integrity), run_stage2.py (orchestrator)
+- Infrastructure tracking: test2.html updated with "Quality Gate – Stage 2" section
+- CI/CD snippet: stage2_quality_gate.yml for GitHub Actions automation
+- Documentation: README_STAGE2.md (quick reference), stage2/README.md (comprehensive), STAGE2_COMPLETE.md (summary)
+
 **Bundle C v0.2.0 - Governance Extensions (October 2025)**
 - Deployed enterprise-grade governance features for multi-tenant applications
 - **Organization Extension** (`backend/addons/org_ext.py`): Multi-tenant orgs with RBAC (owner/admin/member), invitations, role management

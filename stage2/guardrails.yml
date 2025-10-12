@@ -15,11 +15,11 @@ protected_files:
   - public/profile.html
   
   # Critical CSS files
-  - public/theme.css
+  - public/css/theme.css
   
   # Critical JavaScript files
-  - public/enhance_profile_edit.js
-  - public/availability.js
+  - public/js/enhance_profile_edit.js
+  - public/js/availability.js
 
 # Verification settings
 verification:

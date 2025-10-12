@@ -19,11 +19,11 @@ Stage 2 provides **byte-level verification** of protected files to prevent accid
 - `public/profile.html`
 
 ### CSS Files (1)
-- `public/theme.css`
+- `public/css/theme.css`
 
 ### JavaScript Files (2)
-- `public/enhance_profile_edit.js`
-- `public/availability.js`
+- `public/js/enhance_profile_edit.js`
+- `public/js/availability.js`
 
 ## How It Works
 
