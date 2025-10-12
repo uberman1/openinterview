@@ -34,21 +34,70 @@ Stage 4 is the **final quality gate** before production deployment. It validates
 ```
 stage4/
 ├── run_stage4.py            # Main orchestrator ✨
-├── requirements.txt         # Dependencies (requests, beautifulsoup4) ✨
-└── README.md                # Comprehensive guide ✨
+├── run_and_save.sh          # Convenience runner with artifacts ✨
+├── requirements.txt         # Dependencies (requests, beautifulsoup4)
+└── README.md                # Comprehensive guide
 
 qa/stage4/v0.4.0/
 ├── summary.json             # Machine-readable results
 └── tests.txt                # Human-readable summary
 
 scripts/
-└── update_test2_index_stage4.py  # Infrastructure tracking ✨
+├── update_test2_index_stage4.py  # Infrastructure tracking ✨
+└── apply_stage4_gate_patch.py    # Release gate integration ✨
 
-ci/snippets/
-└── stage4_pipeline.yml      # GitHub Actions workflow ✨
+ci/
+├── stage4_gate.yml          # Production CI/CD workflow ✨
+└── snippets/
+    └── stage4_pipeline.yml  # Development workflow
 
-README_STAGE4.md             # Quick reference ✨
-STAGE4_COMPLETE.md           # This file ✨
+README_STAGE4.md             # Quick reference
+README_STAGE4_GATE.md        # Gate integration guide ✨
+STAGE4_COMPLETE.md           # This file
+```
+
+## 🔗 Release Gate Integration
+
+**Stage 4 is now integrated into your release gate!**
+
+### Apply Gate Integration
+
+```bash
+# Apply the patch (creates backup automatically)
+python scripts/apply_stage4_gate_patch.py
+
+# Verify integration
+grep "Stage 4" release_gate/run_all.py
+
+# Check marker file
+cat qa/_aggregate/stage4_patch_applied.txt
+```
+
+### Run Complete Pipeline
+
+```bash
+# Start backend
+bash scripts/serve_api.sh
+
+# Run all gates (includes Stage 4)
+PYTHONPATH=. python release_gate/run_all.py
+```
+
+**Execution flow:**
+1. Packs 1-9 (Feature validation)
+2. Bundle A (API security)
+3. Bundle B (UI quality)
+4. Bundle C (Governance)
+5. **Stage 4 (Production readiness)** ✨
+
+### Standalone Execution
+
+```bash
+# With artifacts and tracking
+bash stage4/run_and_save.sh
+
+# Manual
+PYTHONPATH=. python stage4/run_stage4.py
 ```
 
 ## 🎯 How It Works

@@ -1,4 +1,3 @@
-import subprocess
 import os, sys, json, subprocess, datetime
 from pathlib import Path
 from release_gate.aggregate import find_latest_tests, overall_status
@@ -22,8 +21,6 @@ PACKS = [
 def run(cmd):
     print(f"\n=== RUN: {cmd} ===", flush=True)
     return subprocess.call(cmd, shell=True)
-
-__ORIGINAL_MAIN__ = main
 
 def main():
     started = datetime.datetime.utcnow().isoformat() + "Z"
@@ -75,37 +72,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# === Stage 4 – Production Go-Live (v0.4.0) ===
-def _run_stage4():
-    print("\n[Stage 4] Running Production Go-Live Readiness v0.4.0 ...")
-    cmd = [sys.executable, "stage4/run_stage4.py"]
-    env = dict(os.environ)
-    try:
-        out = subprocess.run(cmd, check=False, capture_output=True, text=True, env=env)
-    except Exception as e:
-        print(f"[Stage 4] ERROR: {e}")
-        return 1
-    print(out.stdout)
-    if out.stderr:
-        print(out.stderr, file=sys.stderr)
-    if out.returncode != 0:
-        print("[Stage 4] FAILED with non-zero exit code.")
-    else:
-        print("[Stage 4] PASS")
-    return out.returncode
-
-def main():
-    rc = 0
-    try:
-        if "__ORIGINAL_MAIN__" in globals() and __ORIGINAL_MAIN__:
-            rc = __ORIGINAL_MAIN__()
-    except SystemExit as se:
-        rc = int(se.code) if se.code is not None else 0
-
-    s4 = _run_stage4()
-    final_rc = 1 if (rc != 0 or s4 != 0) else 0
-    print(f"[ReleaseGate] Final exit code (with Stage 4): {final_rc}")
-    sys.exit(final_rc)
-
