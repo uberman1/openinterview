@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:;">
+  <title>Stage 6 Status</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; margin: 2rem; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .ok { color: #0a7f2e; }
+    code { background: #f6f6f6; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Stage 6 — Provider Sandbox & Shadow-Mode</h1>
+  <div class="card">
+    <h2>Feature Flags</h2>
+    <ul id="flags"></ul>
+  </div>
+  <div class="card">
+    <h2>How to run</h2>
+    <pre><code>export STRIPE_TEST=1
+export NOTIFY_MODE=sandbox
+export FEATURE_SHADOW_CALLS=1
+PYTHONPATH=. python stage6/run_stage6.py</code></pre>
+    <p>Artifacts: <code>qa/stage6/v0.6.0/tests.json</code></p>
+  </div>
+<script>
+(function(){
+  const flags = [
+    ["STRIPE_MOCK", localStorage.getItem("STRIPE_MOCK")||"(env controlled)"],
+    ["STRIPE_TEST", localStorage.getItem("STRIPE_TEST")||"(env controlled)"],
+    ["NOTIFY_MODE", localStorage.getItem("NOTIFY_MODE")||"(env controlled)"],
+    ["FEATURE_SHADOW_CALLS", localStorage.getItem("FEATURE_SHADOW_CALLS")||"(env controlled)"],
+  ];
+  const ul = document.getElementById("flags");
+  flags.forEach(([k,v])=>{
+    const li = document.createElement("li");
+    li.textContent = k + ": " + v;
+    ul.appendChild(li);
+  });
+})();
+</script>
+</body>
+</html>
