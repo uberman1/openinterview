@@ -1,0 +1,32 @@
+# Stage 2 - Guardrails Configuration
+# Protected files that must pass byte-level verification
+
+protected_files:
+  # Critical HTML files
+  - public/home.html
+  - public/availability.html
+  - public/profiles.html
+  - public/profile_edit.html
+  - public/uploads.html
+  - public/subscription.html
+  - public/password.html
+  - public/public_profile.html
+  - public/booking_manage.html
+  - public/profile.html
+  
+  # Critical CSS files
+  - public/theme.css
+  
+  # Critical JavaScript files
+  - public/enhance_profile_edit.js
+  - public/availability.js
+
+# Verification settings
+verification:
+  algorithm: sha256
+  strict_mode: true
+  fail_on_missing: true
+  fail_on_modified: true
+
+# Baseline storage
+baseline_file: stage2/baselines.json
