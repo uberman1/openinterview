@@ -1,0 +1,21 @@
+{
+  "name": "openinterview-home-uat",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:unit": "jest --runInBand"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@testing-library/dom": "^9.3.4",
+    "jsdom": "^24.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "roots": [
+      "<rootDir>/tests"
+    ]
+  }
+}
