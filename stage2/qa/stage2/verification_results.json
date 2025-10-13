@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "total": 0,
+  "passed": 0,
+  "violations": 0,
+  "missing": 0,
+  "details": {
+    "violations": [],
+    "missing": []
+  }
+}
