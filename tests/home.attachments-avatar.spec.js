@@ -1,15 +1,12 @@
-
 /**
  * home.attachments-avatar.spec.js
  * Validates uploads for Resumes/Attachments and Avatar update persistence.
+ * Tests the REAL implementation from home-uat.js module using dynamic import
  */
+import { jest } from '@jest/globals';
 import { JSDOM } from 'jsdom';
 
-function mockFile(name, type, size = 1024) {
-  return new File(['x'.repeat(size)], name, { type });
-}
-
-function setupDOM() {
+async function setupDOM() {
   const html = `
     <a id="link-add-resume"></a>
     <input id="input-add-resume" type="file" multiple />
@@ -24,10 +21,15 @@ function setupDOM() {
     <input id="input-edit-avatar" type="file" />
   `;
 
-  const dom = new JSDOM(html, { url: 'http://localhost' });
+  const dom = new JSDOM(html, { 
+    url: 'http://localhost',
+    runScripts: 'outside-only'
+  });
   const { window } = dom;
   global.window = window;
   global.document = window.document;
+  global.FileReader = window.FileReader;
+  global.File = window.File;
   global.localStorage = (function(){
     let s = {};
     return {
@@ -37,83 +39,100 @@ function setupDOM() {
       clear: () => { s = {}; }
     };
   })();
+  global.alert = jest.fn();
 
-  return dom;
+  // Dynamically import the real module
+  const { HomeUAT } = await import('../public/js/home-uat.js');
+
+  return { dom, window, HomeUAT };
 }
 
-describe('Uploads & Avatar', () => {
-  test('Resumes & Attachments prepend rows and persist', () => {
-    const dom = setupDOM();
-    const { document, FileReader } = dom.window;
-
-    function formatSize(bytes){
-      if (bytes >= 1024*1024) return (bytes/(1024*1024)).toFixed(1) + 'MB';
-      const kb = Math.max(1, Math.round(bytes/1024));
-      return kb + 'KB';
-    }
-
-    function prependRow(tbody, cellsHtml){
-      const tr = document.createElement('tr');
-      tr.innerHTML = cellsHtml;
-      tbody.prepend(tr);
-      return tr;
-    }
-
-    function renderRow(rec){
-      return `
-        <td class="px-6 py-4 text-sm font-medium">${rec.filename}</td>
-        <td class="px-6 py-4 text-sm">${rec.date}</td>
-        <td class="px-6 py-4 text-sm">${rec.size}</td>
-        <td class="px-6 py-4 text-sm"><div class="actions"><button>Edit</button><button>Delete</button></div></td>
-      `;
-    }
-
+describe('Uploads & Avatar - Real Implementation', () => {
+  test('Resume upload creates rows with real formatSize logic', async () => {
+    const { HomeUAT } = await setupDOM();
+    
     const resumesBody = document.getElementById('resumes-body');
-    const attachmentsBody = document.getElementById('attachments-body');
-
-    const rfile1 = mockFile('resume1.pdf', 'application/pdf', 2*1024*1024);
-    const rfile2 = mockFile('resume2.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 15*1024);
-    [rfile1, rfile2].forEach(file => {
-      const rec = { filename: file.name, date: '2025-10-13', size: formatSize(file.size) };
-      prependRow(resumesBody, renderRow(rec));
+    const input = document.getElementById('input-add-resume');
+    
+    // Bind real upload handler
+    HomeUAT.bindUpload('link-add-resume', 'input-add-resume', 'resumes-body', 
+                       HomeUAT.K.resumes, HomeUAT.renderResumeRow);
+    
+    // Create mock files
+    const file1 = new File(['x'.repeat(2 * 1024 * 1024)], 'resume1.pdf', { type: 'application/pdf' });
+    const file2 = new File(['x'.repeat(15 * 1024)], 'resume2.docx', { 
+      type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
     });
+    
+    // Simulate file selection
+    Object.defineProperty(input, 'files', { value: [file1, file2], writable: false });
+    input.dispatchEvent(new Event('change'));
+    
+    // Verify rows created
     expect(resumesBody.querySelectorAll('tr').length).toBe(2);
-
-    const afile1 = mockFile('image.jpg', 'image/jpeg', 12*1024);
-    const afile2 = mockFile('sheet.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 3*1024*1024);
-    [afile1, afile2].forEach(file => {
-      const rec = { filename: file.name, date: '2025-10-13', size: formatSize(file.size) };
-      prependRow(attachmentsBody, renderRow(rec));
-    });
-    expect(attachmentsBody.querySelectorAll('tr').length).toBe(2);
+    
+    // Verify size formatting (using real formatSize)
+    const sizes = Array.from(resumesBody.querySelectorAll('tr')).map(tr => 
+      tr.querySelectorAll('td')[2].textContent
+    );
+    expect(sizes).toContain('2.0MB');  // 2MB file
+    expect(sizes).toContain('15KB');   // 15KB file
+    
+    // Verify localStorage
+    const stored = JSON.parse(localStorage.getItem(HomeUAT.K.resumes));
+    expect(stored.length).toBe(2);
+    expect(stored[0].filename).toBe('resume2.docx'); // Prepended, so reversed order
   });
 
-  test('Avatar updates both elements', (done) => {
-    const dom = setupDOM();
-    const { document } = dom.window;
-    const input = document.getElementById('input-edit-avatar');
+  test('Attachment upload handles various file types', async () => {
+    const { HomeUAT } = await setupDOM();
+    
+    const attachmentsBody = document.getElementById('attachments-body');
+    const input = document.getElementById('input-create-attachment');
+    
+    // Bind real upload handler
+    HomeUAT.bindUpload('link-create-attachment', 'input-create-attachment', 'attachments-body',
+                       HomeUAT.K.attachments, HomeUAT.renderAttachmentRow);
+    
+    // Create mock files
+    const file1 = new File(['x'.repeat(12 * 1024)], 'image.jpg', { type: 'image/jpeg' });
+    const file2 = new File(['x'.repeat(3 * 1024 * 1024)], 'sheet.xlsx', { 
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+    });
+    
+    // Simulate file selection
+    Object.defineProperty(input, 'files', { value: [file1, file2], writable: false });
+    input.dispatchEvent(new Event('change'));
+    
+    // Verify rows created
+    expect(attachmentsBody.querySelectorAll('tr').length).toBe(2);
+    
+    // Verify size formatting
+    const sizes = Array.from(attachmentsBody.querySelectorAll('td')).filter((_, i) => i % 4 === 2)
+      .map(td => td.textContent);
+    expect(sizes).toContain('3.0MB');
+    expect(sizes).toContain('12KB');
+  });
 
-    const dataUrl = 'data:image/png;base64,AAA';
-    const reader = {
-      onload: null,
-      readAsDataURL: function() { setTimeout(() => this.onload({ target: { result: dataUrl } }), 0); }
-    };
-    global.FileReader = function(){ return reader; };
-
-    Object.defineProperty(input, 'files', { value: [new File(['abc'], 'pic.png', { type: 'image/png' })] });
-
-    // Simulate the actual handler logic
+  test('Avatar update syncs both elements', async (done) => {
+    const { HomeUAT } = await setupDOM();
+    
     const header = document.getElementById('avatar-header');
     const profile = document.getElementById('avatar-profile');
-    reader.onload = (ev) => {
-      const url = ev.target.result;
-      header.style.backgroundImage = `url("${url}")`;
-      profile.style.backgroundImage = `url("${url}")`;
-      localStorage.setItem('oi.avatarUrl', JSON.stringify(url));
-      expect(header.style.backgroundImage.includes('data:image/png')).toBe(true);
-      expect(profile.style.backgroundImage.includes('data:image/png')).toBe(true);
-      done();
-    };
-    reader.readAsDataURL(input.files[0]);
+    const dataUrl = 'data:image/png;base64,AAA';
+    
+    // Use real setAvatar function
+    HomeUAT.setAvatar(dataUrl);
+    
+    // Verify both elements updated
+    expect(header.style.backgroundImage).toBe(`url("${dataUrl}")`);
+    expect(profile.style.backgroundImage).toBe(`url("${dataUrl}")`);
+    
+    // Verify storage
+    HomeUAT.lsSet(HomeUAT.K.avatarUrl, dataUrl);
+    const stored = HomeUAT.lsGet(HomeUAT.K.avatarUrl, null);
+    expect(stored).toBe(dataUrl);
+    
+    done();
   });
 });

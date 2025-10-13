@@ -78,12 +78,14 @@ npm install
 
 ### Run Tests
 ```bash
-# All tests
-npm test
+# All tests (with ES module support)
+NODE_OPTIONS="--experimental-vm-modules" npx jest
 
 # Home tests only
-npm run test:home
+NODE_OPTIONS="--experimental-vm-modules" npx jest tests/home
 ```
+
+**Note:** Tests use dynamic ES module imports to load the real implementation.
 
 ### Test Coverage
 - ✅ Resume upload flow
