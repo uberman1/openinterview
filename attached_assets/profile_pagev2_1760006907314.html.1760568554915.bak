@@ -1,0 +1,288 @@
+<!DOCTYPE html> 
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+            "foreground-light": "#141414",
+            "foreground-dark": "#f7f7f7",
+            "subtle-light": "#e5e5e5",
+            "subtle-dark": "#2a2a2a",
+            "muted-light": "#737373",
+            "muted-dark": "#a3a3a3",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+<div class="lg:grid lg:grid-cols-12 lg:gap-16">
+<main class="lg:col-span-8 space-y-4">
+  <!-- VIDEO HERO with dynamic play -->
+  <div>
+    <div id="videoHero" class="relative aspect-video w-full rounded-lg overflow-hidden border border-subtle-light dark:border-subtle-dark">
+      <div id="cover" class="absolute inset-0 bg-cover bg-center"></div>
+      <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+        <button id="playBtn" class="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110" aria-label="Play video">
+          <svg class="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6.3 20.3V3.7L20.3 12L6.3 20.3Z"></path></svg>
+        </button>
+      </div>
+      <div class="absolute bottom-0 left-0 p-6 text-white">
+        <h1 id="nameHero" class="text-3xl font-bold">Name</h1>
+        <p id="titleHero" class="text-lg text-white/80">Title</p>
+      </div>
+    </div>
+  </div>
+  <!-- small gap between video and scrolling area -->
+  <div class="h-2"></div>
+  <!-- Scrolling: Attachments + Highlights -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section class="max-h-80 overflow-auto pr-1">
+      <h2 class="text-2xl font-bold mb-4">Attachments</h2>
+      <div id="attachments" class="space-y-3"></div>
+    </section>
+    <section class="max-h-80 overflow-auto pr-1">
+      <h2 class="text-2xl font-bold mb-4">Highlights</h2>
+      <ul id="highlights" class="space-y-3"></ul>
+    </section>
+  </div>
+
+  <!-- Resume preview + skills -->
+  <section class="space-y-6">
+    <h2 class="text-2xl font-bold">Resume</h2>
+    <div class="border border-subtle-light dark:border-subtle-dark rounded-lg overflow-hidden">
+      <div class="bg-background-light dark:bg-subtle-dark p-4 sm:p-6">
+        <div class="aspect-[8.5/11] bg-white dark:bg-background-dark shadow-md rounded-md p-8 text-foreground-light dark:text-foreground-dark">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 id="nameResume" class="text-3xl font-bold">Name</h3>
+              <p id="titleResume" class="text-lg text-muted-light dark:text-muted-dark">Title</p>
+            </div>
+            <div class="text-right text-sm">
+              <p id="locationResume">City, ST</p>
+              <p>email@example.com</p>
+              <p>(555) 123-4567</p>
+            </div>
+          </div>
+          <div class="mt-8 space-y-6">
+            <div>
+              <h4 class="text-lg font-bold border-b border-subtle-light dark:border-subtle-dark pb-2 mb-2">Summary</h4>
+              <p id="aboutResume" class="text-sm text-muted-light dark:text-muted-dark"></p>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold border-b border-subtle-light dark:border-subtle-dark pb-2 mb-2">Key Skills</h4>
+              <div id="skills" class="flex flex-wrap gap-2 text-xs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-center p-4 bg-background-light dark:bg-subtle-dark border-t border-subtle-light dark:border-subtle-dark">
+        <span class="text-sm font-medium text-muted-light dark:text-muted-dark">Sample Resume Preview</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<aside class="lg:col-span-4 mt-12 lg:mt-0">
+  <div class="sticky top-12 space-y-12">
+    <div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+      <div class="text-center space-y-4">
+        <img id="avatar" alt="" class="w-24 h-24 rounded-full mx-auto object-cover"/>
+        <div>
+          <h3 id="nameSide" class="text-xl font-bold text-foreground-light dark:text-foreground-dark">Name</h3>
+          <p id="titleSide" class="text-muted-light dark:text-muted-dark">Title</p>
+          <p id="locationSide" class="text-sm text-muted-light dark:text-muted-dark">Location</p>
+        </div>
+      </div>
+      <p id="aboutSide" class="text-center text-muted-light dark:text-muted-dark"></p>
+    </div>
+
+    <!-- ORIGINAL CALENDAR BLOCK EXACTLY AS PROVIDED -->
+    <div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+      <h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book an Interview</h2>
+      <div class="flex items-center justify-between">
+        <button class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark">
+          <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </button>
+        <p class="font-semibold">July 2024</p>
+        <button class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark">
+          <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </button>
+      </div>
+      <div class="grid grid-cols-7 gap-1 text-center text-sm">
+        <span class="font-medium text-muted-light dark:text-muted-dark">S</span>
+        <span class="font-medium text-muted-light dark:text-muted-dark">M</span>
+        <span class="font-medium text-muted-light dark:text-muted-dark">T</span>
+        <span class="font-medium text-muted-light dark:text-muted-dark">W</span>
+        <span class="font-medium text-muted-light dark:text-muted-dark">T</span>
+        <span class="font-medium text-muted-light dark:text-muted-dark">F</span>
+        <span class="font-medium text-muted-light dark:text-muted-dark">S</span>
+        <span class="col-start-4 text-muted-light dark:text-muted-dark/50">1</span>
+        <span class="text-muted-light dark:text-muted-dark/50">2</span>
+        <span class="text-muted-light dark:text-muted-dark/50">3</span>
+        <span class="text-muted-light dark:text-muted-dark/50">4</span>
+        <button class="h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white font-semibold">5</button>
+        <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+      </div>
+      <div class="flex flex-wrap gap-2 justify-center">
+        <label class="cursor-pointer">
+          <input class="sr-only" name="time" type="radio"/>
+          <span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">9:00 AM</span>
+        </label>
+        <label class="cursor-pointer">
+          <input class="sr-only" name="time" type="radio"/>
+          <span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">10:00 AM</span>
+        </label>
+        <label class="cursor-pointer">
+          <input checked="" class="sr-only" name="time" type="radio"/>
+          <span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">11:00 AM</span>
+        </label>
+        <label class="cursor-pointer">
+          <input class="sr-only" name="time" type="radio"/>
+          <span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">1:00 PM</span>
+        </label>
+        <label class="cursor-pointer">
+          <input class="sr-only" name="time" type="radio"/>
+          <span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">2:00 PM</span>
+        </label>
+      </div>
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="email">Recruiter Email</label>
+        <input class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="email" placeholder="Enter your email" type="email"/>
+      </div>
+      <button class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Confirm Booking</button>
+    </div>
+    <!-- END ORIGINAL CALENDAR BLOCK -->
+  </div>
+</aside>
+</div>
+</div>
+
+<footer class="mt-24 pb-12 text-center text-sm text-muted-light dark:text-muted-dark">
+  <div class="flex items-center justify-center space-x-4">
+    <p>Powered by OpenInterview.me</p>
+    <div class="w-16 h-16 p-1 border border-subtle-light dark:border-subtle-dark rounded-lg">
+      <div id="footerCover" class="w-full h-full bg-center bg-cover"></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mapper + flexible loader for original or v2 data
+function val(obj, keys, fallback=null){ for(const k of keys){ if(obj && obj[k]!=null) return obj[k]; } return fallback; }
+function firstUrl(v){ if(!v) return null; if(typeof v==='string') return v; if(Array.isArray(v)&&v.length) return v[0]; if(typeof v==='object'){ for(const k of ['url','href','link']) if(v[k]) return v[k]; } return null; }
+function mapOriginalToV2(o){
+  const id = (val(o,['id','slug','handle']) || (val(o,['name'],'').toLowerCase().replace(/\s+/g,'-'))) || String(Math.random());
+  const name = val(o,['name','fullName','displayName'],'Unnamed Candidate');
+  const title = val(o,['title','role','headline'],'');
+  const location = val(o,['location','city','geo'],'');
+  const avatar_url = firstUrl(val(o,['avatar_url','avatar','photo','image']));
+  const cover_image = firstUrl(val(o,['cover','cover_image','banner']));
+  const video = firstUrl(val(o,['video','video_url','interview','introVideo']));
+  const about = val(o,['about','bio','summary','overview'],'');
+  let highlights = val(o,['highlights','bullets','accomplishments'],[]); if(typeof highlights==='string') highlights=[highlights]; if(!Array.isArray(highlights)) highlights=[];
+  let skills = val(o,['skills','tags'],[]); if(typeof skills==='string') skills = skills.split(',').map(s=>s.trim()).filter(Boolean); if(!Array.isArray(skills)) skills=[];
+  const links = val(o,['links','attachments'],[]);
+  const resume = val(o,['resume','resume_url','resumeUrl']); const portfolio = val(o,['portfolio','portfolio_url','website']); const linkedIn = val(o,['linkedin','linkedin_url','linkedIn']);
+  const attachments = [];
+  if(resume) attachments.push({label:'Resume', href:firstUrl(resume)||'#'});
+  if(portfolio) attachments.push({label:'Portfolio', href:firstUrl(portfolio)||'#'});
+  if(linkedIn) attachments.push({label:'LinkedIn', href:firstUrl(linkedIn)||'#'});
+  if(Array.isArray(links)){ links.forEach(l=>{ if(!l) return; const lbl = val(l,['label','name','title'],'Link'); const href = firstUrl(l) || '#'; if(!attachments.some(a=>a.href===href)) attachments.push({label:lbl, href}); }); }
+  return { id, name, title, location, avatar_url, cover_image, video, about, highlights, skills, attachments };
+}
+async function loadProfiles(){ 
+  try {
+    const r0 = await fetch('./data/original_profiles.json',{cache:'no-store'});
+    if(r0.ok){ const orig = await r0.json(); if(Array.isArray(orig) && orig.length>0){ return orig.map(mapOriginalToV2); } }
+  } catch(e){}
+  const r = await fetch('./data/profiles.json',{cache:'no-store'}); return r.json(); 
+}
+
+function byId(id){ return document.getElementById(id); }
+function makeAttachment(a){
+  const el = document.createElement('a');
+  el.className = 'flex items-center justify-between p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors';
+  el.href = a.href || '#'; el.target = '_blank'; el.rel = 'noopener';
+  el.innerHTML = '<span class="font-medium"></span><svg class="h-6 w-6 text-muted-light dark:text-muted-dark" fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+  el.querySelector('span').textContent = a.label || 'Attachment';
+  return el;
+}
+
+(async function init(){
+  const id = new URLSearchParams(location.search).get('profileId');
+  const all = await loadProfiles();
+  const p = all.find(x=>x.id===id) || all[0];
+
+  // Hero content
+  byId('nameHero').textContent = p.name;
+  byId('titleHero').textContent = p.title;
+  byId('cover').style.backgroundImage = 'url("'+(p.cover_image || '')+'")';
+  byId('footerCover').style.backgroundImage = 'url("'+(p.cover_image || '')+'")';
+
+  // Sidebar bio
+  byId('avatar').src = p.avatar_url || '';
+  byId('nameSide').textContent = p.name;
+  byId('titleSide').textContent = p.title;
+  byId('locationSide').textContent = p.location;
+  byId('aboutSide').textContent = p.about || '';
+
+  // Resume section
+  byId('nameResume').textContent = p.name;
+  byId('titleResume').textContent = p.title;
+  byId('locationResume').textContent = p.location;
+  byId('aboutResume').textContent = p.about || '';
+  const skillsHost = byId('skills'); (p.skills||[]).forEach(s=>{
+    const tag = document.createElement('span');
+    tag.className = 'px-2 py-1 rounded-full border border-subtle-light dark:border-subtle-dark';
+    tag.textContent = s; skillsHost.appendChild(tag);
+  });
+
+  // Attachments
+  const at = byId('attachments'); (p.attachments||[]).forEach(a=> at.appendChild(makeAttachment(a)));
+
+  // Highlights
+  const hi = byId('highlights'); (p.highlights||[]).forEach(h=>{
+    const li = document.createElement('li');
+    li.className = 'flex items-start';
+    li.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark"></p>';
+    li.querySelector('p').textContent = h;
+    hi.appendChild(li);
+  });
+
+  // Dynamic video
+  const playBtn = document.getElementById('playBtn');
+  playBtn.addEventListener('click', () => {
+    const hero = document.getElementById('videoHero');
+    hero.innerHTML = '<iframe class="w-full h-full" src="" title="Interview Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    const f = hero.querySelector('iframe');
+    const src = (p.video || '') + (p.video && p.video.includes('?') ? '&' : '?') + 'autoplay=1';
+    f.src = src;
+  }, { once: true });
+})().catch(err => console.error(err));
+</script>
+</body></html>

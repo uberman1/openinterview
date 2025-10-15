@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OpenInterview.me – Versions Index</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+            "foreground-light": "#141414",
+            "foreground-dark": "#f7f7f7",
+            "subtle-light": "#e5e5e5",
+            "subtle-dark": "#2a2a2a",
+            "muted-light": "#737373",
+            "muted-dark": "#a3a3a3",
+          },
+          fontFamily: { display: ["Inter","sans-serif"] },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          }
+        }
+      }
+    }
+  </script>
+  <style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark">
+  <header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-neutral-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-bold">Profile Versions Index</h1>
+      <a href="./profile_pagev2.html" class="text-sm underline hover:no-underline">Current Profile Page</a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <p class="text-sm text-muted-light dark:text-muted-dark mb-6">
+      This page indexes and tests all profile page versions. Sections are grouped by major version (3, 2, 1).
+      The newest section appears first; within a section, the most recent version is first.
+    </p>
+
+    <div id="sections" class="space-y-10"></div>
+  </main>
+
+  <script>
+    function semverDesc(a,b){
+      // Compare like '3.12' vs '3.2' etc.
+      const pa = a.split('.').map(n=>parseInt(n,10));
+      const pb = b.split('.').map(n=>parseInt(n,10));
+      for(let i=0;i<Math.max(pa.length,pb.length);i++){
+        const da = pa[i]||0, db = pb[i]||0;
+        if(da!==db) return db-da;
+      }
+      return 0;
+    }
+
+    async function loadVersions(){
+      const r = await fetch('./data/versions.json', { cache: 'no-store' });
+      if(!r.ok) throw new Error('versions.json failed to load');
+      return r.json();
+    }
+
+    function renderTable(major, rows){
+      const wrap = document.createElement('section');
+      wrap.className = 'space-y-3';
+
+      const h = document.createElement('h2');
+      h.className = 'text-lg font-semibold';
+      h.textContent = 'Version ' + major;
+      wrap.appendChild(h);
+
+      const table = document.createElement('table');
+      table.className = 'w-full text-sm border border-subtle-light dark:border-subtle-dark rounded-lg overflow-hidden';
+      const thead = document.createElement('thead');
+      thead.innerHTML = '<tr class="bg-white dark:bg-subtle-dark text-left">'+
+        '<th class="p-3 border-b border-subtle-light dark:border-subtle-dark w-28">Version</th>'+
+        '<th class="p-3 border-b border-subtle-light dark:border-subtle-dark">Description</th>'+
+        '<th class="p-3 border-b border-subtle-light dark:border-subtle-dark w-32">Page</th>'+
+        '<th class="p-3 border-b border-subtle-light dark:border-subtle-dark w-32">Code</th>'+
+      '</tr>';
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      rows
+        .slice()
+        .sort((a,b)=>semverDesc(a.version,b.version))
+        .forEach(r => {
+          const tr = document.createElement('tr');
+          tr.className = 'odd:bg-white even:bg-neutral-50 dark:odd:bg-background-dark dark:even:bg-[#1f1f1f]';
+          tr.innerHTML =
+            '<td class="p-3 align-top font-medium">'+ (r.version||'') +'</td>'+
+            '<td class="p-3 align-top">'+ (r.description||'') +'</td>'+
+            '<td class="p-3 align-top"><a class="underline hover:no-underline" href="'+ (r.page||'#') +'">page</a></td>'+
+            '<td class="p-3 align-top"><a class="underline hover:no-underline" href="'+ (r.code||'#') +'">code</a></td>';
+          tbody.appendChild(tr);
+        });
+      table.appendChild(tbody);
+
+      wrap.appendChild(table);
+      return wrap;
+    }
+
+    (async function init(){
+      const data = await loadVersions();
+      const host = document.getElementById('sections');
+      const sections = (data.sections||[]).slice().sort((a,b)=> (b.major||0) - (a.major||0) );
+      sections.forEach(sec => {
+        const el = renderTable(sec.major, sec.rows||[]);
+        host.appendChild(el);
+      });
+    })().catch(e => {
+      console.error(e);
+      document.getElementById('sections').innerHTML = '<p class="text-red-600">Failed to load versions.</p>';
+    });
+  </script>
+</body>
+</html>

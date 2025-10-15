@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#141414",
+              "background-light": "#f7f7f7",
+              "background-dark": "#191919",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+          },
+        },
+      };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden text-primary">
+<div class="flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4">
+<div class="flex items-center gap-4">
+<div class="h-6 w-6">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold">OpenInterview.me</h2>
+</div>
+<div class="flex flex-1 items-center justify-end gap-6">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="#">Home</a>
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="#">Explore</a>
+<a class="text-sm font-medium text-primary dark:text-white" href="#">My Profile</a>
+</nav>
+<!-- Header avatar gets an ID and can be updated; no style changes -->
+<div id="avatar-header" class="aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE");'></div>
+</div>
+</header>
+<main class="flex-1 px-40 py-12">
+<div class="mx-auto flex max-w-[960px] flex-col gap-12">
+<div class="flex items-start justify-between gap-12">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl font-bold tracking-tight">My Profile</h1>
+<p class="text-primary/60 dark:text-white/60">Manage your interviews, resumes, and account metrics.</p>
+</div>
+<div class="flex-shrink-0">
+<!-- Profile avatar is clickable (acts as Edit trigger) -->
+<div id="avatar-profile" role="button" tabindex="0" title="Edit avatar"
+     class="aspect-square w-20 rounded-full bg-cover bg-center bg-no-repeat outline-none focus:ring-2 focus:ring-primary/30"
+     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE");'></div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+<p class="text-3xl font-bold tracking-tight">12</p>
+<p class="text-sm text-primary/60 dark:text-white/60">Total Interviews</p>
+</div>
+<div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+<p class="text-3xl font-bold tracking-tight">450</p>
+<p class="text-sm text-primary/60 dark:text-white/60">Total Views</p>
+</div>
+<div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+<p class="text-3xl font-bold tracking-tight">23</p>
+<p class="text-sm text-primary/60 dark:text-white/60">Total Shares</p>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<h2 class="text-2xl font-bold tracking-tight">Upcoming Interviews</h2>
+<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Company</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Role</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Date &amp; Time</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Recruiter</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="upcoming-body" class="divide-y divide-primary/10 dark:divide-white/10">
+<tr>
+<td class="px-6 py-4 text-sm font-medium">Innovate Inc.</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">Senior Frontend Developer</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-08-15, 10:00 AM</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">John Doe</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white upcoming-view" href="#" data-company="Innovate Inc." data-role="Senior Frontend Developer" data-datetime="2024-08-15, 10:00 AM" data-recruiter="John Doe">View Details</a>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-sm font-medium">Tech Solutions</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">Product Designer</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-08-20, 2:00 PM</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">Jane Smith</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white upcoming-view" href="#" data-company="Tech Solutions" data-role="Product Designer" data-datetime="2024-08-20, 2:00 PM" data-recruiter="Jane Smith">View Details</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<h2 class="text-2xl font-bold tracking-tight">My Interviews</h2>
+<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Title</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Date</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Views</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Shares</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Status</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="interviews-body" class="divide-y divide-primary/10 dark:divide-white/10">
+<tr data-title="Software Engineer Interview">
+<td class="px-6 py-4 text-sm font-medium">Software Engineer Interview</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-26</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">150</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">10</td>
+<td class="px-6 py-4 text-sm">
+<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium dark:bg-white/10">Published</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+<tr data-title="Product Manager Interview">
+<td class="px-6 py-4 text-sm font-medium">Product Manager Interview</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-20</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">200</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">8</td>
+<td class="px-6 py-4 text-sm">
+<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium dark:bg-white/10">Published</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+<tr data-title="Data Scientist Interview">
+<td class="px-6 py-4 text-sm font-medium">Data Scientist Interview</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-18</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">50</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">5</td>
+<td class="px-6 py-4 text-sm">
+<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium text-primary/60 dark:bg-white/10 dark:text-white/60">Draft</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+<tr data-title="UX Designer Interview">
+<td class="px-6 py-4 text-sm font-medium">UX Designer Interview</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-10</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">30</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">0</td>
+<td class="px-6 py-4 text-sm">
+<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium text-primary/60 dark:bg-white/10 dark:text-white/60">Draft</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+<tr data-title="Marketing Manager Interview">
+<td class="px-6 py-4 text-sm font-medium">Marketing Manager Interview</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-05</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">20</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">0</td>
+<td class="px-6 py-4 text-sm">
+<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium text-primary/60 dark:bg-white/10 dark:text-white/60">Draft</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<h2 class="text-2xl font-bold tracking-tight">My Resumes</h2>
+<!-- Right-aligned Add New link + hidden input -->
+<div class="mb-2 flex items-center justify-end">
+  <a id="link-add-resume" href="#" class="text-sm font-medium text-black hover:underline dark:text-white">Add New</a>
+  <input id="input-add-resume" type="file" class="hidden" multiple accept=".pdf,.doc,.docx,.txt"/>
+</div>
+<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">File Name</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Upload Date</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Size</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="resumes-body" class="divide-y divide-primary/10 dark:divide-white/10">
+<tr data-filename="resume_sophia_lee.pdf">
+<td class="px-6 py-4 text-sm font-medium">resume_sophia_lee.pdf</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-26</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2MB</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+<tr data-filename="resume_sophia_lee_v2.pdf">
+<td class="px-6 py-4 text-sm font-medium">resume_sophia_lee_v2.pdf</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-20</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">1.8MB</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+<tr data-filename="resume_sophia_lee_old.pdf">
+<td class="px-6 py-4 text-sm font-medium">resume_sophia_lee_old.pdf</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-15</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">1.5MB</td>
+<td class="px-6 py-4 text-sm font-medium">
+<div class="flex items-center justify-end gap-4 actions">
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Attachments Section (added) -->
+<div class="flex flex-col gap-6">
+  <h2 class="text-2xl font-bold tracking-tight">Attachments</h2>
+  <div class="mb-2 flex items-center justify-end">
+    <a id="link-create-attachment" href="#" class="text-sm font-medium text-black hover:underline dark:text-white">Create New</a>
+    <input id="input-create-attachment" type="file" class="hidden" multiple
+           accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg,.gif,.ppt,.pptx,.xls,.xlsx,.csv"/>
+  </div>
+
+  <div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+    <table class="w-full text-left">
+      <thead>
+        <tr class="border-b border-primary/10 dark:border-white/10">
+          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">File Name</th>
+          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Upload Date</th>
+          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Size</th>
+          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="attachments-body" class="divide-y divide-primary/10 dark:divide-white/10">
+        <!-- UAT: new rows will be injected here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+</main>
+</div>
+</div>
+
+<!-- Hidden input for avatar editing -->
+<input id="input-edit-avatar" type="file" class="hidden" accept="image/*"/>
+
+<script>
+(function(){
+  // ---------- Utils ----------
+  function lsGet(key, fallback) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){ return fallback; }
+  }
+  function lsSet(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+  function genId(){ return Date.now() + '-' + Math.random().toString(36).slice(2,8); }
+  function today(){ return new Date().toISOString().slice(0,10); }
+  function formatSize(bytes){
+    if (bytes >= 1024*1024) return (bytes/(1024*1024)).toFixed(1) + 'MB';
+    const kb = Math.max(1, Math.round(bytes/1024));
+    return kb + 'KB';
+  }
+
+  // ---------- Storage keys ----------
+  const K = {
+    interviews: 'oi.interviews',
+    resumes: 'oi.resumes',
+    attachments: 'oi.attachments',
+    avatarUrl: 'oi.avatarUrl',
+    viewItem: 'oi.view.item',
+  };
+
+  // ---------- Hydration ----------
+  function ensureIdsOnExistingRows(){
+    // Interviews existing rows
+    const itRows = document.querySelectorAll('#interviews-body tr');
+    let list = lsGet(K.interviews, []);
+    const existingTitles = new Set(list.map(x=>x.title));
+    itRows.forEach(tr => {
+      if(!tr.dataset.id){
+        tr.dataset.id = genId();
+      }
+      // try to sync to storage (best-effort, based on visible cells)
+      const tds = tr.querySelectorAll('td');
+      if (tds.length >= 6) {
+        const title = tds[0].textContent.trim();
+        const date = tds[1].textContent.trim();
+        const views = parseInt(tds[2].textContent.trim()||'0',10);
+        const shares = parseInt(tds[3].textContent.trim()||'0',10);
+        const status = tr.querySelector('span')?.textContent.trim() || 'Draft';
+        if (!list.find(x => x.title === title && x.date === date)) {
+          list.push({ id: tr.dataset.id, title, date, views, shares, status });
+        }
+      }
+    });
+    lsSet(K.interviews, list);
+
+    // Resumes existing rows
+    const rRows = document.querySelectorAll('#resumes-body tr');
+    let rlist = lsGet(K.resumes, []);
+    rRows.forEach(tr => {
+      if(!tr.dataset.id) tr.dataset.id = genId();
+      const tds = tr.querySelectorAll('td');
+      if (tds.length >= 4) {
+        const filename = tds[0].textContent.trim();
+        const date = tds[1].textContent.trim();
+        const size = tds[2].textContent.trim();
+        if (!rlist.find(x => x.filename === filename && x.date === date)) {
+          rlist.push({ id: tr.dataset.id, filename, date, size });
+        }
+      }
+    });
+    lsSet(K.resumes, rlist);
+
+    // Attachments table may be empty initially
+    const alist = lsGet(K.attachments, []);
+    lsSet(K.attachments, alist);
+  }
+
+  function prependRow(tbody, cellsHtml){
+    const tr = document.createElement('tr');
+    tr.dataset.id = genId();
+    tr.innerHTML = cellsHtml;
+    tbody.prepend(tr);
+    return tr;
+  }
+
+  function renderResumeRow(rec){
+    return `
+      <td class="px-6 py-4 text-sm font-medium">${rec.filename}</td>
+      <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">${rec.date}</td>
+      <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">${rec.size}</td>
+      <td class="px-6 py-4 text-sm font-medium">
+        <div class="flex items-center justify-end gap-4 actions">
+          <button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+          <button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+        </div>
+      </td>`;
+  }
+
+  function renderAttachmentRow(rec){
+    return `
+      <td class="px-6 py-4 text-sm font-medium">${rec.filename}</td>
+      <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">${rec.date}</td>
+      <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">${rec.size}</td>
+      <td class="px-6 py-4 text-sm font-medium">
+        <div class="flex items-center justify-end gap-4 actions">
+          <button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+          <button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+        </div>
+      </td>`;
+  }
+
+  function hydrateFromStorage(){
+    // Resumes
+    const resumesBody = document.getElementById('resumes-body');
+    const resumes = lsGet(K.resumes, []);
+    // avoid duplicating existing static rows: clear any injected (optional)
+    // For simplicity, only add missing by filename+date
+    const existingSet = new Set(Array.from(resumesBody.querySelectorAll('tr')).map(tr => {
+      const tds = tr.querySelectorAll('td');
+      return tds.length ? tds[0].textContent.trim() + '|' + (tds[1]?.textContent.trim()||'') : '';
+    }));
+    resumes.slice().reverse().forEach(rec => {
+      const key = rec.filename + '|' + rec.date;
+      if (!existingSet.has(key)){
+        const tr = prependRow(resumesBody, renderResumeRow(rec));
+        tr.dataset.id = rec.id || genId();
+      }
+    });
+
+    // Attachments
+    const attachmentsBody = document.getElementById('attachments-body');
+    const attachments = lsGet(K.attachments, []);
+    attachments.slice().reverse().forEach(rec => {
+      const tr = prependRow(attachmentsBody, renderAttachmentRow(rec));
+      tr.dataset.id = rec.id || genId();
+    });
+
+    // Avatars
+    const avatarUrl = lsGet(K.avatarUrl, null);
+    if (avatarUrl){
+      setAvatar(avatarUrl);
+    }
+  }
+
+  // ---------- Bind uploads ----------
+  function bindUpload(linkId, inputId, tbodyId, key, rowRenderer){
+    const link = document.getElementById(linkId);
+    const input = document.getElementById(inputId);
+    const tbody = document.getElementById(tbodyId);
+    if (!link || !input || !tbody) return;
+
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      input.click();
+    });
+
+    input.addEventListener('change', function(){
+      const files = Array.from(input.files || []);
+      if (!files.length) return;
+      const list = lsGet(key, []);
+      files.forEach(file => {
+        const rec = {
+          id: genId(),
+          filename: file.name,
+          date: today(),
+          size: formatSize(file.size || 0)
+        };
+        // Prepend DOM row
+        const tr = prependRow(tbody, rowRenderer(rec));
+        tr.dataset.id = rec.id;
+        // Prepend storage
+        list.unshift(rec);
+      });
+      lsSet(key, list);
+      input.value = '';
+    });
+  }
+
+  // ---------- Actions (Edit/Delete) ----------
+  function bindActions(tbodyId, key, primaryCellIndex){
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    tbody.addEventListener('click', function(e){
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const tr = e.target.closest('tr');
+      if (!tr) return;
+      const id = tr.dataset.id;
+      let list = lsGet(key, []);
+      const idx = list.findIndex(x => x.id === id);
+      if (btn.textContent.trim().toLowerCase() === 'edit'){
+        const tds = tr.querySelectorAll('td');
+        const current = tds[primaryCellIndex].textContent.trim();
+        const next = prompt('Rename', current);
+        if (next && next.trim()){
+          tds[primaryCellIndex].textContent = next.trim();
+          if (idx >= 0){
+            if (key === K.interviews) list[idx].title = next.trim();
+            else list[idx].filename = next.trim();
+            lsSet(key, list);
+          }
+        }
+      } else if (btn.textContent.trim().toLowerCase() === 'delete'){
+        if (confirm('Delete this item?')){
+          tr.remove();
+          if (idx >= 0){
+            list.splice(idx,1);
+            lsSet(key, list);
+          }
+        }
+      }
+    });
+  }
+
+  // ---------- Upcoming "View Details" ----------
+  function bindUpcomingView(){
+    const links = document.querySelectorAll('.upcoming-view');
+    links.forEach(a => {
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        const payload = {
+          company: a.dataset.company || '',
+          role: a.dataset.role || '',
+          datetime: a.dataset.datetime || '',
+          recruiter: a.dataset.recruiter || ''
+        };
+        lsSet(K.viewItem, { type: 'upcoming', id: genId(), payload });
+        location.hash = '#/interviews/view';
+      });
+    });
+  }
+
+  // ---------- Avatar edit ----------
+  function setAvatar(url){
+    const header = document.getElementById('avatar-header');
+    const profile = document.getElementById('avatar-profile');
+    if (header) header.style.backgroundImage = 'url("' + url + '")';
+    if (profile) profile.style.backgroundImage = 'url("' + url + '")';
+  }
+  function bindAvatarEdit(){
+    const trigger = document.getElementById('avatar-profile'); // clickable avatar
+    const input = document.getElementById('input-edit-avatar');
+    if (!trigger || !input) return;
+    function openPicker(){ input.click(); }
+    trigger.addEventListener('click', function(){ openPicker(); });
+    trigger.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); } });
+    input.addEventListener('change', function(){
+      const file = input.files && input.files[0];
+      if (!file) return;
+      if (!file.type || !file.type.startsWith('image/')){
+        alert('Please select an image');
+        input.value=''; return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        const url = ev.target.result;
+        setAvatar(url);
+        lsSet(K.avatarUrl, url);
+        input.value='';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ---------- Init ----------
+  function init(){
+    ensureIdsOnExistingRows();
+    hydrateFromStorage();
+    bindUpload('link-add-resume', 'input-add-resume', 'resumes-body', K.resumes, renderResumeRow);
+    bindUpload('link-create-attachment', 'input-create-attachment', 'attachments-body', K.attachments, renderAttachmentRow);
+    bindActions('interviews-body', K.interviews, 0); // primary cell = title
+    bindActions('resumes-body', K.resumes, 0);       // primary cell = filename
+    bindActions('attachments-body', K.attachments, 0);
+    bindUpcomingView();
+    bindAvatarEdit();
+  }
+
+  init();
+})();
+</script>
+
+</body></html>

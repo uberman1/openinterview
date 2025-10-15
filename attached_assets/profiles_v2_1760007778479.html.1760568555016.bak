@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview – Profiles v2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: { fontFamily: { display: ["Inter","sans-serif"] } } }
+  }
+</script>
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#f7f7f7] text-[#141414]">
+<header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-neutral-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <h1 class="text-xl font-bold">Profiles v2</h1>
+  </div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <input id="search" placeholder="Search by name, title, location..." class="w-full md:w-1/2 rounded-lg border px-3 py-2 mb-6"/>
+  <div id="sections" class="space-y-10"></div>
+</main>
+
+<template id="card">
+  <article class="rounded-lg border bg-white p-4 shadow-sm hover:shadow transition">
+    <div class="flex items-center gap-3">
+      <img data-avatar class="w-12 h-12 rounded-full object-cover bg-neutral-100"/>
+      <div>
+        <h2 data-name class="font-semibold leading-tight">Name</h2>
+        <p data-title class="text-sm text-neutral-600"></p>
+        <p data-location class="text-xs text-neutral-500"></p>
+      </div>
+    </div>
+    <a data-link class="mt-4 inline-flex rounded-lg border px-3 py-2 text-sm hover:bg-neutral-50">Open Profile</a>
+  </article>
+</template>
+
+<script>
+// Mapper to support user's original profiles.json shape
+function val(obj, keys, fallback=null){ for(const k of keys){ if(obj && obj[k]!=null) return obj[k]; } return fallback; }
+function firstUrl(v){ if(!v) return null; if(typeof v==='string') return v; if(Array.isArray(v)&&v.length) return v[0]; if(typeof v==='object'){ for(const k of ['url','href','link']) if(v[k]) return v[k]; } return null; }
+function mapOriginalToV2(o){
+  const id = (val(o, ['id','slug','handle']) || (val(o,['name'],'').toLowerCase().replace(/\s+/g,'-'))) || String(Math.random());
+  const name = val(o, ['name','fullName','displayName'],'Unnamed Candidate');
+  const title = val(o, ['title','role','headline'],'');
+  const location = val(o, ['location','city','geo'],'');
+  const avatar_url = firstUrl(val(o,['avatar_url','avatar','photo','image']));
+  const cover_image = firstUrl(val(o,['cover','cover_image','banner']));
+  const video = firstUrl(val(o,['video','video_url','interview','introVideo']));
+  const about = val(o,['about','bio','summary','overview'],'');
+  let highlights = val(o,['highlights','bullets','accomplishments'],[]); if(typeof highlights==='string') highlights=[highlights]; if(!Array.isArray(highlights)) highlights=[];
+  let skills = val(o,['skills','tags'],[]); if(typeof skills==='string') skills = skills.split(',').map(s=>s.trim()).filter(Boolean); if(!Array.isArray(skills)) skills=[];
+  const links = val(o,['links','attachments'],[]);
+  const resume = val(o,['resume','resume_url','resumeUrl']); const portfolio = val(o,['portfolio','portfolio_url','website']); const linkedIn = val(o,['linkedin','linkedin_url','linkedIn']);
+  const attachments = [];
+  if(resume) attachments.push({label:'Resume', href:firstUrl(resume)||'#'});
+  if(portfolio) attachments.push({label:'Portfolio', href:firstUrl(portfolio)||'#'});
+  if(linkedIn) attachments.push({label:'LinkedIn', href:firstUrl(linkedIn)||'#'});
+  if(Array.isArray(links)){ links.forEach(l=>{ if(!l) return; const lbl = val(l,['label','name','title'],'Link'); const href = firstUrl(l) || '#'; if(!attachments.some(a=>a.href===href)) attachments.push({label:lbl, href}); }); }
+  return { id, name, title, location, avatar_url, cover_image, video, about, highlights, skills, attachments };
+}
+async function loadProfiles(){ 
+  try {
+    const r0 = await fetch('./data/original_profiles.json',{cache:'no-store'});
+    if(r0.ok){ const orig = await r0.json(); if(Array.isArray(orig) && orig.length>0){ return orig.map(mapOriginalToV2); } }
+  } catch(e){}
+  const r = await fetch('./data/profiles.json',{cache:'no-store'}); return r.json(); 
+}
+
+
+function render(list){
+  const host = document.getElementById('sections');
+  host.innerHTML = '';
+
+  // Group by version; default to 1 if missing
+  const groups = {};
+  list.forEach(p => {
+    const v = Number.isFinite(p.version) ? p.version : (parseInt(p.version,10) || 1);
+    if(!groups[v]) groups[v] = [];
+    groups[v].push(p);
+  });
+
+  // Sort versions desc so the most recent appears first/top
+  const versions = Object.keys(groups).map(n=>parseInt(n,10)).sort((a,b)=>b-a);
+
+  // For each version, build a section
+  versions.forEach(v => {
+    const sec = document.createElement('section');
+    sec.className = 'space-y-4';
+
+    const h = document.createElement('h2');
+    h.className = 'text-lg font-semibold';
+    h.textContent = 'Version ' + v;
+    sec.appendChild(h);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+
+    const tpl = document.getElementById('card');
+    groups[v].forEach(p => {
+      const n = tpl.content.cloneNode(true);
+      const av = n.querySelector('[data-avatar]'); av.src = p.avatar_url || '';
+      n.querySelector('[data-name]').textContent = p.name;
+      n.querySelector('[data-title]').textContent = p.title;
+      n.querySelector('[data-location]').textContent = p.location;
+      const url = new URL('./profile_pagev2.html', location.href); url.searchParams.set('profileId', p.id);
+      n.querySelector('[data-link]').href = url.toString();
+      grid.appendChild(n);
+    });
+
+    sec.appendChild(grid);
+    host.appendChild(sec);
+  });
+}
+let all = [];
+
+loadProfiles().then(p=>{ all=p; render(all); });
+document.getElementById('search').addEventListener('input', e=>{
+  const q = e.target.value.toLowerCase();
+  render(all.filter(p => [p.name,p.title,p.location,(p.skills||[]).join(' ')].join(' ').toLowerCase().includes(q)));
+});
+</script>
+</body></html>

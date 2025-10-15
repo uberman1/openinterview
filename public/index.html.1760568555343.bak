@@ -1,0 +1,16 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Redirecting…</title>
+<script>
+  // Legacy SPA hash route migration (/#/login → /login.html)
+  try {
+    if (location.hash && location.hash.startsWith('#/')) {
+      location.replace('/login.html');
+    } else {
+      location.replace('/login.html');
+    }
+  } catch (e) {
+    // last resort
+    window.location.href = '/login.html';
+  }
+</script>

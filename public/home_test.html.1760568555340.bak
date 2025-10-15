@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Home — OpenInterview (QA v0.1.1)</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; connect-src 'self' https:">
+  <style>
+    :root { --ink:#111; --bg:#fff; --muted:#666; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding: 16px; }
+    nav a { margin-right: 12px; color: var(--ink); text-decoration: underline; }
+    .card { border:1px solid var(--ink); border-radius:12px; padding:16px; }
+    .btn { padding:10px 14px; border-radius:8px; border:1px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer; }
+    .btn.secondary { background:#fff; color:var(--ink); }
+    .muted { color:var(--muted); font-size:14px; }
+    #system_ready { padding:10px 14px; border-radius:8px; border:1px solid var(--ink); display:inline-block; }
+    #system_ready.ready { background:#c8f7c5; color:#053; }
+    #system_ready.not-ready { background:#fff4f4; color:#900; }
+    #errors { min-height: 1.2em; }
+    code { background:#f6f6f6; padding:2px 4px; border-radius:4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>OpenInterview — Home (QA v0.1.1)</h1>
+    <p class="muted">Navigation to feature test pages and live readiness indicator (UI + optional API health).</p>
+    <nav aria-label="Primary">
+      <a id="nav_password" href="/password_reset.html">Password</a>
+      <a id="nav_subscription" href="/subscription_test.html">Subscription</a>
+      <a id="nav_availability" href="/availability_test.html">Availability</a>
+      <a id="nav_profiles" href="/profiles_test.html">Profiles</a>
+      <a id="nav_shareable" href="/shareable_profile_test.html">Shareable Profile</a>
+      <a id="nav_uploads" href="/uploads_test.html">Uploads</a>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="card" aria-labelledby="ready_h2">
+      <h2 id="ready_h2">System Readiness</h2>
+      <p class="muted">Aggregates UI state from feature packs and, if configured, backend health from <code>qa_health_url</code>.</p>
+      <div id="system_ready" role="status" aria-live="polite" class="not-ready">Checking…</div>
+      <div style="margin-top:12px">
+        <button id="run_diag" class="btn">Run diagnostics</button>
+        <button id="view_details" class="btn secondary">View details</button>
+      </div>
+      <pre id="details" class="muted" style="white-space:pre-wrap; margin-top:12px"></pre>
+      <div id="errors" class="muted" role="alert" aria-live="assertive"></div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Get Started</h2>
+      <p>Choose a task to begin:</p>
+      <ul>
+        <li><a id="cta_book" href="/availability_test.html">Book availability</a></li>
+        <li><a id="cta_profile" href="/profiles_test.html">Create a profile</a></li>
+        <li><a id="cta_subscribe" href="/subscription_test.html">Manage subscription</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p class="muted">© OpenInterview — QA surface for navigation, a11y, visual and readiness checks.</p>
+  </footer>
+
+<script>
+function parseJSON(txt){ try { return JSON.parse(txt); } catch(e){ return null; } }
+function parseState(){
+  const txt = localStorage.getItem('qa_state_mirror') || '{}';
+  return parseJSON(txt) || {};
+}
+function readinessUI(state){
+  const ok = !!(state.security?.reset || state.password_reset?.status === 'completed');
+  const sub = (state.subscription?.status === 'active');
+  const av  = (state.availability?.booking_count || 0) >= 1;
+  const pf  = (state.profiles?.profile_count || 0) >= 1;
+  const sh  = !!(state.shareable_profile?.link_copied);
+  const up  = (state.uploads?.upload_count || 0) >= 1;
+  const all = ok && sub && av && pf && sh && up;
+  return {all, map:{password_reset:ok, subscription:sub, availability:av, profiles:pf, shareable_profile:sh, uploads:up}};
+}
+async function readinessAPI(){
+  const enabled = localStorage.getItem('qa_health_flag') === '1';
+  const url = localStorage.getItem('qa_health_url');
+  if(!enabled || !url) return {enabled:false, ok:false, url};
+  try {
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) return {enabled:true, ok:false, url, status: res.status};
+    const data = await res.json().catch(()=>({}));
+    const ok = (data.status === 'ok' || data.healthy === true || data.ok === true);
+    return {enabled:true, ok, url, data};
+  } catch(e){
+    return {enabled:true, ok:false, url, error: String(e)};
+  }
+}
+async function render(){
+  const state = parseState();
+  const ui = readinessUI(state);
+  const api = await readinessAPI();
+  const all = ui.all && (!api.enabled || api.ok);
+
+  const el = document.getElementById('system_ready');
+  el.classList.remove('ready','not-ready');
+  el.classList.add(all ? 'ready' : 'not-ready');
+  el.textContent = all ? 'System Ready' : 'Not Ready';
+
+  const details = { ui_checks: ui.map, ui_all: ui.all, api_enabled: api.enabled, api_ok: api.ok, api_url: api.url, api_data: api.data || undefined };
+  document.getElementById('details').textContent = JSON.stringify(details, null, 2);
+}
+document.getElementById('run_diag').addEventListener('click', render);
+document.getElementById('view_details').addEventListener('click', render);
+window.addEventListener('pageshow', () => { render(); });
+</script>
+</body>
+</html>

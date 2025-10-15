@@ -125,4 +125,6 @@ document.getElementById('search').addEventListener('input', e=>{
   render(all.filter(p => [p.name,p.title,p.location,(p.skills||[]).join(' ')].join(' ').toLowerCase().includes(q)));
 });
 </script>
+<script type="module" src="/js/nav-patch.js"></script>
+<script type="module" src="/js/redirect-shim.js"></script>
 </body></html>

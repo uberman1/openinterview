@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Forgot Password - OpenInterview.me</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: { primary: "#141414", "background-light":"#f7f7f7", "background-dark":"#191919" },
+        fontFamily: { display: ["Inter"] },
+        borderRadius: { DEFAULT: "0.25rem", lg:"0.5rem", xl:"0.75rem", full:"9999px" }
+      },
+    },
+  }
+</script>
+<style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-white">
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-md space-y-8">
+    <div class="text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight">Forgot password</h1>
+      <p class="mt-2 text-sm text-primary/70 dark:text-white/70">Enter your email and we’ll send a reset link.</p>
+    </div>
+    <form class="space-y-4" method="POST" action="/api/auth/forgot">
+      <label class="sr-only" for="email">Email</label>
+      <input id="email" name="email" type="email" required placeholder="you@example.com"
+        class="block w-full px-4 py-3 border border-primary/20 dark:border-white/20 rounded-lg bg-transparent text-sm placeholder-primary/50 dark:placeholder-white/50"/>
+      <button class="w-full py-3 rounded-lg text-white bg-primary font-semibold hover:bg-primary/90" type="submit">Send reset link</button>
+    </form>
+    <p id="msg" class="text-center text-sm text-primary/70 dark:text-white/70"></p>
+    <div class="text-center">
+      <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/login.html">Back to sign in</a>
+    </div>
+  </div>
+</div>
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const r = await fetch('/api/auth/forgot', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email }) });
+  document.getElementById('msg').textContent = 'If an account exists for that email, we\'ll send a reset link.';
+});
+</script>
+</body></html>

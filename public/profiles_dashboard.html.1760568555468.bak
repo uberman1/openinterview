@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profiles Dashboard - OpenInterview.me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+          },
+          fontFamily: { display: ["Inter", "sans-serif"] },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .badge { 
+      display: inline-block; 
+      font-size: 12px; 
+      padding: 2px 8px; 
+      border: 1px solid #e5e7eb; 
+      border-radius: 999px; 
+      background: #f5f5f5; 
+    }
+    .link-style { 
+      color: inherit; 
+      text-decoration: underline; 
+    }
+    .link-style:hover { 
+      text-decoration: none; 
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-primary">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold mb-2">Profiles Dashboard</h1>
+      <p class="text-sm text-gray-600">View and manage your interview profiles</p>
+    </div>
+    
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <table id="profilesTable" class="w-full">
+        <thead>
+          <tr class="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+            <th class="text-left px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300">Title</th>
+            <th class="text-left px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300">Status</th>
+            <th class="text-left px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300">Last Updated</th>
+            <th class="text-left px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300">Test File</th>
+            <th class="text-left px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="profilesTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module">
+    async function fetchJSON(url, init) {
+      const r = await fetch(url, { headers: {'Content-Type': 'application/json'}, ...init });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }
+
+    function titleFromProfile(p) {
+      if (p.title && p.title.trim().length) return p.title.trim();
+      const s = (p.summary || '').replace(/\s+/g, ' ').trim();
+      return s ? s.slice(0, 60) + (s.length > 60 ? '…' : '') : `Profile ${p.id}`;
+    }
+
+    function testFileHref(profileId) {
+      return `/test_output/profile-${profileId}.summary.md`;
+    }
+
+    async function loadProfiles() {
+      try {
+        const profiles = await fetchJSON('/api/profiles');
+        const tbody = document.getElementById('profilesTbody');
+        tbody.innerHTML = '';
+
+        if (profiles.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No profiles found</td></tr>';
+          return;
+        }
+
+        profiles.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.className = 'border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700';
+          tr.setAttribute('data-testid', `row-profile-${p.id}`);
+
+          const tdTitle = document.createElement('td');
+          tdTitle.className = 'px-6 py-4 font-medium';
+          tdTitle.setAttribute('data-testid', `text-title-${p.id}`);
+          tdTitle.textContent = titleFromProfile(p);
+
+          const tdStatus = document.createElement('td');
+          tdStatus.className = 'px-6 py-4';
+          tdStatus.innerHTML = `<span class="badge" data-testid="badge-status-${p.id}">${p.status || 'draft'}</span>`;
+
+          const tdUpdated = document.createElement('td');
+          tdUpdated.className = 'px-6 py-4 text-sm text-gray-600 dark:text-gray-400';
+          tdUpdated.setAttribute('data-testid', `text-updated-${p.id}`);
+          const d = new Date(p.updated_at || p.created_at);
+          tdUpdated.textContent = isNaN(d) ? '' : d.toLocaleString();
+
+          const tdTest = document.createElement('td');
+          tdTest.className = 'px-6 py-4';
+          const testLink = document.createElement('a');
+          testLink.href = testFileHref(p.id);
+          testLink.target = '_blank';
+          testLink.rel = 'noopener';
+          testLink.className = 'link-style text-sm';
+          testLink.setAttribute('data-testid', `link-test-${p.id}`);
+          testLink.textContent = 'View test output';
+          tdTest.appendChild(testLink);
+
+          const tdActions = document.createElement('td');
+          tdActions.className = 'px-6 py-4';
+          const openLink = document.createElement('a');
+          openLink.href = `/profile/${p.id}`;
+          openLink.className = 'link-style text-sm';
+          openLink.setAttribute('data-testid', `link-open-${p.id}`);
+          openLink.textContent = 'Open';
+          tdActions.appendChild(openLink);
+
+          tr.append(tdTitle, tdStatus, tdUpdated, tdTest, tdActions);
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error('Failed to load profiles:', error);
+        document.getElementById('profilesTbody').innerHTML = 
+          '<tr><td colspan="5" class="px-6 py-8 text-center text-red-600">Failed to load profiles</td></tr>';
+      }
+    }
+
+    loadProfiles();
+  </script>
+</body>
+</html>

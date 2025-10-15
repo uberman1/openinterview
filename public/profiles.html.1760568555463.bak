@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me - Profiles</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                        "foreground-light": "#141414",
+                        "foreground-dark": "#f7f7f7",
+                        "subtle-light": "#E5E5E5",
+                        "subtle-dark": "#2A2A2A",
+                        "muted-light": "#525252",
+                        "muted-dark": "#A3A3A3"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.25rem;
+            border: 2px solid #E5E5E5;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            outline: none;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .dark .custom-checkbox {
+            border-color: #2A2A2A;
+        }
+        .custom-checkbox:checked {
+            background-color: #141414;
+            border-color: #141414;
+        }
+        .dark .custom-checkbox:checked {
+            background-color: #141414;
+            border-color: #141414;
+        }
+        .custom-checkbox:checked::after {
+            content: '✓';
+            color: #f7f7f7;
+            font-size: 1rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .dark .custom-checkbox:checked::after {
+            color: #f7f7f7;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="flex flex-col min-h-screen">
+<header class="border-b border-subtle-light dark:border-subtle-dark">
+<nav class="container mx-auto px-10 py-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 text-primary">
+<svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+</svg>
+</div>
+<h1 class="text-lg font-bold">OpenInterview.me</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Dashboard</a>
+<a class="text-sm font-bold text-primary dark:text-white" href="#">Profiles</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Templates</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Questions</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-white" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-background-light dark:text-background-dark text-sm font-bold py-2 px-4 rounded-lg hover:bg-opacity-80 transition-colors">New Profile</button>
+<div class="w-10 h-10 rounded-full bg-subtle-light dark:bg-subtle-dark bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAirf4vzQwAdGVbZnWe4UdCI9ZKRfOfGiUDpL2v0hpb6a9NMDXrhE2nDtx7gMHeWn_-UjVDh0oqPrF4JkN8yLmSAieyK1AGYB32Jy3aAAfrrbbYFr3IutNuWeTL80FRgYCTJsR9Mnq2noP4pod-Q1G-r6hUcqliiuIMlgAbtdRWzxLgl0TWOYX2QJDa2ohQMEqwiT7SRelYEDdb-ajgKhxENyhy14b-xIerfYKnFwXcsYZj8e204_Ocvb3lKq8PUekhxJoYM2_Xa60");'></div>
+</div>
+</nav>
+</header>
+<main class="flex-grow container mx-auto px-10 py-12">
+<div class="max-w-5xl mx-auto">
+<header class="mb-8">
+<h2 class="text-4xl font-bold tracking-tight">Profiles</h2>
+</header>
+<div class="bg-background-light dark:bg-background-dark">
+<table class="w-full text-left">
+<thead class="border-b border-subtle-light dark:border-subtle-dark">
+<tr>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-2/6">Profile name</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-1/6">Title</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-1/6">Date Created</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm text-center w-1/12">Default</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-1/4"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6 font-medium text-sm">Marketing Lead Profile</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">Marketing Lead</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">2023-08-15</td>
+<td class="py-5 px-6 text-center">
+<input class="custom-checkbox" type="checkbox"/>
+</td>
+<td class="py-5 px-6 text-sm font-medium">
+<div class="flex items-center justify-end gap-6">
+<a class="hover:text-primary dark:hover:text-white" href="#">View</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Share</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Edit</a>
+</div>
+</td>
+</tr>
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6 font-medium text-sm">Product Manager Profile</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">Product Manager</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">2023-07-22</td>
+<td class="py-5 px-6 text-center">
+<input checked="" class="custom-checkbox" type="checkbox"/>
+</td>
+<td class="py-5 px-6 text-sm font-medium">
+<div class="flex items-center justify-end gap-6">
+<a class="hover:text-primary dark:hover:text-white" href="#">View</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Share</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Edit</a>
+</div>
+</td>
+</tr>
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6 font-medium text-sm">Software Engineer Profile</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">Software Engineer</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">2023-06-10</td>
+<td class="py-5 px-6 text-center">
+<input class="custom-checkbox" type="checkbox"/>
+</td>
+<td class="py-5 px-6 text-sm font-medium">
+<div class="flex items-center justify-end gap-6">
+<a class="hover:text-primary dark:hover:text-white" href="#">View</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Share</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Edit</a>
+</div>
+</td>
+</tr>
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6 font-medium text-sm">Sales Representative Profile</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">Sales Representative</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">2023-05-01</td>
+<td class="py-5 px-6 text-center">
+<input class="custom-checkbox" type="checkbox"/>
+</td>
+<td class="py-5 px-6 text-sm font-medium">
+<div class="flex items-center justify-end gap-6">
+<a class="hover:text-primary dark:hover:text-white" href="#">View</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Share</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Edit</a>
+</div>
+</td>
+</tr>
+<tr>
+<td class="py-5 px-6 font-medium text-sm">Customer Support Profile</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">Customer Support</td>
+<td class="py-5 px-6 text-sm text-muted-light dark:text-muted-dark">2023-04-18</td>
+<td class="py-5 px-6 text-center">
+<input class="custom-checkbox" type="checkbox"/>
+</td>
+<td class="py-5 px-6 text-sm font-medium">
+<div class="flex items-center justify-end gap-6">
+<a class="hover:text-primary dark:hover:text-white" href="#">View</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Share</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">Edit</a>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

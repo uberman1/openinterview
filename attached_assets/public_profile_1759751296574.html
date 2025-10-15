@@ -193,4 +193,6 @@
     try{ const av=await api(`/api/availability?userId=${p.userId}`); const slots=[]; ['Mon','Tue','Wed','Thu','Fri'].forEach(d=>{ (av.weekly?.[d]||[]).forEach(t=>{ const b=el('label','cursor-pointer'); b.innerHTML='<input class="sr-only" name="time" type="radio"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">'+t+'</span>'; slots.push(b); }); }); const sb=$('#slotButtons'); sb.innerHTML=''; slots.slice(0,8).forEach(x=>sb.appendChild(x)); if(!slots.length) sb.innerHTML='<span class="text-sm text-muted-light dark:text-muted-dark">No slots available</span>'; }catch{}
   })();
 </script>
+<script type="module" src="/js/nav-patch.js"></script>
+<script type="module" src="/js/redirect-shim.js"></script>
 </body></html>

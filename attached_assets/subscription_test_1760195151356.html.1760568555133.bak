@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Subscription — OpenInterview</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; }
+    header, main { max-width: 960px; margin: 0 auto; padding: 16px; }
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; }
+    .card h3 { margin: 0 0 8px; }
+    .price { font-size: 28px; font-weight: 700; }
+    .features { margin: 8px 0 16px; }
+    .btn { display:inline-block; padding:10px 14px; border-radius:8px; border:1px solid #111; background:#111; color:#fff; text-decoration:none; cursor:pointer; }
+    .btn.secondary { background:#fff; color:#111; }
+    .row { display:flex; gap:12px; align-items:center; }
+    .muted { color:#666; font-size: 14px; }
+    .status { background:#f5f5f5; padding:12px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Choose your plan</h1>
+    <div class="row" role="group" aria-label="Billing interval">
+      <label for="billing_toggle">Billing:</label>
+      <select id="billing_toggle" aria-label="Billing interval">
+        <option value="monthly" selected>Monthly</option>
+        <option value="annual">Annual</option>
+      </select>
+    </div>
+  </header>
+
+  <main id="content">
+    <section aria-labelledby="plans_heading">
+      <h2 id="plans_heading" class="sr-only">Plans</h2>
+      <div class="plans" id="plans">
+        <article class="card" data-plan="starter" data-price-monthly="price_starter_m" data-price-annual="price_starter_a">
+          <h3>Starter</h3>
+          <div class="price"><span class="currency">$</span><span class="amount" data-monthly="9" data-annual="90">9</span><span class="interval">/mo</span></div>
+          <ul class="features">
+            <li>Basic features</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn select-plan" data-price-id="price_starter_m" aria-label="Select Starter">Select</button>
+        </article>
+
+        <article class="card" data-plan="pro" data-price-monthly="price_pro_m" data-price-annual="price_pro_a">
+          <h3>Pro</h3>
+          <div class="price"><span class="currency">$</span><span class="amount" data-monthly="19" data-annual="190">19</span><span class="interval">/mo</span></div>
+          <ul class="features">
+            <li>Everything in Starter</li>
+            <li>Priority support</li>
+            <li>Advanced analytics</li>
+          </ul>
+          <button class="btn select-plan" data-price-id="price_pro_m" aria-label="Select Pro">Select</button>
+        </article>
+
+        <article class="card" data-plan="team" data-price-monthly="price_team_m" data-price-annual="price_team_a">
+          <h3>Team</h3>
+          <div class="price"><span class="currency">$</span><span class="amount" data-monthly="49" data-annual="490">49</span><span class="interval">/mo</span></div>
+          <ul class="features">
+            <li>Multi-user</li>
+            <li>Team permissions</li>
+            <li>SSO (SAML)</li>
+          </ul>
+          <button class="btn select-plan" data-price-id="price_team_m" aria-label="Select Team">Select</button>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="billing_heading" style="margin-top:24px;">
+      <h2 id="billing_heading">Billing & Payment</h2>
+      <div class="status" role="status" aria-live="polite">
+        <div>Payment method on file: <span id="pm_brand">Visa</span> •••• <span id="pm_last4">4242</span></div>
+        <div class="muted">We do not store card details. All payments are processed by Stripe.</div>
+      </div>
+      <div class="row" style="margin-top:12px;">
+        <a id="manage_billing" class="btn secondary" href="/stripe-portal" rel="noopener">Manage billing in Stripe</a>
+        <button id="cancel_plan" class="btn secondary">Cancel at period end</button>
+      </div>
+    </section>
+  </main>
+
+  <footer style="max-width:960px;margin:24px auto;padding:0 16px;">
+    <p class="muted">By subscribing you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
+  </footer>
+
+  <script>
+    // Pricing toggle (purely UI; no storage of payment data)
+    const toggle = document.getElementById('billing_toggle');
+    const planCards = Array.from(document.querySelectorAll('.card'));
+    function applyBilling() {
+      const annual = toggle.value === 'annual';
+      planCards.forEach(card => {
+        const amt = card.querySelector('.amount');
+        const interval = card.querySelector('.interval');
+        amt.textContent = annual ? amt.getAttribute('data-annual') : amt.getAttribute('data-monthly');
+        interval.textContent = annual ? '/yr' : '/mo';
+        const btn = card.querySelector('.select-plan');
+        btn.dataset.priceId = annual ? card.dataset.priceAnnual : card.dataset.priceMonthly;
+      });
+    }
+    toggle.addEventListener('change', applyBilling);
+    applyBilling();
+
+    // Simulate redirect to Stripe Checkout (mock).
+    document.querySelectorAll('.select-plan').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // In production: create Checkout Session server-side and redirectToCheckout(sessionId)
+        // For tests: simulate success redirect.
+        window.location.href = '/subscription/success.html';
+      });
+    });
+
+    // Simulate cancel flow
+    document.getElementById('cancel_plan').addEventListener('click', () => {
+      window.location.href = '/subscription/canceled.html';
+    });
+  </script>
+</body>
+</html>

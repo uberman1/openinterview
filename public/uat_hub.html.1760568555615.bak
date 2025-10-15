@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UAT Hub – Stage 5</title>
+<style>
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+section { max-width: 800px; margin: 0 auto; }
+label { display:block; margin-top: 0.75rem; font-weight: 600; }
+input, textarea, select { width: 100%; padding: 0.5rem; margin-top: 0.25rem; }
+button { margin-top: 1rem; padding: 0.6rem 1rem; border: 1px solid #111; background:#111; color:#fff; border-radius:6px; cursor:pointer; }
+#status { margin-top: 1rem; padding: 0.5rem; }
+.small { font-size: 0.875rem; color:#666; }
+.card { border: 1px solid #e5e5e5; padding: 1rem; border-radius: 8px; }
+</style>
+</head>
+<body>
+<section aria-labelledby="h1">
+  <h1 id="h1">Pilot & UAT – Feedback Capture</h1>
+  <p class="small">Stage 5: record real user sessions; nothing is sent offsite. Feedback is saved to <code>qa/stage5/feedback/</code> as JSON.</p>
+
+  <div class="card">
+    <label for="tester">Tester name or initials</label>
+    <input id="tester" placeholder="e.g. JD" />
+
+    <label for="feature">Feature</label>
+    <select id="feature">
+      <option>Home</option>
+      <option>Password</option>
+      <option>Subscription</option>
+      <option>Availability</option>
+      <option>Shareable Profile</option>
+      <option>Profiles</option>
+      <option>Uploads</option>
+      <option>Auth</option>
+    </select>
+
+    <label for="flow">Flow</label>
+    <input id="flow" placeholder="e.g. SUB-BUY-PRO, PF-CREATE-PUBLISH" />
+
+    <label for="rating">Experience rating (1–5)</label>
+    <input id="rating" type="number" min="1" max="5" value="5" />
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" rows="5" placeholder="What worked? What was confusing? Any bugs?"></textarea>
+
+    <button id="save_btn">Save Feedback</button>
+    <div id="status" role="status" aria-live="polite"></div>
+  </div>
+</section>
+<script>
+(function(){
+  const status = document.getElementById('status');
+  const btn = document.getElementById('save_btn');
+  function save() {
+    try {
+      const entry = {
+        ts: new Date().toISOString(),
+        tester: document.getElementById('tester').value.trim(),
+        feature: document.getElementById('feature').value,
+        flow: document.getElementById('flow').value.trim(),
+        rating: Number(document.getElementById('rating').value || 0),
+        notes: document.getElementById('notes').value.trim()
+      };
+      const k = "uat_feedback_entries";
+      const arr = JSON.parse(localStorage.getItem(k) || "[]");
+      arr.push(entry);
+      localStorage.setItem(k, JSON.stringify(arr));
+      status.textContent = "Saved locally. Use Stage 5 runner to export to qa/stage5/feedback/*.json";
+    } catch(e) {
+      status.textContent = "Save failed: " + e.message;
+    }
+  }
+  btn.addEventListener('click', save);
+})();
+</script>
+</body>
+</html>

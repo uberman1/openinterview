@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Subscription — Success</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
+  <style> body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width:680px; margin:40px auto; padding:16px;} .ok{color:#155724; background:#d4edda; padding:12px; border-radius:8px;} a.btn{display:inline-block;margin-top:12px} </style>
+</head>
+<body>
+  <main>
+    <h1>You're all set 🎉</h1>
+    <p class="ok">Your subscription is active. Billing is managed securely by Stripe.</p>
+    <a class="btn" href="/subscription_test.html">Return to Subscription</a>
+  </main>
+</body>
+</html>

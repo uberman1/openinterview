@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Uploads — OpenInterview (v0.1.1)</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:#fff; color:#111; }
+    header, main { max-width: 1040px; margin: 0 auto; padding: 16px; }
+    .card { border:1px solid #111; border-radius:12px; padding:16px; }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .btn { padding:10px 14px; border-radius:8px; border:1px solid #111; background:#111; color:#fff; cursor:pointer; }
+    .btn.secondary { background:#fff; color:#111; }
+    .muted { color:#666; font-size:14px; }
+    #progress { height: 10px; background: #eee; border: 1px solid #111; border-radius: 6px; overflow:hidden; width: 260px; display:none; }
+    #bar { height:100%; width:0%; background:#111; }
+    ul { padding-left: 18px; }
+    #errors { min-height: 1.2em; }
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <a id="back_to_home" href="/" class="muted">&larr; Home</a>
+    <h1 id="page_h1">Uploads</h1>
+    <p class="muted">Upload an image or PDF. Large files are rejected. Progress and cancel included.</p>
+  </header>
+
+  <main id="content">
+    <section class="card">
+      <form id="upload_form">
+        <div class="row">
+          <input id="file_input" type="file" accept=".png,.jpg,.jpeg,.gif,.webp,.pdf" aria-describedby="rules"/>
+          <button id="upload_btn" type="button" class="btn">Upload</button>
+          <button id="cancel_btn" type="button" class="btn secondary">Cancel</button>
+          <span id="status" class="muted" role="status" aria-live="polite"></span>
+        </div>
+        <div id="rules" class="muted">Max size 5 MB. Supported: images & PDF.</div>
+        <div id="errors" class="muted" role="alert" aria-live="assertive"></div>
+        <div id="progress" aria-hidden="true" aria-label="Progress">
+          <div id="bar"></div>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Uploaded Files</h2>
+      <ul id="uploads_list"></ul>
+    </section>
+  </main>
+
+<script>
+const MAX_MB = 5;
+let uploading = false;
+let timer = null;
+const input = document.getElementById('file_input');
+const errors = document.getElementById('errors');
+const statusEl = document.getElementById('status');
+const progress = document.getElementById('progress');
+const bar = document.getElementById('bar');
+const list = document.getElementById('uploads_list');
+
+const ALLOWED_TYPES = ['image/png','image/jpeg','image/jpg','image/gif','image/webp','application/pdf'];
+const ALLOWED_EXTS = ['png','jpg','jpeg','gif','webp','pdf'];
+
+function getUploads(){
+  try { return JSON.parse(localStorage.getItem('uploads')||'[]'); } catch(e){ return []; }
+}
+function setUploads(arr){
+  try { localStorage.setItem('uploads', JSON.stringify(arr)); } catch(e){}
+}
+function renderUploads(){
+  const arr = getUploads();
+  list.innerHTML='';
+  if (!arr.length) { list.innerHTML='<li class="muted">No files yet.</li>'; return; }
+  arr.forEach(u=>{
+    const li = document.createElement('li');
+    li.textContent = u.name + ' ('+u.size+' bytes) — ' + (u.type||'unknown');
+    list.appendChild(li);
+  });
+}
+function setError(msg){ errors.textContent = msg || ''; }
+function setStatus(msg){ statusEl.textContent = msg || ''; }
+function resetProgress(){
+  progress.style.display = 'none';
+  progress.setAttribute('aria-hidden','true');
+  bar.style.width = '0%';
+}
+function startProgress(){
+  progress.style.display = 'block';
+  progress.setAttribute('aria-hidden','false');
+  bar.style.width = '0%';
+}
+function isAllowed(file){
+  const name = (file.name||'').toLowerCase();
+  const ext = name.split('.').pop();
+  const type = (file.type||'').toLowerCase();
+  const byType = ALLOWED_TYPES.includes(type);
+  const byExt = ALLOWED_EXTS.includes(ext);
+  return byType && byExt;
+}
+function updateAvatarIfImage(file){
+  if (!file.type || !file.type.startsWith('image/')) return;
+  try {
+    const list = JSON.parse(localStorage.getItem('profiles_list')||'[]');
+    if (list && list.length){
+      list[0].avatar = 'uploaded:'+file.name;
+      localStorage.setItem('profiles_list', JSON.stringify(list));
+    }
+  }catch(e){}
+}
+
+document.getElementById('cancel_btn').addEventListener('click', ()=>{
+  if (!uploading) return;
+  uploading = false;
+  if (timer) clearInterval(timer);
+  resetProgress();
+  setStatus('Upload canceled');
+});
+
+document.getElementById('upload_btn').addEventListener('click', ()=>{
+  setError('');
+  setStatus('');
+  const f = input.files && input.files[0];
+  if (!f){ setError('Please choose a file'); return; }
+  const sizeMB = f.size / (1024*1024);
+  if (sizeMB > MAX_MB){ setError('File too large (max 5 MB)'); return; }
+  if (!isAllowed(f)){ setError('Unsupported file type'); return; }
+  uploading = true;
+  startProgress();
+  let pct = 0;
+  timer = setInterval(()=>{
+    if (!uploading){ clearInterval(timer); return; }
+    pct += 10 + Math.random()*10;
+    if (pct >= 100) pct = 100;
+    bar.style.width = pct + '%';
+    if (pct === 100){
+      clearInterval(timer);
+      uploading = false;
+      // "persist" upload
+      const arr = getUploads();
+      arr.push({ name:f.name, size:f.size, type:f.type, ts:Date.now() });
+      setUploads(arr);
+      updateAvatarIfImage(f);
+      renderUploads();
+      resetProgress();
+      setStatus('Upload complete');
+    }
+  }, 120);
+});
+
+renderUploads();
+</script>
+</body>
+</html>
