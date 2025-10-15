@@ -6,6 +6,16 @@
   const size = b => (b>=MB? (b/MB).toFixed(1)+'MB' : Math.max(1, Math.round((b||0)/KB))+'KB');
   const today = () => new Date().toISOString().slice(0,10);
 
+  // Metrics refresh helper - updates dashboard summary cards
+  function refreshMetrics() {
+    // Trigger metrics update if available (maintains dashboard accuracy)
+    if (typeof window.updateMetrics === 'function') {
+      window.updateMetrics();
+    }
+    // Dispatch custom event for other metric listeners
+    window.dispatchEvent(new CustomEvent('metrics:refresh'));
+  }
+
   function headerSection(text){
     return $$('h2').find(h=>h.textContent.trim().toLowerCase()===text.toLowerCase())
       ?.closest('.flex.flex-col.gap-6');
@@ -34,6 +44,16 @@
       const nInput = input.cloneNode(true);
       input.replaceWith(nInput); input = nInput;
       const nTrig  = trig.cloneNode(true);
+      // Preserve ARIA attributes for accessibility
+      if (!nTrig.hasAttribute('aria-label')) {
+        nTrig.setAttribute('aria-label', 'Upload profile avatar');
+      }
+      if (!nTrig.hasAttribute('role')) {
+        nTrig.setAttribute('role', 'button');
+      }
+      if (!nTrig.hasAttribute('tabindex')) {
+        nTrig.setAttribute('tabindex', '0');
+      }
       trig.parentNode.replaceChild(nTrig, trig); trig = nTrig;
       const open = ()=>input.click();
       trig.addEventListener('click', open);
@@ -47,6 +67,7 @@
           setBg(url);
           try { localStorage.setItem('oi.avatarUrl', url); } catch {}
           input.value='';
+          refreshMetrics(); // Update dashboard metrics after avatar change
         };
         rd.readAsDataURL(f);
       });
@@ -79,7 +100,12 @@
     input.replaceWith(nInput); input = nInput;
     const nLink  = link.cloneNode(true);
     link.parentNode.replaceChild(nLink, link); link = nLink;
-    const tbody = document.querySelector(tbodySel);
+    // Support multiple tbody selector patterns (e.g., #resumes-body or #resumes-table tbody)
+    let tbody = document.querySelector(tbodySel);
+    if (!tbody && tbodySel.includes('-body')) {
+      const tableId = tbodySel.replace('-body', '-table');
+      tbody = document.querySelector(`${tableId} tbody`);
+    }
     link.addEventListener('click', e=>{ e.preventDefault(); input.click(); });
     input.addEventListener('change', ()=>{
       const files = Array.from(input.files||[]); if (!files.length) return;
@@ -101,6 +127,7 @@
       });
       try { localStorage.setItem(storageKey, JSON.stringify(list)); } catch {}
       input.value='';
+      refreshMetrics(); // Update dashboard metrics after upload
     });
   }
 

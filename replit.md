@@ -6,15 +6,16 @@ OpenInterview is a modular development framework emphasizing a mock-first archit
 
 ## Recent Changes
 
-**Guardrails Features Integration (October 2025)**
-- Integrated compact guardrails features into modular home-uat.js (411 lines)
-- Added dedupeAttachments() for duplicate section removal
-- Added ensureBottomUploader() for smart upload link positioning and deduplication
-- Enhanced with compact selectors ($, $$) and defensive programming
-- Comprehensive test coverage: 487 total lines across 3 Jest test files
-- Guardrails compliance maintained: 13 protected files verified
-- Architecture: ES6 module with exported functions (testable, maintainable)
-- Documentation: GUARDRAILS_INTEGRATION.md, INTEGRATION_SUMMARY.md, PATCH_VS_CURRENT.md
+**Loose Guardrails Migration (October 2025)**
+- Migrated to loose standalone guardrails architecture (133 lines)
+- Separate script file: `/public/js/guardrails-loose.js` with IIFE auto-initialization
+- Script injection via `apply-guardrails.mjs` automation
+- Features: dedupeByHeader(), ensureBottomUploaderLoose(), bindAvatarLoose()
+- Archived previous modular implementation (411 lines + 487 test lines) to `archive/guardrails-modular/`
+- Playwright test suite prepared (39 lines, skipped due to environment limitations)
+- Guardrails compliance maintained: 13 protected files verified, baselines updated
+- Architecture: Standalone IIFE script, cleaner separation from main codebase
+- Documentation: LOOSE_GUARDRAILS_MIGRATION.md, PLAYWRIGHT_SKIP.md, THREE_APPROACHES_COMPARISON.md
 
 **Stage 7 v0.7.0 - UAT Launch Pack (October 2025)**
 - Deployed comprehensive UAT readiness validation with end-to-end smoke tests
