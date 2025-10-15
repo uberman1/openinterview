@@ -34,14 +34,31 @@ function normalizeBottomUploader({ heading, sectionId, linkId, inputId, accept, 
   let link = section.querySelector(`#${linkId}`);
   let input = section.querySelector(`#${inputId}`);
   if (!link || !input) {
-    const wrap = document.createElement('div');
-    wrap.className = 'mt-2 flex items-center justify-end';
-    wrap.innerHTML = `
-      <a id="${linkId}" href="#" class="text-sm font-medium text-black hover:underline dark:text-white">${linkText}</a>
-      <input id="${inputId}" type="file" class="hidden" multiple accept="${accept}"/>`;
-    section.appendChild(wrap);
-    link = section.querySelector(`#${linkId}`);
-    input = section.querySelector(`#${inputId}`);
+    const header = section.querySelector('h2');
+    if (!header) return;
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mb-4 flex items-center justify-between';
+    
+    const a = document.createElement('a');
+    a.id = linkId;
+    a.href = '#';
+    a.textContent = linkText;
+    a.className = 'text-sm font-medium text-black hover:underline dark:text-white';
+    
+    input = document.createElement('input');
+    input.id = inputId;
+    input.type = 'file';
+    input.className = 'hidden';
+    input.multiple = true;
+    input.accept = accept;
+    
+    header.parentNode.insertBefore(wrapper, header);
+    wrapper.appendChild(header);
+    wrapper.appendChild(a);
+    wrapper.appendChild(input);
+    
+    link = a;
   }
 
   if (!link.dataset.bound) {

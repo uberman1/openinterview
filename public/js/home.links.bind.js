@@ -67,15 +67,7 @@
       }
     });
 
-    wrapHeaderWithLink('My Resumes', 'Add New', () => {
-      const input = ensureHiddenFileInput('resume-file-input');
-      input.click();
-    });
-
-    wrapHeaderWithLink('Attachments', 'Add New', () => {
-      const input = ensureHiddenFileInput('attachment-file-input');
-      input.click();
-    });
+    // Note: My Resumes and Attachments now handled by home-guardrails-module.js
   }
 
   if (document.readyState === 'loading') {
