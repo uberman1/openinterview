@@ -1,0 +1,9 @@
+{
+  "name": "availability-home-button-patch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "apply:availability-home": "node scripts/apply_availability_home_button.mjs",
+    "test:availability-home": "node tests/selftest.mjs"
+  }
+}
