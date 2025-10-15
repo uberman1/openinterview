@@ -16,11 +16,12 @@ Successfully migrated from modular ES6 guardrails to loose standalone architectu
 - **Script Tag:** `<script type="module" src="/js/home-uat.js"></script>`
 
 ### After: Loose Standalone Implementation
-- **File:** `public/js/guardrails-loose.js` (133 lines)
+- **File:** `public/js/guardrails-loose.js` (159 lines, includes fixes)
 - **Architecture:** IIFE (Immediately Invoked Function Expression)
 - **Testing:** Playwright E2E (39 lines, skipped in Replit)
 - **Integration:** Auto-initialization on DOMContentLoaded
 - **Script Tag:** `<script defer src="/js/guardrails-loose.js?v=loose1"></script>`
+- **Enhancements:** Tbody fallback, metrics refresh, ARIA accessibility
 
 ---
 
@@ -28,7 +29,7 @@ Successfully migrated from modular ES6 guardrails to loose standalone architectu
 
 ### 1. Files Created/Moved ✅
 ```
-public/js/guardrails-loose.js      133 lines  ✨ NEW
+public/js/guardrails-loose.js      159 lines  ✨ NEW (with fixes)
 tests/specs/guardrails.spec.ts      39 lines  ✨ NEW (Playwright)
 tests/assets/avatar.png                       ✨ NEW (test fixture)
 playwright.config.ts                          ✨ NEW
@@ -61,6 +62,54 @@ archive/guardrails-modular/
 ---
 
 ## 🔧 Technical Details
+
+### Fixes Applied (Architect Review)
+
+After initial architect review, three critical issues were identified and fixed:
+
+1. **✅ Tbody Selector Fallback** (Lines 96-101)
+   - Added fallback logic to support both `#resumes-body` and `#resumes-table tbody` patterns
+   - Ensures resume rows are properly appended even with different HTML structures
+   ```javascript
+   let tbody = document.querySelector(tbodySel);
+   if (!tbody && tbodySel.includes('-body')) {
+     const tableId = tbodySel.replace('-body', '-table');
+     tbody = document.querySelector(`${tableId} tbody`);
+   }
+   ```
+
+2. **✅ Metrics Refresh Integration** (Lines 12-20, 63, 123)
+   - Added `refreshMetrics()` helper function
+   - Calls `window.updateMetrics()` if available (maintains dashboard accuracy)
+   - Dispatches `metrics:refresh` custom event for other listeners
+   - Integrated into both avatar upload and file upload flows
+   ```javascript
+   function refreshMetrics() {
+     if (typeof window.updateMetrics === 'function') {
+       window.updateMetrics();
+     }
+     window.dispatchEvent(new CustomEvent('metrics:refresh'));
+   }
+   ```
+
+3. **✅ Avatar Accessibility** (Lines 40-49)
+   - Restored ARIA attributes after cloning avatar trigger
+   - Added `aria-label="Upload profile avatar"`
+   - Added `role="button"` for semantic clarity
+   - Added `tabindex="0"` for keyboard navigation
+   ```javascript
+   if (!nTrig.hasAttribute('aria-label')) {
+     nTrig.setAttribute('aria-label', 'Upload profile avatar');
+   }
+   if (!nTrig.hasAttribute('role')) {
+     nTrig.setAttribute('role', 'button');
+   }
+   if (!nTrig.hasAttribute('tabindex')) {
+     nTrig.setAttribute('tabindex', '0');
+   }
+   ```
+
+**Architect Verdict:** ✅ PASS - All regressions addressed, functionality fully preserved
 
 ### Loose Guardrails Architecture
 
