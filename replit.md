@@ -2,117 +2,7 @@
 
 ## Overview
 
-OpenInterview is a modular development framework emphasizing a mock-first architecture for rapid prototyping and iterative integration of services. It's a full-stack TypeScript application with an Express backend, React frontend, and PostgreSQL database. The core purpose is to enable developers to build and validate features using local mocks before seamlessly swapping in production integrations via feature flags, adhering to a "replit-deployment model" that prioritizes configuration over code rewrites for integration. The project's ambition is to provide a robust, scalable platform for interview management, leveraging modern web technologies and a clear separation of concerns.
-
-## Recent Changes
-
-**Loose Guardrails Migration (October 2025)**
-- Migrated to loose standalone guardrails architecture (133 lines)
-- Separate script file: `/public/js/guardrails-loose.js` with IIFE auto-initialization
-- Script injection via `apply-guardrails.mjs` automation
-- Features: dedupeByHeader(), ensureBottomUploaderLoose(), bindAvatarLoose()
-- Archived previous modular implementation (411 lines + 487 test lines) to `archive/guardrails-modular/`
-- Playwright test suite prepared (39 lines, skipped due to environment limitations)
-- Guardrails compliance maintained: 13 protected files verified, baselines updated
-- Architecture: Standalone IIFE script, cleaner separation from main codebase
-- Documentation: LOOSE_GUARDRAILS_MIGRATION.md, PLAYWRIGHT_SKIP.md, THREE_APPROACHES_COMPARISON.md
-
-**Stage 7 v0.7.0 - UAT Launch Pack (October 2025)**
-- Deployed comprehensive UAT readiness validation with end-to-end smoke tests
-- **Critical Flows** (`stage7/tests_api/smoke_critical_flows.py`): 10 E2E tests (auth, Stripe, profiles, availability, uploads, notifications)
-- **Governance Checks** (`stage7/tests_api/governance_checks.py`): 3 operational tests (extended health, Prometheus metrics, audit export)
-- **Backend Integration** (`stage7/patch_backend_imports.py`): Auto-patch helper for Stage 6 routers
-- **UAT Orchestrator** (`stage7/run_stage7.py`): Complete flow validation with artifact tracking
-- **Status Dashboard** (`public/stage7_status.html`): UAT readiness display
-- Release gate integration: Runs after Stage 6 as final pre-UAT validation
-- Documentation: README_STAGE7.md (quick reference), stage7/README.md (comprehensive), STAGE7_COMPLETE.md (summary)
-
-**Stage 6 v0.6.0 - Provider Sandbox & Shadow-Mode (October 2025)**
-- Deployed provider sandbox testing with mock-first defaults
-- **Provider Flags** (`backend/addons/provider_flags.py`): Centralized feature flag system
-- **Stripe Sandbox** (`backend/addons/stripe_live_ext.py`): Checkout and webhook endpoints with test mode
-- **Notify Sandbox** (`backend/addons/notify_live_ext.py`): Email provider with file outbox and sandbox mode
-- **Smoke Tests** (`stage6/tests_api/`): Requests-based Stripe and notify validation
-- **Shadow-Mode**: Optional parallel validation (FEATURE_SHADOW_CALLS=1)
-- **Status Dashboard** (`public/stage6_status.html`): Feature flag display and usage instructions
-- Release gate integration: Runs after Stage 5 in complete pipeline
-- Documentation: README_STAGE6.md (quick reference), stage6/README.md (comprehensive), STAGE6_COMPLETE.md (summary)
-
-**Stage 5 v0.5.0 - Pilot & UAT (October 2025)**
-- Deployed UAT/pilot quality gate with structured feedback capture
-- **UAT Hub** (`public/uat_hub.html`): Web-based feedback form with localStorage persistence
-- **Prerequisite Validation**: Checks Bundle A/B/C artifacts exist
-- **Health Check**: Optional /health endpoint validation with EXPECT_LIVE enforcement
-- **Feedback Export** (`stage5/export_feedback.py`): Export localStorage to individual JSON files
-- **Artifact Collection**: Machine-readable (summary.json) and human-readable (tests.txt) results in qa/stage5/v0.5.0/
-- Infrastructure tracking: test2.html updated with "UAT – Stage 5" section
-- Release gate integration: Runs after Stage 4 in complete pipeline
-- Documentation: README_STAGE5.md (quick reference), stage5/README.md (comprehensive), STAGE5_COMPLETE.md (summary)
-
-**Stage 4 v0.4.0 - Production Go-Live Readiness (October 2025)**
-- Deployed final production go-live validation gate
-- **Health Contract** (`stage4/run_stage4.py`): /health endpoint validation with latency tracking
-- **Canary Pings**: 5 consecutive requests with p95 latency SLO (< 1000ms)
-- **Security Headers**: CSP header validation on root endpoint
-- **Provider Guard**: Stripe and email provider configuration checks (EXPECT_LIVE mode)
-- **Artifact Collection**: Machine-readable (summary.json) and human-readable (tests.txt) results in qa/stage4/v0.4.0/
-- Infrastructure tracking: test2.html updated with "Stage 4 – Production Go-Live" section
-- CI/CD snippet: stage4_pipeline.yml for GitHub Actions with workflow dispatch
-- Documentation: README_STAGE4.md (quick reference), stage4/README.md (comprehensive), STAGE4_COMPLETE.md (summary)
-
-**Stage 3 v0.3.0 - Staging Pilot & Production Hardening (October 2025)**
-- Deployed production readiness validation with API-mode testing
-- **Smoke Tests** (`stage3/smoke_tests.py`): 5 critical endpoint checks (health, auth CSRF, security CSRF, Stripe webhook, notify outbox)
-- **Release Gate Integration**: Full 12-pack validation in API mode (HOME_API=1)
-- **Artifact Collection**: Comprehensive results saved to qa/stage3/v0.3.0/ (smoke_results.json, summary.json, release gate logs)
-- **Pilot Resources**: Checklist, rollout plan, monitoring setup guidelines
-- Infrastructure tracking: test2.html updated with "Stage 3 – Staging Pilot" section
-- CI/CD snippet: stage3_pipeline.yml for GitHub Actions automation
-- Documentation: README_STAGE3.md (quick reference), stage3/README.md (comprehensive), STAGE3_COMPLETE.md (summary)
-
-**Stage 2 v0.2.0 - Guardrails Quality Gate (October 2025)**
-- Deployed byte-level file protection for 13 critical UI files
-- **Guardrails System** (`stage2/`): SHA-256 hash verification, baseline locking, violation detection
-- **Protected Files**: 10 HTML files, 1 CSS file, 2 JavaScript files
-- **Verification Scripts**: lock_baselines.py (create hashes), verify_guardrails.py (check integrity), run_stage2.py (orchestrator)
-- Infrastructure tracking: test2.html updated with "Quality Gate – Stage 2" section
-- CI/CD snippet: stage2_quality_gate.yml for GitHub Actions automation
-- Documentation: README_STAGE2.md (quick reference), stage2/README.md (comprehensive), STAGE2_COMPLETE.md (summary)
-
-**Bundle C v0.2.0 - Governance Extensions (October 2025)**
-- Deployed enterprise-grade governance features for multi-tenant applications
-- **Organization Extension** (`backend/addons/org_ext.py`): Multi-tenant orgs with RBAC (owner/admin/member), invitations, role management
-- **Audit Extension** (`backend/addons/audit_ext.py`): Blockchain-inspired hash chain audit log with SHA-256 integrity, PII redaction
-- **Metrics Extension** (`backend/addons/metrics_ext.py`): Prometheus-compatible metrics, extended health endpoint with uptime
-- Backend integration: org_router, audit_router, metrics_router wired into main.py
-- Requests-based test suite: bundle_c/tests_api with org_test (RBAC), audit_test (hash chain), metrics_test (Prometheus)
-- Release gate integration: Bundle C added as 12th pack in run_all.py
-- Infrastructure tracking: test2.html updated with "Quality Gate – Governance" section
-- CI/CD snippet: bundle_c_quality_gate.yml for GitHub Actions automation
-- Documentation: BUNDLE_C_INTEGRATION.md with comprehensive governance guide
-
-**Bundle B v0.2.0 - UI Quality Gate (October 2025)**
-- Deployed Playwright-based UI quality gate with comprehensive frontend testing
-- **Accessibility Tests** (`bundle_b/tests_ui/a11y_smoke.py`): ARIA landmarks, semantic HTML, screen reader compatibility across 7 test pages
-- **Performance Tests** (`bundle_b/tests_ui/perf_smoke.py`): DOMContentLoaded (<2.5s) and Load (<3.5s) metrics validation
-- **Responsive Tests** (`bundle_b/tests_ui/responsive_smoke.py`): Mobile (375x812) and desktop (1280x900) layout validation, no horizontal overflow
-- **Error State Tests** (`bundle_b/tests_ui/error_state_smoke.py`): Graceful degradation and user feedback validation
-- Release gate integration: Bundle B added as 11th pack in run_all.py
-- Infrastructure tracking: test2.html updated with "Quality Gate – UI" section
-- CI/CD snippet: bundle_b_quality_gate.yml for GitHub Actions automation
-- Documentation: BUNDLE_B_INTEGRATION.md with comprehensive testing guide
-
-**Bundle A v0.2.0 - Security & Production Hardening (October 2025)**
-- Deployed production-ready security, Stripe, and notification provider adapters
-- **Security Extension** (`backend/addons/security_ext.py`): CSRF protection with HMAC-SHA256, rate limiting (5 req/60sec), session management with configurable TTL
-- **Stripe Live Extension** (`backend/addons/stripe_ext_live.py`): Checkout integration, webhook signature verification, test mode support
-- **Notify Provider** (`backend/addons/notify_provider.py`): Mock email provider with file-based outbox, extensible for production (Resend, etc.)
-- Backend integration: SessionMiddleware added, routers wired into main.py, itsdangerous dependency installed
-- Environment configuration: AUTH_RATE_LIMIT, AUTH_RATE_WINDOW_SEC, SESSION_TTL_SEC, CSRF_SECRET, STRIPE_TEST, STRIPE_SIGNING_SECRET, NOTIFY_MODE
-- Requests-based test suite: bundle_a/tests_api with security_test, stripe_test, notify_test (no Playwright dependencies)
-- Release gate integration: Bundle A added as 10th pack, artifact saving with run_and_save.sh
-- Infrastructure tracking: test2.html updated with "Release Gate – Infra" section
-- Manual verification procedures documented in BUNDLE_A_INTEGRATION.md
+OpenInterview is a modular development framework designed for rapid prototyping and iterative integration, utilizing a mock-first architecture. It's a full-stack TypeScript application featuring an Express backend, React frontend, and PostgreSQL database. The primary goal is to enable developers to build and validate features with local mocks, then seamlessly transition to production integrations using feature flags, following a "replit-deployment model" that prioritizes configuration over code changes for integration. The project aims to be a robust, scalable platform for interview management, built with modern web technologies and a clear separation of concerns.
 
 ## User Preferences
 
@@ -122,48 +12,48 @@ Preferred communication style: Simple, everyday language.
 
 ### Application Structure
 
-The project uses a monorepo structure with distinct areas: `/server` (Express API), `/client` (React SPA), `/shared` (common types/schemas), `/adapters` (port interfaces), `/mocks` (stub implementations), and `/config` (feature flags).
+The project employs a monorepo structure, separating concerns into `/server` (Express API), `/client` (React SPA), `/shared` (common types/schemas), `/adapters` (port interfaces), `/mocks` (stub implementations), and `/config` (feature flags).
 
 ### Frontend Architecture
 
 **Technology Stack:** React 18, TypeScript, Vite, Wouter, TanStack Query, Shadcn/ui (Radix UI, Tailwind CSS).
-**Design Patterns:** Component-based, custom hooks, API client abstraction.
-**Key Features:** Dark theme, responsive design, real-time data refresh, multi-page dashboard.
+**Design Patterns:** Component-based architecture, custom hooks, and an API client abstraction.
+**Key Features:** Dark theme, responsive design, real-time data refresh, and a multi-page dashboard.
 
 ### Backend Architecture
 
 **Technology Stack:** Node.js, Express, TypeScript, Drizzle ORM, PostgreSQL.
-**Design Patterns:** Adapter/Port pattern for external service isolation, in-memory storage (with PostgreSQL migration path), middleware-based processing, RESTful API design (`/api/v1`).
-**Core Services:** Health monitoring, structured logging, self-test framework, adapter registry.
-**Key Features:** Admin console for managing feature flags and viewing analytics, authentication (including passwordless OTP), graceful shutdown, static file serving with intelligent caching, robust API error handling.
-**Core Workflow:** Interview scheduling, status management (draft, scheduled, completed, canceled) with transition validation, search, and filtering.
+**Design Patterns:** Adapter/Port pattern for external service isolation, middleware-based processing, and RESTful API design (`/api/v1`).
+**Core Services:** Health monitoring, structured logging, a self-test framework, and an adapter registry.
+**Key Features:** Admin console for feature flag management and analytics, authentication (including passwordless OTP), graceful shutdown, static file serving with caching, and robust API error handling.
+**Core Workflow:** Manages interview scheduling, status transitions (draft, scheduled, completed, canceled) with validation, search, and filtering.
 
 ### Data Storage
 
 **Strategy:**
-- **Development:** In-memory storage, file-backed persistence (`/server/data/fsStore.ts`) for profiles and interviews using JSON files (`/data/profiles.json`, `/data/interviews.json`). File-backed storage supports search and cursor-based pagination.
+- **Development:** In-memory storage, with file-backed persistence for profiles and interviews using JSON files, supporting search and cursor-based pagination.
 - **Production:** PostgreSQL via Neon serverless driver with Drizzle ORM.
-- **Schema:** Drizzle ORM defines `users`, `health_checks`, `logs`, `test_results` tables.
+- **Schema:** Drizzle ORM defines `users`, `health_checks`, `logs`, and `test_results` tables.
 
 ### Adapter Pattern Implementation
 
-Core services are defined by port interfaces (`AuthPort`, `StoragePort`, `EmailPort`, `PaymentsPort`). Implementations are controlled by `config/flags.json`, allowing seamless switching between mock and real services.
+Core services are defined by port interfaces (e.g., `AuthPort`, `StoragePort`). Implementations are dynamically switched between mock and real services using `config/flags.json`.
 
 ### Security Implementation
 
-Middleware stack includes Helmet.js for HTTP headers, CORS with an origin allowlist, rate limiting (120 req/min/IP), and request body size limits (200KB).
+The middleware stack incorporates Helmet.js for HTTP headers, CORS with an origin allowlist, rate limiting (120 req/min/IP), and request body size limits (200KB).
 
 ### Build and Development Workflow
 
-**Development:** Vite dev server (5173) and Express API (5000) with API proxying.
-**Production Build:** Client to `/dist/public`, server (esbuild) to `/dist/index.js`.
-**Testing:** Self-test framework (`/scripts/selftest.js`) validates API contracts and features per module, outputting JSON and human-readable logs.
+**Development:** Vite development server (port 5173) for the client and Express API (port 5000), with API proxying.
+**Production Build:** Client assets are built to `/dist/public`, and the server (via esbuild) to `/dist/index.js`.
+**Testing:** A self-test framework (`/scripts/selftest.js`) validates API contracts and features, outputting JSON and human-readable logs.
 
 ## External Dependencies
 
 ### Third-Party Services
 
-**Currently Mocked (planned integrations):**
+**Currently Mocked (with planned production integrations):**
 - Authentication service (`AuthPort`)
 - Cloud storage/database (`StoragePort`)
 - Email delivery service (`EmailPort`)
@@ -183,7 +73,7 @@ Middleware stack includes Helmet.js for HTTP headers, CORS with an origin allowl
 
 ### Development Tools
 
-**Replit-Specific Plugins:** `@replit/vite-plugin-runtime-error-modal`, `@replit/vite-plugin-cartographer`, `@replit/vite-plugin-dev-banner` (conditional loading for Replit environments).
+**Replit-Specific Plugins:** `@replit/vite-plugin-runtime-error-modal`, `@replit/vite-plugin-cartographer`, `@replit/vite-plugin-dev-banner` (loaded conditionally in Replit environments).
 
 **Key NPM Packages:**
 - **Runtime:** `express`, `drizzle-orm`, `zod`, `react`, `react-dom`, `@tanstack/react-query`, `wouter`.
