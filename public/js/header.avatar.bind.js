@@ -1,7 +1,7 @@
 (function(){
   function apply(url){
     if(!url) return;
-    var nodes = document.querySelectorAll('header [data-avatar], header .header-avatar, header .rounded-full.bg-cover, header .size-10.rounded-full, header img.header-avatar');
+    var nodes = document.querySelectorAll('header [data-avatar], header .header-avatar, header .rounded-full, header #avatar-header, header img.header-avatar');
     nodes.forEach(function(el){
       if(el.tagName === 'IMG') el.src = url; else el.style.backgroundImage = 'url("'+url+'")';
     });

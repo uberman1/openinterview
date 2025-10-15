@@ -127,7 +127,10 @@ function bindAvatar() {
         const url = e.target.result;
         avatarProfile.style.backgroundImage = `url("${url}")`;
         if (avatarHeader) avatarHeader.style.backgroundImage = `url("${url}")`;
-        try { localStorage.setItem('oi.avatarUrl', url); } catch {}
+        try { 
+          localStorage.setItem('oi.avatarUrl', url);
+          window.dispatchEvent(new CustomEvent('avatar:updated', { detail: { url } }));
+        } catch {}
         avatarInput.value = '';
       };
       rd.readAsDataURL(f);
