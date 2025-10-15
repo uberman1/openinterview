@@ -217,7 +217,10 @@
   }
 
   function init(){
-    replaceHeaderNav();
+    // Skip header replacement if nav-patch.js has already handled it
+    if (document.body.dataset.navPatched !== 'true') {
+      replaceHeaderNav();
+    }
     wireHeader();
     hydrateTable();
     bindRowActions(); // for static sample rows

@@ -1,14 +1,9 @@
 // js/redirect-shim.js
+// DISABLED - All legacy route redirects are now handled server-side in index.js
+// Server redirects:
+//   /profile, /account → /home.html#profile
+//   /uploads, /documents → /home.html#attachments
 (function(){
-  const legacyMap = [
-    { rx: /^\/?(profile|profiles|account)\/?$/i, hash: '#profile' },
-    { rx: /^\/?(uploads|documents)\/?$/i,       hash: '#attachments' }
-  ];
-  const path = (location.pathname || '').replace(/\/+$/,'').toLowerCase() || '/';
-  const match = legacyMap.find(m => m.rx.test(path));
-  if (!match) return;
-  const onHome = /home(\.html)?$/.test(path) || /home(\.html)?$/.test(document.referrer || '');
-  if (onHome) { location.replace(match.hash); return; }
-  const homeTarget = (location.origin ? (location.origin + '/home.html') : '/home.html') + match.hash;
-  location.replace(homeTarget);
+  // No client-side redirect needed - server handles all legacy routes
+  return;
 })();

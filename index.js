@@ -25,7 +25,6 @@ app.get('/uploads.html', (req,res) => {
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/uploads.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
@@ -41,7 +40,6 @@ function serveHome(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/home.upcoming.contact.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/home.links.bind.js" defer></script></body>');
@@ -50,8 +48,13 @@ function serveHome(req,res){
   }catch(e){ res.status(500).send('Failed to load home.html'); }
 }
 app.get('/home.html', serveHome);
-app.get('/profile.html', (req,res)=> res.redirect(302,'/home.html'));
-app.get('/profile', (req,res)=> res.redirect(302,'/home.html'));
+app.get('/profile.html', (req,res)=> res.redirect(302,'/home.html#profile'));
+app.get('/profile', (req,res)=> res.redirect(302,'/home.html#profile'));
+app.get('/account', (req,res)=> res.redirect(302,'/home.html#profile'));
+
+// Legacy routes for uploads/documents -> home.html#attachments
+app.get('/uploads', (req,res)=> res.redirect(302,'/home.html#attachments'));
+app.get('/documents', (req,res)=> res.redirect(302,'/home.html#attachments'));
 
 // ---- Serve /subscription(.html) with binder
 /* SUBSCRIPTION_BIND_INJECT */
@@ -60,7 +63,6 @@ function serveSubscription(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/subscription.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
@@ -77,7 +79,6 @@ function servePassword(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/password.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
@@ -94,7 +95,6 @@ function serveProfiles(req,res){
   try{
     let html = fs.readFileSync(p, 'utf8');
     html = html.replace('</body>', '<script src="/js/profiles.bind.js" defer></script></body>');
-    html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
@@ -109,7 +109,6 @@ function serveAvailability(req,res){
   const p = path.join(__dirname, 'public', 'availability.html');
   try{
     let html = fs.readFileSync(p, 'utf8');
-    html = html.replace('</body>', '<script src="/js/header.unify.v5.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/availability.home.bind.js" defer></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
