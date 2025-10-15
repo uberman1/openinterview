@@ -1,12 +1,7 @@
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/specs',
-  use: { headless: true, baseURL: 'http://localhost:3000' },
+  use: { headless: true, baseURL: 'http://localhost:5000' },
   timeout: 45000,
-  webServer: {
-    command: 'node serve.mjs',
-    port: 3000,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000
-  }
+  // Use existing workflow server on port 5000
 });
