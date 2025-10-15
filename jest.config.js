@@ -2,8 +2,8 @@ export default {
   testEnvironment: 'jsdom',
   roots: ['<rootDir>/tests'],
   transform: {},
-  extensionsToTreatAsEsm: ['.js'],
-  moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1'
+  setupFiles: ['<rootDir>/tests/setup.js'],
+  testEnvironmentOptions: {
+    customExportConditions: ['node', 'node-addons']
   }
 };

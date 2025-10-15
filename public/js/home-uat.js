@@ -6,6 +6,9 @@
 
 export const HomeUAT = (function(){
   // ---------- Utils ----------
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
   function lsGet(key, fallback) {
     try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){ return fallback; }
   }
@@ -113,28 +116,32 @@ export const HomeUAT = (function(){
   function hydrateFromStorage(){
     // Resumes
     const resumesBody = document.getElementById('resumes-body');
-    const resumes = lsGet(K.resumes, []);
-    // avoid duplicating existing static rows: clear any injected (optional)
-    // For simplicity, only add missing by filename+date
-    const existingSet = new Set(Array.from(resumesBody.querySelectorAll('tr')).map(tr => {
-      const tds = tr.querySelectorAll('td');
-      return tds.length ? tds[0].textContent.trim() + '|' + (tds[1]?.textContent.trim()||'') : '';
-    }));
-    resumes.slice().reverse().forEach(rec => {
-      const key = rec.filename + '|' + rec.date;
-      if (!existingSet.has(key)){
-        const tr = prependRow(resumesBody, renderResumeRow(rec));
-        tr.dataset.id = rec.id || genId();
-      }
-    });
+    if (resumesBody) {
+      const resumes = lsGet(K.resumes, []);
+      // avoid duplicating existing static rows: clear any injected (optional)
+      // For simplicity, only add missing by filename+date
+      const existingSet = new Set(Array.from(resumesBody.querySelectorAll('tr')).map(tr => {
+        const tds = tr.querySelectorAll('td');
+        return tds.length ? tds[0].textContent.trim() + '|' + (tds[1]?.textContent.trim()||'') : '';
+      }));
+      resumes.slice().reverse().forEach(rec => {
+        const key = rec.filename + '|' + rec.date;
+        if (!existingSet.has(key)){
+          const tr = prependRow(resumesBody, renderResumeRow(rec));
+          tr.dataset.id = rec.id || genId();
+        }
+      });
+    }
 
     // Attachments
     const attachmentsBody = document.getElementById('attachments-body');
-    const attachments = lsGet(K.attachments, []);
-    attachments.slice().reverse().forEach(rec => {
-      const tr = prependRow(attachmentsBody, renderAttachmentRow(rec));
-      tr.dataset.id = rec.id || genId();
-    });
+    if (attachmentsBody) {
+      const attachments = lsGet(K.attachments, []);
+      attachments.slice().reverse().forEach(rec => {
+        const tr = prependRow(attachmentsBody, renderAttachmentRow(rec));
+        tr.dataset.id = rec.id || genId();
+      });
+    }
 
     // Avatars
     const avatarUrl = lsGet(K.avatarUrl, null);
@@ -233,14 +240,14 @@ export const HomeUAT = (function(){
 
   // ---------- Avatar edit ----------
   function setAvatar(url){
-    const header = document.getElementById('avatar-header');
-    const profile = document.getElementById('avatar-profile');
+    const header = $('#avatar-header');
+    const profile = $('#avatar-profile');
     if (header) header.style.backgroundImage = 'url("' + url + '")';
     if (profile) profile.style.backgroundImage = 'url("' + url + '")';
   }
   function bindAvatarEdit(){
-    const trigger = document.getElementById('avatar-profile'); // clickable avatar
-    const input = document.getElementById('input-edit-avatar');
+    const trigger = $('#avatar-profile');
+    const input = $('#input-edit-avatar');
     if (!trigger || !input) return;
     function openPicker(){ input.click(); }
     trigger.addEventListener('click', function(){ openPicker(); });
@@ -263,12 +270,117 @@ export const HomeUAT = (function(){
     });
   }
 
+  // ---------- Guardrails: Cleanup & Smart Positioning ----------
+  function dedupeAttachments(){
+    const sections = $$('h2')
+      .filter(h => h.textContent.trim() === 'Attachments')
+      .map(h => h.closest('.flex.flex-col.gap-6'))
+      .filter(Boolean);
+    
+    if (sections.length > 1) {
+      // Keep first, remove duplicates
+      sections.slice(1).forEach(s => s.remove());
+    }
+  }
+
+  function ensureBottomUploader({sectionId, linkId, inputId, accept, tbodyId, storageKey, linkText}){
+    const section = $(`#${sectionId}`);
+    const tbody = $(`#${tbodyId}`);
+    if (!section || !tbody) return;
+
+    // Remove duplicate links (keep only the last one)
+    const existingLinks = $$(`#${sectionId} #${linkId}`);
+    if (existingLinks.length > 1) {
+      existingLinks.slice(0, -1).forEach(a => {
+        const wrapper = a.closest('div');
+        if (wrapper) wrapper.remove();
+      });
+    }
+
+    // Ensure link and input exist at bottom of section
+    let link = $(`#${sectionId} #${linkId}`);
+    let input = $(`#${sectionId} #${inputId}`);
+    
+    if (!link || !input) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'mt-2 flex items-center justify-end';
+      wrapper.innerHTML = `
+        <a id="${linkId}" href="#" class="text-sm font-medium text-black hover:underline dark:text-white">${linkText}</a>
+        <input id="${inputId}" type="file" class="hidden" multiple accept="${accept}"/>
+      `;
+      section.appendChild(wrapper);
+      link = $(`#${sectionId} #${linkId}`);
+      input = $(`#${sectionId} #${inputId}`);
+    }
+
+    // Bind upload handler
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      input.click();
+    });
+
+    input.addEventListener('change', function(){
+      const files = Array.from(input.files || []);
+      if (!files.length) return;
+      const list = lsGet(storageKey, []);
+      
+      files.forEach(file => {
+        const rec = {
+          id: genId(),
+          filename: file.name,
+          date: today(),
+          size: formatSize(file.size || 0)
+        };
+        
+        // Prepend DOM row
+        const tr = document.createElement('tr');
+        tr.dataset.id = rec.id;
+        tr.innerHTML = storageKey === K.resumes 
+          ? renderResumeRow(rec) 
+          : renderAttachmentRow(rec);
+        tbody.prepend(tr);
+        
+        // Prepend storage
+        list.unshift(rec);
+      });
+      
+      lsSet(storageKey, list);
+      input.value = '';
+    });
+  }
+
   // ---------- Init ----------
   function init(){
+    // Guardrails cleanup
+    dedupeAttachments();
+    
+    // Ensure upload links are properly positioned (only if sections exist)
+    if ($('#resumes-section')) {
+      ensureBottomUploader({
+        sectionId: 'resumes-section',
+        linkId: 'link-add-resume',
+        inputId: 'input-add-resume',
+        accept: '.pdf,.doc,.docx,.txt',
+        tbodyId: 'resumes-body',
+        storageKey: K.resumes,
+        linkText: 'Add New'
+      });
+    }
+    
+    if ($('#attachments-section')) {
+      ensureBottomUploader({
+        sectionId: 'attachments-section',
+        linkId: 'link-create-attachment',
+        inputId: 'input-create-attachment',
+        accept: '.pdf,.doc,.docx,.txt,.png,.jpg,.jpeg,.gif,.ppt,.pptx,.xls,.xlsx,.csv',
+        tbodyId: 'attachments-body',
+        storageKey: K.attachments,
+        linkText: 'Create New'
+      });
+    }
+
     ensureIdsOnExistingRows();
     hydrateFromStorage();
-    bindUpload('link-add-resume', 'input-add-resume', 'resumes-body', K.resumes, renderResumeRow);
-    bindUpload('link-create-attachment', 'input-create-attachment', 'attachments-body', K.attachments, renderAttachmentRow);
     bindActions('interviews-body', K.interviews, 0); // primary cell = title
     bindActions('resumes-body', K.resumes, 0);       // primary cell = filename
     bindActions('attachments-body', K.attachments, 0);
@@ -288,6 +400,8 @@ export const HomeUAT = (function(){
     bindUpcomingView,
     bindAvatarEdit,
     setAvatar,
+    dedupeAttachments,
+    ensureBottomUploader,
     K,
     prependRow,
     renderResumeRow,
