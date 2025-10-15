@@ -1,9 +1,0 @@
-{
-  "name": "openinterview-v4.1-mover",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "apply": "node mover/apply.js"
-  }
-}
