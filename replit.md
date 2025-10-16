@@ -6,6 +6,16 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**File Upload Persistence Fix (October 16, 2025)**
+- Fixed file upload persistence on home.html for resumes and attachments
+- **Issue**: Uploaded files were not persisting after page reload
+- **Root Cause**: Files saved to localStorage but never restored on page load
+- **Solution**: Added restore logic that reads from localStorage and recreates table rows
+- **Ordering Fix**: Iterate saved array in reverse to maintain newest-first order when prepending
+- Changed "Create New" to "Add New" for Attachments section
+- All Playwright tests passing ✅ (files persist, correct ordering maintained)
+- Architect review: PASS - Production ready
+
 **Sign In Button Removed from Password Page (October 16, 2025)**
 - Removed "Sign In" button from password.html header navigation
 - **Issue**: password.html had hardcoded "Sign In" button in header alongside navigation
