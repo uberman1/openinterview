@@ -6,6 +6,15 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Grey Avatar Placeholder Removed (October 16, 2025)**
+- Removed grey placeholder avatar circle from subscription.html
+- **Issue**: subscription.html had hardcoded grey placeholder div alongside real avatar
+- **Solution**: Removed `<div class='w-8 h-8 rounded-full bg-primary/10 dark:bg-white/10'></div>` from HTML
+- nav-patch.js now provides the sole avatar with photo
+- Subscription page now shows exactly 1 avatar ✅
+- Playwright tests passing ✅
+- Architect review: PASS - Production ready
+
 **Duplicate Avatar Fix (October 16, 2025)**
 - Fixed duplicate avatar issue on home.html and subscription.html
 - **Root Cause**: home.html has `id="avatar-header"` but nav-patch.js only looked for `data-testid="avatar-header"`
