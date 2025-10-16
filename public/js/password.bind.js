@@ -128,9 +128,11 @@
   }
 
   function init(){
-    // Make header consistent with home.html
-    injectHomeHeader();
-    wireHeader();
+    // Skip header replacement if nav-patch.js has already handled it
+    if (document.body.dataset.navPatched !== 'true') {
+      injectHomeHeader();
+      wireHeader();
+    }
     bindForm();
   }
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();

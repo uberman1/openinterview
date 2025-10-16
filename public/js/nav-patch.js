@@ -19,6 +19,7 @@
 
     const path = (location.pathname || '').toLowerCase();
     const isHome = /home(\.html)?$/.test(path) || path === '/';
+    const isAvail = /availability/i.test(path);
     const isSub = /subscription/i.test(path);
     const isPass = /password/i.test(path);
 
@@ -58,6 +59,7 @@
     // Clear and populate nav
     while (nav.firstChild) nav.removeChild(nav.firstChild);
     nav.appendChild(mk('Home', (isHome ? '#': (location.origin ? (location.origin + '/home.html') : '/home.html')), isHome));
+    nav.appendChild(mk('Availability', '/availability', isAvail));
     nav.appendChild(mk('Subscription', '/subscription', isSub));
     nav.appendChild(mk('Password', '/password', isPass));
     nav.appendChild(mk('Log Out', '/logout'));
