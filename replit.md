@@ -6,6 +6,14 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Sign In Button Removed from Password Page (October 16, 2025)**
+- Removed "Sign In" button from password.html header navigation
+- **Issue**: password.html had hardcoded "Sign In" button in header alongside navigation
+- **Solution**: Removed button div from HTML, nav-patch.js handles unified navigation
+- Password page header now matches other pages (navigation + avatar only)
+- Playwright tests passing ✅ (no Sign In button, proper navigation verified)
+- Architect review: PASS - Production ready
+
 **Grey Avatar Placeholder Removed (October 16, 2025)**
 - Removed grey placeholder avatar circle from subscription.html
 - **Issue**: subscription.html had hardcoded grey placeholder div alongside real avatar
