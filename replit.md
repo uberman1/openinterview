@@ -6,6 +6,17 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Duplicate Avatar Fix (October 16, 2025)**
+- Fixed duplicate avatar issue on home.html and subscription.html
+- **Root Cause**: home.html has `id="avatar-header"` but nav-patch.js only looked for `data-testid="avatar-header"`
+- **Solution**: Updated nav-patch.js to detect avatars by BOTH id AND data-testid selectors
+- When existing avatar found: Adds data-testid to it (no duplicate created)
+- When no avatar exists: Creates new avatar with data-testid
+- All pages now have exactly ONE avatar ✅
+- Playwright tests passing ✅ (1 avatar verified on all pages)
+- Architect review: PASS - Production ready
+- Documentation: DUPLICATE_AVATAR_FIX.md
+
 **Header Spacing Fix (October 16, 2025)**
 - Fixed header spacing to match home.html across ALL pages (consistent 24px gap-6)
 - **nav-patch.js Update**: Changed gap-8 to gap-6, wrapped nav and avatar in flex gap-6 container

@@ -53,8 +53,9 @@
       document.body.insertBefore(globalHeader, document.body.firstChild);
       nav = globalHeader.querySelector('#oi-global-nav');
     } else {
-      // Nav exists - ensure avatar is present
-      let avatar = header ? header.querySelector('[data-testid="avatar-header"]') : null;
+      // Nav exists - check for any existing avatar (by id OR data-testid)
+      let avatar = header ? (header.querySelector('#avatar-header') || header.querySelector('[data-testid="avatar-header"]')) : null;
+      
       if (!avatar) {
         // Find or create wrapper for nav and avatar with gap-6
         let navParent = nav.parentElement;
@@ -75,6 +76,11 @@
         avatar.className = 'aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat';
         avatar.style.backgroundImage = `url('${avatarUrl}')`;
         navParent.appendChild(avatar);
+      } else {
+        // Avatar exists - ensure it has the correct test id
+        if (!avatar.hasAttribute('data-testid')) {
+          avatar.setAttribute('data-testid', 'avatar-header');
+        }
       }
       
       // Update nav gap to gap-6 if not already
