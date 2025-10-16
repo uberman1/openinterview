@@ -4,6 +4,16 @@
 
 OpenInterview is a modular development framework designed for rapid prototyping and iterative integration, utilizing a mock-first architecture. It's a full-stack TypeScript application featuring an Express backend, React frontend, and PostgreSQL database. The primary goal is to enable developers to build and validate features with local mocks, then seamlessly transition to production integrations using feature flags, following a "replit-deployment model" that prioritizes configuration over code changes for integration. The project aims to be a robust, scalable platform for interview management, built with modern web technologies and a clear separation of concerns.
 
+## Recent Changes
+
+**Availability Link Restored (October 16, 2025)**
+- Restored Availability link to navigation menu (5 items: Home, Availability, Subscription, Password, Log Out)
+- Updated nav-patch.js with Availability link and active state detection
+- Fixed password.bind.js to respect navPatched flag (prevents header override conflicts)
+- Bug fix: Password page now shows correct 5-item navigation
+- All Playwright tests passing ✅
+- Documentation: AVAILABILITY_LINK_RESTORED.md
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
