@@ -6,6 +6,17 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Header Spacing Fix (October 16, 2025)**
+- Fixed header spacing to match home.html across ALL pages (consistent 24px gap-6)
+- **nav-patch.js Update**: Changed gap-8 to gap-6, wrapped nav and avatar in flex gap-6 container
+- **Avatar Presence**: Ensured avatar present on all pages including password page
+- **Null Safety**: Added header null check to prevent crashes on pages without <header>
+- Added data-testid="avatar-header" for reliable testing
+- Bug fix: Password page now shows avatar with correct spacing (was showing "Sign In" button)
+- All Playwright tests passing ✅ (24px gap verified on all pages)
+- Architect review: PASS - Production ready
+- Documentation: HEADER_SPACING_FIX.md
+
 **Availability Link Restored (October 16, 2025)**
 - Restored Availability link to navigation menu (5 items: Home, Availability, Subscription, Password, Log Out)
 - Updated nav-patch.js with Availability link and active state detection
