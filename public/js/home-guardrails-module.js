@@ -61,6 +61,30 @@ function normalizeBottomUploader({ heading, sectionId, linkId, inputId, accept, 
     link = a;
   }
 
+  // Restore saved files from localStorage (in reverse order to maintain newest-first)
+  const tbody = document.querySelector(tbodySelector);
+  if (tbody) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      // Iterate in reverse to maintain newest-first order when prepending
+      for (let i = saved.length - 1; i >= 0; i--) {
+        const item = saved[i];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-6 py-4 text-sm font-medium">${item.filename}</td>
+          <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">${item.date}</td>
+          <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">${item.size}</td>
+          <td class="px-6 py-4 text-sm font-medium">
+            <div class="flex items-center justify-end gap-4 actions">
+              <button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
+              <button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+            </div>
+          </td>`;
+        tbody.prepend(tr);
+      }
+    } catch {}
+  }
+
   if (!link.dataset.bound) {
     link.dataset.bound = 'true';
     link.addEventListener('click', (e) => { e.preventDefault(); input.click(); });
@@ -72,7 +96,6 @@ function normalizeBottomUploader({ heading, sectionId, linkId, inputId, accept, 
       let list = [];
       try { list = JSON.parse(localStorage.getItem(storageKey) || '[]'); } catch {}
 
-      const tbody = document.querySelector(tbodySelector);
       files.forEach(f => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -162,7 +185,7 @@ export function initGuardrails() {
     inputId: 'input-create-attachment',
     accept: '.pdf,.doc,.docx,.txt,.png,.jpg,.jpeg,.gif,.ppt,.pptx,.xls,.xlsx,.csv',
     tbodySelector: '#attachments-body',
-    linkText: 'Create New',
+    linkText: 'Add New',
     storageKey: 'oi.attachments'
   });
 
