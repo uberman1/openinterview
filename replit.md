@@ -29,6 +29,17 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 - All Playwright tests passing ✅ (complete workflow: create → view → edit → save → view)
 - Architect review: PASS - View-first workflow production ready
 
+**Login Page Sign-In Function and Font Fixed (October 17, 2025)**
+- Fixed login.html sign-in functionality and font to match other pages
+- **Issue**: Sign-in button not working, font not Inter like other pages
+- **Root Cause**: Missing app.js file with api function, missing Google Fonts Inter link
+- **Solution**: 
+  - Created public/js/app.js with api helper function for backend requests
+  - Added Google Fonts Inter link to login.html head
+- app.js exports api(path, options) with automatic auth token handling from localStorage
+- All Playwright tests passing ✅ (login flow works, font verified as Inter)
+- Production ready ✅
+
 **Login Page Header Formatting Fixed (October 17, 2025)**
 - Fixed login.html header and menu formatting to match other pages
 - **Issue**: Logo was simple text (too large), menu text not formatted like other pages
