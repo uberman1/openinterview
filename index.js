@@ -118,28 +118,20 @@ function serveAvailability(req,res){
 app.get('/availability.html', serveAvailability);
 app.get('/availability', serveAvailability);
 
-// ---- Serve /profile/:id as VIEW page (with owner-only Edit button)
-function serveProfileView(req,res){
+// ---- Serve /profile/new with new interview editor
+function serveNewProfile(req,res){
   const p = path.join(__dirname, 'public', 'profile_v4_1_package', 'public', 'index.html');
   try{
     let html = fs.readFileSync(p, 'utf8');
-    html = html.replace('</body>', '<script type="module" src="/js/profile-view-bindings.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/data-store.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/asset-library.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/profile-editor.js"></script></body>');
     res.setHeader('Content-Type','text/html; charset=utf-8');
     res.send(html);
   }catch(e){ res.status(500).send('Failed to load profile template'); }
 }
-app.get('/profile/:id', serveProfileView);
-
-// ---- Serve /pages/profile-edit.html as EDIT page
-function serveProfileEdit(req,res){
-  const p = path.join(__dirname, 'public', 'pages', 'profile-edit.html');
-  try{
-    let html = fs.readFileSync(p, 'utf8');
-    res.setHeader('Content-Type','text/html; charset=utf-8');
-    res.send(html);
-  }catch(e){ res.status(500).send('Failed to load profile editor'); }
-}
-app.get('/pages/profile-edit.html', serveProfileEdit);
+app.get('/profile/new', serveNewProfile);
+app.get('/profile/:id', serveNewProfile);
 
 // ---- Serve availability editor for profiles
 function serveProfileAvailability(req,res){

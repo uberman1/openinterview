@@ -46,10 +46,25 @@
     wrapper.appendChild(a);
   }
 
+  function ensureHiddenFileInput(id) {
+    let input = document.getElementById(id);
+    if (!input) {
+      input = document.createElement('input');
+      input.type = 'file';
+      input.id = id;
+      input.style.display = 'none';
+      document.body.appendChild(input);
+    }
+    return input;
+  }
+
   function init() {
     wrapHeaderWithLink('My Interviews', 'Create New', () => {
-      // home-bindings.js will handle the actual creation flow
-      // This just creates the link that home-bindings.js will bind to
+      if (typeof window.startNewProfileFlow === 'function') {
+        window.startNewProfileFlow();
+      } else {
+        window.location.href = '/interviews/new';
+      }
     });
 
     // Note: My Resumes and Attachments now handled by home-guardrails-module.js

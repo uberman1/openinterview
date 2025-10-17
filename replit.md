@@ -6,39 +6,21 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
-**New Interview Workflow - View-First Pattern Deployed (October 17, 2025)**
-- Updated to view-first pattern: Create New → View page → Edit button → Edit page → Save → View page
-- **Implementation**: Non-invasive architecture using dynamic link injection and localStorage persistence
+**New Interview Workflow Package Deployed (October 17, 2025)**
+- Deployed guardrailed self-deploy package for New Interview workflow with profile creation, inline editing, and asset library
+- **Implementation**: Non-invasive architecture using existing links via home.links.bind.js integration
 - **Key Components**:
   - data-store.js: localStorage wrapper for profiles and assets (keys: oi:profiles:{id}, oi:assets:{type}:{id})
-  - asset-library.js: File picker and asset management  
-  - home-bindings.js: Finds "Create New" links and binds profile creation workflow
-  - profile-view-bindings.js: Hydrates view page, adds owner-only "Edit Profile" button
-  - editor-page.js: Standalone edit page with integrated availability management
-  - home.links.bind.js: Creates "Create New" link in My Interviews section
-- **Pages**: 
-  - /profile/:id - View page (profile template with view bindings)
-  - /pages/profile-edit.html - Standalone edit page with full form
-- **Data Flow**: 
-  1. home.links.bind.js creates "Create New" link
-  2. home-bindings.js binds click → creates draft → redirects to /profile/{id}
-  3. profile-view-bindings.js hydrates view, adds Edit button (owner-only)
-  4. Edit → /pages/profile-edit.html → editor-page.js handles form
-  5. Save → publishes profile → redirects back to /profile/{id}
-- **Guardrails**: Updated deploy.mjs with --pages support, protected files unchanged
-- All Playwright tests passing ✅ (complete workflow: create → view → edit → save → view)
-- Architect review: PASS - View-first workflow production ready
-
-**Login Page Sign-In Function and Font Fixed (October 17, 2025)**
-- Fixed login.html sign-in functionality and font to match other pages
-- **Issue**: Sign-in button not working, font not Inter like other pages
-- **Root Cause**: Missing app.js file with api function, missing Google Fonts Inter link
-- **Solution**: 
-  - Created public/js/app.js with api helper function for backend requests
-  - Added Google Fonts Inter link to login.html head
-- app.js exports api(path, options) with automatic auth token handling from localStorage
-- All Playwright tests passing ✅ (login flow works, font verified as Inter)
-- Production ready ✅
+  - asset-library.js: File picker and asset management
+  - home-bindings.js: Binds to existing links, exposes window.startNewProfileFlow
+  - profile-editor.js: Inline editing for profile template
+  - availability.js: Availability slot management
+- **Server Routes**: /profile/new, /profile/:id, /availability/:id
+- **Integration Fix**: home-bindings.js exposes window.startNewProfileFlow for compatibility with home.links.bind.js
+- **Data Flow**: Click "Create New" → window.startNewProfileFlow() → Creates draft profile → Redirects to /profile/new?id={profileId}
+- **Guardrails Protection**: Prevents overwriting protected files (home.html, profile template, nav-patch.js, etc.)
+- All Playwright tests passing ✅ (workflow accessible, profile template loads)
+- Architect review: PASS - Production ready
 
 **Login Page Header Formatting Fixed (October 17, 2025)**
 - Fixed login.html header and menu formatting to match other pages

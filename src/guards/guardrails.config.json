@@ -10,8 +10,7 @@
     "public/js",
     "public/tests",
     "public/tests/playwright",
-    "public/guards",
-    "public/pages"
+    "public/guards"
   ],
   "allowOverwrite": {},
   "notes": "This package installs *additional* runtime scripts and tests. It will never modify protected files."
