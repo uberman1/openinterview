@@ -12,10 +12,11 @@ function readJSON(p) {
 
 function parseArgs() {
   const args = process.argv.slice(2);
-  const out = { target: 'public/js', tests: 'public/tests', guards: 'public/guards', dryRun: false };
+  const out = { target: 'public/js', pages: 'public/pages', tests: 'public/tests', guards: 'public/guards', dryRun: false };
   for (let i=0;i<args.length;i++) {
     const a = args[i];
-    if (a === '--target') out.target = args[++i];
+    if (a === '--js') out.target = args[++i];
+    else if (a === '--pages') out.pages = args[++i];
     else if (a === '--tests') out.tests = args[++i];
     else if (a === '--guards') out.guards = args[++i];
     else if (a === '--dry-run') out.dryRun = true;
@@ -34,7 +35,7 @@ function copyFile(src, dest, dryRun) {
 }
 
 function main() {
-  const { target, tests, guards, dryRun } = parseArgs();
+  const { target, pages, tests, guards, dryRun } = parseArgs();
   const guardCfgPath = path.join(ROOT, 'src', 'guards', 'guardrails.config.json');
   const guardCfg = readJSON(guardCfgPath);
 
@@ -42,10 +43,11 @@ function main() {
   const allowed = new Set(guardCfg.allowedTargets.map(p=>path.resolve(p)));
 
   const targetAbs = path.resolve(target);
+  const pagesAbs = path.resolve(pages);
   const testsAbs = path.resolve(tests);
   const guardsAbs = path.resolve(guards);
 
-  for (const loc of [targetAbs, testsAbs, guardsAbs]) {
+  for (const loc of [targetAbs, pagesAbs, testsAbs, guardsAbs]) {
     if (![...allowed].some(a => loc.startsWith(a))) {
       console.error(`ERROR: Target ${loc} is not within an allowedTargets path.`);
       process.exit(2);
@@ -58,8 +60,8 @@ function main() {
   // Map of source -> destination subfolders
   const plan = [
     { srcDir: path.join(ROOT, 'src', 'js'), destDir: targetAbs },
+    { srcDir: path.join(ROOT, 'src', 'pages'), destDir: pagesAbs },
     { srcDir: path.join(ROOT, 'src', 'guards'), destDir: guardsAbs },
-    { srcDir: path.join(ROOT, 'tests', 'playwright'), destDir: path.join(testsAbs, 'playwright') },
   ];
 
   for (const step of plan) {
