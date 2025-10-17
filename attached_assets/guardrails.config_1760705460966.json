@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "protectedFiles": [
+    "home.html",
+    "profile_v4_1_package/public/index.html",
+    "js/nav-patch.js",
+    "js/redirect-shim.js"
+  ],
+  "allowedTargets": [
+    "public/js",
+    "public/tests",
+    "public/tests/playwright",
+    "public/guards"
+  ],
+  "allowOverwrite": {},
+  "notes": "This package installs *additional* runtime scripts and tests. It will never modify protected files."
+}
