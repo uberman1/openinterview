@@ -6,6 +6,16 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Login Page Header Formatting Fixed (October 17, 2025)**
+- Fixed login.html header and menu formatting to match other pages
+- **Issue**: Logo was simple text (too large), menu text not formatted like other pages
+- **Root Cause**: login.html had simple text-only brand div instead of proper header structure
+- **Solution**: Replaced with proper header matching home.html (logo SVG, navigation, avatar)
+- Added Tailwind CSS configuration and proper header structure with `justify-between`
+- nav-patch.js now wraps nav and adds avatar with correct 24px gap-6 spacing
+- All Playwright tests passing ✅ (header matches home.html, proper spacing verified)
+- Architect review: PASS - Production ready
+
 **File Upload Persistence Fix (October 16, 2025)**
 - Fixed file upload persistence on home.html for resumes and attachments
 - **Issue**: Uploaded files were not persisting after page reload
