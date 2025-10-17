@@ -84,6 +84,13 @@ function init(){
   bindCreateNew();
   bindAddNewResume();
   bindAddNewAttachment();
+  
+  // Expose startNewProfileFlow for home.links.bind.js
+  window.startNewProfileFlow = function() {
+    const p = store.createDraftProfile();
+    const url = `/profile/new?id=${encodeURIComponent(p.id)}`;
+    window.location.href = url;
+  };
 }
 
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
