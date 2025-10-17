@@ -6,6 +6,22 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**New Interview Workflow Package Deployed (October 17, 2025)**
+- Deployed guardrailed self-deploy package for New Interview workflow with profile creation, inline editing, and asset library
+- **Implementation**: Non-invasive architecture using existing links via home.links.bind.js integration
+- **Key Components**:
+  - data-store.js: localStorage wrapper for profiles and assets (keys: oi:profiles:{id}, oi:assets:{type}:{id})
+  - asset-library.js: File picker and asset management
+  - home-bindings.js: Binds to existing links, exposes window.startNewProfileFlow
+  - profile-editor.js: Inline editing for profile template
+  - availability.js: Availability slot management
+- **Server Routes**: /profile/new, /profile/:id, /availability/:id
+- **Integration Fix**: home-bindings.js exposes window.startNewProfileFlow for compatibility with home.links.bind.js
+- **Data Flow**: Click "Create New" → window.startNewProfileFlow() → Creates draft profile → Redirects to /profile/new?id={profileId}
+- **Guardrails Protection**: Prevents overwriting protected files (home.html, profile template, nav-patch.js, etc.)
+- All Playwright tests passing ✅ (workflow accessible, profile template loads)
+- Architect review: PASS - Production ready
+
 **Login Page Header Formatting Fixed (October 17, 2025)**
 - Fixed login.html header and menu formatting to match other pages
 - **Issue**: Logo was simple text (too large), menu text not formatted like other pages
