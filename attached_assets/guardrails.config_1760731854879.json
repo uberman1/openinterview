@@ -1,0 +1,16 @@
+{
+  "version": "1.1.0",
+  "protectedFiles": [
+    "home.html",
+    "profile_v4_1_package/public/index.html",
+    "js/nav-patch.js",
+    "js/redirect-shim.js"
+  ],
+  "allowedTargets": [
+    "public/js",
+    "public/tests",
+    "public/guards",
+    "public/pages"
+  ],
+  "notes": "Installer copies new modules (no overwrites) and an editable profile page into public/."
+}
