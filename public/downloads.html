@@ -74,14 +74,24 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-primary/10 dark:divide-white/10">
-<tr data-testid="download-row-1">
-<td class="px-6 py-4 text-sm font-medium">OpenInterview Application</td>
+<tr data-testid="download-row-current">
+<td class="px-6 py-4 text-sm font-medium">OpenInterview - Current Version <span class="ml-2 inline-block rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-white/10 dark:text-white">Recommended</span></td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">v1.0.0</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">October 17, 2025</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">66 KB</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">47 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-current" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/openinterview-current-version.tar.gz" download>Download</a>
+</td>
+</tr>
+<tr data-testid="download-row-complete">
+<td class="px-6 py-4 text-sm font-medium">OpenInterview - Complete Package</td>
 <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">v1.0.0</td>
 <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">October 17, 2025</td>
 <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">450 KB</td>
 <td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">447 files</td>
 <td class="px-6 py-4 text-sm font-medium text-right">
-<a data-testid="button-download-v1" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/openinterview-application.tar.gz" download>Download</a>
+<a data-testid="button-download-complete" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/openinterview-application.tar.gz" download>Download</a>
 </td>
 </tr>
 </tbody>
@@ -94,15 +104,22 @@
 <div class="grid gap-4">
 <div class="flex items-center justify-between rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
 <div class="flex flex-col gap-1">
-<p class="text-sm font-medium">Setup Instructions</p>
-<p class="text-xs text-primary/60 dark:text-white/60">Complete installation and configuration guide</p>
+<p class="text-sm font-medium">Current Version Guide <span class="ml-2 inline-block rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-white/10 dark:text-white">Recommended</span></p>
+<p class="text-xs text-primary/60 dark:text-white/60">Setup guide for the streamlined current version package (47 files)</p>
+</div>
+<a data-testid="button-download-current-readme" class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/CURRENT_VERSION_README.md" download>Download</a>
+</div>
+<div class="flex items-center justify-between rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+<div class="flex flex-col gap-1">
+<p class="text-sm font-medium">Complete Package Guide</p>
+<p class="text-xs text-primary/60 dark:text-white/60">Full installation and configuration guide (447 files)</p>
 </div>
 <a data-testid="button-download-readme" class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/DOWNLOAD_PACKAGE_README.md" download>Download</a>
 </div>
 <div class="flex items-center justify-between rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
 <div class="flex flex-col gap-1">
 <p class="text-sm font-medium">Package Inventory</p>
-<p class="text-xs text-primary/60 dark:text-white/60">Complete list of all files included in the package</p>
+<p class="text-xs text-primary/60 dark:text-white/60">Complete list of all files in the full package</p>
 </div>
 <a data-testid="button-download-inventory" class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/PACKAGE_INVENTORY.txt" download>Download</a>
 </div>
@@ -111,11 +128,27 @@
 
 <div class="rounded border border-primary/10 bg-white p-6 dark:border-white/10 dark:bg-primary">
 <h3 class="text-lg font-bold mb-2">Package Information</h3>
-<div class="space-y-2 text-sm text-primary/60 dark:text-white/60">
+<div class="space-y-3 text-sm text-primary/60 dark:text-white/60">
+<div>
 <p><strong class="text-primary dark:text-white">Latest Version:</strong> v1.0.0 (October 17, 2025)</p>
-<p><strong class="text-primary dark:text-white">Contents:</strong> Complete application with 447 files including all HTML pages, JavaScript modules, backend code, frontend React components, tests, and configurations</p>
+</div>
+<div>
+<p><strong class="text-primary dark:text-white">Current Version Package (Recommended):</strong></p>
+<p class="ml-4 mt-1">• 47 essential files (66 KB) - Clean, streamlined package</p>
+<p class="ml-4">• Includes: 10 HTML pages, 27 JavaScript modules, config files, and profile template</p>
+<p class="ml-4">• Excludes: backups, old versions, test files, and user uploads</p>
+</div>
+<div>
+<p><strong class="text-primary dark:text-white">Complete Package:</strong></p>
+<p class="ml-4 mt-1">• 447 total files (450 KB) - Full application archive</p>
+<p class="ml-4">• Includes everything: all pages, modules, backend code, tests, and configurations</p>
+</div>
+<div>
 <p><strong class="text-primary dark:text-white">Features:</strong> New Interview Workflow, Profile Editor, Asset Library, Availability Management, File Uploads, Dark Mode Support</p>
+</div>
+<div>
 <p><strong class="text-primary dark:text-white">Quick Start:</strong> Extract the archive, run <code class="bg-primary/5 dark:bg-white/5 px-1 py-0.5 rounded">npm install</code>, then <code class="bg-primary/5 dark:bg-white/5 px-1 py-0.5 rounded">npm run dev</code></p>
+</div>
 </div>
 </div>
 
