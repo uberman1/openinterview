@@ -6,6 +6,20 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Downloads Page Created (October 17, 2025)**
+- Created downloads.html page for accessing application packages and documentation
+- **Features**:
+  - Application Packages table showing OpenInterview Application v1.0.0 (October 17, 2025)
+  - Package details: 450 KB size, 447 files included
+  - Download links for main package (tar.gz), Setup Instructions (README.md), and Package Inventory (txt)
+  - Documentation section with quick start guide
+  - Dark mode support with consistent design
+- **Server Routes**: /downloads.html and /downloads
+- **Files Available**: openinterview-application.tar.gz, DOWNLOAD_PACKAGE_README.md, PACKAGE_INVENTORY.txt
+- All files moved to public/ directory for serving via Express static middleware
+- All Playwright tests passing ✅ (page loads, all downloads accessible with HTTP 200)
+- Production ready ✅
+
 **New Interview Workflow Package Deployed (October 17, 2025)**
 - Deployed guardrailed self-deploy package for New Interview workflow with profile creation, inline editing, and asset library
 - **Implementation**: Non-invasive architecture using existing links via home.links.bind.js integration
