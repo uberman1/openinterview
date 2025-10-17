@@ -118,6 +118,34 @@ function serveAvailability(req,res){
 app.get('/availability.html', serveAvailability);
 app.get('/availability', serveAvailability);
 
+// ---- Serve /profile/new with new interview editor
+function serveNewProfile(req,res){
+  const p = path.join(__dirname, 'public', 'profile_v4_1_package', 'public', 'index.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script type="module" src="/js/data-store.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/asset-library.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/profile-editor.js"></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load profile template'); }
+}
+app.get('/profile/new', serveNewProfile);
+app.get('/profile/:id', serveNewProfile);
+
+// ---- Serve availability editor for profiles
+function serveProfileAvailability(req,res){
+  const p = path.join(__dirname, 'public', 'availability.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script type="module" src="/js/data-store.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/availability.js"></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load availability editor'); }
+}
+app.get('/availability/:id', serveProfileAvailability);
+
 // ---- Serve public profile with booking binder
 /* PUBLIC_PROFILE_BOOK_BIND */
 function servePublicProfile(req,res){
