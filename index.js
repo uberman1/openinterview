@@ -118,6 +118,18 @@ function serveAvailability(req,res){
 app.get('/availability.html', serveAvailability);
 app.get('/availability', serveAvailability);
 
+// ---- Serve /downloads(.html)
+function serveDownloads(req,res){
+  const p = path.join(__dirname, 'public', 'downloads.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load downloads.html'); }
+}
+app.get('/downloads.html', serveDownloads);
+app.get('/downloads', serveDownloads);
+
 // ---- Serve /profile/new with new interview editor
 function serveNewProfile(req,res){
   const p = path.join(__dirname, 'public', 'profile_v4_1_package', 'public', 'index.html');

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Downloads - OpenInterview</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary: "#141414",
+          "background-light": "#f7f7f7",
+          "background-dark": "#191919",
+        },
+        fontFamily: {
+          display: ["Inter"],
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+      },
+    },
+  };
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden text-primary dark:text-white">
+<div class="flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4">
+<div class="flex items-center gap-4">
+<div class="h-6 w-6">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold">OpenInterview.me</h2>
+</div>
+<div class="flex flex-1 items-center justify-end gap-6">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/home.html">Home</a>
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/availability.html">Availability</a>
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/subscription.html">Subscription</a>
+<a class="text-sm font-medium text-primary dark:text-white" href="/downloads.html">Downloads</a>
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/password.html">Password</a>
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/login.html">Log Out</a>
+</nav>
+<div id="avatar-header" data-testid="avatar-header" class="aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE");'></div>
+</div>
+</header>
+<main class="flex-1 px-40 py-12">
+<div class="mx-auto flex max-w-[960px] flex-col gap-12">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl font-bold tracking-tight">Downloads</h1>
+<p class="text-primary/60 dark:text-white/60">Download complete application packages and backups.</p>
+</div>
+
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-bold tracking-tight">Application Packages</h2>
+</div>
+<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Package Name</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Version</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Release Date</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Size</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Files</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Download</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/10 dark:divide-white/10">
+<tr data-testid="download-row-1">
+<td class="px-6 py-4 text-sm font-medium">OpenInterview Application</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">v1.0.0</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">October 17, 2025</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">450 KB</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">447 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-v1" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/openinterview-application.tar.gz" download>Download</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="flex flex-col gap-6">
+<h2 class="text-2xl font-bold tracking-tight">Documentation</h2>
+<div class="grid gap-4">
+<div class="flex items-center justify-between rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+<div class="flex flex-col gap-1">
+<p class="text-sm font-medium">Setup Instructions</p>
+<p class="text-xs text-primary/60 dark:text-white/60">Complete installation and configuration guide</p>
+</div>
+<a data-testid="button-download-readme" class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/DOWNLOAD_PACKAGE_README.md" download>Download</a>
+</div>
+<div class="flex items-center justify-between rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+<div class="flex flex-col gap-1">
+<p class="text-sm font-medium">Package Inventory</p>
+<p class="text-xs text-primary/60 dark:text-white/60">Complete list of all files included in the package</p>
+</div>
+<a data-testid="button-download-inventory" class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/PACKAGE_INVENTORY.txt" download>Download</a>
+</div>
+</div>
+</div>
+
+<div class="rounded border border-primary/10 bg-white p-6 dark:border-white/10 dark:bg-primary">
+<h3 class="text-lg font-bold mb-2">Package Information</h3>
+<div class="space-y-2 text-sm text-primary/60 dark:text-white/60">
+<p><strong class="text-primary dark:text-white">Latest Version:</strong> v1.0.0 (October 17, 2025)</p>
+<p><strong class="text-primary dark:text-white">Contents:</strong> Complete application with 447 files including all HTML pages, JavaScript modules, backend code, frontend React components, tests, and configurations</p>
+<p><strong class="text-primary dark:text-white">Features:</strong> New Interview Workflow, Profile Editor, Asset Library, Availability Management, File Uploads, Dark Mode Support</p>
+<p><strong class="text-primary dark:text-white">Quick Start:</strong> Extract the archive, run <code class="bg-primary/5 dark:bg-white/5 px-1 py-0.5 rounded">npm install</code>, then <code class="bg-primary/5 dark:bg-white/5 px-1 py-0.5 rounded">npm run dev</code></p>
+</div>
+</div>
+
+</div>
+</main>
+</div>
+</div>
+<script type="module" src="/js/nav-patch.js"></script>
+</body>
+</html>
