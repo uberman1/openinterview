@@ -1,0 +1,13 @@
+{
+  "name": "create-new-with-playwright",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "PWDEBUG=1 playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2"
+  }
+}

@@ -1,5 +1,6 @@
 // src/js/home-bindings.js
 // Binds to existing links on home.html without altering DOM.
+// View-first flow: routes to read-only profile pages before editor.
 import { store } from './data-store.js';
 import { pickAndCreateAsset } from './asset-library.js';
 
@@ -28,6 +29,25 @@ function findLink({preferId, dataAction, text, scopeHeading}){
   return null;
 }
 
+async function headOk(url){
+  try { const r = await fetch(url, { method:'HEAD' }); return r.ok; } catch { return false; }
+}
+
+function candidatesForView(id){
+  return [
+    `/profile/${encodeURIComponent(id)}`,
+    `/public_profile.html?profileId=${encodeURIComponent(id)}`,
+    `/index.html?profileId=${encodeURIComponent(id)}`
+  ];
+}
+
+async function routeToViewFirst(p){
+  for (const url of candidatesForView(p.id)){
+    if (await headOk(url)){ window.location.href = url; return; }
+  }
+  window.location.href = `/profile_edit.html?id=${encodeURIComponent(p.id)}`;
+}
+
 function bindCreateNew(){
   const link = findLink({
     preferId: 'createNewInterviewLink',
@@ -36,12 +56,10 @@ function bindCreateNew(){
     scopeHeading: '(my\s+interviews|interviews)'
   });
   if (!link) return;
-  link.addEventListener('click', (e) => {
+  link.addEventListener('click', async (e) => {
     e.preventDefault();
-    // Initialize a draft profile and route to editor
     const p = store.createDraftProfile();
-    const url = `/profile/new?id=${encodeURIComponent(p.id)}`;
-    window.location.href = url;
+    await routeToViewFirst(p);
   }, { once: false });
 }
 
@@ -85,11 +103,10 @@ function init(){
   bindAddNewResume();
   bindAddNewAttachment();
   
-  // Expose startNewProfileFlow for home.links.bind.js
-  window.startNewProfileFlow = function() {
+  // Expose startNewProfileFlow for home.links.bind.js and tests
+  window.startNewProfileFlow = async function() {
     const p = store.createDraftProfile();
-    const url = `/profile/new?id=${encodeURIComponent(p.id)}`;
-    window.location.href = url;
+    await routeToViewFirst(p);
   };
 }
 

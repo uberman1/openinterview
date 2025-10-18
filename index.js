@@ -143,7 +143,23 @@ function serveNewProfile(req,res){
   }catch(e){ res.status(500).send('Failed to load profile template'); }
 }
 app.get('/profile/new', serveNewProfile);
-app.get('/profile/:id', serveNewProfile);
+
+// ---- Serve /profile/:id with BOTH view and edit capabilities
+function serveProfileView(req,res){
+  const p = path.join(__dirname, 'public', 'profile_v4_1_package', 'public', 'index.html');
+  try{
+    let html = fs.readFileSync(p, 'utf8');
+    // Inject all scripts for both view and edit modes
+    html = html.replace('</body>', '<script type="module" src="/js/data-store.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/asset-library.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/profile-editor.js"></script></body>');
+    // Inject owner-bind script for Edit Profile button on view mode
+    html = html.replace('</body>', '<script type="module" src="/js/public_profile.owner.bind.js"></script></body>');
+    res.setHeader('Content-Type','text/html; charset=utf-8');
+    res.send(html);
+  }catch(e){ res.status(500).send('Failed to load profile page'); }
+}
+app.get('/profile/:id', serveProfileView);
 
 // ---- Serve availability editor for profiles
 function serveProfileAvailability(req,res){

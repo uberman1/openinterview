@@ -1,7 +1,14 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
+
 export default defineConfig({
-  testDir: './tests/specs',
-  use: { headless: true, baseURL: 'http://localhost:5000' },
+  testDir: './tests',
   timeout: 45000,
-  // Use existing workflow server on port 5000
+  fullyParallel: true,
+  retries: 0,
+  use: { 
+    headless: true, 
+    baseURL: 'http://localhost:5000',
+    trace: 'on-first-retry' 
+  },
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }]
 });
