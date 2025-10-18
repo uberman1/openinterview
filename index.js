@@ -426,6 +426,46 @@ app.post("/api/upload/:kind(resume|attachment)/:profileId", upload.single("file"
   } catch { res.status(500).send("Upload failed"); }
 });
 
+// AI Resume Extraction endpoint
+app.post("/api/ai/extract_profile", upload.single("file"), async (req, res) => {
+  try {
+    const { profileId } = req.body;
+    if (!profileId) return res.status(400).send("profileId required");
+    
+    const buf = req.file?.buffer;
+    if (!buf) return res.status(400).send("No file");
+    
+    // Mock GPT extraction - In production, integrate with OpenAI/Anthropic API
+    // For now, extract basic info from filename and return sample data
+    const filename = req.file.originalname || "";
+    const nameParts = filename.replace(/\.(pdf|docx?|txt)$/i, '').split(/[-_\s]+/);
+    
+    // Mock extracted data - replace with actual AI extraction
+    const mockData = {
+      name: nameParts.slice(0, 2).join(' ') || "John Doe",
+      title: "Software Engineer",
+      location: "San Francisco, CA",
+      summary: "Experienced professional with expertise in software development and product design.",
+      highlights: [
+        "5+ years of experience in software engineering",
+        "Strong problem-solving and analytical skills",
+        "Excellent communication and teamwork abilities"
+      ],
+      linkedin: "",
+      portfolio: "",
+      github: ""
+    };
+    
+    // TODO: Replace with actual AI extraction using OpenAI/Anthropic
+    // Example: const extraction = await extractProfileFromResume(buf, req.file.mimetype);
+    
+    res.json(mockData);
+  } catch (err) {
+    console.error("AI extraction error:", err);
+    res.status(500).send("Extraction failed");
+  }
+});
+
 // Error handler for multer errors
 app.use((err, req, res, next) => {
   if (err && err.code === 'LIMIT_FILE_SIZE') {
