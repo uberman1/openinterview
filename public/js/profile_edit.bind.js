@@ -13,6 +13,34 @@ function toast(msg, opts = {}) {
   }
 }
 
+// DOM Helper functions (standard browser API, no jQuery)
+function findSectionByHeading(text) {
+  return Array.from(document.querySelectorAll('section')).find(section => {
+    const h2 = section.querySelector('h2');
+    return h2 && h2.textContent.includes(text);
+  });
+}
+
+function findElementInSection(sectionHeading, selector) {
+  const section = findSectionByHeading(sectionHeading);
+  return section ? section.querySelector(selector) : null;
+}
+
+function findElementsInSection(sectionHeading, selector) {
+  const section = findSectionByHeading(sectionHeading);
+  return section ? Array.from(section.querySelectorAll(selector)) : [];
+}
+
+function findButtonByText(selector, text) {
+  return Array.from(document.querySelectorAll(selector)).find(btn => 
+    btn.textContent.trim() === text
+  );
+}
+
+function hasChildWithClass(element, className) {
+  return element.querySelector(`.${className}`) !== null;
+}
+
 // Adapter functions for data-store API
 function getProfile() {
   const params = new URLSearchParams(window.location.search);
@@ -202,7 +230,7 @@ function parseTZ(v) {
     });
 
     // Highlights
-    const hlTextarea = $('section:has(h2:contains("Highlights")) textarea');
+    const hlTextarea = findElementInSection('Highlights', 'textarea');
     if (hlTextarea) {
       const text = hlTextarea.value.trim();
       model.display.highlights = text ? text.split('\n').filter(l => l.trim()) : [];
@@ -236,7 +264,7 @@ function parseTZ(v) {
     renderResumeAndAttachments(p);
 
     // Highlights
-    const hi = $('section:has(h2:contains("Highlights")) textarea');
+    const hi = findElementInSection('Highlights', 'textarea');
     if (hi) {
       const highlights = Array.isArray(p.display?.highlights) ? p.display.highlights : [];
       hi.value = highlights.join('\n');
@@ -281,7 +309,10 @@ function parseTZ(v) {
 
   function wireSocial(p){
     // Delete buttons per row
-    $$('#attachments-container button:has(.material-symbols-outlined)').forEach((btn, idx)=>{
+    const deleteButtons = Array.from($$('#attachments-container button')).filter(btn => 
+      hasChildWithClass(btn, 'material-symbols-outlined')
+    );
+    deleteButtons.forEach((btn, idx)=>{
       btn.addEventListener('click', ()=>{
         const rows = $$('#attachments-container > div.flex.items-end.gap-2');
         rows[idx].remove();
@@ -289,7 +320,8 @@ function parseTZ(v) {
     });
 
     // Add More button
-    const addBtn = $$('section:has(h2:contains("Social Media")) button').find(b=> b.textContent.trim()==='Add More');
+    const socialSection = findSectionByHeading('Social Media');
+    const addBtn = socialSection ? findButtonByText('button', 'Add More') : null;
     addBtn?.addEventListener('click', ()=>{
       const container = $('#attachments-container');
       const row = document.createElement('div');
@@ -335,8 +367,9 @@ function parseTZ(v) {
 
 
   function renderResumeAndAttachments(p){
-    const sections = $$('section:has(h2:contains("Resume")) .space-y-4 > .flex.items-center.justify-between');
-    const container = sections[0]?.parentElement; if (!container) return;
+    const section = findSectionByHeading('Resume');
+    const containers = section ? Array.from(section.querySelectorAll('.space-y-4 > .flex.items-center.justify-between')) : [];
+    const container = containers[0]?.parentElement; if (!container) return;
     container.innerHTML = '';
 
     if (p.resume?.name){
@@ -369,7 +402,7 @@ function parseTZ(v) {
   }
 
   function wireHighlights(p){
-    const ta = $('section:has(h2:contains("Highlights")) textarea');
+    const ta = findElementInSection('Highlights', 'textarea');
     ta?.addEventListener('input', ()=>{ 
       p.display = p.display || {};
       p.display.highlights = ta.value.split('\n').filter(l => l.trim());
@@ -379,8 +412,8 @@ function parseTZ(v) {
   // ===== Resume import (top selector) =====
   function wireResumeImportUI(p){
     const container = document.querySelector('#resumeImport')
-      || document.querySelector('section:has(h2:contains("Select a Resume"))')
-      || document.querySelector('section:has(h2:contains("Auto-populate"))');
+      || findSectionByHeading('Select a Resume')
+      || findSectionByHeading('Auto-populate');
 
     const select = container?.querySelector('#resumeSourceSelect')
       || container?.querySelector('select[data-bind="resume-source"]')
@@ -481,10 +514,12 @@ function parseTZ(v) {
   }
 
   function wireAvailability(p){
-    const saveBtn = $$('section:has(h2:contains("Set Your Availability")) button').find(b=> b.textContent.trim()==='Save');
-    const revertBtn = $$('section:has(h2:contains("Set Your Availability")) button').find(b=> b.textContent.trim()==='Revert');
+    const availSection = findSectionByHeading('Set Your Availability');
+    const saveBtn = findButtonByText('button', 'Save');
+    const revertBtn = findButtonByText('button', 'Revert');
 
-    const quickPanel = $$('section:has(h2:contains("Set Your Availability")) .p-6.border.rounded-lg')[0];
+    const quickPanels = availSection ? Array.from(availSection.querySelectorAll('.p-6.border.rounded-lg')) : [];
+    const quickPanel = quickPanels[0];
     const qaButtons = quickPanel?.querySelectorAll('button');
 
     const addBlockButtons = $$('button').filter(b=> b.textContent.trim()==='Add Block');
@@ -539,7 +574,7 @@ function parseTZ(v) {
   function paintAvailability(model){
     if (!model) return;
     
-    const tzSel = $$('section:has(h2:contains("Set Your Availability")) select')[0];
+    const tzSel = findElementInSection('Set Your Availability', 'select');
     if (tzSel) tzSel.value = stringifyTZ(model.timezone);
 
     const dayDefs = [
@@ -592,7 +627,9 @@ function parseTZ(v) {
     const increments = $('#increments');
     if (increments) increments.value = `${model.incrementsMins || 30} minutes`;
     
-    const rulesBox = $$('section:has(h2:contains("Set Your Availability")) .p-6.border.rounded-lg')[1];
+    const availSection = findSectionByHeading('Set Your Availability');
+    const rulesBoxes = availSection ? Array.from(availSection.querySelectorAll('.p-6.border.rounded-lg')) : [];
+    const rulesBox = rulesBoxes[1];
     if (rulesBox){
       const inputs = rulesBox.querySelectorAll('input[type="number"]');
       if (inputs[0]) inputs[0].value = model.bufferBeforeMins || 15;
@@ -605,7 +642,7 @@ function parseTZ(v) {
   function readAvailabilityFromUI(fallback){
     const model = structuredClone(fallback || defaultAvailability());
 
-    const tzSel = $$('section:has(h2:contains("Set Your Availability")) select')[0];
+    const tzSel = findElementInSection('Set Your Availability', 'select');
     model.timezone = parseTZ(tzSel?.value) || model.timezone;
 
     const map = { sun:0, mon:1, tue:2, wed:3, thu:4, fri:5, sat:6 };
@@ -624,7 +661,9 @@ function parseTZ(v) {
     const minNotice = $('#min-notice')?.value?.match(/(\d+)/)?.[1];
     const windowDays = $('#window')?.value?.match(/(\d+)/)?.[1];
     const increments = $('#increments')?.value?.match(/(\d+)/)?.[1];
-    const numInputs = $$('section:has(h2:contains("Set Your Availability")) .p-6.border.rounded-lg')[1]?.querySelectorAll('input[type="number"]');
+    const availSection2 = findSectionByHeading('Set Your Availability');
+    const rulesBoxes2 = availSection2 ? Array.from(availSection2.querySelectorAll('.p-6.border.rounded-lg')) : [];
+    const numInputs = rulesBoxes2[1]?.querySelectorAll('input[type="number"]');
 
     model.minNoticeHours = minNotice? parseInt(minNotice,10) : model.minNoticeHours;
     model.windowDays = windowDays? parseInt(windowDays,10) : model.windowDays;
