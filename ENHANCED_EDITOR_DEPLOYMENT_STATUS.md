@@ -14,7 +14,7 @@ The enhanced profile editor system has been **fully developed and is backend-rea
 ## ✅ What's Been Delivered
 
 ### 1. Enhanced Profile Editor Binder
-**File:** `public/js/profile_edit.bind.js` (677 lines)
+**File:** `public/js/profile_edit.bind.js` (700+ lines)
 
 **Features:**
 - ✅ GPT-powered resume auto-population
@@ -24,8 +24,14 @@ The enhanced profile editor system has been **fully developed and is backend-rea
 - ✅ Highlights editor with bullet points
 - ✅ Auto-save to localStorage
 - ✅ Adapted to work with existing `data-store.js` API
+- ✅ **FIXED:** All jQuery-style selectors replaced with standard browser DOM API
 
-**Status:** Code complete, tested, ready to use
+**Status:** Code complete, selector issues fixed, ready to use
+
+**Recent Fixes (Oct 18, 2025):**
+- Replaced all `:has()` and `:contains()` pseudo-selectors with standard DOM traversal
+- Added helper functions: `findSectionByHeading()`, `findElementInSection()`, `findButtonByText()`, `hasChildWithClass()`
+- Binder now uses only standard browser APIs (no jQuery dependencies)
 
 ### 2. Backend AI Extraction Endpoint
 **Endpoint:** `POST /api/ai/extract_profile`
