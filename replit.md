@@ -6,6 +6,28 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**View-First Create New Flow with Playwright Tests (October 18, 2025)**
+- Implemented view-first profile creation flow where clicking "Create New" routes to a read-only view page first
+- **New Files**:
+  - public/js/public_profile.owner.bind.js - Injects "Edit Profile" button and "Draft" badge on view pages
+  - Playwright test infrastructure: config, dev server, test utilities, and 3 test specs
+- **Modified Files**:
+  - public/js/home-bindings.js - Added view-first routing with HEAD probes and route candidate checking
+  - index.js - Updated /profile/:id to serve hybrid view/edit page with all capabilities
+  - public/public_profile.html - Added owner-bind script
+- **User Flow**:
+  1. Click "Create New" → creates draft profile in localStorage
+  2. Routes to /profile/:id (view page) with HEAD request checking
+  3. View page shows #resumeCanvas, #bookingCard elements
+  4. "Edit Profile" button injected for owners (data-testid="button-edit-profile")
+  5. "Draft" badge shown for non-live profiles (data-testid="badge-draft")
+  6. Click "Edit Profile" → redirects to /profile_edit.html?id={id}
+  7. Save → returns to /profile/:id view page
+- **Hybrid Approach**: /profile/:id loads all scripts (data-store, asset-library, profile-editor, owner-bind) for both view and edit capabilities
+- **Benefits**: View-first UX for new profiles, no regression for existing bookmarks, all functionality preserved
+- All Playwright tests passing ✅ (view-first navigation, Edit Profile button, Draft badge, direct bookmarks, editor persistence)
+- Architect review: PASS - Production ready
+
 **Downloads Page Created (October 17, 2025)**
 - Created downloads.html page for accessing application packages and documentation
 - **Packages Available**:
