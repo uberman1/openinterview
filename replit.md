@@ -6,6 +6,20 @@ OpenInterview is a modular development framework designed for rapid prototyping 
 
 ## Recent Changes
 
+**Profile Editor Dual Input Fix (October 19, 2025)**
+- Fixed critical phone/email persistence bug in profile editor
+- **Root Cause**: HTML has phone/email inputs in TWO places (inline under name + Contact Information section)
+- **Issue**: Users edited Contact Info fields but code read from inline fields (stale values)
+- **Solution**: Always read from Contact Information inputs (labeled, last in DOM), never fallback to inline
+- **Benefits**: 
+  - Users can save phone/email correctly
+  - Users can clear phone/email (empty strings persist)
+  - Inline inputs are decorative (hydrated for display only)
+  - Contact Info inputs are authoritative (used for save)
+- **Code Pattern**: `const phone = phoneInputs[phoneInputs.length - 1].value?.trim() || ''`
+- **Test Coverage**: Verified save, clear, and persistence flows with Playwright
+- Architect review: PASS - Production ready ✅
+
 **View-First Create New Flow with Playwright Tests (October 18, 2025)**
 - Implemented view-first profile creation flow where clicking "Create New" routes to a read-only view page first
 - **New Files**:
