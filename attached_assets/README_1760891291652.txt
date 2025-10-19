@@ -1,0 +1,12 @@
+# OpenInterview.me — Shareable Patch
+This ZIP updates **profile_edit_enhanced.html** to use the correct **Auto‑populate with Resume** UI:
+- A **Select a resume** drop‑down (pull from existing uploads)
+- A **Drag & drop / Browse** uploader (adds new resumes to the user's library)
+- Video placeholder is directly beneath the resume section
+
+## Files included
+- `public/profile_edit_enhanced.html` — updated markup
+
+## Integration notes
+- The binder (`/js/profile_edit.bind.js`) in your repo should already handle resume selection + uploads.
+- If you use a feature-flagged rollout, ensure edit routes point to `/profile_edit_enhanced.html?id={profileId}`.
