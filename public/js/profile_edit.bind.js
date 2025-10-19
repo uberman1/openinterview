@@ -52,20 +52,19 @@ import { store } from './data-store.js';
     const title = $('input[placeholder="Your Title"]')?.value?.trim() || '';
     const location = $('input[placeholder="City, Country"]')?.value?.trim() || '';
     
-    // Phone and email - check BOTH inline and Contact Information inputs
+    // Phone and email - ALWAYS read from Contact Information section (labeled inputs)
+    // These are the authoritative fields users interact with, NOT the inline duplicates
     const phoneInputs = $$('input[placeholder="e.g. +1 234 567 890"]');
-    let phone = '';
-    for (const input of phoneInputs) {
-      const val = input.value?.trim();
-      if (val) { phone = val; break; }  // Use first non-empty value
-    }
+    // Contact Info phone is the LAST one. ALWAYS use it (even if empty - allows clearing)
+    const phone = phoneInputs.length > 0 
+      ? phoneInputs[phoneInputs.length - 1].value?.trim() || '' 
+      : '';
     
     const emailInputs = $$('input[placeholder="your.email@example.com"]');
-    let email = '';
-    for (const input of emailInputs) {
-      const val = input.value?.trim();
-      if (val) { email = val; break; }  // Use first non-empty value
-    }
+    // Contact Info email is the LAST one. ALWAYS use it (even if empty - allows clearing)
+    const email = emailInputs.length > 0
+      ? emailInputs[emailInputs.length - 1].value?.trim() || ''
+      : '';
     
     const bio = $('textarea[data-testid="textarea-bio"]')?.value?.trim() ||
                 $('textarea[placeholder^="Add a brief"]')?.value?.trim() || '';
