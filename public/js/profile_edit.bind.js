@@ -1,7 +1,7 @@
 // profile_edit.bind.js — Enhanced editor binder with drag&drop resume and availability wiring
-// Dependencies: app.js -> { $, $$, toast }, data-store.js -> { getProfile, updateProfile }
+// Dependencies: app.js -> { $, $$, toast }, data-store.js -> { store }
 import { $, $$, toast } from './app.js';
-import { getProfile, updateProfile } from './data-store.js';
+import { store } from './data-store.js';
 
 (function initProfileEditBinder(){
   const profile = safeGetProfile();
@@ -18,13 +18,16 @@ import { getProfile, updateProfile } from './data-store.js';
   // Top save
   const saveBtn = $$('header button').find(b=> b.dataset.testid === 'button-save-profile' || b.textContent.trim().toLowerCase()==='save profile');
   saveBtn?.addEventListener('click', async ()=>{
-    try { await updateProfile(currentModel()); toast('Profile saved'); }
+    try { await store.updateProfile(profile.id, currentModel()); toast('Profile saved'); }
     catch(e){ console.error(e); toast('Failed to save', {type:'error'}); }
   });
 
   // Helpers
   function safeGetProfile(){
-    try { return getProfile(); } catch(e){ return seed(); }
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    if (!id) return seed();
+    try { return store.getProfile({id}) || seed(); } catch(e){ return seed(); }
   }
   function seed(){
     return {
@@ -110,14 +113,14 @@ import { getProfile, updateProfile } from './data-store.js';
       if (file.size > 2*1024*1024) return toast('Image too large (max 2MB)', {type:'error'});
       const url = await fakeUpload(file); p.avatarUrl = url;
       const avatar = $('.aspect-square.rounded-full'); if (avatar) avatar.style.backgroundImage = `url(${CSS.escape(url)})`;
-      await updateProfile(p); toast('Avatar updated');
+      await store.updateProfile(profile.id, p); toast('Avatar updated');
     });
     // Video
     const videoBtn = $$('button').find(b=> b.dataset.testid==='button-upload-video' || b.textContent.trim()==='Upload Video');
     videoBtn?.addEventListener('click', async ()=>{
       const file = await pickFile('video/*'); if (!file) return;
       const url = await fakeUpload(file); p.videoUrl = url;
-      await updateProfile(p); toast('Video uploaded');
+      await store.updateProfile(profile.id, p); toast('Video uploaded');
     });
   }
 
@@ -163,7 +166,7 @@ import { getProfile, updateProfile } from './data-store.js';
           p.attachments.push({ name:f.name, url });
         }
       }
-      await updateProfile(p);
+      await store.updateProfile(profile.id, p);
       renderResumeAndAttachments(p);
       toast(didAnalyze ? 'Resume uploaded and profile populated' : 'Files uploaded');
     });
@@ -212,6 +215,10 @@ import { getProfile, updateProfile } from './data-store.js';
     const select = container?.querySelector('#resumeSourceSelect');
     const populateBtn = container?.querySelector('#btnResumePopulate');
     const addNewBtn = container?.querySelector('#btnResumeAddNew');
+    console.log('[ResumeUI] Container found:', !!container);
+    console.log('[ResumeUI] Select found:', !!select);
+    console.log('[ResumeUI] Populate button found:', !!populateBtn);
+    console.log('[ResumeUI] Add New button found:', !!addNewBtn);
     if (!select) return;
 
     function resumeLike(a){
@@ -248,7 +255,7 @@ import { getProfile, updateProfile } from './data-store.js';
         if (!file) { paintOptions(); return; }
         const url = await fakeUpload(file);
         p.resume = { name: file.name, url };
-        await updateProfile(p);
+        await store.updateProfile(profile.id, p);
         renderResumeAndAttachments(p);
         paintOptions();
         select.value = url;
@@ -258,15 +265,17 @@ import { getProfile, updateProfile } from './data-store.js';
     addNewBtn?.addEventListener('click', ()=> select.dispatchEvent(new Event('change')));
 
     populateBtn?.addEventListener('click', async ()=>{
+      console.log('[ResumeUI] Populate button clicked!');
       let url = select.value;
       let fileName = select.options[select.selectedIndex]?.getAttribute('data-name') || 'resume.pdf';
+      console.log('[ResumeUI] Selected resume URL:', url);
 
       if (!url || url === '__add_new__'){
         const file = await pickFile('application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         if (!file) return;
         url = await fakeUpload(file);
         p.resume = { name:file.name, url };
-        await updateProfile(p);
+        await store.updateProfile(profile.id, p);
         renderResumeAndAttachments(p);
         paintOptions();
         try { await analyzeResumeAndPopulate(file, url, p); toast('Profile populated from resume'); }
@@ -288,7 +297,14 @@ import { getProfile, updateProfile } from './data-store.js';
     const drop = document.getElementById('resumeDropArea');
     const browse = document.getElementById('resumeBrowseBtn');
     const input = document.getElementById('resumeFileInput');
-    if (!drop || !browse || !input) return;
+    console.log('[DragDrop] Drop area found:', !!drop);
+    console.log('[DragDrop] Browse button found:', !!browse);
+    console.log('[DragDrop] File input found:', !!input);
+    if (!drop || !browse || !input) { 
+      console.warn('[DragDrop] Missing elements, drag & drop not wired');
+      return;
+    }
+    console.log('[DragDrop] Wiring drag & drop events...');
     const stop = e => { e.preventDefault(); e.stopPropagation(); };
 
     ['dragenter','dragover','dragleave','drop'].forEach(evt => drop.addEventListener(evt, stop));
@@ -311,7 +327,7 @@ import { getProfile, updateProfile } from './data-store.js';
       if (!ok){ toast('Please upload a PDF or Word resume', {type:'error'}); return; }
       const url = await fakeUpload(file);
       p.resume = { name:file.name, url };
-      await updateProfile(p);
+      await store.updateProfile(profile.id, p);
       renderResumeAndAttachments(p);
       try { await analyzeResumeAndPopulate(file, url, p); toast('Profile populated from resume'); }
       catch(e){ console.error(e); toast('Uploaded, but AI parsing failed', {type:'error'}); }
@@ -336,7 +352,7 @@ import { getProfile, updateProfile } from './data-store.js';
     // Save
     saveBtn?.addEventListener('click', async ()=>{
       p.availability = readAvailabilityFromUI(p.availability);
-      await updateProfile(p);
+      await store.updateProfile(profile.id, p);
       window.dispatchEvent(new CustomEvent('availability:updated', { detail:{profileId:p.id, model:p.availability} }));
       toast('Availability saved');
     });
@@ -530,7 +546,7 @@ export async function analyzeResumeAndPopulate(file, uploadedUrl, p){
   const phoneEl = document.querySelector('input[placeholder="e.g. +1 234 567 890"]'); if (phoneEl) phoneEl.value = p.phone || '';
   const emailEl = document.querySelector('input[placeholder="your.email@example.com"]'); if (emailEl) emailEl.value = p.email || '';
 
-  await updateProfile(p);
+  await store.updateProfile(profile.id, p);
   // Re-render resume list if a helper exists
   const reRender = (window.renderResumeAndAttachments || null);
 }

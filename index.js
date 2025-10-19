@@ -455,16 +455,24 @@ app.post("/api/ai/extract_profile", upload.single("file"), async (req, res) => {
     const mockData = {
       name: nameParts.slice(0, 2).join(' ') || "John Doe",
       title: "Software Engineer",
-      location: "San Francisco, CA",
-      summary: "Experienced professional with expertise in software development and product design.",
+      contact: {
+        email: "john.doe@example.com",
+        phone: "+1 (555) 123-4567",
+        location: "San Francisco, CA"
+      },
+      socials: {
+        linkedin: "https://linkedin.com/in/johndoe",
+        portfolio: "https://johndoe.com",
+        github: "https://github.com/johndoe",
+        twitter: ""
+      },
+      bio: "Experienced professional with expertise in software development and product design. Passionate about building innovative solutions and leading high-performing teams.",
       highlights: [
         "5+ years of experience in software engineering",
-        "Strong problem-solving and analytical skills",
-        "Excellent communication and teamwork abilities"
-      ],
-      linkedin: "",
-      portfolio: "",
-      github: ""
+        "Led cross-functional teams of 10+ engineers",
+        "Shipped 15+ production features with 99.9% uptime",
+        "Strong problem-solving and analytical skills"
+      ]
     };
     
     // TODO: Replace with actual AI extraction using OpenAI/Anthropic
