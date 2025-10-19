@@ -21,7 +21,9 @@
     if (document.getElementById(nsId)) return;
     const a = document.createElement('a');
     a.id = nsId;
-    a.href = `/profile_edit.html?id=${encodeURIComponent(id)}`;
+    // Redirect to template preview with dummy data first
+    const templateId = 'default';
+    a.href = `/profile/${encodeURIComponent(id)}/template?templateId=${encodeURIComponent(templateId)}`;
     a.textContent = 'Edit Profile';
     a.className = 'fixed bottom-6 right-6 px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold shadow hover:bg-opacity-90';
     a.setAttribute('data-testid', 'button-edit-profile');

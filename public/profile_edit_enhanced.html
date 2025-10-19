@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me - Editable Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: { "display": ["Inter", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#cccccc] px-6 py-4">
+<div class="flex items-center gap-4 text-primary dark:text-neutral-50">
+<svg class="w-6 h-6" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+<h1 class="text-xl font-bold leading-tight tracking-tight">OpenInterview.me</h1>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide" data-testid="button-save-profile">
+<span class="truncate">Save Profile</span>
+</button>
+</header>
+
+<main class="p-6 md:p-10 space-y-12">
+<section class="p-6 bg-background-light dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700 space-y-4" id="resumeImport">
+<h2 class="text-lg font-semibold leading-tight tracking-tight">Auto-populate with Resume</h2>
+<p class="text-neutral-600 dark:text-neutral-400 text-sm">Select an existing resume or upload a new one to automatically fill out your profile.</p>
+<div class="relative">
+<select id="resumeSourceSelect" class="form-select w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-base pr-10" data-testid="select-resume-source">
+<option value="" selected>Select a resume</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+<span class="material-symbols-outlined text-neutral-500">expand_more</span>
+</div>
+</div>
+<div class="flex gap-3 mt-4">
+<button id="btnResumePopulate" class="flex-1 flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide" data-testid="button-populate-resume">
+<span class="truncate">Populate Profile</span>
+</button>
+<button id="btnResumeAddNew" class="flex-1 flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal" data-testid="button-add-new-resume">
+<span class="truncate">Add New Resume</span>
+</button>
+</div>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<section class="space-y-8">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Profile Information</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-4">
+<label class="flex flex-col gap-2">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal">Your Name</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="Your Name" data-testid="input-name"/>
+</label>
+<label class="flex flex-col gap-2">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal">Your Title</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="Your Title" data-testid="input-title"/>
+</label>
+<label class="flex flex-col gap-2">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal">Location</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="City, Country" data-testid="input-location"/>
+</label>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="aspect-square rounded-full bg-neutral-200 dark:bg-neutral-700 w-40 h-40 bg-center bg-cover"></div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide" data-testid="button-upload-photo">
+<span class="truncate">Upload/Change Photo</span>
+</button>
+</div>
+</div>
+
+<label class="flex flex-col gap-2">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal">About You</p>
+<textarea class="form-textarea flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark min-h-32 px-4 py-3 text-base font-normal leading-normal" placeholder="Tell us about yourself..." data-testid="textarea-bio"></textarea>
+</label>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<section class="space-y-8">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Highlights</h2>
+<p class="text-neutral-600 dark:text-neutral-400 text-sm">List your key achievements or skills (one per line)</p>
+<textarea class="form-textarea flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark min-h-32 px-4 py-3 text-base font-normal leading-normal" placeholder="Enter highlights..." data-testid="textarea-highlights"></textarea>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<section class="space-y-8">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Social Media</h2>
+<div id="attachments-container" class="space-y-4">
+<div class="flex items-end gap-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">LinkedIn</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="https://linkedin.com/in/..." data-testid="input-linkedin"/>
+</label>
+<button class="flex min-w-[40px] h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal" data-testid="button-delete-link-0">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="flex items-end gap-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Portfolio</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="https://..." data-testid="input-portfolio"/>
+</label>
+<button class="flex min-w-[40px] h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal" data-testid="button-delete-link-1">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide" data-testid="button-add-more-links">
+<span class="truncate">Add More</span>
+</button>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<section class="space-y-8">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Resume & Attachments</h2>
+<div class="space-y-4">
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide" data-testid="button-upload-files">
+<span class="truncate">Upload Files</span>
+</button>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<section class="space-y-8">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Set Your Availability</h2>
+<div class="flex items-center gap-2">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal" data-testid="button-revert-availability">
+<span class="truncate">Revert</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide" data-testid="button-save-availability">
+<span class="truncate">Save</span>
+</button>
+</div>
+</div>
+
+<div class="space-y-4">
+<label class="flex flex-col gap-2">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal">Timezone</p>
+<select class="form-select w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50" data-testid="select-timezone">
+<option>America/New_York</option>
+<option>America/Chicago</option>
+<option>America/Denver</option>
+<option>America/Los_Angeles</option>
+<option>Europe/London</option>
+<option>Europe/Paris</option>
+<option>Asia/Tokyo</option>
+</select>
+</label>
+
+<div id="availabilityCalendar" class="grid grid-cols-1 gap-4">
+<div class="flex flex-col gap-2">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal">Weekly Schedule</p>
+<div class="grid grid-cols-7 gap-2 text-center text-sm">
+<div class="font-semibold">Sun</div>
+<div class="font-semibold">Mon</div>
+<div class="font-semibold">Tue</div>
+<div class="font-semibold">Wed</div>
+<div class="font-semibold">Thu</div>
+<div class="font-semibold">Fri</div>
+<div class="font-semibold">Sat</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<div class="day-slot" data-day="0" data-testid="day-slot-0">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+<div class="day-slot" data-day="1" data-testid="day-slot-1">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+<div class="day-slot" data-day="2" data-testid="day-slot-2">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+<div class="day-slot" data-day="3" data-testid="day-slot-3">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+<div class="day-slot" data-day="4" data-testid="day-slot-4">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+<div class="day-slot" data-day="5" data-testid="day-slot-5">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+<div class="day-slot" data-day="6" data-testid="day-slot-6">
+<button class="w-full h-20 rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary dark:hover:border-neutral-50 text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-neutral-50">
+<span class="text-xs">Add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+</div>
+</div>
+
+<script type="module" src="/js/data-store.js"></script>
+<script type="module" src="/js/profile_edit.bind.js"></script>
+</body></html>

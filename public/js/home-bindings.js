@@ -45,7 +45,8 @@ async function routeToViewFirst(p){
   for (const url of candidatesForView(p.id)){
     if (await headOk(url)){ window.location.href = url; return; }
   }
-  window.location.href = `/profile_edit.html?id=${encodeURIComponent(p.id)}`;
+  // New flow: land on template preview (dummy) before enhanced editor
+  window.location.href = `/profile/${encodeURIComponent(p.id)}/template?templateId=default`;
 }
 
 function bindCreateNew(){

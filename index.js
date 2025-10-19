@@ -188,6 +188,17 @@ function servePublicProfile(req,res){
 app.get('/u/:handle', servePublicProfile);
 app.get('/profile_public.html', servePublicProfile);
 
+// ---- Enhanced editor page
+app.get("/profile_edit_enhanced.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "profile_edit_enhanced.html"));
+});
+
+// ---- Soft-redirect old editor to the template preview (graceful fallback for stale bookmarks)
+app.get("/profile_edit.html", (req, res) => {
+  const id = req.query.id || '';
+  return res.redirect(302, `/profile/${encodeURIComponent(id)}/template?templateId=default`);
+});
+
 // ---- Serve profiles v2 list page
 /* PROFILES_V2_ROUTE */
 function serveProfilesV2(req,res){

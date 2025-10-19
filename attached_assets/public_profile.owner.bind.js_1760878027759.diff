@@ -1,0 +1,10 @@
+*** a/public/js/public_profile.owner.bind.js
+--- b/public/js/public_profile.owner.bind.js
+***************
+*** 21,28 ****
+-   a.href = `/profile_edit.html?id=${encodeURIComponent(id)}`;
++   // Redirect to template preview with dummy data first
++   const templateId = 'default';
++   a.href = `/profile/${encodeURIComponent(id)}/template?templateId=${encodeURIComponent(templateId)}`;
+    a.textContent = 'Edit Profile';
+---
