@@ -47,10 +47,10 @@ import { store } from './data-store.js';
   function collectFormData(){
     const patch = { display: {} };
     
-    // Basic info
-    const name = $('input[placeholder="Your Name"]')?.value?.trim();
-    const title = $('input[placeholder="Your Title"]')?.value?.trim();
-    const location = $('input[placeholder="City, Country"]')?.value?.trim();
+    // Basic info - ALWAYS include all fields (even if empty) so users can clear them
+    const name = $('input[placeholder="Your Name"]')?.value?.trim() || '';
+    const title = $('input[placeholder="Your Title"]')?.value?.trim() || '';
+    const location = $('input[placeholder="City, Country"]')?.value?.trim() || '';
     
     // Phone and email - check BOTH inline and Contact Information inputs
     const phoneInputs = $$('input[placeholder="e.g. +1 234 567 890"]');
@@ -68,17 +68,17 @@ import { store } from './data-store.js';
     }
     
     const bio = $('textarea[data-testid="textarea-bio"]')?.value?.trim() ||
-                $('textarea[placeholder^="Add a brief"]')?.value?.trim();
+                $('textarea[placeholder^="Add a brief"]')?.value?.trim() || '';
 
-    if (name) patch.display.name = name;
-    if (title) patch.display.title = title;
-    if (location) patch.display.location = location;
-    if (phone) patch.display.phone = phone;
-    if (email) patch.display.email = email;
-    if (bio) patch.display.summary = bio;
+    // Always include all fields (even empty strings) so users can clear values
+    patch.display.name = name;
+    patch.display.title = title;
+    patch.display.location = location;
+    patch.display.phone = phone;
+    patch.display.email = email;
+    patch.display.summary = bio;
 
-    console.log('[COLLECT] Found phone:', phone, 'from', phoneInputs.length, 'inputs');
-    console.log('[COLLECT] Found email:', email, 'from', emailInputs.length, 'inputs');
+    console.log('[COLLECT] Collected data:', JSON.stringify(patch.display, null, 2));
 
     return patch;
   }
