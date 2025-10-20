@@ -92,7 +92,7 @@
     // Clear and populate nav
     while (nav.firstChild) nav.removeChild(nav.firstChild);
     nav.appendChild(mk('Home', (isHome ? '#': (location.origin ? (location.origin + '/home.html') : '/home.html')), isHome));
-    nav.appendChild(mk('Availability', '/availability', isAvail));
+    nav.appendChild(mk('', '/availability', isAvail));
     nav.appendChild(mk('Subscription', '/subscription', isSub));
     nav.appendChild(mk('Password', '/password', isPass));
     nav.appendChild(mk('Log Out', '/logout'));
