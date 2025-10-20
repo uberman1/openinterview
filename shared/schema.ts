@@ -37,6 +37,19 @@ export const testResults = pgTable("test_results", {
   details: jsonb("details"),
 });
 
+// Assets table for resumes and attachments
+export const assets = pgTable("assets", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  type: text("type").notNull(), // 'resume' or 'attachment'
+  name: text("name").notNull(),
+  storageUrl: text("storage_url"), // URL to file in object storage
+  fileSize: text("file_size"), // file size in bytes
+  mimeType: text("mime_type"),
+  uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
+  ownerUserId: varchar("owner_user_id").notNull(), // 'me' for now, user ID in future
+  tags: text("tags").array().default(sql`ARRAY[]::text[]`),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -57,11 +70,18 @@ export const insertTestResultSchema = createInsertSchema(testResults).omit({
   timestamp: true,
 });
 
+export const insertAssetSchema = createInsertSchema(assets).omit({
+  id: true,
+  uploadedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type HealthCheck = typeof healthChecks.$inferSelect;
 export type Log = typeof logs.$inferSelect;
 export type TestResult = typeof testResults.$inferSelect;
+export type Asset = typeof assets.$inferSelect;
 export type InsertHealthCheck = z.infer<typeof insertHealthCheckSchema>;
 export type InsertLog = z.infer<typeof insertLogSchema>;
 export type InsertTestResult = z.infer<typeof insertTestResultSchema>;
+export type InsertAsset = z.infer<typeof insertAssetSchema>;
