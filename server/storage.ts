@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type HealthCheck, type InsertHealthCheck, type Log, type InsertLog, type TestResult, type InsertTestResult } from "@shared/schema";
+import { type User, type InsertUser, type HealthCheck, type InsertHealthCheck, type Log, type InsertLog, type TestResult, type InsertTestResult, type Asset, type InsertAsset } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -19,6 +19,12 @@ export interface IStorage {
   // Test result methods
   createTestResult(testResult: InsertTestResult): Promise<TestResult>;
   getLatestTestResults(limit?: number): Promise<TestResult[]>;
+  
+  // Asset methods
+  createAsset(asset: InsertAsset): Promise<Asset>;
+  getAsset(id: string): Promise<Asset | undefined>;
+  listAssets(ownerUserId: string, type?: string): Promise<Asset[]>;
+  deleteAsset(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -26,12 +32,14 @@ export class MemStorage implements IStorage {
   private healthChecks: Map<string, HealthCheck>;
   private logs: Map<string, Log>;
   private testResults: Map<string, TestResult>;
+  private assets: Map<string, Asset>;
 
   constructor() {
     this.users = new Map();
     this.healthChecks = new Map();
     this.logs = new Map();
     this.testResults = new Map();
+    this.assets = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -113,6 +121,38 @@ export class MemStorage implements IStorage {
     return Array.from(this.testResults.values())
       .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
       .slice(0, limit);
+  }
+
+  async createAsset(insertAsset: InsertAsset): Promise<Asset> {
+    const id = randomUUID();
+    const asset: Asset = {
+      ...insertAsset,
+      id,
+      uploadedAt: new Date(),
+    };
+    this.assets.set(id, asset);
+    return asset;
+  }
+
+  async getAsset(id: string): Promise<Asset | undefined> {
+    return this.assets.get(id);
+  }
+
+  async listAssets(ownerUserId: string, type?: string): Promise<Asset[]> {
+    let assets = Array.from(this.assets.values())
+      .filter(a => a.ownerUserId === ownerUserId);
+    
+    if (type) {
+      assets = assets.filter(a => a.type === type);
+    }
+    
+    return assets.sort((a, b) => 
+      new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+    );
+  }
+
+  async deleteAsset(id: string): Promise<boolean> {
+    return this.assets.delete(id);
   }
 }
 

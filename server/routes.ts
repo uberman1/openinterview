@@ -19,6 +19,7 @@ import { mountAdminConsoleRoutes } from "./admin.console.routes";
 import { mountOps } from "./ops.readiness";
 import { serveStaticWithCache } from "./ops.static";
 import { router as protectedRouter } from "./protected.routes";
+import { mountAssetRoutes } from "./routes.assets";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
@@ -41,6 +42,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Mount payments routes for checkout and subscriptions
   mountPaymentsRoutes(app, API_BASE);
+  
+  // Mount asset routes for resumes and attachments
+  mountAssetRoutes(app, API_BASE);
   
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {
