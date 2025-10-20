@@ -9,6 +9,12 @@ import { readFileSync } from "fs";
 import cors from "cors";
 import { v4 as uuid } from "uuid";
 
+// Database imports
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
+import { sql as drizzleSql, eq } from "drizzle-orm";
+import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -17,6 +23,23 @@ app.use(cors());
 app.use(express.json());
 
 let db = JSON.parse(readFileSync(path.join(__dirname, "seed.json"), "utf8"));
+
+// Initialize database connection
+const sql = neon(process.env.DATABASE_URL);
+const dbClient = drizzle(sql);
+
+// Define assets table schema (inline to avoid TypeScript import issues)
+const assets = pgTable("assets", {
+  id: varchar("id").primaryKey(),
+  type: text("type").notNull(),
+  name: text("name").notNull(),
+  storageUrl: text("storage_url"),
+  fileSize: text("file_size"),
+  mimeType: text("mime_type"),
+  uploadedAt: timestamp("uploaded_at").notNull(),
+  ownerUserId: varchar("owner_user_id").notNull(),
+  tags: text("tags").array()
+});
 
 // ---- Inject client binder for uploads.html (no file changes) ----
 /* UPLOADS_BIND_INJECT_BEFORE_STATIC */
@@ -310,6 +333,106 @@ app.delete("/api/files/:id", (req,res)=>{
     if(p.resumeFileId===id) p.resumeFileId = null;
   });
   res.status(204).end();
+});
+
+// Assets (shared resumes and attachments across profiles) - PostgreSQL backed
+app.get("/api/v1/assets", async (req, res) => {
+  try {
+    const { type } = req.query;
+    
+    let results;
+    if (type) {
+      results = await dbClient.select().from(assets).where(eq(assets.type, type));
+    } else {
+      results = await dbClient.select().from(assets);
+    }
+    
+    // Map database columns to frontend expected format (url instead of storageUrl)
+    const formattedAssets = results.map(asset => ({
+      id: asset.id,
+      type: asset.type,
+      name: asset.name,
+      url: asset.storageUrl || "",
+      uploadedAt: asset.uploadedAt,
+      ownerUserId: asset.ownerUserId,
+      tags: asset.tags || []
+    }));
+    
+    res.json(formattedAssets);
+  } catch (error) {
+    console.error("Error listing assets:", error);
+    res.status(500).json({ error: "Failed to list assets" });
+  }
+});
+
+app.get("/api/v1/assets/:id", async (req, res) => {
+  try {
+    const result = await dbClient.select().from(assets).where(eq(assets.id, req.params.id));
+    
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Asset not found" });
+    }
+    
+    const asset = result[0];
+    res.json({
+      id: asset.id,
+      type: asset.type,
+      name: asset.name,
+      url: asset.storageUrl || "",
+      uploadedAt: asset.uploadedAt,
+      ownerUserId: asset.ownerUserId,
+      tags: asset.tags || []
+    });
+  } catch (error) {
+    console.error("Error getting asset:", error);
+    res.status(500).json({ error: "Failed to get asset" });
+  }
+});
+
+app.post("/api/v1/assets", async (req, res) => {
+  try {
+    const { id, type, name, url, ownerUserId, tags } = req.body || {};
+    
+    const assetData = {
+      id: id || `asset_${type || 'att'}_${uuid().slice(0, 8)}`,
+      type: type || "attachment",
+      name: name || `${type || 'attachment'}-${Date.now()}`,
+      storageUrl: url || "",
+      ownerUserId: ownerUserId || "me",
+      tags: tags || []
+    };
+    
+    const result = await dbClient.insert(assets).values(assetData).returning();
+    const created = result[0];
+    
+    res.status(201).json({
+      id: created.id,
+      type: created.type,
+      name: created.name,
+      url: created.storageUrl || "",
+      uploadedAt: created.uploadedAt,
+      ownerUserId: created.ownerUserId,
+      tags: created.tags || []
+    });
+  } catch (error) {
+    console.error("Error creating asset:", error);
+    res.status(500).json({ error: "Failed to create asset" });
+  }
+});
+
+app.delete("/api/v1/assets/:id", async (req, res) => {
+  try {
+    const result = await dbClient.delete(assets).where(eq(assets.id, req.params.id)).returning();
+    
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Asset not found" });
+    }
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting asset:", error);
+    res.status(500).json({ error: "Failed to delete asset" });
+  }
 });
 
 // Profiles (package owns resume, links, attachments)
