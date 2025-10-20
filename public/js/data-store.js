@@ -97,6 +97,19 @@ export const store = {
     return this._idx().map(id => this._read(`profiles:${id}`, null)).filter(Boolean);
   },
 
+  async syncAssetsFromAPI(){
+    try {
+      const response = await fetch('/api/v1/assets');
+      if (!response.ok) return;
+      const assets = await response.json();
+      const ids = assets.map(a => a.id);
+      this._saveAssets(ids);
+      assets.forEach(a => this._write(`assets:${a.id}`, a));
+    } catch (err) {
+      console.warn('Failed to sync assets from API:', err);
+    }
+  },
+
   listAssets({type=null, q=''}={}){
     const ids = this._assets();
     let assets = ids.map(id => this._read(`assets:${id}`, null)).filter(Boolean);
@@ -108,7 +121,7 @@ export const store = {
     return assets;
   },
 
-  createAsset(fileMeta={}, {type, name=null, tags=[]}={}){
+  async createAsset(fileMeta={}, {type, name=null, tags=[]}={}){
     const id = this._id(type === 'resume' ? 'asset_res' : 'asset_att');
     const asset = {
       id, type,
@@ -118,9 +131,45 @@ export const store = {
       ownerUserId: 'me',
       tags
     };
+    
+    // Save to localStorage immediately for UI
     this._write(`assets:${id}`, asset);
     const idx = this._assets();
     if (!idx.includes(id)) { idx.unshift(id); this._saveAssets(idx); }
+    
+    // Sync to API in background
+    try {
+      const response = await fetch('/api/v1/assets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(asset)
+      });
+      if (response.ok) {
+        const savedAsset = await response.json();
+        this._write(`assets:${savedAsset.id}`, savedAsset);
+      }
+    } catch (err) {
+      console.warn('Failed to sync asset to API:', err);
+    }
+    
     return asset;
+  },
+
+  async deleteAsset(id){
+    // Remove from localStorage
+    const idx = this._assets();
+    const pos = idx.indexOf(id);
+    if (pos >= 0) {
+      idx.splice(pos, 1);
+      this._saveAssets(idx);
+    }
+    localStorage.removeItem(this._k(`assets:${id}`));
+    
+    // Delete from API
+    try {
+      await fetch(`/api/v1/assets/${id}`, { method: 'DELETE' });
+    } catch (err) {
+      console.warn('Failed to delete asset from API:', err);
+    }
   }
 };

@@ -4,7 +4,10 @@
 import { $, $$, toast } from './app.js';
 import { store } from './data-store.js';
 
-(function initProfileEditBinder(){
+(async function initProfileEditBinder(){
+  // Sync assets from API on load
+  await store.syncAssetsFromAPI();
+  
   let profile = safeGetProfile();  // Changed to `let` so we can update it
   hydrate(profile);
   wireAll(profile);
@@ -129,6 +132,9 @@ import { store } from './data-store.js';
 
   // Wire up interactive elements
   function wireAll(p){
+    // Populate resume dropdown with assets from database
+    populateResumeDropdown();
+    
     // Avatar upload
     const avatarBtn = $$('button').find(b=> b.dataset.testid==='button-upload-photo' || b.textContent.trim().includes('Upload') && b.textContent.trim().includes('Photo'));
     if (avatarBtn){
@@ -178,6 +184,65 @@ import { store } from './data-store.js';
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
       reader.readAsDataURL(file);
+    });
+  }
+
+  // Populate resume dropdown with assets from database
+  function populateResumeDropdown(){
+    const dropdown = $('select.form-select');
+    if (!dropdown) return;
+    
+    // Get resumes from store
+    const resumes = store.listAssets({type: 'resume'});
+    
+    // Clear existing options except first (placeholder) and last (add new)
+    dropdown.innerHTML = '';
+    
+    // Add placeholder
+    const placeholder = document.createElement('option');
+    placeholder.textContent = 'Select a resume';
+    placeholder.selected = true;
+    dropdown.appendChild(placeholder);
+    
+    // Add resume options
+    resumes.forEach(asset => {
+      const option = document.createElement('option');
+      option.value = asset.id;
+      option.textContent = asset.name || `Resume ${asset.id.slice(-6)}`;
+      dropdown.appendChild(option);
+    });
+    
+    // Add separator and "Add new" option
+    if (resumes.length > 0) {
+      const separator = document.createElement('option');
+      separator.disabled = true;
+      separator.textContent = '---';
+      dropdown.appendChild(separator);
+    }
+    
+    const addNew = document.createElement('option');
+    addNew.value = '__add_new__';
+    addNew.textContent = '-- Add new resume --';
+    dropdown.appendChild(addNew);
+    
+    // Wire up dropdown selection
+    dropdown.addEventListener('change', async (e) => {
+      const selected = e.target.value;
+      if (selected === '__add_new__') {
+        // Trigger file upload
+        const browseBtn = $$('button').find(b => 
+          b.textContent.includes('browse') || 
+          b.textContent.includes('Browse')
+        );
+        if (browseBtn) browseBtn.click();
+      } else if (selected && selected !== 'Select a resume') {
+        // Load selected resume
+        const asset = resumes.find(a => a.id === selected);
+        if (asset) {
+          toast(`Loaded resume: ${asset.name}`);
+          // TODO: Extract data from resume and populate profile
+        }
+      }
     });
   }
 })();
