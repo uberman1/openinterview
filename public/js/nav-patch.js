@@ -1,56 +1,100 @@
-// public/js/nav-patch.js
-// Centralized navigation builder. Change: Availability removed from menu (2025-10-20).
-// Safe rollback: uncomment the marked line below.
-// This file is intended to REPLACE your existing public/js/nav-patch.js.
-
+// js/nav-patch.js
 (function(){
-  if (window.navPatched) return;
-  window.navPatched = true;
+  const onReady = (fn)=> document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn, {once:true}) : fn();
+  onReady(()=>{
+    // Skip if already patched
+    if (document.body.dataset.navPatched === 'true') return;
+    document.body.dataset.navPatched = 'true';
 
-  const path = (location.pathname || '').toLowerCase();
+    const mk = (text, href, active=false)=>{
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = text;
+      a.className = [
+        'text-sm','font-medium',
+        active ? 'text-primary dark:text-white' : 'text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white'
+      ].join(' ');
+      return a;
+    };
 
-  // Active flags (kept for potential rollback and page detection)
-  const isHome = /home\.html$/.test(path) || path.endsWith('/home');
-  // const isAvail = /availability/i.test(path);  // Availability no longer shown in nav
-  const isSub  = /subscription/i.test(path);
-  const isPass = /password/i.test(path);
+    const path = (location.pathname || '').toLowerCase();
+    const isHome = /home(\.html)?$/.test(path) || path === '/';
+    const isAvail = /availability/i.test(path);
+    const isSub = /subscription/i.test(path);
+    const isPass = /password/i.test(path);
 
-  function mk(text, href, active){
-    const a = document.createElement('a');
-    a.textContent = text;
-    a.href = href;
-    a.className = [
-      'px-3 py-2 rounded-md text-sm font-medium',
-      active ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-black/80 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10'
-    ].join(' ');
-    return a;
-  }
-
-  function ensureNavContainer(){
-    let header = document.querySelector('header');
-    if (!header){
-      header = document.createElement('header');
-      document.body.prepend(header);
+    const avatarUrl = localStorage.getItem('oi.avatarUrl') || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE';
+    
+    // Try to find existing header nav first
+    const header = document.querySelector('header');
+    let nav = header ? header.querySelector('nav') : null;
+    
+    // If no nav in header, try to find any top-level nav
+    if (!nav) nav = document.querySelector('body > header nav, body > nav');
+    
+    // If still no nav, create a global header with nav
+    if (!nav) {
+      const globalHeader = document.createElement('header');
+      globalHeader.className = 'flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4';
+      globalHeader.innerHTML = `
+        <div class="flex items-center gap-4">
+          <div class="h-6 w-6">
+            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold">OpenInterview.me</h2>
+        </div>
+        <div class="flex flex-1 items-center justify-end gap-6">
+          <nav class="flex items-center gap-6" id="oi-global-nav"></nav>
+          <div data-testid="avatar-header" class="aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat" style="background-image:url('${avatarUrl}');"></div>
+        </div>`;
+      
+      document.body.insertBefore(globalHeader, document.body.firstChild);
+      nav = globalHeader.querySelector('#oi-global-nav');
+    } else {
+      // Nav exists - check for any existing avatar (by id OR data-testid)
+      let avatar = header ? (header.querySelector('#avatar-header') || header.querySelector('[data-testid="avatar-header"]')) : null;
+      
+      if (!avatar) {
+        // Find or create wrapper for nav and avatar with gap-6
+        let navParent = nav.parentElement;
+        const hasGap6 = navParent && navParent.classList.contains('gap-6');
+        
+        if (!hasGap6) {
+          // Need to wrap nav and add avatar with gap-6
+          const wrapper = document.createElement('div');
+          wrapper.className = 'flex flex-1 items-center justify-end gap-6';
+          nav.parentElement.insertBefore(wrapper, nav);
+          wrapper.appendChild(nav);
+          navParent = wrapper;
+        }
+        
+        // Add avatar after nav
+        avatar = document.createElement('div');
+        avatar.setAttribute('data-testid', 'avatar-header');
+        avatar.className = 'aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat';
+        avatar.style.backgroundImage = `url('${avatarUrl}')`;
+        navParent.appendChild(avatar);
+      } else {
+        // Avatar exists - ensure it has the correct test id
+        if (!avatar.hasAttribute('data-testid')) {
+          avatar.setAttribute('data-testid', 'avatar-header');
+        }
+      }
+      
+      // Update nav gap to gap-6 if not already
+      if (!nav.classList.contains('gap-6')) {
+        nav.className = 'flex items-center gap-6';
+      }
     }
-    let nav = header.querySelector('nav[data-nav-root]');
-    if (!nav){
-      nav = document.createElement('nav');
-      nav.setAttribute('data-nav-root', 'true');
-      nav.className = 'flex items-center gap-6';
-      header.appendChild(nav);
-    }
-    return nav;
-  }
 
-  const nav = ensureNavContainer();
-
-  const homeHref = (isHome ? '#' : (location.origin ? (location.origin + '/home.html') : '/home.html'));
-
-  // Build menu (Availability intentionally hidden; keep exact order otherwise)
-  nav.innerHTML = '';
-  nav.appendChild(mk('Home', homeHref, isHome));
-  // nav.appendChild(mk('Availability', '/availability', isAvail)); // ← intentionally hidden (2025-10-20)
-  nav.appendChild(mk('Subscription', '/subscription', isSub));
-  nav.appendChild(mk('Password', '/password', isPass));
-  nav.appendChild(mk('Log Out', '/logout', false));
+    // Clear and populate nav
+    while (nav.firstChild) nav.removeChild(nav.firstChild);
+    nav.appendChild(mk('Home', (isHome ? '#': (location.origin ? (location.origin + '/home.html') : '/home.html')), isHome));
+    nav.appendChild(mk('Availability', '/availability', isAvail));
+    nav.appendChild(mk('Subscription', '/subscription', isSub));
+    nav.appendChild(mk('Password', '/password', isPass));
+    nav.appendChild(mk('Log Out', '/logout'));
+  });
 })();

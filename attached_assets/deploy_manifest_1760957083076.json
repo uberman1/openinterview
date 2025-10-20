@@ -1,8 +1,0 @@
-{
-  "copy": [
-    {
-      "from": "public/js/nav-patch.js",
-      "to": "public/js/nav-patch.js"
-    }
-  ]
-}
