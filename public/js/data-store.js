@@ -18,6 +18,7 @@ export const store = {
     const now = new Date().toISOString();
     const profile = {
       id, status:'draft', createdAt: now, updatedAt: now, ownerUserId: 'me',
+      profileName: '',
       display: {
         name: 'Ethan Carter',
         title: 'Senior Product Designer',
