@@ -5,12 +5,24 @@ import { $, $$, toast } from '/js/app.js';
 import { store } from '/js/data-store.js';
 
 (async function initProfileEditBinder(){
+  console.log('[INIT] Profile editor binder starting...');
+  
   // Sync assets from API on load
-  await store.syncAssetsFromAPI();
+  try {
+    await store.syncAssetsFromAPI();
+    console.log('[INIT] Assets synced successfully');
+  } catch(e) {
+    console.error('[INIT] Failed to sync assets:', e);
+  }
   
   let profile = safeGetProfile();  // Changed to `let` so we can update it
+  console.log('[INIT] Profile loaded:', profile?.id);
+  
   hydrate(profile);
+  console.log('[INIT] Hydration complete');
+  
   wireAll(profile);
+  console.log('[INIT] Wiring complete - editor ready');
 
   // Top "Save Profile" button
   const saveBtn = $$('header button').find(b=> b.dataset.testid === 'button-save-profile' || b.textContent.trim().toLowerCase()==='save profile');
