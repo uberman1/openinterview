@@ -1,8 +1,8 @@
 // profile_edit.bind.js — Simple working binder for profile_edit_enhanced.html
 // Compatible with data-store.js nested structure
 
-import { $, $$, toast } from './app.js';
-import { store } from './data-store.js';
+import { $, $$, toast } from '/js/app.js';
+import { store } from '/js/data-store.js';
 
 (async function initProfileEditBinder(){
   // Sync assets from API on load
