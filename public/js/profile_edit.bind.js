@@ -187,6 +187,154 @@ import { store } from './data-store.js';
     });
   }
 
+  // ===== NEW: Availability Rules UI Enhancements =====
+  function injectRulesUI(){
+    // Remove Scheduling Window + Increments (if present)
+    const windowInput = document.querySelector('input[placeholder*="days"]');
+    if (windowInput) {
+      const windowBlock = windowInput.closest('div.space-y-4, div.flex, label');
+      if (windowBlock && windowBlock.textContent.toLowerCase().includes('window')) {
+        windowBlock.remove();
+      }
+    }
+    
+    const incrementsInput = document.querySelector('select, input[placeholder*="minutes"]');
+    if (incrementsInput) {
+      const incrementsBlock = incrementsInput.closest('div.space-y-4, div.flex, label');
+      if (incrementsBlock && incrementsBlock.textContent.toLowerCase().includes('increment')) {
+        incrementsBlock.remove();
+      }
+    }
+
+    // Minimum Notice: add Immediate + Custom
+    const minSelect = document.querySelector('select');
+    if (minSelect && minSelect.querySelector('option[value*="24"]') && !minSelect.querySelector('option[value="immediate"]')) {
+      const opt0 = document.createElement('option');
+      opt0.value = 'immediate';
+      opt0.textContent = 'Immediate';
+      const optC = document.createElement('option');
+      optC.value = 'custom';
+      optC.textContent = 'Custom…';
+      minSelect.prepend(opt0);
+      minSelect.appendChild(optC);
+      
+      const holder = document.createElement('div');
+      holder.className = 'mt-2';
+      holder.id = 'min-notice-custom-holder';
+      holder.style.display = 'none';
+      holder.innerHTML = '<input id="min-notice-custom" type="number" min="0" class="form-input w-28 rounded-lg border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark text-sm px-3 py-2" placeholder="hours" /> <span class="text-xs text-neutral-500 dark:text-neutral-400 ml-2">Enter hours for custom notice</span>';
+      minSelect.parentElement?.appendChild(holder);
+      
+      // Show/hide custom input based on selection
+      minSelect.addEventListener('change', (e) => {
+        const customHolder = document.getElementById('min-notice-custom-holder');
+        if (customHolder) {
+          customHolder.style.display = e.target.value === 'custom' ? 'block' : 'none';
+        }
+      });
+    }
+
+    // Buffers explainer
+    const allLabels = Array.from(document.querySelectorAll('label, div'));
+    const buffersLabel = allLabels.find(el => {
+      const text = el.textContent || '';
+      return /buffer/i.test(text) && !el.querySelector('[data-buffers-expl]');
+    });
+    if (buffersLabel && !buffersLabel.querySelector('[data-buffers-expl]')) {
+      const exp = document.createElement('p');
+      exp.setAttribute('data-buffers-expl', '');
+      exp.className = 'text-xs text-neutral-500 dark:text-neutral-400 mt-2';
+      exp.textContent = 'Sets the amount of time you will have between interviews (avoids back-to-back interviews).';
+      buffersLabel.appendChild(exp);
+    }
+
+    // Daily cap explainer
+    const dailyCapInput = document.querySelector('input[type="number"]');
+    if (dailyCapInput) {
+      const capBlock = dailyCapInput.closest('label, div.space-y-4');
+      if (capBlock && /daily|cap|limit/i.test(capBlock.textContent || '') && !capBlock.querySelector('[data-cap-expl]')) {
+        const exp = document.createElement('p');
+        exp.setAttribute('data-cap-expl', '');
+        exp.className = 'text-xs text-neutral-500 dark:text-neutral-400 mt-2';
+        exp.textContent = 'Set the total number of interviews you will accept in a day, leave blank for unlimited interviews.';
+        capBlock.appendChild(exp);
+      }
+    }
+
+    // Durations: add 45 & 120 min chips (if not already present)
+    const allSections = Array.from(document.querySelectorAll('section, div'));
+    const durBlock = allSections.find(el => /duration/i.test(el.textContent || ''));
+    if (durBlock && !durBlock.querySelector('[data-dur-45]')) {
+      const chipsContainer = durBlock.querySelector('.flex.items-center.gap-2, .mt-1.flex');
+      if (chipsContainer) {
+        const addChip = (label, attr) => {
+          const span = document.createElement('span');
+          span.className = 'bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm text-primary dark:text-neutral-50 cursor-pointer';
+          if (attr) span.setAttribute(attr, '');
+          span.textContent = label;
+          const addBtn = chipsContainer.querySelector('button');
+          chipsContainer.insertBefore(span, addBtn || null);
+        };
+        addChip('45 min', 'data-dur-45');
+        addChip('120 min', 'data-dur-120');
+      }
+    }
+  }
+
+  function readRulesInto(model) {
+    // Minimum notice
+    const minSelect = document.querySelector('select');
+    if (minSelect) {
+      const sel = minSelect.value;
+      if (sel === 'immediate') {
+        model.minNoticeHours = 0;
+      } else if (sel === 'custom') {
+        const customInput = document.getElementById('min-notice-custom');
+        const v = parseInt(customInput?.value || '0', 10);
+        model.minNoticeHours = isNaN(v) ? 0 : v;
+      } else {
+        const match = sel.match(/(\d+)/);
+        if (match) model.minNoticeHours = parseInt(match[1], 10);
+      }
+    }
+
+    // Daily cap: blank = unlimited (Infinity)
+    const dailyCapInput = document.querySelector('input[type="number"]');
+    if (dailyCapInput) {
+      const capRaw = (dailyCapInput.value || '').trim();
+      model.dailyCap = capRaw === '' ? Infinity : parseInt(capRaw, 10);
+    }
+
+    // Durations: ensure 45 & 120 exist
+    if (model.durations) {
+      const set = new Set(model.durations);
+      set.add(45);
+      set.add(120);
+      model.durations = Array.from(set).sort((a, b) => a - b);
+    }
+  }
+
+  // Call injectRulesUI on page load
+  setTimeout(() => injectRulesUI(), 100);
+
+  // Wire Save button within Availability section to apply rules
+  const availSection = document.querySelector('section:has(h2)');
+  if (availSection && /availability/i.test(availSection.textContent || '')) {
+    const saveBtn = availSection.querySelector('button.bg-primary, button:has(span:contains("Save"))');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        if (!profile.availability) profile.availability = {};
+        readRulesInto(profile.availability);
+        const updated = store.updateProfile(profile.id, { availability: profile.availability });
+        if (updated) profile = updated;
+        window.dispatchEvent(new CustomEvent('availability:updated', {
+          detail: { profileId: profile.id, model: profile.availability }
+        }));
+        toast('Availability saved');
+      });
+    }
+  }
+
   // Populate resume dropdown with assets from database
   function populateResumeDropdown(){
     const dropdown = $('select.form-select');
