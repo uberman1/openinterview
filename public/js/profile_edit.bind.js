@@ -245,4 +245,68 @@ import { store } from './data-store.js';
       }
     });
   }
+
+  // ===== NEW: Profile Name Field Wiring =====
+  const profileNameInput = document.getElementById('profileNameInput');
+  if (profileNameInput) {
+    // Hydrate with existing profileName
+    profileNameInput.value = profile.profileName || '';
+    
+    // Save on change
+    profileNameInput.addEventListener('change', () => {
+      const updated = store.updateProfile(profile.id, { 
+        profileName: profileNameInput.value.trim() 
+      });
+      if (updated) profile = updated;
+      console.log('[PROFILE NAME] Updated to:', profile.profileName);
+    });
+  }
+
+  // ===== NEW: Edit/Publish Banner Wiring =====
+  // Edit button - stay on editor with current profile ID
+  const btnTopEdit = document.getElementById('btnTopEdit');
+  if (btnTopEdit) {
+    btnTopEdit.addEventListener('click', () => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('id', profile.id);
+      window.location.href = url.toString();
+    });
+  }
+
+  // Publish button - save and publish profile
+  const btnTopPublish = document.getElementById('btnTopPublish');
+  if (btnTopPublish) {
+    btnTopPublish.addEventListener('click', async () => {
+      try {
+        // Save current form data first
+        const patch = collectFormData();
+        const updated = store.updateProfile(profile.id, patch);
+        if (updated) profile = updated;
+        
+        // Publish the profile
+        const published = store.publishProfile(profile.id);
+        
+        if (published?.share?.publicUrl) {
+          const fullUrl = window.location.origin + published.share.publicUrl;
+          alert(`Published! Shareable link:\n\n${fullUrl}\n\nProfile URL: ${published.share.publicUrl}`);
+          
+          // Update banner to show published state
+          const banner = document.getElementById('ep-topbar');
+          if (banner) {
+            const heading = banner.querySelector('h2');
+            const description = banner.querySelector('p');
+            if (heading) heading.textContent = 'This profile is published';
+            if (description) description.textContent = `Share your profile: ${published.share.publicUrl}`;
+          }
+        } else {
+          alert('Profile published successfully!');
+        }
+        
+        toast('Profile published');
+      } catch (error) {
+        console.error('[PUBLISH ERROR]:', error);
+        toast('Failed to publish profile', {type: 'error'});
+      }
+    });
+  }
 })();
