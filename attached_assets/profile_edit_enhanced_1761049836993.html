@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OpenInterview.me – Editable Profile</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+            "foreground-light": "#141414",
+            "foreground-dark": "#f7f7f7",
+            "subtle-light": "#e5e5e5",
+            "subtle-dark": "#2a2a2a",
+            "muted-light": "#737373",
+            "muted-dark": "#a3a3a3",
+          },
+          fontFamily: { display: ["Inter","sans-serif"] },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          }
+        }
+      }
+    }
+  </script>
+  <style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark">
+  <!-- NEW: Edit / Publish banner -->
+  <section id="ep-topbar" class="bg-white/80 dark:bg-background-dark/80 backdrop-blur border-b border-neutral-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="text-center sm:text-left">
+        <h2 class="text-base sm:text-lg font-semibold">This profile isn’t published yet</h2>
+        <p class="text-sm text-muted-light dark:text-muted-dark">Edit your details then publish to get a shareable link.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="btnTopEdit" class="bg-background-light dark:bg-subtle-dark border border-subtle-light dark:border-subtle-dark text-foreground-light dark:text-foreground-dark font-semibold py-2 px-4 rounded-lg">Edit Profile</button>
+        <button id="btnTopPublish" class="bg-primary text-white font-bold py-2 px-4 rounded-lg">Publish</button>
+      </div>
+    </div>
+  </section>
+
+  <header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-neutral-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-bold">Editable Profile</h1>
+      <button class="text-sm underline hover:no-underline" data-test="save-top">Save Profile</button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- NEW: Profile Name -->
+    <section id="profileNameBlock" class="mb-6">
+      <label class="flex flex-col w-full max-w-xl">
+        <p class="text-base font-medium pb-2">Profile Name</p>
+        <input id="profileNameInput" class="form-input rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-background-dark h-12 px-4" placeholder="e.g. Senior Product Manager Application"/>
+        <p class="mt-2 text-xs text-muted-light dark:text-muted-dark">This name appears under “My interviews” on the Home page.</p>
+      </label>
+    </section>
+
+    <!-- Your editor markup can hydrate here -->
+    <div id="editor-root"></div>
+  </main>
+
+  <!-- Inline wiring for new top banner + name field -->
+  <script type="module" id="oi-inline-wire">
+    import { store } from "/js/data-store.js";
+    import { $, $$ } from "/js/app.js";
+
+    const url = new URL(location.href);
+    const id = url.searchParams.get('id') || (store._idx?.()||[])[0];
+    const profile = id ? store.getProfile({ id }) : store.createDraftProfile();
+
+    // Make sure URL carries the profile id for deep linking
+    if (!url.searchParams.get('id')) {
+      url.searchParams.set('id', profile.id);
+      history.replaceState({}, "", url.toString());
+    }
+
+    // Name field wires to display.name
+    const nameInput = document.getElementById('profileNameInput');
+    if (nameInput && profile?.display) {
+      nameInput.value = profile.display.name || "";
+      nameInput.addEventListener('change', () => {
+        store.updateProfile(profile.id, { display: { ...profile.display, name: nameInput.value.trim() } });
+      });
+    }
+
+    // Top Edit button -> remain on this editor with id
+    document.getElementById('btnTopEdit')?.addEventListener('click', () => {
+      const target = \`./profile_edit_enhanced.html?id=\${encodeURIComponent(profile?.id||'')}\`;
+      if (!location.pathname.endsWith('profile_edit_enhanced.html')) location.href = target;
+    });
+
+    // Top Publish button -> save + publish
+    document.getElementById('btnTopPublish')?.addEventListener('click', async () => {
+      if (nameInput && profile?.display) {
+        store.updateProfile(profile.id, { display: { ...profile.display, name: nameInput.value.trim() } });
+      }
+      const out = await store.publishProfile(profile.id);
+      if (out?.share?.publicUrl) {
+        alert(\`Published! Shareable link: \${out.share.publicUrl}\`);
+      } else {
+        alert("Profile published.");
+      }
+    });
+  </script>
+
+  <!-- App JS (unchanged imports) -->
+  <script type="module" src="/js/nav-patch.js"></script>
+  <script type="module" src="/js/redirect-shim.js"></script>
+  <script type="module" src="/js/profile_edit.bind.js"></script>
+</body>
+</html>
