@@ -102,6 +102,13 @@
 <div class="flex flex-col gap-6">
 <h2 class="text-2xl font-bold tracking-tight">Documentation</h2>
 <div class="grid gap-4">
+<div class="flex items-center justify-between rounded border border-orange-200 bg-orange-50 p-4 dark:border-orange-900 dark:bg-orange-950">
+<div class="flex flex-col gap-1">
+<p class="text-sm font-medium text-orange-900 dark:text-orange-200">Sync Packages Installation Guide <span class="ml-2 inline-block rounded bg-orange-200 dark:bg-orange-900 px-2 py-0.5 text-xs font-medium text-orange-900 dark:text-orange-200">NEW</span></p>
+<p class="text-xs text-orange-700 dark:text-orange-300">Complete setup instructions for PostgreSQL asset storage sync (5 packages)</p>
+</div>
+<a data-testid="button-download-sync-readme" class="text-sm font-medium text-orange-700 hover:text-orange-900 dark:text-orange-300 dark:hover:text-orange-100" href="/SYNC_PACKAGES_README.md" download>Download</a>
+</div>
 <div class="flex items-center justify-between rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
 <div class="flex flex-col gap-1">
 <p class="text-sm font-medium">Current Version Guide <span class="ml-2 inline-block rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-white/10 dark:text-white">Recommended</span></p>
@@ -126,11 +133,96 @@
 </div>
 </div>
 
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-bold tracking-tight">Development Sync Packages</h2>
+</div>
+<p class="text-sm text-primary/60 dark:text-white/60">
+Download packages organized by component (max 5 folders each) to sync your development environment with the latest PostgreSQL-backed asset storage and API updates.
+</p>
+<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Package Name</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Contents</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Size</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Files</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Download</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/10 dark:divide-white/10">
+<tr data-testid="download-row-sync-1">
+<td class="px-6 py-4 text-sm font-medium">Package 1: Core Backend <span class="ml-2 inline-block rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-white/10 dark:text-white">PostgreSQL</span></td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">index.js, server/, shared/, drizzle.config.ts, package files</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">91 KB</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">41 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-sync-1" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/sync-package-1-core-backend.tar.gz" download>Download</a>
+</td>
+</tr>
+<tr data-testid="download-row-sync-2">
+<td class="px-6 py-4 text-sm font-medium">Package 2: Public HTML & JS <span class="ml-2 inline-block rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-white/10 dark:text-white">Frontend</span></td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">public/ (HTML pages, JavaScript modules, CSS, images)</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">16 MB</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">7,274 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-sync-2" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/sync-package-2-public.tar.gz" download>Download</a>
+</td>
+</tr>
+<tr data-testid="download-row-sync-3">
+<td class="px-6 py-4 text-sm font-medium">Package 3: Config & Data</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">config/, data/ (feature flags, profiles, interviews)</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2.9 KB</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">6 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-sync-3" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/sync-package-3-config-data.tar.gz" download>Download</a>
+</td>
+</tr>
+<tr data-testid="download-row-sync-4">
+<td class="px-6 py-4 text-sm font-medium">Package 4: Adapters & Mocks</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">adapters/, mocks/ (adapter pattern implementations)</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">877 B</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">4 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-sync-4" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/sync-package-4-adapters-mocks.tar.gz" download>Download</a>
+</td>
+</tr>
+<tr data-testid="download-row-sync-5">
+<td class="px-6 py-4 text-sm font-medium">Package 5: Client</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">client/ (React frontend, UI components, hooks)</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">55 KB</td>
+<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">102 files</td>
+<td class="px-6 py-4 text-sm font-medium text-right">
+<a data-testid="button-download-sync-5" class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/sync-package-5-client.tar.gz" download>Download</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="rounded border border-orange-200 bg-orange-50 dark:border-orange-900 dark:bg-orange-950 p-4">
+<div class="flex items-start gap-3">
+<span class="text-orange-600 dark:text-orange-400 text-sm">⚠️</span>
+<div class="text-sm text-orange-900 dark:text-orange-200">
+<p class="font-semibold mb-1">Sync Instructions</p>
+<ol class="list-decimal ml-4 space-y-1">
+<li>Download all 5 packages to your local development environment</li>
+<li>Extract each package in the root directory of your project</li>
+<li>Review the updated files, especially index.js (PostgreSQL asset routes)</li>
+<li>Run <code class="bg-orange-100 dark:bg-orange-900 px-1 py-0.5 rounded">npm run db:push</code> to sync the database schema</li>
+<li>Restart your dev server with <code class="bg-orange-100 dark:bg-orange-900 px-1 py-0.5 rounded">npm run dev</code></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
 <div class="rounded border border-primary/10 bg-white p-6 dark:border-white/10 dark:bg-primary">
 <h3 class="text-lg font-bold mb-2">Package Information</h3>
 <div class="space-y-3 text-sm text-primary/60 dark:text-white/60">
 <div>
 <p><strong class="text-primary dark:text-white">Latest Version:</strong> v1.0.0 (October 17, 2025)</p>
+<p><strong class="text-primary dark:text-white">Latest Update:</strong> October 21, 2025 - PostgreSQL Asset Storage</p>
 </div>
 <div>
 <p><strong class="text-primary dark:text-white">Current Version Package (Recommended):</strong></p>
@@ -144,7 +236,13 @@
 <p class="ml-4">• Includes everything: all pages, modules, backend code, tests, and configurations</p>
 </div>
 <div>
-<p><strong class="text-primary dark:text-white">Features:</strong> New Interview Workflow, Profile Editor, Asset Library, Availability Management, File Uploads, Dark Mode Support</p>
+<p><strong class="text-primary dark:text-white">Development Sync Packages:</strong></p>
+<p class="ml-4 mt-1">• 5 packages organized by component (max 5 folders each)</p>
+<p class="ml-4">• Total: 7,427 files across all packages</p>
+<p class="ml-4">• Includes latest PostgreSQL integration for centralized asset storage</p>
+</div>
+<div>
+<p><strong class="text-primary dark:text-white">Features:</strong> New Interview Workflow, Profile Editor, Asset Library, Availability Management, File Uploads, Dark Mode Support, PostgreSQL-Backed Asset Sharing</p>
 </div>
 <div>
 <p><strong class="text-primary dark:text-white">Quick Start:</strong> Extract the archive, run <code class="bg-primary/5 dark:bg-white/5 px-1 py-0.5 rounded">npm install</code>, then <code class="bg-primary/5 dark:bg-white/5 px-1 py-0.5 rounded">npm run dev</code></p>
