@@ -33,6 +33,20 @@
   <div class="layout-container flex h-full grow flex-col">
     <div class="flex flex-1 justify-center py-5">
       <div class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
+        <!-- Edit / Publish Banner -->
+        <section id="ep-topbar" class="bg-white/80 dark:bg-background-dark/80 backdrop-blur border-b border-neutral-200 dark:border-neutral-700 mb-0">
+          <div class="px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-center sm:text-left">
+              <h2 class="text-base sm:text-lg font-semibold text-primary dark:text-neutral-50">This profile isn't published yet</h2>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Edit your details then publish to get a shareable link.</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button id="btnTopEdit" data-testid="button-top-edit" class="bg-background-light dark:bg-neutral-700 border border-[#cccccc] dark:border-neutral-600 text-primary dark:text-neutral-50 font-semibold py-2 px-4 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-600">Edit Profile</button>
+              <button id="btnTopPublish" data-testid="button-top-publish" class="bg-primary text-neutral-50 font-bold py-2 px-4 rounded-lg hover:bg-primary/90">Publish</button>
+            </div>
+          </div>
+        </section>
+
         <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#cccccc] px-6 py-4">
           <div class="flex items-center gap-4 text-primary dark:text-neutral-50">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
