@@ -58,6 +58,15 @@
         </header>
 
         <main class="p-6 md:p-10 space-y-12">
+          <!-- Profile Name -->
+          <section id="profileNameBlock" class="mb-6">
+            <label class="flex flex-col w-full max-w-xl">
+              <p class="text-base font-medium pb-2 text-primary dark:text-neutral-50">Profile Name</p>
+              <input id="profileNameInput" data-testid="input-profile-name" class="form-input rounded-lg border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark text-primary dark:text-neutral-50 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="e.g. Senior Product Manager Application"/>
+              <p class="mt-2 text-xs text-neutral-500 dark:text-neutral-400">This name appears under "My interviews" on the Home page.</p>
+            </label>
+          </section>
+
           <!-- Auto-populate with Resume -->
           <section id="resumeImport" class="p-6 bg-background-light dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700 space-y-4">
             <h2 class="text-lg font-semibold leading-tight tracking-tight">Auto-populate with Resume</h2>
