@@ -4,10 +4,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>OpenInterview.me - Editable Profile</title>
 <link rel="stylesheet" href="/css/tailwind.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <style>
 html,body{visibility:visible!important;opacity:1!important}
-.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
 </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50">
@@ -59,12 +57,12 @@ html,body{visibility:visible!important;opacity:1!important}
                 <option value="__add_new__">-- Add new resume --</option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <span class="material-symbols-outlined text-neutral-500">expand_more</span>
+                <svg class="text-neutral-500 w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </div>
             </div>
             <div class="mt-4 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 p-6 text-center h-24">
               <div class="flex flex-col items-center justify-center gap-2 text-neutral-600 dark:text-neutral-400">
-                <span class="material-symbols-outlined text-3xl">upload_file</span>
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></svg>
                 <p class="text-sm font-medium">Drag &amp; drop a new resume here, or <button class="font-semibold text-primary dark:text-neutral-50 underline">browse</button></p>
               </div>
             </div>
@@ -76,10 +74,10 @@ html,body{visibility:visible!important;opacity:1!important}
           <section class="space-y-6">
             <div class="flex flex-col items-center justify-center bg-neutral-200 dark:bg-neutral-800 rounded-lg p-8 aspect-video w-full">
               <div class="flex flex-col items-center gap-4 text-center">
-                <span class="material-symbols-outlined text-6xl text-neutral-500 dark:text-neutral-400">videocam</span>
+                <svg class="w-20 h-20 text-neutral-500 dark:text-neutral-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
                 <p class="text-neutral-600 dark:text-neutral-300">Your video will appear here.</p>
                 <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
-                  <span class="material-symbols-outlined text-xl">upload</span>
+                  <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
                   <span class="truncate">Upload Video</span>
                 </button>
               </div>
@@ -91,7 +89,7 @@ html,body{visibility:visible!important;opacity:1!important}
           <section>
             <div class="flex flex-col md:flex-row gap-8 items-start">
               <div class="flex flex-col gap-4 items-start">
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-32 h-32 bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center text-neutral-500"><span class="material-symbols-outlined text-4xl">person</span></div>
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-32 h-32 bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center text-neutral-500"><svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
                 <button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><span class="truncate">Upload/Change Photo</span></button>
               </div>
               <div class="flex flex-col justify-center flex-1 w-full gap-4">
@@ -127,11 +125,11 @@ html,body{visibility:visible!important;opacity:1!important}
             <div class="space-y-4" id="attachments-container">
               <div class="flex items-end gap-2">
                 <label class="flex flex-col min-w-40 flex-1"><p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">LinkedIn</p><input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="https://linkedin.com/in/..." value=""/></label>
-                <button class="flex min-w-[40px] h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><span class="material-symbols-outlined">delete</span></button>
+                <button class="flex min-w-[40px] h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></button>
               </div>
               <div class="flex items-end gap-2">
                 <label class="flex flex-col min-w-40 flex-1"><p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Portfolio</p><input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal" placeholder="https://your-portfolio.com" value=""/></label>
-                <button class="flex min-w-[40px] h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><span class="material-symbols-outlined">delete</span></button>
+                <button class="flex min-w-[40px] h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg></button>
               </div>
             </div>
             <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><span class="truncate">Add More</span></button>
@@ -142,7 +140,7 @@ html,body{visibility:visible!important;opacity:1!important}
           <section class="space-y-6">
             <h2 class="text-2xl font-bold leading-tight tracking-tight">Resume &amp; Attachments</h2>
             <div class="space-y-4"><!-- rows will be rendered by binder --></div>
-            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2"><span class="material-symbols-outlined text-xl">upload</span><span class="truncate">Upload Files</span></button>
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg><span class="truncate">Upload Files</span></button>
           </section>
 
           <div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
@@ -192,12 +190,12 @@ html,body{visibility:visible!important;opacity:1!important}
                       <div class="p-4 flex items-center gap-4">
                         <div class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" id="mon" type="checkbox"/><label class="font-medium" for="mon">MON</label></div>
                         <div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
-                        <button class="flex items-center gap-1 text-sm font-medium text-primary dark:text-neutral-50 hover:text-primary/80 dark:hover:text-neutral-300"><span class="material-symbols-outlined text-lg">add</span><span>Add Block</span></button>
+                        <button class="flex items-center gap-1 text-sm font-medium text-primary dark:text-neutral-50 hover:text-primary/80 dark:hover:text-neutral-300"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span>Add Block</span></button>
                       </div>
                       <div class="p-4 flex items-center gap-4">
                         <div class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" id="tue" type="checkbox"/><label class="font-medium" for="tue">TUE</label></div>
                         <div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
-                        <button class="flex items-center gap-1 text-sm font-medium text-primary dark:text-neutral-50 hover:text-primary/80 dark:hover:text-neutral-300"><span class="material-symbols-outlined text-lg">add</span><span>Add Block</span></button>
+                        <button class="flex items-center gap-1 text-sm font-medium text-primary dark:text-neutral-50 hover:text-primary/80 dark:hover:text-neutral-300"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span>Add Block</span></button>
                       </div>
                       <div class="p-4 flex items-center gap-4">
                         <div class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" id="wed" type="checkbox"/><label class="font-medium" for="wed">WED</label></div>
@@ -206,7 +204,7 @@ html,body{visibility:visible!important;opacity:1!important}
                       <div class="p-4 flex items-center gap-4">
                         <div class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" id="thu" type="checkbox"/><label class="font-medium" for="thu">THU</label></div>
                         <div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
-                        <button class="flex items-center gap-1 text-sm font-medium text-primary dark:text-neutral-50 hover:text-primary/80 dark:hover:text-neutral-300"><span class="material-symbols-outlined text-lg">add</span><span>Add Block</span></button>
+                        <button class="flex items-center gap-1 text-sm font-medium text-primary dark:text-neutral-50 hover:text-primary/80 dark:hover:text-neutral-300"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span>Add Block</span></button>
                       </div>
                       <div class="p-4 flex items-center gap-4">
                         <div class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" id="fri" type="checkbox"/><label class="font-medium" for="fri">FRI</label></div>
@@ -238,7 +236,7 @@ html,body{visibility:visible!important;opacity:1!important}
                     <div><label class="text-sm font-medium" for="increments">Increments</label><select class="form-select mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="increments"><option selected="">30 minutes</option><option>15 minutes</option><option>60 minutes</option></select></div>
                     <div><label class="text-sm font-medium">Buffers</label><div class="flex items-center gap-2 mt-1"><input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" type="number" value="15"/><span>min before</span></div><div class="flex items-center gap-2 mt-1"><input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" type="number" value="15"/><span>min after</span></div></div>
                     <div><label class="text-sm font-medium" for="daily-cap">Daily Cap</label><input class="form-input mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="daily-cap" type="number" value="5"/></div>
-                    <div><label class="text-sm font-medium">Durations</label><div class="mt-1 flex items-center gap-2"><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">15 min</span><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">30 min</span><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">60 min</span><button><span class="material-symbols-outlined">add_circle</span></button></div></div>
+                    <div><label class="text-sm font-medium">Durations</label><div class="mt-1 flex items-center gap-2"><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">15 min</span><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">30 min</span><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">60 min</span><button><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></button></div></div>
                   </div>
                 </div>
               </div>
