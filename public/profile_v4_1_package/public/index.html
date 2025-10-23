@@ -122,48 +122,29 @@
 </div>
 
 <!-- REGION:CALENDAR_CARD_START -->
-<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6" id="bookingCard" data-calendar-year="2024" data-calendar-month-index="6">
-<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book an Interview</h2>
-<div class="flex items-center justify-between">
-<button id="calPrev" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark" aria-label="Previous month">
-  <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<p id="calTitle" class="font-semibold">July 2024</p>
-<button id="calNext" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark" aria-label="Next month">
-  <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6" id="bookingCard" data-cal-link="" data-profile-handle="demo">
+<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book a time</h2>
+
+<!-- Cal.com inline mount point -->
+<div id="calEmbedContainer" class="w-full min-h-[740px]"></div>
+
+<!-- Fallback appears only if Cal fails or no handle/link is set -->
+<div id="bookingFallback" class="mt-4 hidden">
+  <p class="text-sm text-muted-light dark:text-muted-dark mb-2">
+    The scheduler couldn't load. You can still add this to your calendar via .ics.
+  </p>
+  <div class="grid gap-3">
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Choose a date</label>
+    <input type="date" id="fallbackDate" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Choose a time</label>
+    <input type="time" id="fallbackTime" value="09:00" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Your email</label>
+    <input type="email" id="fallbackEmail" placeholder="you@example.com" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <button id="fallbackConfirm" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors">
+      Download invite (.ics)
+    </button>
+  </div>
 </div>
-<div id="calGrid" class="grid grid-cols-7 gap-1 text-center text-sm" aria-label="Calendar">
-<span class="font-medium text-muted-light dark:text-muted-dark">S</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">M</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">T</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">W</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">T</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">F</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">S</span>
-<span class="col-start-4 text-muted-light dark:text-muted-dark/50" data-day="1">1</span>
-<span class="text-muted-light dark:text-muted-dark/50" data-day="2">2</span>
-<span class="text-muted-light dark:text-muted-dark/50" data-day="3">3</span>
-<span class="text-muted-light dark:text-muted-dark/50" data-day="4">4</span>
-<button class="h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white font-semibold" data-day="5" type="button">5</button>
-<span data-day="6">6</span><span data-day="7">7</span><span data-day="8">8</span><span data-day="9">9</span><span data-day="10">10</span><span data-day="11">11</span>
-<span data-day="12">12</span><span data-day="13">13</span><span data-day="14">14</span><span data-day="15">15</span><span data-day="16">16</span><span data-day="17">17</span>
-<span data-day="18">18</span><span data-day="19">19</span><span data-day="20">20</span><span data-day="21">21</span><span data-day="22">22</span><span data-day="23">23</span>
-<span data-day="24">24</span><span data-day="25">25</span><span data-day="26">26</span><span data-day="27">27</span><span data-day="28">28</span><span data-day="29">29</span><span data-day="30">30</span>
-</div>
-<div class="flex flex-wrap gap-2 justify-center" id="timeOptions">
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="09:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">9:00 AM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="10:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">10:00 AM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="11:00" checked/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">11:00 AM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="13:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">1:00 PM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="14:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">2:00 PM</span></label>
-</div>
-<div class="space-y-2">
-<label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="email">Recruiter Email</label>
-<input class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="email" placeholder="Enter your email" type="email"/>
-</div>
-<button id="confirmBookingBtn" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors" type="button">Confirm Booking</button>
-<div id="toast" class="rounded-lg bg-primary text-white px-4 py-3 shadow-lg text-sm text-center">Booking confirmed. An .ics invite has been downloaded.</div>
 </div>
 <!-- REGION:CALENDAR_CARD_END -->
 </div>
@@ -201,6 +182,7 @@
 <script src="./app.js"></script>
 <script type="module" src="/js/nav-patch.js"></script>
 <script type="module" src="/js/redirect-shim.js"></script>
+<script type="module" src="/js/cal-embed.bind.js"></script>
 
 <script type="module">
   import { store } from '/js/data-store.js';
