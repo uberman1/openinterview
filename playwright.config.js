@@ -1,13 +1,11 @@
-// playwright.config.js - Adapted for Express server on port 5000
-import { defineConfig } from '@playwright/test';
+// playwright.config.js - CI-stable config with software rendering for headless tests
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30000,
-  fullyParallel: false,
-  forbidOnly: !!process.env.CI,
+  timeout: 45000,
+  fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   
   use: {
@@ -17,18 +15,15 @@ export default defineConfig({
     colorScheme: 'light',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    trace: 'retain-on-failure',
+    trace: 'on-first-retry',
     
     launchOptions: {
       args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--use-gl=swiftshader',
-        '--single-process',
-        '--disable-web-security',
-        '--disable-features=IsolateOrigins,site-per-process'
+        '--disable-gpu',              // Critical: Force software rendering
+        '--use-gl=swiftshader',       // Critical: Use SwiftShader for painting
+        '--disable-dev-shm-usage',    // Fix for container environments
+        '--no-sandbox',               // Required for some CI environments
+        '--disable-setuid-sandbox'    // Additional sandbox bypass
       ]
     }
   },
@@ -37,15 +32,8 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { 
-        browserName: 'chromium'
-      },
-    },
-  ],
-
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:5000',
-    reuseExistingServer: true,
-    timeout: 120000
-  },
+        ...devices['Desktop Chrome']
+      }
+    }
+  ]
 });
