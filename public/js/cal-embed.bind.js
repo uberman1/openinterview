@@ -74,6 +74,10 @@
 
     // Listen for booking events (defensive: hide/disable ICS pieces if present)
     window.addEventListener('message', (evt) => {
+      // Validate origin (only accept Cal.com messages)
+      const origin = evt?.origin;
+      if (!origin || !origin.match(/^https:\/\/(app\.)?cal\.com$/)) return;
+      
       const data = evt?.data;
       if (!data || typeof data !== 'object') return;
       const t = String(data.type || '').toLowerCase();
