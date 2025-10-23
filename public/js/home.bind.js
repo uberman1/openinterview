@@ -45,28 +45,56 @@
         vb.textContent = 'View';
         actions.prepend(vb);
       }
+      if (actions && !Array.from(actions.children).some(el=>/share/i.test(el.textContent||''))){
+        const sb = document.createElement('button');
+        sb.className = 'text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white';
+        sb.textContent = 'Share';
+        const editBtn = Array.from(actions.children).find(el=>/edit/i.test(el.textContent||''));
+        if (editBtn) actions.insertBefore(sb, editBtn);
+        else actions.appendChild(sb);
+      }
       const title = tr.dataset.title || tr.querySelector('td').textContent || '';
       const slug = slugify(title);
       const id = tr.dataset.id || slug;
 
       const btns = Array.from(tr.querySelectorAll('.actions button'));
       const viewBtn = btns.find(b=>/view/i.test(b.textContent||''));
+      const shareBtn = btns.find(b=>/share/i.test(b.textContent||''));
       const editBtn = btns.find(b=>/edit/i.test(b.textContent||''));
       const delBtn  = btns.find(b=>/delete/i.test(b.textContent||''));
 
       if (viewBtn){
         viewBtn.addEventListener('click', async (e)=>{
           e.preventDefault();
-          const direct = await pickCached(`interviewView:${id}`,[`/interviews/${id}`, `/interview/${id}`, `/interviews/view?title=${slug}`]);
-          const fallback = await pickCached('profileShare', ['/profile_share.html','/profile_public.html']);
-          window.location.href = direct || fallback || '#';
+          const profileId = tr.dataset.id || await getProfileIdFromTitle(title);
+          if (profileId) {
+            window.location.href = `/profile_v4_1_package/public/index.html?id=${encodeURIComponent(profileId)}`;
+          } else {
+            const direct = await pickCached(`interviewView:${id}`,[`/interviews/${id}`, `/interview/${id}`, `/interviews/view?title=${slug}`]);
+            const fallback = await pickCached('profileShare', ['/profile_share.html','/profile_public.html']);
+            window.location.href = direct || fallback || '#';
+          }
+        });
+      }
+      if (shareBtn){
+        shareBtn.addEventListener('click', async (e)=>{
+          e.preventDefault();
+          const profileId = tr.dataset.id || await getProfileIdFromTitle(title);
+          if (profileId) {
+            window.location.href = `/profile_v4_1_package/public/index.html?id=${encodeURIComponent(profileId)}#share`;
+          }
         });
       }
       if (editBtn){
         editBtn.addEventListener('click', async (e)=>{
           e.preventDefault();
-          const target = await pickCached(`interviewEdit:${id}`,[`/interviews/${id}/edit`, `/profile_edit.html?interview=${slug}`, `/profile_edit.html`]);
-          if (target) window.location.href = target;
+          const profileId = tr.dataset.id || await getProfileIdFromTitle(title);
+          if (profileId) {
+            window.location.href = `/profile_edit_enhanced.html?id=${encodeURIComponent(profileId)}`;
+          } else {
+            const target = await pickCached(`interviewEdit:${id}`,[`/interviews/${id}/edit`, `/profile_edit.html?interview=${slug}`, `/profile_edit.html`]);
+            if (target) window.location.href = target;
+          }
         });
       }
       if (delBtn){
@@ -82,6 +110,17 @@
           }
         });
       }
+    }
+  }
+
+  async function getProfileIdFromTitle(title){
+    try {
+      const { store } = await import('/js/data-store.js');
+      const profiles = store.listProfiles();
+      const profile = profiles.find(p => p.profileName === title || p.display?.name === title);
+      return profile?.id || null;
+    } catch {
+      return null;
     }
   }
 

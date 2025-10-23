@@ -280,5 +280,13 @@
     const body = encodeURIComponent(`Hi,\n\nHere is my OpenInterview profile:\n${decodeURIComponent(url)}\n`);
     emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
   });
+
+  // Auto-open share modal if #share hash is present
+  if (window.location.hash === '#share') {
+    setTimeout(() => {
+      openShare();
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }, 100);
+  }
 </script>
 </body></html>
