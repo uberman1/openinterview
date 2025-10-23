@@ -115,15 +115,18 @@
         return;
       }
       
-      // Calculate proper start and end times (30 min duration)
+      // Calculate proper start and end times (30 min duration) with midnight rollover
       const [hours, minutes] = time.split(':').map(Number);
-      const endHours = hours + (minutes >= 30 ? 1 : 0);
-      const endMinutes = (minutes + 30) % 60;
+      const startDate = new Date(`${date}T${time}:00`);
+      const endDate = new Date(startDate.getTime() + 30 * 60 * 1000); // Add 30 minutes
       
-      // Format for iCalendar (basic UTC, can be enhanced with timezone)
-      const formatTime = (h, m) => `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}00`;
-      const startDt = `${date.replaceAll('-', '')}T${formatTime(hours, minutes)}Z`;
-      const endDt = `${date.replaceAll('-', '')}T${formatTime(endHours, endMinutes)}Z`;
+      // Format for iCalendar (UTC format: YYYYMMDDTHHMMSSZ)
+      const formatIcal = (d) => {
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}Z`;
+      };
+      const startDt = formatIcal(startDate);
+      const endDt = formatIcal(endDate);
       const nowDt = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       
       const ics = [
