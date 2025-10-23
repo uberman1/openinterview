@@ -14,6 +14,23 @@
 </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark" data-profile-version="4.1">
+
+<!-- Template Topbar: Edit / Save & Publish / Share -->
+<div class="sticky top-0 z-40 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur border-b border-subtle-light dark:border-subtle-dark">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <div class="text-sm text-muted-light dark:text-muted-dark">
+      <span class="font-medium">Profile</span>
+      <span class="mx-2 opacity-50">•</span>
+      <span id="tplProfileStatus" class="uppercase tracking-wide text-xs">DRAFT</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="btnTplEdit" data-testid="button-template-edit" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Edit</button>
+      <button id="btnTplPublish" data-testid="button-template-publish" class="h-10 px-5 rounded-lg bg-primary text-white text-sm font-bold">Save &amp; Publish</button>
+      <button id="btnTplShare" data-testid="button-template-share" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Share</button>
+    </div>
+  </div>
+</div>
+
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
 <div class="lg:grid lg:grid-cols-12 lg:gap-16">
 <main class="lg:col-span-8 space-y-12">
@@ -162,8 +179,124 @@
 </div>
 </footer>
 
+<!-- Share Modal -->
+<div id="shareModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/40" data-dismiss="share"></div>
+  <div class="relative mx-4 w-full max-w-md rounded-xl border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-background-dark p-6">
+    <h3 class="text-lg font-bold mb-2">Share Profile</h3>
+    <p id="shareHint" class="text-sm text-muted-light dark:text-muted-dark mb-4"></p>
+    <div class="flex gap-2 mb-4">
+      <input id="shareUrl" class="flex-1 rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2" readonly />
+      <button id="btnCopyLink" data-testid="button-copy-link" class="px-3 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Copy</button>
+    </div>
+    <div class="flex gap-2">
+      <button id="btnShareNative" data-testid="button-share-native" class="px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm">Share…</button>
+      <a id="btnShareEmail" data-testid="button-share-email" class="px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm" href="#" target="_blank" rel="noopener">Email</a>
+      <button class="ml-auto px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm" data-dismiss="share" data-testid="button-close-share">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Functional logic -->
 <script src="./app.js"></script>
 <script type="module" src="/js/nav-patch.js"></script>
 <script type="module" src="/js/redirect-shim.js"></script>
+
+<script type="module">
+  import { store } from '/js/data-store.js';
+  const params = new URLSearchParams(location.search);
+  const profileId = params.get('id') || (window.__oi?.currentProfileId ?? null);
+
+  (async () => {
+    try {
+      if (!profileId) return;
+      const prof = store.getProfile({id: profileId});
+      const el = document.getElementById('tplProfileStatus');
+      if (el && prof?.status) el.textContent = String(prof.status).toUpperCase();
+    } catch {}
+  })();
+
+  document.getElementById('btnTplEdit')?.addEventListener('click', () => {
+    const to = profileId ? `/profile_edit_enhanced.html?id=${encodeURIComponent(profileId)}` : '/profile_edit_enhanced.html';
+    location.assign(to);
+  });
+
+  document.getElementById('btnTplPublish')?.addEventListener('click', async () => {
+    if (!profileId) return console.warn('[publish] missing profileId');
+    try {
+      store.publishProfile(profileId);
+      const el = document.getElementById('tplProfileStatus');
+      if (el) el.textContent = 'LIVE';
+      if (window.toast) window.toast('Profile published and shareable.', 'success');
+    } catch (e) {
+      console.error('[publish] failed', e);
+      if (window.toast) window.toast('Failed to publish. Please try again.', 'error');
+    }
+  });
+
+  const shareBtn = document.getElementById('btnTplShare');
+  const shareModal = document.getElementById('shareModal');
+  const shareUrlInput = document.getElementById('shareUrl');
+  const shareHint = document.getElementById('shareHint');
+  const copyBtn = document.getElementById('btnCopyLink');
+  const nativeBtn = document.getElementById('btnShareNative');
+  const emailBtn = document.getElementById('btnShareEmail');
+
+  const buildShareUrl = async () => {
+    let url = new URL(location.href);
+    if (profileId) url.searchParams.set('id', profileId);
+    try {
+      const prof = profileId ? store.getProfile({id: profileId}) : null;
+      const isLive = String(prof?.status || '').toLowerCase() === 'live';
+      shareHint.textContent = isLive
+        ? 'Anyone with this link can view your profile.'
+        : 'This profile is not published. Click "Save & Publish" to make the link public.';
+    } catch {
+      shareHint.textContent = 'Share your profile with this link.';
+    }
+    return url.toString();
+  };
+
+  const openShare = async () => {
+    shareUrlInput.value = await buildShareUrl();
+    shareModal.classList.remove('hidden');
+    shareModal.classList.add('flex');
+    shareUrlInput.focus();
+    shareUrlInput.select();
+  };
+
+  shareBtn?.addEventListener('click', openShare);
+  shareModal?.addEventListener('click', (e) => {
+    if (e.target && (e.target.getAttribute('data-dismiss') === 'share')) {
+      shareModal.classList.add('hidden');
+      shareModal.classList.remove('flex');
+    }
+  });
+
+  copyBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrlInput.value);
+      if (window.toast) window.toast('Link copied to clipboard.', 'success');
+    } catch {
+      shareUrlInput.select();
+      document.execCommand('copy');
+    }
+  });
+
+  nativeBtn?.addEventListener('click', async () => {
+    const url = shareUrlInput.value;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'OpenInterview Profile', url }); } catch {}
+    } else {
+      if (window.toast) window.toast('Native share not supported on this device.', 'info');
+    }
+  });
+
+  emailBtn?.addEventListener('click', () => {
+    const url = encodeURIComponent(shareUrlInput.value);
+    const subject = encodeURIComponent('My OpenInterview Profile');
+    const body = encodeURIComponent(`Hi,\n\nHere is my OpenInterview profile:\n${decodeURIComponent(url)}\n`);
+    emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
+  });
+</script>
 </body></html>
