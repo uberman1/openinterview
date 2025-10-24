@@ -608,6 +608,67 @@ app.post("/api/ai/extract_profile", upload.single("file"), async (req, res) => {
   }
 });
 
+// Cloudinary video upload signing endpoint
+app.post("/api/v1/upload/sign", async (req, res) => {
+  const { 
+    folder = 'openinterview/assets', 
+    public_id, 
+    profileId = 'anonymous', 
+    resource_type 
+  } = req.body || {};
+
+  const {
+    CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET,
+  } = process.env;
+  const CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET || 'oi_signed_videos';
+
+  // Validate required env vars
+  if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
+    return res.status(500).json({
+      error: 'Cloudinary not configured. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET environment variables.'
+    });
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000);
+  const finalFolder = `${folder}/${profileId}`;
+
+  // Build parameters to sign (note: resource_type must NOT be included in signature)
+  const paramsToSign = {
+    folder: finalFolder,
+    timestamp,
+    upload_preset: CLOUDINARY_UPLOAD_PRESET,
+  };
+
+  if (public_id) {
+    paramsToSign.public_id = public_id;
+  }
+
+  // Generate signature according to Cloudinary spec
+  const toSign = Object.keys(paramsToSign)
+    .sort()
+    .map(k => `${k}=${paramsToSign[k]}`)
+    .join('&');
+
+  const crypto = await import('crypto');
+  const signature = crypto.createHash('sha1')
+    .update(`${toSign}${CLOUDINARY_API_SECRET}`)
+    .digest('hex');
+
+  // Return all necessary data for client-side upload
+  res.json({
+    timestamp,
+    signature,
+    apiKey: CLOUDINARY_API_KEY,
+    cloudName: CLOUDINARY_CLOUD_NAME,
+    uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+    folder: finalFolder,
+    public_id: public_id || undefined,
+    resource_type: resource_type || 'auto'
+  });
+});
+
 // Error handler for multer errors
 app.use((err, req, res, next) => {
   if (err && err.code === 'LIMIT_FILE_SIZE') {
