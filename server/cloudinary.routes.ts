@@ -38,7 +38,7 @@ export function mountCloudinaryRoutes(app: Express, apiBase: string) {
     const timestamp = Math.floor(Date.now() / 1000);
     const finalFolder = `${folder}/${profileId}`;
 
-    // Build parameters to sign
+    // Build parameters to sign (note: resource_type must NOT be included in signature)
     const paramsToSign: Record<string, string | number> = {
       folder: finalFolder,
       timestamp,
@@ -47,10 +47,6 @@ export function mountCloudinaryRoutes(app: Express, apiBase: string) {
 
     if (public_id) {
       paramsToSign.public_id = public_id;
-    }
-
-    if (resource_type) {
-      paramsToSign.resource_type = resource_type;
     }
 
     // Generate signature according to Cloudinary spec

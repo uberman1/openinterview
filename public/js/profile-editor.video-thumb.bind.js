@@ -51,10 +51,15 @@ export function initVideoThumbBindings() {
       
       // Update video preview if it exists
       const videoPreview = document.querySelector('#video-section video');
+      const videoPlaceholder = document.getElementById('videoPlaceholder');
       if (videoPreview && vAsset.mp4Url) {
         videoPreview.src = vAsset.mp4Url;
         videoPreview.poster = vAsset.posterUrl;
         videoPreview.load();
+        videoPreview.classList.remove('hidden');
+        if (videoPlaceholder) {
+          videoPlaceholder.classList.add('hidden');
+        }
       }
     } catch (err) {
       console.error('Video upload error:', err);
