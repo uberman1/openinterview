@@ -9,11 +9,6 @@
   - Configured for Express server on port 5000
 
 ### 2. Test Pages (CDN-Free for Manual Testing)
-- **`public/mock/profile_editor_mock.html`** - Pure UI mock (zero JavaScript)
-  - For typography/spacing/layout validation
-  - No external dependencies or CDNs
-  - Instant loading for visual checks
-  
 - **`public/dev/profile_edit_dev.html`** - Integrated dev page
   - Uses same DOM hooks as real editor (`#editor-root`, IDs)
   - Includes safe-render-shim.js
@@ -21,11 +16,6 @@
   - Can redirect to production editor with `?mode=prod`
 
 ### 3. Test Files (Playwright)
-- **`tests/ui-mock-format.spec.ts`** - Tests for UI mock page
-  - Layout validation (grid columns)
-  - Typography checks (font size, padding)
-  - Element visibility tests
-  
 - **`tests/editor-dev.spec.ts`** - Tests for dev editor page
   - Blank page regression test with safe-render-shim
   - Profile ID loading verification
@@ -89,9 +79,8 @@ await page.waitForFunction(() => {
 ```
 
 #### Layer 4: CDN-Free Test Pages
-- Mock page has NO JavaScript at all - pure HTML/CSS
 - Dev page has inline JavaScript only - no external dependencies
-- Both pages use local `/css/tailwind.css` - no Google Fonts or Material Icons
+- Uses local `/css/tailwind.css` - no Google Fonts or Material Icons
 - Eliminates network timing issues and CDN failures
 
 ---
@@ -129,12 +118,6 @@ Please install them with: sudo npx playwright install-deps
 **Time:** 2-3 minutes  
 **Reliability:** Highest in this environment
 
-#### Test the Mock Page (UI/Typography):
-1. Open http://localhost:5000/mock/profile_editor_mock.html
-2. Verify layout renders correctly
-3. Check font sizes and spacing
-4. Verify grid layout (2-column + sidebar)
-
 #### Test the Dev Page (Functionality):
 1. Open http://localhost:5000/dev/profile_edit_dev.html
 2. Click buttons to verify toast notifications appear
@@ -168,7 +151,6 @@ The Replit `run_test` agent tool may have its own browser automation that works 
 - ✅ Safe-render-shim.js (enhanced with webdriver detection)
 - ✅ Edit/Save & Publish/Share button patch (fully functional)
 - ✅ Template page workflow (tested manually)
-- ✅ Mock page for UI validation (CDN-free, instant load)
 - ✅ Dev page for functional testing (CDN-free, inline JS)
 - ✅ Playwright config (will work when deployed to environment with browser support)
 
@@ -183,10 +165,9 @@ The Replit `run_test` agent tool may have its own browser automation that works 
 
 ### Immediate (Before Deployment)
 1. ✅ Manual test all workflows in development browser
-2. ✅ Verify mock page renders correctly (typography/spacing)
-3. ✅ Verify dev page is not blank and buttons work
-4. ✅ Test production edit page doesn't show blank screen (use Ctrl+Shift+R if needed)
-5. ✅ Test Edit/Publish/Share buttons on template page
+2. ✅ Verify dev page is not blank and buttons work
+3. ✅ Test production edit page doesn't show blank screen (use Ctrl+Shift+R if needed)
+4. ✅ Test Edit/Publish/Share buttons on template page
 
 ### After Deployment
 1. Run Playwright tests in production/staging environment
@@ -205,9 +186,7 @@ The Replit `run_test` agent tool may have its own browser automation that works 
 
 ### Created
 - `playwright.config.js`
-- `public/mock/profile_editor_mock.html`
 - `public/dev/profile_edit_dev.html`
-- `tests/ui-mock-format.spec.ts`
 - `tests/editor-dev.spec.ts`
 - `tests/profile-edit.spec.js`
 - `tests/template-workflow.spec.js`
@@ -230,7 +209,7 @@ The Replit `run_test` agent tool may have its own browser automation that works 
 - ✅ Implemented multi-layer fix (config + shim + test strategy)
 - ✅ Created comprehensive test suite (ready for proper environment)
 - ✅ Removed problematic CSS file
-- ✅ Created CDN-free test pages for reliable manual testing
+- ✅ Created CDN-free dev page for reliable manual testing
 - ✅ Enhanced safe-render-shim with better headless detection
 - ✅ Documented everything for future reference
 
@@ -239,14 +218,13 @@ The Replit `run_test` agent tool may have its own browser automation that works 
 - ❌ CDN-free approach helps manual testing but doesn't solve automation
 
 **Recommendation:**
-Use manual testing with the new mock/dev pages for now. Deploy to production where Playwright tests will work properly. The code is solid and the tests are ready - just need a compatible test environment.
+Use manual testing with the dev page for now. Deploy to production where Playwright tests will work properly. The code is solid and the tests are ready - just need a compatible test environment.
 
 ---
 
 ## 🎓 Key Testing URLs
 
 ### For Manual Testing (All work in this environment):
-- **Mock Page:** http://localhost:5000/mock/profile_editor_mock.html
 - **Dev Page:** http://localhost:5000/dev/profile_edit_dev.html
 - **Dev Page (Safe Mode):** http://localhost:5000/dev/profile_edit_dev.html?safe=1
 - **Dev Page (Redirect to Prod):** http://localhost:5000/dev/profile_edit_dev.html?mode=prod
@@ -259,7 +237,6 @@ Use manual testing with the new mock/dev pages for now. Deploy to production whe
 npx playwright test
 
 # Run specific test suite
-npx playwright test tests/ui-mock-format.spec.ts
 npx playwright test tests/editor-dev.spec.ts
 
 # Run in headed mode (see browser)
@@ -291,25 +268,20 @@ npx playwright test --headed --project=chromium
 ## 📚 Architecture Notes
 
 ### Page Hierarchy (Development → Production)
-1. **Mock Page** (`/mock/profile_editor_mock.html`)
-   - Pure HTML/CSS, zero JavaScript
-   - Used for: Layout/typography validation
-   
-2. **Dev Page** (`/dev/profile_edit_dev.html`)
+1. **Dev Page** (`/dev/profile_edit_dev.html`)
    - Inline JavaScript, same DOM structure as production
    - Used for: Functional testing before production integration
    - Can redirect to production with `?mode=prod`
    
-3. **Production Edit Page** (`/profile_edit_enhanced.html`)
+2. **Production Edit Page** (`/profile_edit_enhanced.html`)
    - Full production code with data-store.js integration
    - Used by: Real users editing their profiles
    
-4. **Production Template Page** (`/profile_v4_1_package/public/index.html`)
+3. **Production Template Page** (`/profile_v4_1_package/public/index.html`)
    - View-only profile with Edit/Publish/Share buttons
    - Used by: Profile owners viewing their published profile
 
 ### When to Use Each Page
-- **Building new UI:** Start with mock page (fast iteration)
 - **Testing interactions:** Use dev page (inline JS, easy debugging)
 - **Integration testing:** Use production pages with real backend
 - **End-to-end testing:** Playwright against production pages (when env supports it)
