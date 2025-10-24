@@ -3,34 +3,9 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>OpenInterview.me</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/tailwind.css"/>
 <!-- PDF.js CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "primary": "#141414",
-          "background-light": "#f7f7f7",
-          "background-dark": "#191919",
-          "foreground-light": "#141414",
-          "foreground-dark": "#f7f7f7",
-          "subtle-light": "#e5e5e5",
-          "subtle-dark": "#2a2a2a",
-          "muted-light": "#737373",
-          "muted-dark": "#a3a3a3",
-        },
-        fontFamily: { "display": ["Inter", "sans-serif"] },
-        borderRadius: { "DEFAULT": "0.5rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" }
-      },
-    },
-  }
-</script>
+
 <style>
   body { font-family: 'Inter', sans-serif; }
   #resumeCanvas { width: 100%; height: 100%; display: block; }
@@ -39,6 +14,23 @@
 </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark" data-profile-version="4.1">
+
+<!-- Template Topbar: Edit / Save & Publish / Share -->
+<div class="sticky top-0 z-40 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur border-b border-subtle-light dark:border-subtle-dark">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <div class="text-sm text-muted-light dark:text-muted-dark">
+      <span class="font-medium">Profile</span>
+      <span class="mx-2 opacity-50">•</span>
+      <span id="tplProfileStatus" class="uppercase tracking-wide text-xs">DRAFT</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="btnTplEdit" data-testid="button-template-edit" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Edit</button>
+      <button id="btnTplPublish" data-testid="button-template-publish" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Save &amp; Publish</button>
+      <button id="btnTplShare" data-testid="button-template-share" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Share</button>
+    </div>
+  </div>
+</div>
+
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
 <div class="lg:grid lg:grid-cols-12 lg:gap-16">
 <main class="lg:col-span-8 space-y-12">
@@ -130,48 +122,29 @@
 </div>
 
 <!-- REGION:CALENDAR_CARD_START -->
-<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6" id="bookingCard" data-calendar-year="2024" data-calendar-month-index="6">
-<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book an Interview</h2>
-<div class="flex items-center justify-between">
-<button id="calPrev" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark" aria-label="Previous month">
-  <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<p id="calTitle" class="font-semibold">July 2024</p>
-<button id="calNext" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark" aria-label="Next month">
-  <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6" id="bookingCard" data-cal-link="" data-profile-handle="demo">
+<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book a time</h2>
+
+<!-- Cal.com inline mount point -->
+<div id="calEmbedContainer" class="w-full min-h-[740px]"></div>
+
+<!-- Fallback appears only if Cal fails or no handle/link is set -->
+<div id="bookingFallback" class="mt-4 hidden">
+  <p class="text-sm text-muted-light dark:text-muted-dark mb-2">
+    The scheduler couldn't load. You can still add this to your calendar via .ics.
+  </p>
+  <div class="grid gap-3">
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Choose a date</label>
+    <input type="date" id="fallbackDate" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Choose a time</label>
+    <input type="time" id="fallbackTime" value="09:00" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Your email</label>
+    <input type="email" id="fallbackEmail" placeholder="you@example.com" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <button id="fallbackConfirm" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors">
+      Download invite (.ics)
+    </button>
+  </div>
 </div>
-<div id="calGrid" class="grid grid-cols-7 gap-1 text-center text-sm" aria-label="Calendar">
-<span class="font-medium text-muted-light dark:text-muted-dark">S</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">M</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">T</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">W</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">T</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">F</span>
-<span class="font-medium text-muted-light dark:text-muted-dark">S</span>
-<span class="col-start-4 text-muted-light dark:text-muted-dark/50" data-day="1">1</span>
-<span class="text-muted-light dark:text-muted-dark/50" data-day="2">2</span>
-<span class="text-muted-light dark:text-muted-dark/50" data-day="3">3</span>
-<span class="text-muted-light dark:text-muted-dark/50" data-day="4">4</span>
-<button class="h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white font-semibold" data-day="5" type="button">5</button>
-<span data-day="6">6</span><span data-day="7">7</span><span data-day="8">8</span><span data-day="9">9</span><span data-day="10">10</span><span data-day="11">11</span>
-<span data-day="12">12</span><span data-day="13">13</span><span data-day="14">14</span><span data-day="15">15</span><span data-day="16">16</span><span data-day="17">17</span>
-<span data-day="18">18</span><span data-day="19">19</span><span data-day="20">20</span><span data-day="21">21</span><span data-day="22">22</span><span data-day="23">23</span>
-<span data-day="24">24</span><span data-day="25">25</span><span data-day="26">26</span><span data-day="27">27</span><span data-day="28">28</span><span data-day="29">29</span><span data-day="30">30</span>
-</div>
-<div class="flex flex-wrap gap-2 justify-center" id="timeOptions">
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="09:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">9:00 AM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="10:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">10:00 AM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="11:00" checked/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">11:00 AM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="13:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">1:00 PM</span></label>
-<label class="cursor-pointer"><input class="sr-only peer" name="time" type="radio" value="14:00"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">2:00 PM</span></label>
-</div>
-<div class="space-y-2">
-<label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="email">Recruiter Email</label>
-<input class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="email" placeholder="Enter your email" type="email"/>
-</div>
-<button id="confirmBookingBtn" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors" type="button">Confirm Booking</button>
-<div id="toast" class="rounded-lg bg-primary text-white px-4 py-3 shadow-lg text-sm text-center">Booking confirmed. An .ics invite has been downloaded.</div>
 </div>
 <!-- REGION:CALENDAR_CARD_END -->
 </div>
@@ -187,6 +160,133 @@
 </div>
 </footer>
 
+<!-- Share Modal -->
+<div id="shareModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/40" data-dismiss="share"></div>
+  <div class="relative mx-4 w-full max-w-md rounded-xl border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-background-dark p-6">
+    <h3 class="text-lg font-bold mb-2">Share Profile</h3>
+    <p id="shareHint" class="text-sm text-muted-light dark:text-muted-dark mb-4"></p>
+    <div class="flex gap-2 mb-4">
+      <input id="shareUrl" class="flex-1 rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2" readonly />
+      <button id="btnCopyLink" data-testid="button-copy-link" class="px-3 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Copy</button>
+    </div>
+    <div class="flex gap-2">
+      <button id="btnShareNative" data-testid="button-share-native" class="px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm">Share…</button>
+      <a id="btnShareEmail" data-testid="button-share-email" class="px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm" href="#" target="_blank" rel="noopener">Email</a>
+      <button class="ml-auto px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm" data-dismiss="share" data-testid="button-close-share">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Functional logic -->
 <script src="./app.js"></script>
+<script type="module" src="/js/nav-patch.js"></script>
+<script type="module" src="/js/redirect-shim.js"></script>
+<script type="module" src="/js/cal-embed.bind.js"></script>
+
+<script type="module">
+  import { store } from '/js/data-store.js';
+  const params = new URLSearchParams(location.search);
+  const profileId = params.get('id') || (window.__oi?.currentProfileId ?? null);
+
+  (async () => {
+    try {
+      if (!profileId) return;
+      const prof = store.getProfile({id: profileId});
+      const el = document.getElementById('tplProfileStatus');
+      if (el && prof?.status) el.textContent = String(prof.status).toUpperCase();
+    } catch {}
+  })();
+
+  document.getElementById('btnTplEdit')?.addEventListener('click', () => {
+    const to = profileId ? `/profile_edit_enhanced.html?id=${encodeURIComponent(profileId)}` : '/profile_edit_enhanced.html';
+    location.assign(to);
+  });
+
+  document.getElementById('btnTplPublish')?.addEventListener('click', async () => {
+    if (!profileId) return console.warn('[publish] missing profileId');
+    try {
+      store.publishProfile(profileId);
+      const el = document.getElementById('tplProfileStatus');
+      if (el) el.textContent = 'LIVE';
+      if (window.toast) window.toast('Profile published and shareable.', 'success');
+    } catch (e) {
+      console.error('[publish] failed', e);
+      if (window.toast) window.toast('Failed to publish. Please try again.', 'error');
+    }
+  });
+
+  const shareBtn = document.getElementById('btnTplShare');
+  const shareModal = document.getElementById('shareModal');
+  const shareUrlInput = document.getElementById('shareUrl');
+  const shareHint = document.getElementById('shareHint');
+  const copyBtn = document.getElementById('btnCopyLink');
+  const nativeBtn = document.getElementById('btnShareNative');
+  const emailBtn = document.getElementById('btnShareEmail');
+
+  const buildShareUrl = async () => {
+    let url = new URL(location.href);
+    if (profileId) url.searchParams.set('id', profileId);
+    try {
+      const prof = profileId ? store.getProfile({id: profileId}) : null;
+      const isLive = String(prof?.status || '').toLowerCase() === 'live';
+      shareHint.textContent = isLive
+        ? 'Anyone with this link can view your profile.'
+        : 'This profile is not published. Click "Save & Publish" to make the link public.';
+    } catch {
+      shareHint.textContent = 'Share your profile with this link.';
+    }
+    return url.toString();
+  };
+
+  const openShare = async () => {
+    shareUrlInput.value = await buildShareUrl();
+    shareModal.classList.remove('hidden');
+    shareModal.classList.add('flex');
+    shareUrlInput.focus();
+    shareUrlInput.select();
+  };
+
+  shareBtn?.addEventListener('click', openShare);
+  shareModal?.addEventListener('click', (e) => {
+    if (e.target && (e.target.getAttribute('data-dismiss') === 'share')) {
+      shareModal.classList.add('hidden');
+      shareModal.classList.remove('flex');
+    }
+  });
+
+  copyBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrlInput.value);
+      if (window.toast) window.toast('Link copied to clipboard.', 'success');
+    } catch {
+      shareUrlInput.select();
+      document.execCommand('copy');
+    }
+  });
+
+  nativeBtn?.addEventListener('click', async () => {
+    const url = shareUrlInput.value;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'OpenInterview Profile', url }); } catch {}
+    } else {
+      if (window.toast) window.toast('Native share not supported on this device.', 'info');
+    }
+  });
+
+  emailBtn?.addEventListener('click', () => {
+    const url = encodeURIComponent(shareUrlInput.value);
+    const subject = encodeURIComponent('My OpenInterview Profile');
+    const body = encodeURIComponent(`Hi,\n\nHere is my OpenInterview profile:\n${decodeURIComponent(url)}\n`);
+    emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
+  });
+
+  // Auto-open share modal if #share hash is present
+  if (window.location.hash === '#share') {
+    setTimeout(() => {
+      openShare();
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }, 100);
+  }
+</script>
 </body></html>
