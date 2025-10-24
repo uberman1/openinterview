@@ -19,15 +19,16 @@ The project uses a monorepo structure, separating concerns into `/server`, `/cli
 **Technology Stack:** React 18, TypeScript, Vite, Wouter, TanStack Query, Shadcn/ui (Radix UI, Tailwind CSS).
 **Design Patterns:** Component-based architecture, custom hooks, and an API client abstraction.
 **Key Features:** Dark theme, responsive design, real-time data refresh, and a multi-page dashboard.
-**UI/UX Decisions:** Implemented view-first profile creation flow, consistent header formatting across pages, and robust file upload/persistence mechanisms.
+**UI/UX Decisions:** Implemented view-first profile creation flow, consistent header formatting across pages, robust file upload/persistence mechanisms, and video upload UI with thumbnail customization.
 
 ### Backend Architecture
 
 **Technology Stack:** Node.js, Express, TypeScript, Drizzle ORM, PostgreSQL.
 **Design Patterns:** Adapter/Port pattern for external service isolation, middleware-based processing, and RESTful API design (`/api/v1`).
 **Core Services:** Health monitoring, structured logging, a self-test framework, and an adapter registry.
-**Key Features:** Admin console for feature flag management and analytics, authentication (passwordless OTP), graceful shutdown, static file serving with caching, and robust API error handling.
+**Key Features:** Admin console for feature flag management and analytics, authentication (passwordless OTP), graceful shutdown, static file serving with caching, robust API error handling, and Cloudinary video upload integration.
 **Core Workflow:** Manages interview scheduling, status transitions, search, and filtering.
+**Video Integration:** Server route (`/api/v1/upload/sign`) generates signed upload parameters for direct Cloudinary uploads. Client helpers handle video and thumbnail uploads with progress tracking. Public profiles support HLS streaming with MP4 fallback.
 
 ### Data Storage
 
@@ -58,6 +59,7 @@ The middleware stack incorporates Helmet.js for HTTP headers, CORS with an origi
 - **Cloud Storage/Database:** (Planned integration via `StoragePort`)
 - **Email Delivery Service:** (Planned integration via `EmailPort`)
 - **Payment Processor:** (Planned integration via `PaymentsPort`)
+- **Cloudinary Video Hosting:** Direct client-side uploads with server-signed URLs for video content and thumbnails. Supports HLS streaming and automatic transcoding.
 
 ### Database
 
