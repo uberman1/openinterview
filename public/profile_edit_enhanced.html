@@ -1,3 +1,46 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me - Edit Profile</title>
+<link rel="stylesheet" href="/css/tailwind.css"/>
+<script src="/js/safe-render-shim.js"></script>
+<style>
+html,body{visibility:visible!important;opacity:1!important}
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col w-full max-w-6xl flex-1">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#cccccc] px-6 py-4">
+          <div class="flex items-center gap-4 text-primary dark:text-neutral-50">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+            </svg>
+            <h1 class="text-xl font-bold leading-tight tracking-tight">OpenInterview.me</h1>
+          </div>
+          <div class="flex items-center gap-3">
+            <button data-testid="button-save-profile" class="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+              <span class="truncate">Save Profile</span>
+            </button>
+            <button id="btnSaveReturn" data-testid="button-save-return" class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide">
+              <span class="truncate">Save &amp; Return</span>
+            </button>
+          </div>
+        </header>
+        <main class="p-6 md:p-10 space-y-12">
+          <section id="availability-section" class="space-y-6">
+            <h2 class="text-2xl font-bold">Availability</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-6">
+                <div class="space-y-4">
+                  <h3 class="font-semibold">Your Time Zone</h3>
+                  <div>
+                    <div class="relative">
+                      <select class="form-select w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-base pr-10">
+                        <option selected="">UTC -05:00 Eastern Time</option>
 /option>
                         <option>UTC +01:00 Central European Time</option>
                         <option>UTC +08:00 China Standard Time</option>
