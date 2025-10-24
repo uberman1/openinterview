@@ -20,6 +20,7 @@ import { mountOps } from "./ops.readiness";
 import { serveStaticWithCache } from "./ops.static";
 import { router as protectedRouter } from "./protected.routes";
 import { mountAssetRoutes } from "./routes.assets";
+import { mountCloudinaryRoutes } from "./cloudinary.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
@@ -45,6 +46,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Mount asset routes for resumes and attachments
   mountAssetRoutes(app, API_BASE);
+  
+  // Mount Cloudinary upload signing routes
+  mountCloudinaryRoutes(app, API_BASE);
   
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {
