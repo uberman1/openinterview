@@ -37,15 +37,16 @@
 <div>
 <!-- REGION:HEADER_VIDEO_BLOCK_START -->
 <div class="relative aspect-video w-full">
-  <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk");'></div>
-  <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-    <button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110" aria-label="Play video">
-      <svg class="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6.3 20.3V3.7L20.3 12L6.3 20.3Z"></path></svg>
-    </button>
-  </div>
-  <div class="absolute bottom-0 left-0 p-6 text-white">
-    <h1 class="text-3xl font-bold">Ethan Carter</h1>
-    <p class="text-lg text-white/80">Senior Product Designer</p>
+  <video 
+    id="headerVideo" 
+    class="w-full h-full object-cover"
+    controls
+    poster="https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk"
+    playsinline
+  ></video>
+  <div class="absolute bottom-0 left-0 p-6 text-white pointer-events-none">
+    <h1 class="text-3xl font-bold drop-shadow-lg">Ethan Carter</h1>
+    <p class="text-lg text-white/90 drop-shadow">Senior Product Designer</p>
   </div>
 </div>
 <!-- REGION:HEADER_VIDEO_BLOCK_END -->
@@ -289,4 +290,17 @@
     }, 100);
   }
 </script>
+
+<!-- HLS.js for video streaming support (loaded conditionally) -->
+<script>
+  // Only load HLS.js if needed (not Safari/iOS which support HLS natively)
+  if (!document.createElement('video').canPlayType('application/vnd.apple.mpegURL') && window.profile?.display?.video?.hlsUrl) {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/hls.js@1';
+    script.async = true;
+    document.body.appendChild(script);
+  }
+</script>
+<script type="module" src="/js/public-video.bind.js"></script>
+
 </body></html>
