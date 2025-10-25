@@ -8,7 +8,6 @@
 <style>
 /* Ensure visibility even if a hydration gate exists */
 html,body{visibility:visible!important;opacity:1!important}
-.hidden{display:none}
 </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50">
@@ -24,7 +23,9 @@ html,body{visibility:visible!important;opacity:1!important}
             <h1 class="text-xl font-bold leading-tight tracking-tight">OpenInterview.me</h1>
           </div>
           <div class="flex items-center gap-3">
-            <!-- Removed: Save Profile button -->
+            <button data-testid="button-save-profile" class="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+              <span class="truncate">Save Profile</span>
+            </button>
             <button id="btnSaveReturn" data-testid="button-save-return" class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide">
               <span class="truncate">Save &amp; Return</span>
             </button>
@@ -34,13 +35,12 @@ html,body{visibility:visible!important;opacity:1!important}
         <main class="p-6 md:p-10 space-y-12">
 
           <!-- Profile Name -->
-          <section class="space-y-2" id="profile-name-section">
+          <section class="space-y-4" id="profile-name-section">
             <label class="flex flex-col w-full max-w-xl">
               <p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Profile Name</p>
-              <input id="profileNameInput" required aria-required="true" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="e.g. Senior Product Manager Application" value=""/>
+              <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="e.g. Senior Product Manager Application" value=""/>
+              <p class="mt-2 text-xs text-neutral-500 dark:text-neutral-400">This name appears under "My interviews" on the Home page.</p>
             </label>
-            <p id="profile-name-error" class="mt-1 text-sm text-red-600 hidden">Profile Name is required.</p>
-            <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">This name appears under "My interviews" on the Home page.</p>
           </section>
 
           <div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
@@ -48,10 +48,12 @@ html,body{visibility:visible!important;opacity:1!important}
           <!-- Auto-populate with Resume -->
           <section class="p-6 bg-background-light dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700 space-y-4" id="resume-import-section">
             <h2 class="text-lg font-semibold leading-tight tracking-tight">Auto-populate with Resume</h2>
-            <p class="text-neutral-600 dark:text-neutral-400 text-sm">Select an existing resume or upload a new one to automatically fill out your profile (PDF files only).</p>
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm">Select an existing resume or upload a new one to automatically fill out your profile.</p>
             <div class="relative">
               <select class="form-select w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-base pr-10">
                 <option selected="">Select a resume</option>
+                <option>resume_john_doe_2023.pdf</option>
+                <option>Product_Manager_Resume.pdf</option>
                 <option value="add_new">-- Add new resume --</option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -60,10 +62,9 @@ html,body{visibility:visible!important;opacity:1!important}
               </div>
             </div>
             <div class="mt-4">
-              <label class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
-                <input type="file" accept="application/pdf,.pdf" class="hidden">
+              <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
                 <span class="truncate">Browse</span>
-              </label>
+              </button>
             </div>
           </section>
 
@@ -161,7 +162,7 @@ html,body{visibility:visible!important;opacity:1!important}
                 <div class="flex items-center gap-3">
                   <!-- File icon -->
                   <svg class="w-5 h-5 text-neutral-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                  <span class="font-medium">resume_placeholder.pdf</span>
+                  <span class="font-medium">resume_johndoe_2024.pdf</span>
                 </div>
                 <button class="flex min-w-[40px] h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#ededed] dark:bg-neutral-700">
                   <!-- Trash -->
@@ -169,12 +170,11 @@ html,body{visibility:visible!important;opacity:1!important}
                 </button>
               </div>
             </div>
-            <label class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
               <!-- Upload icon -->
-              <input type="file" accept="application/pdf,.pdf" class="hidden">
               <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
               <span class="truncate">Upload Files</span>
-            </label>
+            </button>
           </section>
 
           <div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
@@ -216,7 +216,10 @@ html,body{visibility:visible!important;opacity:1!important}
           <section id="availability-section" class="space-y-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <h2 class="text-2xl font-bold leading-tight tracking-tight">Set Your Availability</h2>
-              <!-- Removed: Revert / Save buttons -->
+              <div class="flex items-center gap-2">
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal"><span class="truncate">Revert</span></button>
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide"><span class="truncate">Save</span></button>
+              </div>
             </div>
 
             <div class="border-b border-[#cccccc] dark:border-neutral-700">
@@ -292,20 +295,9 @@ html,body{visibility:visible!important;opacity:1!important}
                   <div class="space-y-4">
                     <div><label class="text-sm font-medium" for="min-notice">Minimum Notice</label><select class="form-select mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="min-notice"><option>4 hours</option><option>12 hours</option><option selected="">24 hours</option></select><p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Set the minimum time before an event can be scheduled.</p></div>
                     <div><label class="text-sm font-medium" for="window">Scheduling Window</label><input class="form-input mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="window" type="text" value="60 days into the future"/></div>
-                    <div><label class="text-sm font-medium" for="increments">Increments</label><select class="form-select mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="increments"><option selected="">30 minutes</option><option>15 minutes</option><option>60 minutes</option></select>
-                      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Sets the amount of time you will have between interviews (avoids back-to-back interviews).</p>
-                      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
-                        How often time slots appear as available on your booking calendar.<br/>
-                        • If 30 minutes, your available slots could be: 9:00 AM, 9:30 AM, 10:00 AM, 10:30 AM, …<br/>
-                        • If 15 minutes, your available slots could be: 9:00 AM, 9:15 AM, 9:30 AM, 9:45 AM, …
-                      </p>
-                    </div>
-                    <div><label class="text-sm font-medium">Buffers</label><div class="flex items-center gap-2 mt-1"><input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" type="number" value="15"/><span>min before</span></div><div class="flex items-center gap-2 mt-1"><input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" type="number" value="15"/><span>min after</span></div>
-                      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2">Extra time automatically added before and/or after each scheduled interview to prevent back-to-back bookings.</p>
-                    </div>
-                    <div><label class="text-sm font-medium" for="daily-cap">Daily Cap</label><input class="form-input mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="daily-cap" type="number" value="5"/>
-                      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Set the total number of interviews you will accept in a day, leave blank for unlimited interviews.</p>
-                    </div>
+                    <div><label class="text-sm font-medium" for="increments">Increments</label><select class="form-select mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="increments"><option selected="">30 minutes</option><option>15 minutes</option><option>60 minutes</option></select></div>
+                    <div><label class="text-sm font-medium">Buffers</label><div class="flex items-center gap-2 mt-1"><input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" type="number" value="15"/><span>min before</span></div><div class="flex items-center gap-2 mt-1"><input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" type="number" value="15"/><span>min after</span></div></div>
+                    <div><label class="text-sm font-medium" for="daily-cap">Daily Cap</label><input class="form-input mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="daily-cap" type="number" value="5"/></div>
                     <div><label class="text-sm font-medium">Durations</label><div class="mt-1 flex items-center gap-2"><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">15 min</span><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">30 min</span><span class="bg-[#ededed] dark:bg-neutral-700 rounded-full px-3 py-1 text-sm">60 min</span><button><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></button></div></div>
                   </div>
                 </div>
@@ -316,31 +308,17 @@ html,body{visibility:visible!important;opacity:1!important}
           <script type="module" src="/js/profile_edit.bind.js"></script>
           <script type="module" src="/js/profile-editor.video-thumb.bind.js"></script>
 
-          <!-- Save & Return wiring with minimal validation -->
+          <!-- Save & Return wiring -->
           <script type="module">
             const btn = document.getElementById('btnSaveReturn');
-            const nameInput = document.getElementById('profileNameInput');
-            const nameErr = document.getElementById('profile-name-error');
-
             const redirectToTemplate = () => {
               const id = new URL(location.href).searchParams.get('id');
               const target = id ? `/profile_v4_1_package/public/index.html?id=${encodeURIComponent(id)}`
                                  : '/profile_v4_1_package/public/index.html';
               location.assign(target);
             };
-
             window.addEventListener('profile:saved', () => redirectToTemplate(), { once: true });
-
             btn?.addEventListener('click', () => {
-              const nameVal = (nameInput?.value || '').trim();
-              if (!nameVal) {
-                if (nameErr) nameErr.classList.remove('hidden');
-                nameInput?.focus();
-                return;
-              } else {
-                if (nameErr) nameErr.classList.add('hidden');
-              }
-              // Let existing binder handle persistence
               window.dispatchEvent(new CustomEvent('profile:save-request'));
               setTimeout(redirectToTemplate, 700);
             });
