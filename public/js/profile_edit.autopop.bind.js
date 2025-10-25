@@ -63,21 +63,30 @@ import { store } from '/js/data-store.js';
       setVal("#contact-bio-section textarea", bioShort);
       setVal("#highlights-section textarea", highlights.join('\n'));
 
-      // Persist to profile
+      // Persist to profile - CRITICAL: use display.* structure
       const prof = await store.getProfile?.({ id: profileId });
-      const next = {
-        ...prof,
-        contact: {
-          ...(prof?.contact || {}),
-          location: contact.location || prof?.contact?.location || '',
-          phone: contact.phone || prof?.contact?.phone || '',
-          email: contact.email || prof?.contact?.email || '',
+      if (!prof) {
+        console.error('[auto-populate] Profile not found:', profileId);
+        return;
+      }
+
+      const patch = {
+        display: {
+          ...(prof.display || {}),
+          location: contact.location || prof.display?.location || '',
+          phone: contact.phone || prof.display?.phone || '',
+          email: contact.email || prof.display?.email || '',
+          summary: bioShort || prof.display?.summary || '',
+          highlights: highlights.length ? highlights : (prof.display?.highlights || [])
         },
-        bioShort: bioShort || prof?.bioShort || '',
-        highlights: highlights.length ? highlights : (prof?.highlights || []),
-        resumeAssetId: assetId,
+        resume: {
+          ...(prof.resume || {}),
+          assetId: assetId
+        }
       };
-      await store.updateProfile?.(profileId, next);
+      
+      const updated = await store.updateProfile?.(profileId, patch);
+      console.log('[auto-populate] Profile updated:', updated);
 
       // Emit event for tests/observers
       window.dispatchEvent(new CustomEvent('resume:auto-populate:applied', {
@@ -87,7 +96,7 @@ import { store } from '/js/data-store.js';
             contact.location && 'location',
             contact.phone && 'phone',
             contact.email && 'email',
-            bioShort && 'bioShort',
+            bioShort && 'summary',
             highlights.length && 'highlights',
             'resumeAssetId'
           ].filter(Boolean)

@@ -84,6 +84,12 @@ import { store } from '/js/data-store.js';
     const bio = $('textarea[data-testid="textarea-bio"]')?.value?.trim() ||
                 $('textarea[placeholder^="Add a brief"]')?.value?.trim() || '';
 
+    // Highlights - parse from textarea (newline-separated)
+    const highlightsTa = $('#highlights-section textarea');
+    const highlights = highlightsTa?.value?.trim()
+      ? highlightsTa.value.trim().split('\n').filter(line => line.trim())
+      : [];
+
     // Always include all fields (even empty strings) so users can clear values
     patch.display.name = name;
     patch.display.title = title;
@@ -91,6 +97,7 @@ import { store } from '/js/data-store.js';
     patch.display.phone = phone;
     patch.display.email = email;
     patch.display.summary = bio;
+    patch.display.highlights = highlights;
 
     console.log('[COLLECT] Collected data:', JSON.stringify(patch.display, null, 2));
 
@@ -118,6 +125,12 @@ import { store } from '/js/data-store.js';
 
     const bioTa = $('textarea[data-testid="textarea-bio"]') || $('textarea[placeholder^="Add a brief"]');
     if (bioTa) bioTa.value = p.display.summary || '';
+
+    // Highlights - populate from display.highlights array
+    const highlightsTa = $('#highlights-section textarea');
+    if (highlightsTa && Array.isArray(p.display.highlights)) {
+      highlightsTa.value = p.display.highlights.join('\n');
+    }
 
     // Phone and email - populate ALL matching inputs (both inline and Contact Info)
     const phone = p.display.phone || '';
