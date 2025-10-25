@@ -11,8 +11,7 @@ import { store } from '/js/data-store.js';
 
   const dayRows = DAYS.map(d => ({
     day: d,
-    checkbox: root.querySelector(`#${d}`),
-    addBtn: root.querySelector(`#${d}`)?.closest('.p-4')?.querySelector('button')
+    checkbox: root.querySelector(`#${d}`)
   }));
 
   for (const row of dayRows) {
@@ -25,6 +24,8 @@ import { store } from '/js/data-store.js';
       host.appendChild(list);
     }
   }
+  
+  console.log('[availability] Editor initialized for', DAYS.length, 'days');
 
   function render() {
     for (const row of dayRows) {
@@ -91,13 +92,39 @@ import { store } from '/js/data-store.js';
       model = setDayEnabled(model, row.day, e.target.checked);
       renderBlocks(row.day);
     });
-    row.addBtn?.addEventListener('click', () => {
-      const start = prompt('Start time (HH:MM, 24h)', '09:00');
-      const end = prompt('End time (HH:MM, 24h)', '17:00');
-      model = addBlock(model, row.day, { start, end });
-      renderBlocks(row.day);
-    });
   }
+
+  // Attach event listeners to ALL "Add Block" buttons (find dynamically)
+  root.querySelectorAll('button').forEach(btn => {
+    const btnText = btn.textContent?.trim();
+    if (btnText?.includes('Add Block')) {
+      const dayContainer = btn.closest('.p-4');
+      if (!dayContainer) return;
+      
+      // Find which day this button belongs to
+      const checkbox = dayContainer.querySelector('input[type="checkbox"]');
+      const dayId = checkbox?.id;
+      if (!dayId || !DAYS.includes(dayId)) return;
+      
+      console.log('[availability] Attached Add Block listener for', dayId);
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const input = prompt('Enter time block (HH:MM-HH:MM, 24h format)\nExample: 09:00-12:00', '09:00-17:00');
+        if (!input) return;
+        
+        const parts = input.split('-').map(s => s.trim());
+        if (parts.length !== 2) {
+          alert('Invalid format. Use HH:MM-HH:MM (e.g., 09:00-12:00)');
+          return;
+        }
+        
+        const [start, end] = parts;
+        console.log('[availability] Adding block:', dayId, start, end);
+        model = addBlock(model, dayId, { start, end });
+        renderBlocks(dayId);
+      });
+    }
+  });
 
   root.querySelectorAll('.p-6 .space-y-2 button').forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -143,10 +170,19 @@ import { store } from '/js/data-store.js';
     model = setRules(model, { dailyCap: v === '' ? '' : Number(v) });
   });
 
-  (async function hydrate() {
+  (function hydrate() {
+    console.log('[availability] Hydrating availability for profile:', profileId);
     const prof = store.getProfile?.({ id: profileId });
-    model = normalizeAvailability(prof?.availability);
-    render();
+    console.log('[availability] Profile loaded:', prof ? 'found' : 'NOT FOUND');
+    if (prof) {
+      console.log('[availability] Profile availability:', JSON.stringify(prof.availability, null, 2));
+      model = normalizeAvailability(prof.availability);
+      console.log('[availability] Normalized model:', JSON.stringify(model, null, 2));
+      render();
+      console.log('[availability] Render complete');
+    } else {
+      console.warn('[availability] Profile not found, using defaults');
+    }
   })();
 
   window.addEventListener('profile:save-request', async () => {
