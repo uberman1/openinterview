@@ -272,19 +272,6 @@ import { store } from '/js/data-store.js';
       });
     }
 
-    // Buffers explainer - scope to availability section
-    const allLabels = Array.from(availSection.querySelectorAll('label, div'));
-    const buffersLabel = allLabels.find(el => {
-      const text = el.textContent || '';
-      return /buffer/i.test(text) && !el.querySelector('[data-buffers-expl]');
-    });
-    if (buffersLabel && !buffersLabel.querySelector('[data-buffers-expl]')) {
-      const exp = document.createElement('p');
-      exp.setAttribute('data-buffers-expl', '');
-      exp.className = 'text-xs text-neutral-500 dark:text-neutral-400 mt-2';
-      exp.textContent = 'Sets the amount of time you will have between interviews (avoids back-to-back interviews).';
-      buffersLabel.appendChild(exp);
-    }
 
     // Daily cap explainer - scope to availability section
     const dailyCapInput = availSection.querySelector('input[type="number"]');
