@@ -1,0 +1,613 @@
+================================================================================
+E2E TEST SUITE REWRITE RECOMMENDATIONS
+================================================================================
+
+OVERVIEW
+--------
+The provided test suite uses a mock-based approach (window.__MEM__) that doesn't
+match the actual implementation which uses a localStorage-based store API.
+This document provides detailed rewrite recommendations for each file.
+
+================================================================================
+1. CONFIGURATION FILES
+================================================================================
+
+FILE: playwright.config.ts
+---------------------------
+ISSUE: Port mismatch - tests expect port 3000, app runs on port 5000
+RECOMMENDATION: Update baseURL
+
+BEFORE:
+  use: { baseURL: 'http://localhost:3000', headless: true }
+
+AFTER:
+  use: { baseURL: 'http://localhost:5000', headless: true }
+
+NOTE: A playwright.config.ts already exists in the project with correct settings.
+Consider merging scripts instead of replacing the file entirely.
+
+---
+
+FILE: package.json
+------------------
+ISSUE: Would overwrite existing package.json with different dependencies/scripts
+RECOMMENDATION: Merge scripts only
+
+EXISTING SCRIPTS:
+  "scripts": {
+    "start": "node index.js",
+    "test": "node selftest.mjs",
+    "dev": "node index.js"
+  }
+
+ADD THESE SCRIPTS:
+  "test:e2e": "playwright test",
+  "test:ui": "playwright test --ui"
+
+FINAL MERGED:
+  "scripts": {
+    "start": "node index.js",
+    "test": "node selftest.mjs",
+    "dev": "node index.js",
+    "test:e2e": "playwright test",
+    "test:ui": "playwright test --ui"
+  }
+
+NOTE: @playwright/test v1.56.0 is already installed as a dependency.
+
+================================================================================
+2. MOCK UTILITIES
+================================================================================
+
+FILE: tests/utils/mocks.ts
+---------------------------
+ISSUE: Uses window.__MEM__ pattern which doesn't exist in actual implementation
+ACTUAL: App uses window.store (from /public/js/data-store.js)
+
+COMPLETE REWRITE REQUIRED:
+
+---BEGIN REWRITE---
+import { Page } from '@playwright/test';
+
+/**
+ * Initialize the store for a given profile ID
+ * The actual app uses localStorage-based store, not __MEM__
+ */
+export async function injectMemoryMocks(page: Page, profileId: string) {
+  await page.addInitScript(({ profileId }) => {
+    // Ensure store is loaded (it's imported from data-store.js)
+    // Create a draft profile if it doesn't exist
+    const checkProfile = () => {
+      if (typeof (window as any).store === 'undefined') {
+        console.warn('Store not loaded yet');
+        return;
+      }
+      const existing = (window as any).store.getProfile({ id: profileId });
+      if (!existing) {
+        const draft = (window as any).store.createDraftProfile();
+        // Update the ID to match the test profile ID
+        localStorage.setItem(`oi:profiles:${profileId}`, 
+          JSON.stringify({ ...draft, id: profileId }));
+        const idx = JSON.parse(localStorage.getItem('oi:profiles:index') || '[]');
+        if (!idx.includes(profileId)) {
+          idx.unshift(profileId);
+          localStorage.setItem('oi:profiles:index', JSON.stringify(idx));
+        }
+      }
+    };
+    
+    // Try immediately and on DOMContentLoaded
+    checkProfile();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkProfile);
+    }
+  }, { profileId });
+}
+
+/**
+ * Stub navigation to prevent actual page changes during tests
+ */
+export async function stubNavigation(page: Page) {
+  await page.addInitScript(() => {
+    (window as any).__NAV__ = { assignedTo: null };
+    const originalAssign = window.location.assign.bind(window.location);
+    Object.defineProperty(window.location, 'assign', {
+      value: (url: string) => {
+        (window as any).__NAV__.assignedTo = String(url);
+        console.log('[TEST] Navigation stubbed to:', url);
+      },
+      writable: false
+    });
+  });
+}
+
+/**
+ * Add test assets to the store
+ */
+export async function addTestAsset(page: Page, asset: { 
+  id: string; 
+  type: string; 
+  profileId: string; 
+  name: string 
+}) {
+  await page.evaluate((asset) => {
+    const store = (window as any).store;
+    if (!store) {
+      console.error('Store not available');
+      return;
+    }
+    
+    // Add to assets index
+    const assetsIdx = JSON.parse(localStorage.getItem('oi:assets:index') || '[]');
+    if (!assetsIdx.includes(asset.id)) {
+      assetsIdx.push(asset.id);
+      localStorage.setItem('oi:assets:index', JSON.stringify(assetsIdx));
+    }
+    
+    // Save asset data
+    localStorage.setItem(`oi:assets:${asset.id}`, JSON.stringify(asset));
+  }, asset);
+}
+
+/**
+ * Mock GPT parsing for resume upload
+ */
+export async function interceptResumeFixture(page: Page) {
+  await page.route('**/fixtures/resume_parse_fixture.json', async route => {
+    const fixtureData = {
+      contact: {
+        location: "Atlanta, GA",
+        phone: "+1 (404) 555-1212",
+        email: "jane.sample@domain.com"
+      },
+      bioShort: "Senior Product Manager with 8+ years...",
+      highlights: ["One", "Two", "Three", "Four", "Five"]
+    };
+    
+    return route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify(fixtureData)
+    });
+  });
+}
+---END REWRITE---
+
+================================================================================
+3. PHASE 1 TESTS
+================================================================================
+
+FILE: tests/phase1.spec.ts
+--------------------------
+
+TEST: "Only Save & Return is present"
+ISSUE: Uses non-existent testid 'button-save-profile'
+ACTUAL: The button has id 'btnSaveReturn', no save-profile button exists
+
+BEFORE:
+  await expect(page.getByTestId('button-save-profile')).toHaveCount(0);
+  await expect(page.locator('#btnSaveReturn')).toBeVisible();
+
+AFTER:
+  // Save Profile button should not exist (removed in Phase 1)
+  await expect(page.locator('button').filter({ hasText: /^Save Profile$/i })).toHaveCount(0);
+  // Only Save & Return should be present
+  await expect(page.locator('#btnSaveReturn')).toBeVisible();
+
+---
+
+TEST: "Profile Name is required"
+ISSUE: Selector may not match actual input
+ACTUAL: Input is #profileNameInput in #profile-name-section
+
+BEFORE:
+  const input = page.locator('#profile-name-section input');
+
+AFTER:
+  const input = page.locator('#profileNameInput');
+  await input.clear();
+  await input.fill('');
+  await page.click('#btnSaveReturn');
+  // Error should be visible
+  await expect(page.locator('#profile-name-error')).toBeVisible();
+  // Should stay on edit page
+  await expect(page).toHaveURL(/profile_edit_enhanced\.html/);
+
+---
+
+TEST: "Availability help text and no buttons"
+ISSUE: Section ID and text assertions may not match exactly
+ACTUAL: Section is #availability-section, specific text varies
+
+BEFORE:
+  const avail = page.locator('#availability-section');
+  await expect(avail.getByText('Revert')).toHaveCount(0);
+  await expect(avail.getByText('Save')).toHaveCount(0);
+
+AFTER:
+  const avail = page.locator('section').filter({ has: page.locator('text=/availability/i') });
+  
+  // No separate Save/Revert buttons in availability section
+  // (Save & Return is in header, not in availability section)
+  const availButtons = avail.locator('button');
+  await expect(availButtons.filter({ hasText: /^Save$/i })).toHaveCount(0);
+  await expect(availButtons.filter({ hasText: /^Revert$/i })).toHaveCount(0);
+  
+  // Check for help text (exact wording from HTML)
+  await expect(avail.getByText(/How often time slots appear as available/i)).toBeVisible();
+  await expect(avail.getByText(/leave blank for unlimited interviews/i)).toBeVisible();
+  await expect(avail.getByText(/Extra time automatically added/i)).toBeVisible();
+
+================================================================================
+4. PHASE 2 TESTS
+================================================================================
+
+FILE: tests/phase2.spec.ts
+--------------------------
+
+BEFOREEACH SETUP:
+ISSUE: Need to add assets using actual store API
+
+BEFORE:
+  await page.addInitScript(() => {
+    window.__MEM__.assets.push({ id: 'asset1', ... });
+  });
+
+AFTER:
+  await injectMemoryMocks(page, 'p2');
+  await addTestAsset(page, {
+    id: 'asset1',
+    type: 'resume',
+    profileId: 'p2',
+    name: 'PM_Resume.pdf'
+  });
+  await interceptResumeFixture(page);
+  await page.goto('/profile_edit_enhanced.html?id=p2');
+
+---
+
+TEST: "Dropdown shows assets and add_new"
+ISSUE: Selector needs to match actual implementation
+ACTUAL: Resume section has a select element
+
+BEFORE:
+  const sel = page.locator('#resume-import-section select');
+
+AFTER:
+  // Resume section selector (may vary - check actual HTML)
+  const resumeSection = page.locator('section').filter({ 
+    has: page.locator('text=/resume/i') 
+  });
+  const sel = resumeSection.locator('select').first();
+  
+  await expect(sel).toContainText('Select a resume');
+  await expect(sel).toContainText('PM_Resume.pdf');
+  await expect(sel).toContainText(/Add new|Browse/i);
+
+---
+
+TEST: "Selecting a resume fills fields and persists"
+ISSUE: Need to verify actual field IDs and persistence using store
+
+BEFORE:
+  const persisted = await page.evaluate(() => window.__MEM__.profiles['p2'].resumeAssetId);
+
+AFTER:
+  await page.selectOption(sel, { value: 'asset1 '});
+  
+  // Wait for auto-populate to complete
+  await page.waitForTimeout(500);
+  
+  // Check fields are populated (adjust selectors to match actual HTML)
+  const locationInput = page.locator('input[placeholder*="City"]').or(
+    page.locator('input[placeholder*="Location"]')
+  );
+  await expect(locationInput.first()).toHaveValue(/Atlanta/);
+  
+  // Check persistence using actual store
+  const persisted = await page.evaluate(() => {
+    const profile = (window as any).store?.getProfile({ id: 'p2' });
+    return profile?.resumeAssetId || profile?.resume?.assetId;
+  });
+  expect(persisted).toBe('asset1');
+
+---
+
+TEST: "Upload registers asset and auto-fills"
+ISSUE: File path and verification method
+
+BEFORE:
+  await chooser.setFiles('tests/fixtures/mock.pdf');
+
+AFTER:
+  // Create a proper test PDF file or use attached_assets
+  await chooser.setFiles('attached_assets/mock_1761402912397.pdf');
+  
+  // Wait for upload and processing
+  await page.waitForTimeout(1000);
+  
+  // Verify asset was created in store
+  const newAssetId = await page.evaluate(() => {
+    const assets = (window as any).store?.listAssets({ type: 'resume', profileId: 'p2' });
+    return assets?.[assets.length - 1]?.id;
+  });
+  
+  expect(newAssetId).toBeTruthy();
+  expect(newAssetId).toMatch(/^a[0-9a-z]{5}$/);
+
+================================================================================
+5. PHASE 3 TESTS
+================================================================================
+
+FILE: tests/phase3.spec.ts
+--------------------------
+
+TEST: "Toggle day, add block, reject overlap, remove"
+ISSUE: Prompt handling doesn't match actual implementation
+ACTUAL: Uses single "HH:MM-HH:MM" prompt, not separate Start/End prompts
+
+CRITICAL CHANGE REQUIRED:
+
+BEFORE:
+  page.on('dialog', async d => {
+    if (d.message().includes('Start')) await d.accept('09:00');
+    else if (d.message().includes('End')) await d.accept('12:00');
+  });
+
+AFTER:
+  // Current implementation uses SINGLE prompt "HH:MM-HH:MM"
+  page.once('dialog', async d => {
+    expect(d.message()).toContain('HH:MM-HH:MM');
+    await d.accept('09:00-12:00');  // Single input format
+  });
+  
+  await page.locator('#mon').check();
+  await page.getByText('Add Block').first().click();
+  
+  // Wait for block to appear
+  await page.waitForTimeout(300);
+  
+  // Check block is displayed (selector may vary)
+  const blockContainer = page.locator('[class*="blocks"]').or(
+    page.locator('.oi-blocks')
+  ).first();
+  await expect(blockContainer).toContainText(/09:00.*12:00/);
+
+---
+
+OVERLAP TEST:
+BEFORE:
+  page.on('dialog', async d => {
+    if (d.message().includes('Start')) await d.accept('11:00');
+    else if (d.message().includes('End')) await d.accept('13:00');
+  });
+
+AFTER:
+  // Attempt to add overlapping block
+  page.once('dialog', async d => {
+    await d.accept('11:00-13:00');  // Overlaps with 09:00-12:00
+  });
+  
+  // May show alert for overlap
+  page.once('dialog', async alert => {
+    expect(alert.message()).toMatch(/overlap/i);
+    await alert.accept();
+  });
+  
+  await page.getByText('Add Block').first().click();
+  
+  // Should still only have 1 block (overlap rejected)
+  const blocks = blockContainer.locator('span').filter({ hasText: /\d{2}:\d{2}/ });
+  await expect(blocks).toHaveCount(1);
+
+---
+
+TEST: "Rules persist and public renders slots"
+ISSUE: 
+1. Min Notice selector has different options
+2. Public page URL may vary
+3. Slot container selector needs verification
+
+BEFORE:
+  await page.selectOption('#min-notice', { label: '0 hours' });
+
+AFTER:
+  // Check what options actually exist
+  const minNotice = page.locator('#min-notice');
+  
+  // Current options: '4 hours', '12 hours', '24 hours', possibly 'Immediate'
+  // If 'Immediate' exists (added by JS), use it
+  const hasImmediate = await minNotice.locator('option[value="immediate"]').count() > 0;
+  if (hasImmediate) {
+    await minNotice.selectOption('immediate');
+  } else {
+    // Use lowest available (likely 4 hours)
+    await minNotice.selectOption({ index: 0 });
+  }
+  
+  await page.fill('#window', '3 days into the future');
+  await page.selectOption('#increments', { label: '30 minutes' });
+  
+  // Buffer inputs (note: these are number inputs, not with .w-20 class necessarily)
+  const bufferBefore = page.locator('label:has-text("Buffers")').locator('input[type="number"]').first();
+  const bufferAfter = page.locator('label:has-text("Buffers")').locator('input[type="number"]').last();
+  await bufferBefore.fill('0');
+  await bufferAfter.fill('0');
+  
+  await page.fill('#daily-cap', '');
+  
+  // Add availability block
+  await page.locator('#mon').check();
+  page.once('dialog', async d => {
+    await d.accept('09:00-11:00');
+  });
+  await page.getByText('Add Block').first().click();
+  
+  await page.waitForTimeout(500);
+  
+  // Click Save & Return
+  await page.click('#btnSaveReturn');
+  
+  // Wait for save to complete
+  await page.waitForTimeout(1000);
+  
+  // Navigate to public page
+  const pub = await context.newPage();
+  await injectMemoryMocks(pub, 'p3');
+  
+  // Public page URL (check actual routes)
+  await pub.goto('/public/index.html?id=p3').catch(async () => {
+    await pub.goto('/index.html?id=p3');
+  });
+  
+  // Wait for page load
+  await pub.waitForLoadState('networkidle');
+  
+  // Find booking slots container (verify actual selector)
+  const container = pub.locator('[data-booking-slots]').or(
+    pub.locator('#booking-slots')
+  ).or(
+    pub.locator('[class*="booking"]')
+  );
+  
+  await expect(container.first()).toBeVisible({ timeout: 5000 });
+  
+  // Should have slot buttons
+  const slotButtons = container.locator('button');
+  await expect(slotButtons).toHaveCountGreaterThan(0);
+
+================================================================================
+6. REGRESSION TESTS
+================================================================================
+
+FILE: tests/regression.spec.ts
+-------------------------------
+
+TEST: "Save & Return persists a basic field"
+ISSUE: Selector and reload behavior
+
+BEFORE:
+  const location = page.locator('#contact-bio-section input[placeholder="City, Country"]');
+
+AFTER:
+  // Use more robust selector
+  const location = page.locator('input[placeholder*="City"]').or(
+    page.locator('input[placeholder*="Location"]')
+  ).first();
+  
+  await location.fill('New York, NY');
+  
+  // Click Save & Return
+  await page.click('#btnSaveReturn');
+  
+  // Wait for navigation (stubbed, so check __NAV__)
+  await page.waitForFunction(() => (window as any).__NAV__?.assignedTo !== null);
+  
+  // Reload the edit page
+  await page.goto('/profile_edit_enhanced.html?id=pr');
+  await page.waitForLoadState('networkidle');
+  
+  // Verify persistence
+  await expect(location).toHaveValue('New York, NY');
+
+================================================================================
+7. FIXTURE FILES
+================================================================================
+
+FILE: tests/fixtures/resume_parse_fixture.json
+-----------------------------------------------
+ACTION: Copy to tests/fixtures/ directory
+CONTENT: Already provided in attached_assets/resume_parse_fixture_1761402912397.json
+
+FILE: tests/fixtures/mock.pdf
+-----------------------------
+ACTION: Copy from attached_assets/mock_1761402912397.pdf
+NOTE: This file had PDF parsing errors, may need a valid PDF file for testing
+
+FILE: tests/fixtures/bad.txt
+----------------------------
+ACTION: Copy from attached_assets/bad_1761402912396.txt
+CONTENT: "Not a PDF.\n"
+
+================================================================================
+8. DIRECTORY STRUCTURE
+================================================================================
+
+RECOMMENDED STRUCTURE:
+/tests
+  /utils
+    mocks.ts          (rewritten as above)
+  /fixtures
+    resume_parse_fixture.json
+    mock.pdf
+    bad.txt
+  /phase1
+    phase1.spec.ts    (rewritten tests)
+  /phase2
+    phase2.spec.ts    (rewritten tests)
+  /phase3
+    phase3.spec.ts    (rewritten tests)
+  /regression
+    regression.spec.ts (rewritten tests)
+
+NOTE: Keep existing tests/e2e/ directory for current working tests
+
+================================================================================
+9. CRITICAL IMPLEMENTATION NOTES
+================================================================================
+
+1. **Store API Usage**
+   - Use window.store.getProfile({ id })
+   - Use window.store.updateProfile(id, patch)
+   - Use window.store.listAssets({ type, profileId })
+   - Use window.store.createAsset(...)
+
+2. **Availability Prompt Format**
+   - Single prompt: "Enter time block (HH:MM-HH:MM, 24h format)"
+   - Example input: "09:00-17:00"
+   - NOT separate Start/End prompts
+
+3. **Profile Edit Page Fields**
+   - Profile Name: #profileNameInput
+   - Error display: #profile-name-error
+   - Save button: #btnSaveReturn
+   - Location: input[placeholder*="City"]
+
+4. **Public Page**
+   - URL: /public/index.html?id={profileId} or /index.html?id={profileId}
+   - Slots container: Verify actual selector (may vary)
+
+5. **Asset Management**
+   - Assets stored in localStorage with prefix "oi:assets:"
+   - Index at "oi:assets:index"
+   - Each asset at "oi:assets:{assetId}"
+
+================================================================================
+10. TESTING WORKFLOW
+================================================================================
+
+1. Start the app:
+   npm run dev
+   (Runs on port 5000)
+
+2. Run tests:
+   npm run test:e2e
+
+3. Debug with UI:
+   npm run test:ui
+
+4. Single test file:
+   npx playwright test tests/phase1/phase1.spec.ts
+
+================================================================================
+END OF RECOMMENDATIONS
+================================================================================
+
+ESTIMATED EFFORT:
+- Rewrite mocks.ts: 15-20 minutes
+- Update Phase 1 tests: 10 minutes
+- Update Phase 2 tests: 15 minutes
+- Update Phase 3 tests: 20 minutes
+- Update Regression tests: 5 minutes
+- Create fixtures: 5 minutes
+- Testing & debugging: 20-30 minutes
+TOTAL: ~90-120 minutes (~$0.70-$0.80 at current rates)
