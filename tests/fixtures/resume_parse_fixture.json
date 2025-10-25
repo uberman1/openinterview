@@ -1,0 +1,15 @@
+{
+  "contact": {
+    "location": "Atlanta, GA",
+    "phone": "+1 (404) 555-1212",
+    "email": "jane.sample@domain.com"
+  },
+  "bioShort": "Senior Product Manager with 8+ years...",
+  "highlights": [
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five"
+  ]
+}
