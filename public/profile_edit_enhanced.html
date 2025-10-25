@@ -331,6 +331,14 @@ html,body{visibility:visible!important;opacity:1!important}
 
             window.addEventListener('profile:saved', () => redirectToTemplate(), { once: true });
 
+            // Clear error as user types (better UX)
+            nameInput?.addEventListener('input', () => {
+              const nameVal = (nameInput.value || '').trim();
+              if (nameVal && nameErr) {
+                nameErr.classList.add('hidden');
+              }
+            });
+
             btn?.addEventListener('click', () => {
               const nameVal = (nameInput?.value || '').trim();
               if (!nameVal) {
