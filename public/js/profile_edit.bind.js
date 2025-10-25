@@ -201,25 +201,38 @@ import { store } from '/js/data-store.js';
 
   // ===== NEW: Availability Rules UI Enhancements =====
   function injectRulesUI(){
-    // Remove Scheduling Window + Increments (if present)
-    const windowInput = document.querySelector('input[placeholder*="days"]');
+    // CRITICAL: Scope all queries to availability section ONLY to prevent removing page content
+    const availSection = Array.from(document.querySelectorAll('section')).find(s => 
+      /availability/i.test(s.textContent || '')
+    );
+    
+    // If no availability section exists, skip this function (not on availability page)
+    if (!availSection) {
+      console.log('[injectRulesUI] No availability section found, skipping UI enhancements');
+      return;
+    }
+    
+    // Remove Scheduling Window + Increments (if present) - ONLY within availability section
+    const windowInput = availSection.querySelector('input[placeholder*="days"]');
     if (windowInput) {
       const windowBlock = windowInput.closest('div.space-y-4, div.flex, label');
-      if (windowBlock && windowBlock.textContent.toLowerCase().includes('window')) {
+      // SAFETY: Only remove if block is inside availability section
+      if (windowBlock && availSection.contains(windowBlock) && windowBlock.textContent.toLowerCase().includes('window')) {
         windowBlock.remove();
       }
     }
     
-    const incrementsInput = document.querySelector('select, input[placeholder*="minutes"]');
+    const incrementsInput = availSection.querySelector('select, input[placeholder*="minutes"]');
     if (incrementsInput) {
       const incrementsBlock = incrementsInput.closest('div.space-y-4, div.flex, label');
-      if (incrementsBlock && incrementsBlock.textContent.toLowerCase().includes('increment')) {
+      // SAFETY: Only remove if block is inside availability section
+      if (incrementsBlock && availSection.contains(incrementsBlock) && incrementsBlock.textContent.toLowerCase().includes('increment')) {
         incrementsBlock.remove();
       }
     }
 
-    // Minimum Notice: add Immediate + Custom
-    const minSelect = document.querySelector('select');
+    // Minimum Notice: add Immediate + Custom - scope to availability section
+    const minSelect = availSection.querySelector('select');
     if (minSelect && minSelect.querySelector('option[value*="24"]') && !minSelect.querySelector('option[value="immediate"]')) {
       const opt0 = document.createElement('option');
       opt0.value = 'immediate';
@@ -246,8 +259,8 @@ import { store } from '/js/data-store.js';
       });
     }
 
-    // Buffers explainer
-    const allLabels = Array.from(document.querySelectorAll('label, div'));
+    // Buffers explainer - scope to availability section
+    const allLabels = Array.from(availSection.querySelectorAll('label, div'));
     const buffersLabel = allLabels.find(el => {
       const text = el.textContent || '';
       return /buffer/i.test(text) && !el.querySelector('[data-buffers-expl]');
@@ -260,8 +273,8 @@ import { store } from '/js/data-store.js';
       buffersLabel.appendChild(exp);
     }
 
-    // Daily cap explainer
-    const dailyCapInput = document.querySelector('input[type="number"]');
+    // Daily cap explainer - scope to availability section
+    const dailyCapInput = availSection.querySelector('input[type="number"]');
     if (dailyCapInput) {
       const capBlock = dailyCapInput.closest('label, div.space-y-4');
       if (capBlock && /daily|cap|limit/i.test(capBlock.textContent || '') && !capBlock.querySelector('[data-cap-expl]')) {
@@ -273,9 +286,9 @@ import { store } from '/js/data-store.js';
       }
     }
 
-    // Durations: add 45 & 120 min chips (if not already present)
-    const allSections = Array.from(document.querySelectorAll('section, div'));
-    const durBlock = allSections.find(el => /duration/i.test(el.textContent || ''));
+    // Durations: add 45 & 120 min chips (if not already present) - scope to availability section
+    const allSubSections = Array.from(availSection.querySelectorAll('section, div'));
+    const durBlock = allSubSections.find(el => /duration/i.test(el.textContent || ''));
     if (durBlock && !durBlock.querySelector('[data-dur-45]')) {
       const chipsContainer = durBlock.querySelector('.flex.items-center.gap-2, .mt-1.flex');
       if (chipsContainer) {
