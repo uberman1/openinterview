@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      # If you have a DB for CI, uncomment and add your secret:
+      # If you DO have a CI database, uncomment the next two lines:
       # - name: Configure DATABASE_URL (optional)
       #   run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
@@ -40,75 +40,73 @@ jobs:
             (NODE_ENV=test PORT=$PORT npm start > server.log 2>&1 &)
           else
             echo "Starting MOCK server"
-cat > mock-server.mjs <<'EOF'
-import express from 'express';
-const app = express();
-app.use(express.json());
+            # Write mock-server.mjs without here-docs to avoid YAML issues
+            rm -f mock-server.mjs
+            printf '%s\n' \
+"import express from 'express';" \
+"const app = express();" \
+"app.use(express.json());" \
+"" \
+"function ensureAuth(req,res,next){" \
+"  const auth = req.headers.authorization || '';" \
+"  if (auth === 'Bearer dev') return next();" \
+"  return res.status(401).json({ error: 'unauthorized' });" \
+"}" \
+"" \
+"const buckets = new Map();" \
+"const MAX = 5;" \
+"const WINDOW = 60 * 60 * 1000;" \
+"function rateLimitBook(req,res,next){" \
+"  const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';" \
+"  const key = \`book:\${ip}\`;" \
+"  const now = Date.now();" \
+"  const arr = buckets.get(key) || [];" \
+"  while (arr.length && (now - arr[0]) > WINDOW) arr.shift();" \
+"  if (arr.length >= MAX) {" \
+"    const retryAfter = Math.ceil((WINDOW - (now - arr[0])) / 1000);" \
+"    return res.status(429).json({ error: 'rate_limited', retryAfter });" \
+"  }" \
+"  arr.push(now);" \
+"  buckets.set(key, arr);" \
+"  next();" \
+"}" \
+"" \
+"app.get('/api/v1/scheduler/test', (req,res)=>res.json({ ok:true }));" \
+"app.post('/api/v1/auth/login', (req,res)=>res.json({ token:'dev' }));" \
+"const bookings=[];" \
+"app.get('/api/v1/scheduler/bookings', ensureAuth, (req,res)=>res.json({ bookings }));" \
+"app.post('/api/v1/scheduler/book', rateLimitBook, (req,res)=>{" \
+"  const { userId, startTimeUtc, endTimeUtc, name, email } = req.body || {};" \
+"  if (!userId || !startTimeUtc || !endTimeUtc || !name || !email) return res.status(400).json({ error:'bad_request' });" \
+"  const dup = bookings.find(b => b.userId===userId && b.startTimeUtc===startTimeUtc);" \
+"  if (dup) return res.status(409).json({ error:'booking_conflict' });" \
+"  bookings.push({ userId, startTimeUtc, endTimeUtc, name, email });" \
+"  res.json({ ok:true });" \
+"});" \
+"app.post('/api/v1/test/reset-rate-limit', (req,res)=>{ buckets.clear(); res.json({ ok:true }); });" \
+"" \
+"const port = process.env.PORT || 5000;" \
+"app.listen(port, ()=>console.log('Mock server listening on', port));" \
+            > mock-server.mjs
 
-// auth guard
-function ensureAuth(req, res, next) {
-  const auth = req.headers.authorization || '';
-  if (auth === 'Bearer dev') return next();
-  return res.status(401).json({ error: 'unauthorized' });
-}
-
-// in-memory rate limit for /book
-const buckets = new Map();
-const MAX = 5;
-const WINDOW = 60 * 60 * 1000;
-
-function rateLimitBook(req, res, next) {
-  const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  const key = `book:${ip}`;
-  const now = Date.now();
-  const arr = buckets.get(key) || [];
-  while (arr.length && (now - arr[0]) > WINDOW) arr.shift();
-  if (arr.length >= MAX) {
-    const retryAfter = Math.ceil((WINDOW - (now - arr[0])) / 1000);
-    return res.status(429).json({ error: 'rate_limited', retryAfter });
-  }
-  arr.push(now);
-  buckets.set(key, arr);
-  next();
-}
-
-// endpoints used by tests
-app.get('/api/v1/scheduler/test', (req, res) => res.json({ ok: true }));
-app.post('/api/v1/auth/login', (req, res) => res.json({ token: 'dev' }));
-const bookings = [];
-app.get('/api/v1/scheduler/bookings', ensureAuth, (req, res) => res.json({ bookings }));
-app.post('/api/v1/scheduler/book', rateLimitBook, (req, res) => {
-  const { userId, startTimeUtc, endTimeUtc, name, email } = req.body || {};
-  if (!userId || !startTimeUtc || !endTimeUtc || !name || !email) {
-    return res.status(400).json({ error: 'bad_request' });
-  }
-  const dup = bookings.find(b => b.userId === userId && b.startTimeUtc === startTimeUtc);
-  if (dup) return res.status(409).json({ error: 'booking_conflict' });
-  bookings.push({ userId, startTimeUtc, endTimeUtc, name, email });
-  res.json({ ok: true });
-});
-app.post('/api/v1/test/reset-rate-limit', (req, res) => { buckets.clear(); res.json({ ok: true }); });
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log('Mock server listening on', port));
-EOF
             (NODE_ENV=test PORT=$PORT node mock-server.mjs > server.log 2>&1 &)
           fi
 
           # Wait for server on 5000 or 3000
+          DETECTED=""
           for i in {1..90}; do
             if curl -fsS http://localhost:5000/api/v1/scheduler/test >/dev/null 2>&1; then
               echo "TEST_BASE_URL=http://localhost:5000" >> $GITHUB_ENV
-              break
+              DETECTED=1; break
             fi
             if curl -fsS http://localhost:3000/api/v1/scheduler/test >/dev/null 2>&1; then
               echo "TEST_BASE_URL=http://localhost:3000" >> $GITHUB_ENV
-              break
+              DETECTED=1; break
             fi
             sleep 1
           done
 
-          if ! curl -fsS "${TEST_BASE_URL:-http://localhost:5000}/api/v1/scheduler/test" >/dev/null 2>&1; then
+          if [ -z "$DETECTED" ]; then
             echo "Server did not become healthy."
             tail -n 200 server.log || true
             exit 1
