@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#141414",
+              "background-light": "#f7f7f7",
+              "background-dark": "#191919",
+            },
+            fontFamily: {
+              "display": ["Inter"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-white transition-colors duration-300">
+<div class="flex flex-col min-h-screen">
+<header class="bg-background-light dark:bg-background-dark border-b border-primary/10 dark:border-white/10">
+<div class="container mx-auto px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<svg class="h-6 w-6 text-primary dark:text-white" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+<h1 class="text-xl font-bold text-primary dark:text-white">OpenInterview.me</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white transition-colors" href="#">Users</a>
+<a class="text-sm font-medium text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white transition-colors" href="#">Videos</a>
+<a class="text-sm font-medium text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white transition-colors" href="#">Reports</a>
+</nav>
+<div class="flex items-center">
+<button class="bg-primary text-background-light dark:text-background-dark px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
+              Logout
+            </button>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-6 py-12">
+<h2 class="text-4xl font-bold text-primary dark:text-white mb-12">Admin Dashboard</h2>
+<div class="space-y-12">
+<div>
+<h3 class="text-2xl font-semibold text-primary dark:text-white mb-6">User List</h3>
+<div class="overflow-x-auto bg-background-light dark:bg-background-dark rounded-lg border border-primary/10 dark:border-white/10">
+<table class="min-w-full text-sm">
+<thead class="border-b border-primary/10 dark:border-white/10">
+<tr>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Name</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Email</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Plan</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">Ethan Carter</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">ethan.carter@example.com</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Pro</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Active</span>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">Olivia Bennett</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">olivia.bennett@example.com</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Basic</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Inactive</span>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">Liam Harper</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">liam.harper@example.com</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Pro</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Active</span>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">Sophia Hayes</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">sophia.hayes@example.com</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Basic</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Active</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">Noah Foster</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">noah.foster@example.com</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Pro</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Inactive</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold text-primary dark:text-white mb-6">Videos</h3>
+<div class="overflow-x-auto bg-background-light dark:bg-background-dark rounded-lg border border-primary/10 dark:border-white/10">
+<table class="min-w-full text-sm">
+<thead class="border-b border-primary/10 dark:border-white/10">
+<tr>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Video ID</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">User</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Duration</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">VID001</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Ethan Carter</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">15 min</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Published</span>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">VID002</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Olivia Bennett</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">20 min</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Draft</span>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">VID003</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Liam Harper</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">10 min</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Published</span>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">VID004</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Sophia Hayes</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">25 min</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Published</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">VID005</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">Noah Foster</td>
+<td class="px-6 py-4 whitespace-nowrap text-primary/70 dark:text-white/70">12 min</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-white">Draft</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold text-primary dark:text-white mb-6">Report Queue</h3>
+<div class="overflow-x-auto bg-background-light dark:bg-background-dark rounded-lg border border-primary/10 dark:border-white/10">
+<table class="min-w-full text-sm">
+<thead class="border-b border-primary/10 dark:border-white/10">
+<tr>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white w-2/3">Flagged Link</th>
+<th class="px-6 py-4 font-semibold text-left text-primary dark:text-white">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">https://openinterview.me/video1</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-white font-medium hover:underline rounded-lg">Review</button>
+<button class="text-primary/50 dark:text-white/50 font-medium hover:underline rounded-lg">Delete</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">https://openinterview.me/video2</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-white font-medium hover:underline rounded-lg">Review</button>
+<button class="text-primary/50 dark:text-white/50 font-medium hover:underline rounded-lg">Delete</button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-primary dark:text-white">https://openinterview.me/video3</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-white font-medium hover:underline rounded-lg">Review</button>
+<button class="text-primary/50 dark:text-white/50 font-medium hover:underline rounded-lg">Delete</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

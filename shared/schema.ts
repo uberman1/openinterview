@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, boolean, jsonb, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -50,6 +50,37 @@ export const assets = pgTable("assets", {
   tags: text("tags").array().default(sql`ARRAY[]::text[]`),
 });
 
+export const profiles = pgTable("profiles", {
+    id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+    ownerId: varchar("owner_id").notNull().references(() => users.id),
+    profileName: text("profile_name"),
+    person: jsonb("person"),
+    title: text("title"),
+    location: text("location"),
+    about: text("about"),
+    video: jsonb("video"),
+    resume: jsonb("resume"),
+    attachments: jsonb("attachments"),
+    highlights: jsonb("highlights"),
+    skills: text("skills").array().default(sql`ARRAY[]::text[]`),
+    social: jsonb("social"),
+    contact: jsonb("contact"),
+    availabilityId: varchar("availability_id"),
+    publicHandle: varchar("public_handle").unique(),
+    visibility: text("visibility").default("private"),
+    status: text("status").default("draft"),
+    shareCount: integer("share_count").default(0),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    version: text("version"),
+});
+
+export const entitlements = pgTable("entitlements", {
+    userId: varchar("user_id").primaryKey().references(() => users.id),
+    billing: jsonb("billing"),
+    entitlement: jsonb("entitlement"),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -75,13 +106,26 @@ export const insertAssetSchema = createInsertSchema(assets).omit({
   uploadedAt: true,
 });
 
+export const insertProfileSchema = createInsertSchema(profiles).omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+});
+
+export const insertEntitlementSchema = createInsertSchema(entitlements);
+
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type HealthCheck = typeof healthChecks.$inferSelect;
 export type Log = typeof logs.$inferSelect;
 export type TestResult = typeof testResults.$inferSelect;
 export type Asset = typeof assets.$inferSelect;
+export type Profile = typeof profiles.$inferSelect;
+export type Entitlement = typeof entitlements.$inferSelect;
 export type InsertHealthCheck = z.infer<typeof insertHealthCheckSchema>;
 export type InsertLog = z.infer<typeof insertLogSchema>;
 export type InsertTestResult = z.infer<typeof insertTestResultSchema>;
 export type InsertAsset = z.infer<typeof insertAssetSchema>;
+export type InsertProfile = z.infer<typeof insertProfileSchema>;
+export type InsertEntitlement = z.infer<typeof insertEntitlementSchema>;
