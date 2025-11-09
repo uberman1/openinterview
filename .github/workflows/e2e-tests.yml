@@ -35,32 +35,55 @@ jobs:
       - name: Start server (background)
         env:
           NODE_ENV: test
-          PORT: 5000
         run: |
           set -e
           (npm start > server.log 2>&1 &)
-          # wait up to 90s for health endpoint
+
+          # Try port 5000 first
           for i in {1..90}; do
             if curl -fsS http://localhost:5000/api/v1/scheduler/test > /dev/null 2>&1; then
-              echo "Server is up."
+              echo "Detected server on port 5000"
+              echo "TEST_BASE_URL=http://localhost:5000" >> $GITHUB_ENV
+              DETECTED=1
               break
             fi
-            echo "Waiting for server... ($i/90)"
             sleep 1
           done
 
+          # If not 5000, try 3000
+          if [ -z "${DETECTED:-}" ]; then
+            for i in {1..90}; do
+              if curl -fsS http://localhost:3000/api/v1/scheduler/test > /dev/null 2>&1; then
+                echo "Detected server on port 3000"
+                echo "TEST_BASE_URL=http://localhost:3000" >> $GITHUB_ENV
+                DETECTED=1
+                break
+              fi
+              sleep 1
+            done
+          fi
+
+          # If still not detected, fail fast
+          if [ -z "${DETECTED:-}" ]; then
+            echo "Server did not become healthy on 5000 or 3000"
+            echo "---- server.log (tail) ----"
+            tail -n 200 server.log || true
+            exit 1
+          fi
+
       - name: Run E2E tests (node:test)
         env:
-          TEST_BASE_URL: http://localhost:5000
+          TEST_BASE_URL: ${{ env.TEST_BASE_URL }}
         shell: bash
         run: |
           set -e
+          echo "Using TEST_BASE_URL=${TEST_BASE_URL}"
           if ls tests/*e2e*.mjs >/dev/null 2>&1; then
             node --test tests/*e2e*.mjs
           elif ls tests/*.e2e.test.mjs >/dev/null 2>&1; then
+          # fallback globs
             node --test tests/*.e2e.test.mjs
           elif ls tests/*.mjs >/dev/null 2>&1; then
-            # fallback (runs all mjs tests in tests/)
             node --test tests/*.mjs
           else
             echo "No E2E test files found under tests/"; exit 1
