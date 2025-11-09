@@ -22,10 +22,15 @@ jobs:
           node-version: "18"
           cache: "npm"
 
+      - name: Node info
+        run: |
+          node -v
+          node -e "console.log(process.versions)"
+
       - name: Install dependencies
         run: npm ci || npm install
 
-      # If you have a CI database, uncomment these two lines:
+      # If you have a CI database, uncomment:
       # - name: Configure DATABASE_URL (optional)
       #   run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
@@ -44,54 +49,53 @@ jobs:
             printf '%s\n' \
 "import http from 'node:http';" \
 "import { parse as parseUrl } from 'node:url';" \
-"" \
 "const PORT = process.env.PORT || 5000;" \
 "const MAX = 5; const WINDOW = 60*60*1000;" \
 "const buckets = new Map(); const bookings = [];" \
-"" \
-"function json(res, code, obj){ const s = JSON.stringify(obj); res.writeHead(code,{ 'content-type':'application/json', 'content-length': Buffer.byteLength(s)}); res.end(s); }" \
-"function notFound(res){ json(res,404,{error:'not_found'}); }" \
+"function json(res, code, obj){ const s = JSON.stringify(obj); res.writeHead(code,{ 'content-type':'application/json' }); res.end(s); }" \
 "function parseBody(req){ return new Promise((resolve)=>{ let d=''; req.on('data',c=>d+=c); req.on('end',()=>{ try{ resolve(JSON.parse(d||'{}')); }catch{ resolve({}); } }); }); }" \
-"" \
 "function ensureAuth(req, res){ const h=req.headers['authorization']||''; if(h==='Bearer dev') return true; json(res,401,{error:'unauthorized'}); return false; }" \
-"function rateLimit(key){ const now=Date.now(); const arr=buckets.get(key)||[]; while(arr.length && (now-arr[0])>WINDOW) arr.shift(); if(arr.length>=MAX){ const retryAfter=Math.ceil((WINDOW-(now-arr[0]))/1000); return { limited:true, retryAfter }; } arr.push(now); buckets.set(key,arr); return { limited:false }; }" \
-"" \
+"function rateLimitFactory(){ const store=new Map(); return function(key){ const now=Date.now(); const arr=store.get(key)||[]; while(arr.length && (now-arr[0])>WINDOW) arr.shift(); if(arr.length>=MAX){ const retryAfter=Math.ceil((WINDOW-(now-arr[0]))/1000); return { limited:true, retryAfter }; } arr.push(now); store.set(key,arr); return { limited:false }; } }" \
+"const rateLimit = rateLimitFactory();" \
 "const server = http.createServer(async (req,res)=>{" \
 "  const { pathname } = parseUrl(req.url||'', true);" \
-"  // health" \
 "  if(req.method==='GET' && pathname==='/api/v1/scheduler/test'){ return json(res,200,{ok:true}); }" \
-"" \
-"  // login" \
 "  if(req.method==='POST' && pathname==='/api/v1/auth/login'){ return json(res,200,{token:'dev'}); }" \
-"" \
-"  // bookings (protected)" \
 "  if(req.method==='GET' && pathname==='/api/v1/scheduler/bookings'){ if(!ensureAuth(req,res)) return; return json(res,200,{bookings}); }" \
-"" \
-"  // reset rate limit" \
-"  if(req.method==='POST' && pathname==='/api/v1/test/reset-rate-limit'){ buckets.clear(); return json(res,200,{ok:true}); }" \
-"" \
-"  // book (rate limited)" \
-"  if(req.method==='POST' && pathname==='/api/v1/scheduler/book'){ const ip=(req.socket.remoteAddress||'unknown'); const { limited, retryAfter } = rateLimit('book:'+ip); if(limited) return json(res,429,{error:'rate_limited', retryAfter}); const body=await parseBody(req); const { userId,startTimeUtc,endTimeUtc,name,email } = body||{}; if(!userId||!startTimeUtc||!endTimeUtc||!name||!email) return json(res,400,{error:'bad_request'}); const dup=bookings.find(b=>b.userId===userId && b.startTimeUtc===startTimeUtc); if(dup) return json(res,409,{error:'booking_conflict'}); bookings.push({userId,startTimeUtc,endTimeUtc,name,email}); return json(res,200,{ok:true}); }" \
-"" \
-"  return notFound(res);" \
+"  if(req.method==='POST' && pathname==='/api/v1/test/reset-rate-limit'){ buckets.clear?.(); return json(res,200,{ok:true}); }" \
+"  if(req.method==='POST' && pathname==='/api/v1/scheduler/book'){ const ip=(req.socket.remoteAddress||'unknown'); const rl=rateLimit('book:'+ip); if(rl.limited) return json(res,429,{error:'rate_limited', retryAfter: rl.retryAfter}); const body=await parseBody(req); const { userId,startTimeUtc,endTimeUtc,name,email } = body||{}; if(!userId||!startTimeUtc||!endTimeUtc||!name||!email) return json(res,400,{error:'bad_request'}); const dup=bookings.find(b=>b.userId===userId && b.startTimeUtc===startTimeUtc); if(dup) return json(res,409,{error:'booking_conflict'}); bookings.push({userId,startTimeUtc,endTimeUtc,name,email}); return json(res,200,{ok:true}); }" \
+"  return json(res,404,{error:'not_found'});" \
 "});" \
 "server.listen(PORT, ()=>{ console.log('Mock server listening on', PORT); });" \
             > mock-server.mjs
             (NODE_ENV=test PORT=$PORT node mock-server.mjs > server.log 2>&1 &)
           fi
 
+          # Quick diagnostics right after starting
+          sleep 1
+          echo '--- ps -ef | grep node ---'
+          ps -ef | grep node || true
+          echo '--- lsof -i -P -n | grep LISTEN ---'
+          (command -v lsof >/dev/null 2>&1 && lsof -i -P -n | grep LISTEN) || true
+          echo '--- tail server.log ---'
+          tail -n 50 server.log || true
+
           echo "Waiting for app to start on port 5000..."
-          for i in {1..90}; do
-            if curl -fsS http://localhost:5000/api/v1/scheduler/test >/dev/null 2>&1; then
+          READY=""
+          for i in {1..120}; do
+            if curl -fsS "http://localhost:5000/api/v1/scheduler/test" >/dev/null 2>&1; then
               echo "TEST_BASE_URL=http://localhost:5000" >> $GITHUB_ENV
               READY=1; break
             fi
+            if (( i % 10 == 0 )); then
+              echo "[wait] $i/120 seconds elapsed"
+              tail -n 5 server.log || true
+            fi
             sleep 1
-            echo "Attempt $i/90: App not ready yet..."
           done
-          if [ -z "${READY:-}" ]; then
-            echo "App failed to start within 90 seconds"
-            echo "---- server.log (tail) ----"; tail -n 200 server.log || true
+          if [ -z "$READY" ]; then
+            echo "App failed to start within 120 seconds"
+            echo "---- server.log (full tail) ----"; tail -n 200 server.log || true
             exit 1
           fi
 
