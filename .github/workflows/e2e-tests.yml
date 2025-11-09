@@ -25,11 +25,11 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      # If you DO have a CI database, uncomment the next two lines:
+      # If you have a CI database, uncomment these two lines:
       # - name: Configure DATABASE_URL (optional)
       #   run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
-      - name: Start server (real if DATABASE_URL set, else mock)
+      - name: Start server (real if DATABASE_URL set, else pure-node mock)
         shell: bash
         run: |
           set -euo pipefail
@@ -39,76 +39,59 @@ jobs:
             echo "Starting REAL server"
             (NODE_ENV=test PORT=$PORT npm start > server.log 2>&1 &)
           else
-            echo "Starting MOCK server"
-            # Write mock-server.mjs without here-docs to avoid YAML issues
+            echo "Starting MOCK server (no external deps)"
             rm -f mock-server.mjs
             printf '%s\n' \
-"import express from 'express';" \
-"const app = express();" \
-"app.use(express.json());" \
+"import http from 'node:http';" \
+"import { parse as parseUrl } from 'node:url';" \
 "" \
-"function ensureAuth(req,res,next){" \
-"  const auth = req.headers.authorization || '';" \
-"  if (auth === 'Bearer dev') return next();" \
-"  return res.status(401).json({ error: 'unauthorized' });" \
-"}" \
+"const PORT = process.env.PORT || 5000;" \
+"const MAX = 5; const WINDOW = 60*60*1000;" \
+"const buckets = new Map(); const bookings = [];" \
 "" \
-"const buckets = new Map();" \
-"const MAX = 5;" \
-"const WINDOW = 60 * 60 * 1000;" \
-"function rateLimitBook(req,res,next){" \
-"  const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';" \
-"  const key = \`book:\${ip}\`;" \
-"  const now = Date.now();" \
-"  const arr = buckets.get(key) || [];" \
-"  while (arr.length && (now - arr[0]) > WINDOW) arr.shift();" \
-"  if (arr.length >= MAX) {" \
-"    const retryAfter = Math.ceil((WINDOW - (now - arr[0])) / 1000);" \
-"    return res.status(429).json({ error: 'rate_limited', retryAfter });" \
-"  }" \
-"  arr.push(now);" \
-"  buckets.set(key, arr);" \
-"  next();" \
-"}" \
+"function json(res, code, obj){ const s = JSON.stringify(obj); res.writeHead(code,{ 'content-type':'application/json', 'content-length': Buffer.byteLength(s)}); res.end(s); }" \
+"function notFound(res){ json(res,404,{error:'not_found'}); }" \
+"function parseBody(req){ return new Promise((resolve)=>{ let d=''; req.on('data',c=>d+=c); req.on('end',()=>{ try{ resolve(JSON.parse(d||'{}')); }catch{ resolve({}); } }); }); }" \
 "" \
-"app.get('/api/v1/scheduler/test', (req,res)=>res.json({ ok:true }));" \
-"app.post('/api/v1/auth/login', (req,res)=>res.json({ token:'dev' }));" \
-"const bookings=[];" \
-"app.get('/api/v1/scheduler/bookings', ensureAuth, (req,res)=>res.json({ bookings }));" \
-"app.post('/api/v1/scheduler/book', rateLimitBook, (req,res)=>{" \
-"  const { userId, startTimeUtc, endTimeUtc, name, email } = req.body || {};" \
-"  if (!userId || !startTimeUtc || !endTimeUtc || !name || !email) return res.status(400).json({ error:'bad_request' });" \
-"  const dup = bookings.find(b => b.userId===userId && b.startTimeUtc===startTimeUtc);" \
-"  if (dup) return res.status(409).json({ error:'booking_conflict' });" \
-"  bookings.push({ userId, startTimeUtc, endTimeUtc, name, email });" \
-"  res.json({ ok:true });" \
+"function ensureAuth(req, res){ const h=req.headers['authorization']||''; if(h==='Bearer dev') return true; json(res,401,{error:'unauthorized'}); return false; }" \
+"function rateLimit(key){ const now=Date.now(); const arr=buckets.get(key)||[]; while(arr.length && (now-arr[0])>WINDOW) arr.shift(); if(arr.length>=MAX){ const retryAfter=Math.ceil((WINDOW-(now-arr[0]))/1000); return { limited:true, retryAfter }; } arr.push(now); buckets.set(key,arr); return { limited:false }; }" \
+"" \
+"const server = http.createServer(async (req,res)=>{" \
+"  const { pathname } = parseUrl(req.url||'', true);" \
+"  // health" \
+"  if(req.method==='GET' && pathname==='/api/v1/scheduler/test'){ return json(res,200,{ok:true}); }" \
+"" \
+"  // login" \
+"  if(req.method==='POST' && pathname==='/api/v1/auth/login'){ return json(res,200,{token:'dev'}); }" \
+"" \
+"  // bookings (protected)" \
+"  if(req.method==='GET' && pathname==='/api/v1/scheduler/bookings'){ if(!ensureAuth(req,res)) return; return json(res,200,{bookings}); }" \
+"" \
+"  // reset rate limit" \
+"  if(req.method==='POST' && pathname==='/api/v1/test/reset-rate-limit'){ buckets.clear(); return json(res,200,{ok:true}); }" \
+"" \
+"  // book (rate limited)" \
+"  if(req.method==='POST' && pathname==='/api/v1/scheduler/book'){ const ip=(req.socket.remoteAddress||'unknown'); const { limited, retryAfter } = rateLimit('book:'+ip); if(limited) return json(res,429,{error:'rate_limited', retryAfter}); const body=await parseBody(req); const { userId,startTimeUtc,endTimeUtc,name,email } = body||{}; if(!userId||!startTimeUtc||!endTimeUtc||!name||!email) return json(res,400,{error:'bad_request'}); const dup=bookings.find(b=>b.userId===userId && b.startTimeUtc===startTimeUtc); if(dup) return json(res,409,{error:'booking_conflict'}); bookings.push({userId,startTimeUtc,endTimeUtc,name,email}); return json(res,200,{ok:true}); }" \
+"" \
+"  return notFound(res);" \
 "});" \
-"app.post('/api/v1/test/reset-rate-limit', (req,res)=>{ buckets.clear(); res.json({ ok:true }); });" \
-"" \
-"const port = process.env.PORT || 5000;" \
-"app.listen(port, ()=>console.log('Mock server listening on', port));" \
+"server.listen(PORT, ()=>{ console.log('Mock server listening on', PORT); });" \
             > mock-server.mjs
-
             (NODE_ENV=test PORT=$PORT node mock-server.mjs > server.log 2>&1 &)
           fi
 
-          # Wait for server on 5000 or 3000
-          DETECTED=""
+          echo "Waiting for app to start on port 5000..."
           for i in {1..90}; do
             if curl -fsS http://localhost:5000/api/v1/scheduler/test >/dev/null 2>&1; then
               echo "TEST_BASE_URL=http://localhost:5000" >> $GITHUB_ENV
-              DETECTED=1; break
-            fi
-            if curl -fsS http://localhost:3000/api/v1/scheduler/test >/dev/null 2>&1; then
-              echo "TEST_BASE_URL=http://localhost:3000" >> $GITHUB_ENV
-              DETECTED=1; break
+              READY=1; break
             fi
             sleep 1
+            echo "Attempt $i/90: App not ready yet..."
           done
-
-          if [ -z "$DETECTED" ]; then
-            echo "Server did not become healthy."
-            tail -n 200 server.log || true
+          if [ -z "${READY:-}" ]; then
+            echo "App failed to start within 90 seconds"
+            echo "---- server.log (tail) ----"; tail -n 200 server.log || true
             exit 1
           fi
 
