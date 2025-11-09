@@ -62,7 +62,8 @@ function serveHome(req,res){
   const p = path.join(__dirname, 'public', 'home.html');
   try{
     let html = fs.readFileSync(p, 'utf8');
-    html = html.replace('</body>', '<script src="/js/home.bind.js" defer></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/data-store.js"></script></body>');
+    html = html.replace('</body>', '<script type="module" src="/js/home.js"></script></body>');
     html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/home.upcoming.contact.bind.js" defer></script></body>');
     html = html.replace('</body>', '<script src="/js/home.links.bind.js" defer></script></body>');
@@ -621,52 +622,112 @@ app.post("/api/upload/:kind(resume|attachment)/:profileId", upload.single("file"
   } catch { res.status(500).send("Upload failed"); }
 });
 
-// AI Resume Extraction endpoint
-app.post("/api/ai/extract_profile", upload.single("file"), async (req, res) => {
-  try {
-    const { profileId } = req.body;
-    if (!profileId) return res.status(400).send("profileId required");
-    
-    const buf = req.file?.buffer;
-    if (!buf) return res.status(400).send("No file");
-    
-    // Mock GPT extraction - In production, integrate with OpenAI/Anthropic API
-    // For now, extract basic info from filename and return sample data
-    const filename = req.file.originalname || "";
-    const nameParts = filename.replace(/\.(pdf|docx?|txt)$/i, '').split(/[-_\s]+/);
-    
-    // Mock extracted data - replace with actual AI extraction
-    const mockData = {
-      name: nameParts.slice(0, 2).join(' ') || "John Doe",
-      title: "Software Engineer",
-      contact: {
-        email: "john.doe@example.com",
-        phone: "+1 (555) 123-4567",
-        location: "San Francisco, CA"
-      },
-      socials: {
-        linkedin: "https://linkedin.com/in/johndoe",
-        portfolio: "https://johndoe.com",
-        github: "https://github.com/johndoe",
-        twitter: ""
-      },
-      bio: "Experienced professional with expertise in software development and product design. Passionate about building innovative solutions and leading high-performing teams.",
-      highlights: [
-        "5+ years of experience in software engineering",
-        "Led cross-functional teams of 10+ engineers",
-        "Shipped 15+ production features with 99.9% uptime",
-        "Strong problem-solving and analytical skills"
-      ]
-    };
-    
-    // TODO: Replace with actual AI extraction using OpenAI/Anthropic
-    // Example: const extraction = await extractProfileFromResume(buf, req.file.mimetype);
-    
-    res.json(mockData);
-  } catch (err) {
-    console.error("AI extraction error:", err);
-    res.status(500).send("Extraction failed");
+// New endpoint: POST /api/profiles/:id/ingest
+app.post("/api/profiles/:id/ingest", async (req, res) => {
+  const { id } = req.params;
+  const profile = db.profiles.find((p) => p.id === id);
+
+  if (!profile) {
+    return res.status(404).json({ error: "Profile not found" });
   }
+
+  // Mock GPT extraction
+  const updatedProfile = {
+    ...profile,
+    person: { name: "Alex Johnson" },
+    title: "Senior Product Manager",
+    location: "New York, NY",
+    about: "Short professional summary...",
+    highlights: [
+      { id: "hi_1", text: "Launched X to 2M MAU", pin: true, order: 1 },
+    ],
+    skills: ["Product Strategy", "Roadmapping", "SQL"],
+    social: {
+      website: "https://alexj.dev",
+      linkedin: "https://linkedin.com/in/alexj",
+      github: "https://github.com/alexj",
+    },
+    contact: { email: "alex@example.com", phone: "+1-..." },
+  };
+
+  // Update the profile in the database
+  db.profiles = db.profiles.map((p) => (p.id === id ? updatedProfile : p));
+
+  res.json({ populated: true, profile: updatedProfile });
+});
+
+// New endpoint: POST /api/profiles/:id/share
+app.post("/api/profiles/:id/share", (req, res) => {
+    const { id } = req.params;
+    const profile = db.profiles.find((p) => p.id === id);
+
+    if (!profile) {
+        return res.status(404).json({ error: "Profile not found" });
+    }
+
+    const user = db.users.find((u) => u.id === profile.ownerId);
+    const entitlement = db.entitlements.find((e) => e.userId === user.id);
+
+    if (profile.shareCount < 3) {
+        profile.shareCount++;
+        profile.visibility = "public";
+        if (!profile.publicHandle) {
+            profile.publicHandle = `${profile.person.name.toLowerCase().replace(" ", "-")}-${profile.id.slice(0, 4)}`;
+        }
+        res.json({ publicUrl: `/u/${profile.publicHandle}`, remainingFreeOrEntitlement: 3 - profile.shareCount });
+    } else if (entitlement && entitlement.entitlement.shareCredits > 0) {
+        entitlement.entitlement.shareCredits--;
+        profile.visibility = "public";
+        if (!profile.publicHandle) {
+            profile.publicHandle = `${profile.person.name.toLowerCase().replace(" ", "-")}-${profile.id.slice(0, 4)}`;
+        }
+        res.json({ publicUrl: `/u/${profile.publicHandle}`, remainingFreeOrEntitlement: entitlement.entitlement.shareCredits });
+    } else {
+        res.json({
+            requiresPayment: true,
+            bundles: [
+                { price: 700, credits: 1 },
+                { price: 1000, credits: 5 },
+                { price: 1300, credits: 15 },
+            ],
+        });
+    }
+});
+
+
+// New endpoint: POST /api/purchases
+app.post("/api/purchases", (req, res) => {
+    const { bundleId, userId } = req.body;
+    const entitlement = db.entitlements.find((e) => e.userId === userId);
+
+    if (!entitlement) {
+        return res.status(404).json({ error: "Entitlement not found" });
+    }
+
+    const bundles = {
+        B1: 1,
+        B5: 5,
+        B15: 15,
+    };
+
+    const credits = bundles[bundleId];
+    if (credits) {
+        entitlement.entitlement.shareCredits += credits;
+        res.json({ success: true, shareCredits: entitlement.entitlement.shareCredits });
+    } else {
+        res.status(400).json({ error: "Invalid bundle ID" });
+    }
+});
+
+// New endpoint: GET /api/billing/portal
+app.get("/api/billing/portal", (req, res) => {
+    res.json({ url: "https://stripe.com/billing/portal" });
+});
+
+
+// New endpoint: POST /api/billing/checkout
+app.post("/api/billing/checkout", (req, res) => {
+    res.json({ url: "https://stripe.com/checkout" });
 });
 
 // Error handler for multer errors

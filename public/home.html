@@ -1,273 +1,120 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
-<meta charset="utf-8"/>
-<title>Stitch Design</title>
-<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<link rel="stylesheet" href="/css/tailwind.css"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden text-primary">
-<div class="flex h-full grow flex-col">
-<header class="flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4">
-<div class="flex items-center gap-4">
-<div class="h-6 w-6">
-<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+<body class="bg-background-light dark:bg-background-dark text-primary dark:text-background-light font-display">
+<div class="relative flex min-h-screen w-full flex-col">
+<div class="layout-container flex h-full grow flex-col">
+<div class="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:px-8">
+<div class="layout-content-container flex flex-1 flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-200 dark:border-neutral-800 px-4 py-4 md:px-6">
+<div class="flex items-center gap-4 text-primary dark:text-background-light">
+<div class="size-4">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
 </svg>
 </div>
-<h2 class="text-lg font-bold">OpenInterview.me</h2>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">OpenInterview.me</h2>
 </div>
-<div class="flex flex-1 items-center justify-end gap-6">
-<nav class="flex items-center gap-6">
-<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="#">Home</a>
-<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="#">Explore</a>
-<a class="text-sm font-medium text-primary dark:text-white" href="#">My Profile</a>
-</nav>
-<!-- Header avatar gets an ID and can be updated; no style changes -->
-<div id="avatar-header" class="aspect-square w-10 rounded-full bg-cover bg-center bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE");'></div>
-</div>
+<a class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden border border-primary bg-background-light px-4 text-sm font-bold leading-normal tracking-[0.015em] text-primary transition-colors hover:bg-primary hover:text-background-light dark:border-background-light dark:bg-background-dark dark:text-background-light dark:hover:bg-background-light dark:hover:text-background-dark" href="#">
+<span class="truncate">Sign In</span>
+</a>
 </header>
-<main class="flex-1 px-40 py-12">
-<div class="mx-auto flex max-w-[960px] flex-col gap-12">
-<div class="flex items-start justify-between gap-12">
-<div class="flex flex-col gap-2">
-<h1 class="text-4xl font-bold tracking-tight">My Profile</h1>
-<p class="text-primary/60 dark:text-white/60">Manage your interviews, resumes, and account metrics.</p>
+<main class="flex flex-col gap-16 py-16 md:gap-24 md:py-24">
+<section class="flex flex-col items-center gap-8 px-4 text-center md:gap-12">
+<div class="flex flex-col items-center gap-4">
+<h1 class="text-4xl font-black leading-tight tracking-tighter md:text-6xl">
+                                    The Modern Interview. <br/>Shared Simply.
+                                </h1>
+<p class="max-w-xl text-base font-normal leading-normal text-neutral-600 dark:text-neutral-400 md:text-lg">
+                                    Create and share your video interview with recruiters in minutes. Start by uploading your resume.
+                                </p>
 </div>
-<div class="flex-shrink-0">
-<!-- Profile avatar is clickable (acts as Edit trigger) -->
-<div id="avatar-profile" role="button" tabindex="0" title="Edit avatar"
-     class="aspect-square w-20 rounded-full bg-cover bg-center bg-no-repeat outline-none focus:ring-2 focus:ring-primary/30"
-     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgS88QhSBYUengqyuPFZ-0rqaPoKmMT7v6UlmL9ZwjTSGh6tftgo0ETzEAZf8y-6d0AfCL_5TvJqd-MeDxWbSg03T5D1lPLSNi53oaZkCOoZ1oVRzfLbXc3_Qxe6CJpZLo2ppNz7zInTb-x9-fjO1hQyI8pySg-EPISStHYg_HPGbQDsKOfmNkGSxdfVMjAPPZVefqiPImJaGHAAwAxj-3mhyzTEwlx9PqerIK5EwF3lY74MdDJcyCTOYicZ9--VPI2pvucAXNOTE");'></div>
+<div class="w-full max-w-2xl px-4 py-8">
+<div class="flex flex-col items-center gap-6 rounded-none border-2 border-dashed border-neutral-300 dark:border-neutral-700 p-8 md:p-14">
+<div class="flex max-w-[480px] flex-col items-center gap-2">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em]">Drag &amp; drop your resume here</p>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">or</p>
 </div>
-</div>
-<div class="grid grid-cols-3 gap-6">
-<div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
-<p class="text-3xl font-bold tracking-tight">12</p>
-<p class="text-sm text-primary/60 dark:text-white/60">Total Interviews</p>
-</div>
-<div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
-<p class="text-3xl font-bold tracking-tight">450</p>
-<p class="text-sm text-primary/60 dark:text-white/60">Total Views</p>
-</div>
-<div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
-<p class="text-3xl font-bold tracking-tight">23</p>
-<p class="text-sm text-primary/60 dark:text-white/60">Total Shares</p>
+<button id="browse-files-btn" class="flex h-12 min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden bg-primary px-6 text-sm font-bold leading-normal tracking-[0.015em] text-background-light transition-opacity hover:opacity-80 dark:bg-background-light dark:text-background-dark">
+<span class="truncate">Browse Files</span>
+</button>
 </div>
 </div>
-<div class="flex flex-col gap-6">
-<h2 class="text-2xl font-bold tracking-tight">Upcoming Interviews</h2>
-<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
-<table class="w-full text-left">
-<thead>
-<tr class="border-b border-primary/10 dark:border-white/10">
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Company</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Role</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Date &amp; Time</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Recruiter</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
-</tr>
-</thead>
-<tbody id="upcoming-body" class="divide-y divide-primary/10 dark:divide-white/10">
-<tr>
-<td class="px-6 py-4 text-sm font-medium">Innovate Inc.</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">Senior Frontend Developer</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-08-15, 10:00 AM</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">John Doe</td>
-<td class="px-6 py-4 text-sm font-medium text-right">
-<a class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white upcoming-view" href="#" data-company="Innovate Inc." data-role="Senior Frontend Developer" data-datetime="2024-08-15, 10:00 AM" data-recruiter="John Doe">View Details</a>
-</td>
-</tr>
-<tr>
-<td class="px-6 py-4 text-sm font-medium">Tech Solutions</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">Product Designer</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-08-20, 2:00 PM</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">Jane Smith</td>
-<td class="px-6 py-4 text-sm font-medium text-right">
-<a class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white upcoming-view" href="#" data-company="Tech Solutions" data-role="Product Designer" data-datetime="2024-08-20, 2:00 PM" data-recruiter="Jane Smith">View Details</a>
-</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section class="flex flex-col items-center gap-8 px-4 md:gap-12">
+<div class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+<div class="flex flex-1 flex-col gap-2 rounded-none border border-neutral-200 dark:border-neutral-800 p-6">
+<h2 class="text-lg font-bold leading-tight">Record Once, Share Endlessly</h2>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">Save time by creating one professional video interview you can share with multiple companies.</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-none border border-neutral-200 dark:border-neutral-800 p-6">
+<h2 class="text-lg font-bold leading-tight">Present Your Best Self</h2>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">A dedicated platform designed to showcase your communication skills and personality professionally.</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-none border border-neutral-200 dark:border-neutral-800 p-6">
+<h2 class="text-lg font-bold leading-tight">Seamless for Recruiters</h2>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">Make it easy for hiring managers to review your interview with a simple, shareable link.</p>
 </div>
 </div>
-<div class="flex flex-col gap-6">
-<h2 class="text-2xl font-bold tracking-tight">My Interviews</h2>
-<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
-<table class="w-full text-left">
-<thead>
-<tr class="border-b border-primary/10 dark:border-white/10">
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Title</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Date</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Views</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Shares</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Status</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
-</tr>
-</thead>
-<tbody id="interviews-body" class="divide-y divide-primary/10 dark:divide-white/10">
-<tr data-title="Software Engineer Interview">
-<td class="px-6 py-4 text-sm font-medium">Software Engineer Interview</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-26</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">150</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">10</td>
-<td class="px-6 py-4 text-sm">
-<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium dark:bg-white/10">Published</span>
-</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
+</section>
+<section class="flex flex-col items-center gap-8 px-4">
+<h4 class="text-sm font-bold leading-normal tracking-wider text-neutral-500 dark:text-neutral-400">TRUSTED BY</h4>
+<div class="flex w-full flex-wrap items-center justify-center gap-x-12 gap-y-8 md:gap-x-16">
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Transistor logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9qxlB8uVtEmZW_Y1BLQFrQJJ6xSzgJ4j0K0YGDmeDar6z_GC7n1QWqJycwUfNlqtCDwO2BFWn6fVx9Cti4GgU5u9iEz-Xchh94y1WxZcU5He-XyaTT-pkJP-jeqmSSUML3Vm2UU3XiWzPUJWcf0LqRS6ba-0_vSaMBmAulfjbmPg3BCybcgctYWjsc4LVCtbO-5z_WLiv07UXkvsEgSQli2_KVvgEc2L6m5PR3-lWsijKBamOmQP-0mFJRhri9pnA18evgEgg3co"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Reform logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARq64EgE_B4ijfttlig3FyOlxksW3JOjfvk9Q9UthXp6H5kOz3crHnxcbJhLPpXaOt5kWPwGA7-M1r9b8v-De-HYetLEyNdK2KfKEUtybDqe49L3t8AZHdNTGQHRL1YtvtgQTpO_3qGUhtYIIBtwKr3QwB0DddL7jLhcuEIePkGuJWAoHNQghgKVKNTZDvfUE3Bf86h0NJrGCAJ_jjMIx3Q9qhxomC5sZdC3HOXS8MMEuYvWC3NpnZVhvIXgJIqeaH4xUFq3PwrDU"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="SavvyCal logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZDxNEkGv91ABymgi89N_KxYbCXYx-cKR_zaopLPzo71zuLKKMVAoctGM0-uePGG-VRiLlvuE5tTBFaiXIlMCSPYlxmOVMcUod_8YqYSYBxYvTKf3tK7k6wASnxmRMaSLiwAkunthPJcjRSqy9DfV0K9cNr8658gdhWVGx2CuZ0kx0GVwrMwAIsy9u0Pt7jNSzll9fDoJdrT7ehhbkJhf_j7PRpfSAM7l-_NPBTyAoRydBtfWFkhEO0bBskXmfTCqsU044xl14Ew"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Tuple logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZl-VlgGxBZx4iO_UCCNXjaIGDSUcVps1-FyhTa0Hl3WnZEYOTq_p8B0_bYKNPDjaFJkJ8gom2q4zF38hkLG29yg-1HQV5geQ3MXu1OEmCscqn8f1qSZPgrOZSTpQPBIioZ9LkwcJ0q-aqZLJs0_gx-ZcuswGgdSroBEjZKkKmFUnaHA_agmMhcRrEj6T0CgUYTKMWesJuq7FaCvbuUQqZqAA9zH9omgS3oQ8p4PvFuDzUPrGakpM0vDEwmc1s56o0nWyqDhLntE"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Statamic logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOLSui2BXq4K_lRyV-iiAcyq6xdbAvQ7wmH8eVC9FggVIQCOPjlotautyg94hQ62CkuP1Ox2CjWcGQdQBgw9phRtSFgRJBMt9ffZEORhx-K7lHmq2l0D8aOmTXGcXiSRPAXjaU0DpSWIHFPjXs0p0aNA_D25_vYQlCW2OJl2_W0_EnKsbBkLTxquw-H_N4P0Wsgzlg-pyhMYR7vo8kMumDdcKqb4upBQSRe9FqkxiK3UYXDdXAe6dx2cVBSOhXrbtRNbhCJ4F8oWw"/>
 </div>
-</td>
-</tr>
-<tr data-title="Product Manager Interview">
-<td class="px-6 py-4 text-sm font-medium">Product Manager Interview</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-20</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">200</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">8</td>
-<td class="px-6 py-4 text-sm">
-<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium dark:bg-white/10">Published</span>
-</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-<tr data-title="Data Scientist Interview">
-<td class="px-6 py-4 text-sm font-medium">Data Scientist Interview</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-18</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">50</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">5</td>
-<td class="px-6 py-4 text-sm">
-<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium text-primary/60 dark:bg-white/10 dark:text-white/60">Draft</span>
-</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-<tr data-title="UX Designer Interview">
-<td class="px-6 py-4 text-sm font-medium">UX Designer Interview</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-10</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">30</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">0</td>
-<td class="px-6 py-4 text-sm">
-<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium text-primary/60 dark:bg-white/10 dark:text-white/60">Draft</span>
-</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-<tr data-title="Marketing Manager Interview">
-<td class="px-6 py-4 text-sm font-medium">Marketing Manager Interview</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-05</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">20</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">0</td>
-<td class="px-6 py-4 text-sm">
-<span class="rounded bg-primary/10 px-2 py-1 text-xs font-medium text-primary/60 dark:bg-white/10 dark:text-white/60">Draft</span>
-</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="flex flex-col gap-6">
-<h2 class="text-2xl font-bold tracking-tight">My Resumes</h2>
-<div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
-<table class="w-full text-left">
-<thead>
-<tr class="border-b border-primary/10 dark:border-white/10">
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">File Name</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Upload Date</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Size</th>
-<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
-</tr>
-</thead>
-<tbody id="resumes-body" class="divide-y divide-primary/10 dark:divide-white/10">
-<tr data-filename="resume_sophia_lee.pdf">
-<td class="px-6 py-4 text-sm font-medium">resume_sophia_lee.pdf</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-26</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2MB</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-<tr data-filename="resume_sophia_lee_v2.pdf">
-<td class="px-6 py-4 text-sm font-medium">resume_sophia_lee_v2.pdf</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-20</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">1.8MB</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-<tr data-filename="resume_sophia_lee_old.pdf">
-<td class="px-6 py-4 text-sm font-medium">resume_sophia_lee_old.pdf</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">2024-07-15</td>
-<td class="px-6 py-4 text-sm text-primary/60 dark:text-white/60">1.5MB</td>
-<td class="px-6 py-4 text-sm font-medium">
-<div class="flex items-center justify-end gap-4 actions">
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Edit</button>
-<button class="text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white">Delete</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<!-- Attachments Section (added) -->
-<div class="flex flex-col gap-6">
-  <h2 class="text-2xl font-bold tracking-tight">Attachments</h2>
-  <div class="overflow-hidden rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
-    <table class="w-full text-left">
-      <thead>
-        <tr class="border-b border-primary/10 dark:border-white/10">
-          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">File Name</th>
-          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Upload Date</th>
-          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Size</th>
-          <th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody id="attachments-body" class="divide-y divide-primary/10 dark:divide-white/10">
-        <!-- UAT: new rows will be injected here -->
-      </tbody>
-    </table>
-  </div>
-</div>
-
-</div>
+</section>
 </main>
+<footer class="border-t border-neutral-200 dark:border-neutral-800 px-4 py-8 text-center sm:px-6 lg:px-8">
+<div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+<p class="text-xs text-neutral-500 dark:text-neutral-400">© 2024 OpenInterview.me. All rights reserved.</p>
+<nav class="flex gap-4">
+<a class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-background-light" href="#">About</a>
+<a class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-background-light" href="#">Privacy Policy</a>
+<a class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-background-light" href="#">Contact</a>
+</nav>
+</div>
+</footer>
 </div>
 </div>
-
-<!-- Hidden input for avatar editing -->
-<input id="input-edit-avatar" type="file" class="hidden" accept="image/*"/>
-
-<script src="/js/home-list-limit.js"></script>
-<script type="module" src="/js/home-guardrails-module.js"></script>
-<script type="module" src="/js/home-bindings.js"></script>
-<script type="module" src="/js/nav-patch.js"></script>
-<script type="module" src="/js/redirect-shim.js"></script>
+</div>
+</div>
 </body></html>

@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node index.js",
     "test": "node selftest.mjs",
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "update-hashes": "node tools/update-hashes.mjs",
+    "precommit": "npm run update-hashes && npm run test"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",

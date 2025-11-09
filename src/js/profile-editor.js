@@ -9,118 +9,86 @@ function getIdFromUrl(){
 
 function qs(sel){ return document.querySelector(sel); }
 
-function safeBindContenteditable(el, path, profile){
+function safeBind(el, path, profile, event = 'input'){
   if (!el) return;
-  el.setAttribute('contenteditable', 'true');
-  el.addEventListener('input', () => {
-    const value = el.textContent.trim();
-    const patch = { display: { ...profile.display } };
-    const keys = path.split('.'); // e.g. display.name
-    if (keys.length !== 2) return;
-    patch.display[keys[1]] = value;
+  el.addEventListener(event, () => {
+    const value = el.value;
+    const patch = { ...profile };
+    const keys = path.split('.');
+    let current = patch;
+    for (let i = 0; i < keys.length - 1; i++) {
+        current = current[keys[i]];
+    }
+    current[keys[keys.length - 1]] = value;
     profile = store.updateProfile(profile.id, patch);
   });
 }
 
 function bindInline(profile){
-  // Heuristic element grabs to avoid changing HTML:
-  safeBindContenteditable(qs('h1, .profile-name, [data-field="display.name"]'), 'display.name', profile);
-  safeBindContenteditable(qs('p.text-lg, .profile-title, [data-field="display.title"]'), 'display.title', profile);
-  safeBindContenteditable(qs('aside .text-sm, .profile-location, [data-field="display.location"]'), 'display.location', profile);
-  safeBindContenteditable(qs('aside p:not(.text-sm), main p.lead, [data-field="display.summary"]'), 'display.summary', profile);
+  // Profile Name
+  safeBind(qs('[data-field="profileName"]'), 'profileName', profile);
+
+  // Personal Info
+  safeBind(qs('[data-field="person.name"]'), 'person.name', profile);
+  safeBind(qs('[data-field="title"]'), 'title', profile);
+  safeBind(qs('[data-field="location"]'), 'location', profile);
+  safeBind(qs('[data-field="about"]'), 'about', profile);
+
+  // Contact Info
+  safeBind(qs('[data-field="contact.phone"]'), 'contact.phone', profile);
+  safeBind(qs('[data-field="contact.email"]'), 'contact.email', profile);
+
+  // Social Media
+  safeBind(qs('[data-field="social.linkedin"]'), 'social.linkedin', profile);
+  safeBind(qs('[data-field="social.portfolio"]'), 'social.portfolio', profile);
 
   // Avatar
-  const avatar = qs('img[alt*="Ethan"], img[alt*="Avatar"], img[alt*="Profile"], #avatarImg, [data-field="avatarUrl"]');
+  const avatar = qs('img[alt*="Avatar"], [data-field="person.avatarUrl"]');
   if (avatar){
     avatar.style.cursor = 'pointer';
     avatar.addEventListener('click', async () => {
       const a = await pickAndCreateAsset({type:'attachment'});
       if (!a) return;
       avatar.src = a.url;
-      profile = store.updateProfile(profile.id, { display: { avatarUrl: a.url } });
+      profile = store.updateProfile(profile.id, { person: { avatarUrl: a.url } });
     });
   }
 
-  // Highlights add/remove (simple version: append)
-  const addBtn = document.getElementById('addHighlight');
-  const list = document.getElementById('highlightsList') || document.querySelector('section ul.space-y-4');
-  if (addBtn && list){
-    addBtn.addEventListener('click', () => {
-      const li = document.createElement('li');
-      li.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark" contenteditable="true">New highlight…</p>';
-      list.appendChild(li);
-      const textEl = li.querySelector('p');
-      textEl.focus();
-      textEl.addEventListener('input', () => {
-        const items = Array.from(list.querySelectorAll('p')).map(p => p.textContent.trim()).filter(Boolean);
-        profile = store.updateProfile(profile.id, { display: { highlights: items } });
-      });
-    });
-  }
+  // Highlights
+    const highlightsTextarea = qs('[data-field="highlights"]');
+    if (highlightsTextarea) {
+        highlightsTextarea.addEventListener('input', () => {
+            const highlights = highlightsTextarea.value.split('\n').map(text => ({ id: `hi_${Math.random().toString(36).slice(2)}`, text, pin: false, order: 0 }));
+            profile = store.updateProfile(profile.id, { highlights });
+        });
+    }
 
   // Resume picker
-  const resumeBtn = document.getElementById('btnSelectResume');
-  if (resumeBtn){
-    resumeBtn.addEventListener('click', async () => {
-      // First try existing resumes
-      const found = searchAssets({type:'resume'});
-      let chosen = found[0];
-      if (!chosen) {
-        chosen = await pickAndCreateAsset({type:'resume'});
-      }
-      if (!chosen) return;
-      profile = store.updateProfile(profile.id, { resume: { assetId: chosen.id, pdfUrl: chosen.url }});
-      // If your PDF viewer reads from data-resume-url, update it:
-      const section = document.querySelector('#resumeSection');
-      if (section) section.setAttribute('data-resume-url', chosen.url);
-      // A basic emit so your existing PDF.js loader can react:
-      window.dispatchEvent(new CustomEvent('resume:changed', { detail: { url: chosen.url } }));
-    });
-  }
-
-  // Attachments add
-  const addAtt = document.getElementById('btnAddAttachment');
-  if (addAtt){
-    addAtt.addEventListener('click', async () => {
-      const a = await pickAndCreateAsset({type:'attachment'});
-      if (!a) return;
-      const next = (profile.attachments || []).concat([{ assetId: a.id, label: a.name, url: a.url }]);
-      profile = store.updateProfile(profile.id, { attachments: next });
-      window.dispatchEvent(new CustomEvent('attachments:changed', { detail: { id: a.id } }));
-    });
-  }
-
-  // Edit availability link
-  const editAvail = document.getElementById('editAvailabilityBtn');
-  if (editAvail){
-    editAvail.addEventListener('click', () => {
-      window.location.href = `/availability/${encodeURIComponent(profile.id)}?id=${encodeURIComponent(profile.id)}`;
-    });
+  const resumeSelect = qs('[data-action="select-resume"]');
+  if (resumeSelect){
+      resumeSelect.addEventListener('change', async (e) => {
+          if(e.target.value === 'add_new') {
+              const asset = await pickAndCreateAsset({type:'resume'});
+              if (!asset) return;
+              profile = store.updateProfile(profile.id, { resume: { assetId: asset.id, pdfUrl: asset.url, isPublic: true }});
+              window.dispatchEvent(new CustomEvent('resume:changed', { detail: { url: asset.url } }));
+          }
+      });
   }
 
   // Save & Share
-  const saveBtn = document.getElementById('btnSaveProfile');
+  const saveBtn = qs('[data-action="save-profile"]');
   if (saveBtn){
     saveBtn.addEventListener('click', () => {
-      const name = profile.display?.name?.trim();
-      const title = profile.display?.title?.trim();
+      const name = profile.person?.name?.trim();
+      const title = profile.title?.trim();
       if (!name || !title){
         alert('Please add at least Name and Title.');
         return;
       }
       profile = store.publishProfile(profile.id);
       alert('Profile is live.');
-      // optionally route back home
-      // window.location.href = '/home.html';
-    });
-  }
-
-  const shareBtn = document.getElementById('btnShareProfile');
-  if (shareBtn){
-    shareBtn.addEventListener('click', () => {
-      const link = profile.share?.publicUrl || '#';
-      navigator.clipboard?.writeText(window.location.origin + link).catch(()=>{});
-      alert(`Share link copied: ${link}`);
+      window.location.href = `/index.html?profileId=${profile.id}&ownerPreview=1`;
     });
   }
 }
@@ -129,7 +97,6 @@ function init(){
   let id = getIdFromUrl();
   let profile = id ? store.getProfile({id}) : null;
   if (!profile){
-    // If /profile/new without id, create one on the fly
     profile = store.createDraftProfile();
     const u = new URL(window.location.href);
     u.searchParams.set('id', profile.id);

@@ -1,81 +1,120 @@
+<!DOCTYPE html>
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign in • OpenInterview.me</title>
-  <link rel="stylesheet" href="/css/tailwind.css"/>
-  <link rel="stylesheet" href="/css/theme.css" />
-  
-  <style>
-    .wrap{min-height:calc(100vh - 73px);display:grid;place-items:center;padding:24px}
-    .card{width:min(420px,92vw);background:#fff;border:1px solid rgba(20,20,20,0.1);border-radius:0.25rem;padding:22px;box-shadow:0 8px 28px rgba(0,0,0,.06)}
-    h1{margin:0 0 6px} .sub{color:#141414;opacity:0.6;margin:0 0 14px}
-    .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .chip{padding:6px 10px;border:1px solid rgba(20,20,20,0.1);border-radius:999px;cursor:pointer;font-size:13px;background:#fff}
-    .err{display:none;color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;border-radius:10px;padding:8px 10px;margin-top:10px}
-    .fine{font-size:12px;opacity:0.6;margin-top:10px}
-  </style>
-</head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-  <header class="flex items-center justify-between whitespace-nowrap border-b border-primary/10 px-10 py-4">
-    <div class="flex items-center gap-4">
-      <div class="h-6 w-6">
-        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-          <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
-        </svg>
-      </div>
-      <h2 class="text-lg font-bold text-primary dark:text-white">OpenInterview.me</h2>
-    </div>
-    <nav class="flex items-center gap-6"></nav>
-  </header>
-  <main class="wrap">
-    <section class="card" aria-labelledby="title">
-      <h1 id="title">Sign in</h1>
-      <p class="sub">Enter your email to continue.</p>
-      <form id="form" novalidate>
-        <label for="email" style="display:block;font-size:12px;color:var(--muted);margin:8px 0 6px">Email</label>
-        <input id="email" class="input" type="email" placeholder="you@example.com" autocomplete="email" required />
-        <button class="btn" type="submit" style="margin-top:12px;width:100%">Continue</button>
-        <div id="err" class="err" role="alert">Please enter a valid email.</div>
-      </form>
-      <div class="fine">Demo accounts:</div>
-      <div class="row" aria-label="Demo accounts">
-        <button class="chip" data-fill="user@example.com">user@example.com</button>
-        <button class="chip" data-fill="admin@example.com">admin@example.com</button>
-      </div>
-    </section>
-  </main>
-  <script type="module">
-    import { api } from "/js/app.js";
-    const $ = s => document.querySelector(s);
-    document.querySelectorAll('[data-fill]').forEach(b => b.addEventListener('click', ()=>{ $('#email').value = b.dataset.fill; $('#email').focus(); }));
-    $('#form').addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const email = $('#email').value.trim();
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ $('#err').style.display='block'; return; }
-      $('#err').style.display='none';
-      try{
-        const data = await api('/api/auth/login', { method:'POST', body: JSON.stringify({email}) });
-        localStorage.setItem('me', JSON.stringify(data.user));
-        location.href = data.user.role === 'admin' ? '/admin.html' : '/profile.html';
-      }catch(err){ $('#err').textContent='Sign-in failed. Please try again.'; $('#err').style.display='block'; }
-    });
-  </script>
-
-    <script>
-      // Cleanup any old service workers/caches from previous SPA deployments.
-      (function cleanup(){
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "9999px"
+                    },
+                },
+            },
         }
-        if (window.caches && caches.keys) {
-          caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
-        }
-      })();
     </script>
-
-<script type="module" src="/js/nav-patch.js"></script>
-<script type="module" src="/js/redirect-shim.js"></script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-primary dark:text-background-light font-display">
+<div class="relative flex min-h-screen w-full flex-col">
+<div class="layout-container flex h-full grow flex-col">
+<div class="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:px-8">
+<div class="layout-content-container flex flex-1 flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-200 dark:border-neutral-800 px-4 py-4 md:px-6">
+<div class="flex items-center gap-4 text-primary dark:text-background-light">
+<div class="size-4">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">OpenInterview.me</h2>
+</div>
+<a class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden border border-primary bg-background-light px-4 text-sm font-bold leading-normal tracking-[0.015em] text-primary transition-colors hover:bg-primary hover:text-background-light dark:border-background-light dark:bg-background-dark dark:text-background-light dark:hover:bg-background-light dark:hover:text-background-dark" href="#">
+<span class="truncate">Sign In</span>
+</a>
+</header>
+<main class="flex flex-col gap-16 py-16 md:gap-24 md:py-24">
+<section class="flex flex-col items-center gap-8 px-4 text-center md:gap-12">
+<div class="flex flex-col items-center gap-4">
+<h1 class="text-4xl font-black leading-tight tracking-tighter md:text-6xl">
+                                    The Modern Interview. <br/>Shared Simply.
+                                </h1>
+<p class="max-w-xl text-base font-normal leading-normal text-neutral-600 dark:text-neutral-400 md:text-lg">
+                                    Create and share your video interview with recruiters in minutes. Start by uploading your resume.
+                                </p>
+</div>
+<div class="w-full max-w-2xl px-4 py-8">
+<div class="flex flex-col items-center gap-6 rounded-none border-2 border-dashed border-neutral-300 dark:border-neutral-700 p-8 md:p-14">
+<div class="flex max-w-[480px] flex-col items-center gap-2">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em]">Drag &amp; drop your resume here</p>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">or</p>
+</div>
+<button class="flex h-12 min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden bg-primary px-6 text-sm font-bold leading-normal tracking-[0.015em] text-background-light transition-opacity hover:opacity-80 dark:bg-background-light dark:text-background-dark">
+<span class="truncate">Browse Files</span>
+</button>
+</div>
+</div>
+</section>
+<section class="flex flex-col items-center gap-8 px-4 md:gap-12">
+<div class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+<div class="flex flex-1 flex-col gap-2 rounded-none border border-neutral-200 dark:border-neutral-800 p-6">
+<h2 class="text-lg font-bold leading-tight">Record Once, Share Endlessly</h2>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">Save time by creating one professional video interview you can share with multiple companies.</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-none border border-neutral-200 dark:border-neutral-800 p-6">
+<h2 class="text-lg font-bold leading-tight">Present Your Best Self</h2>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">A dedicated platform designed to showcase your communication skills and personality professionally.</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-none border border-neutral-200 dark:border-neutral-800 p-6">
+<h2 class="text-lg font-bold leading-tight">Seamless for Recruiters</h2>
+<p class="text-sm font-normal leading-normal text-neutral-600 dark:text-neutral-400">Make it easy for hiring managers to review your interview with a simple, shareable link.</p>
+</div>
+</div>
+</section>
+<section class="flex flex-col items-center gap-8 px-4">
+<h4 class="text-sm font-bold leading-normal tracking-wider text-neutral-500 dark:text-neutral-400">TRUSTED BY</h4>
+<div class="flex w-full flex-wrap items-center justify-center gap-x-12 gap-y-8 md:gap-x-16">
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Transistor logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9qxlB8uVtEmZW_Y1BLQFrQJJ6xSzgJ4j0K0YGDmeDar6z_GC7n1QWqJycwUfNlqtCDwO2BFWn6fVx9Cti4GgU5u9iEz-Xchh94y1WxZcU5He-XyaTT-pkJP-jeqmSSUML3Vm2UU3XiWzPUJWcf0LqRS6ba-0_vSaMBmAulfjbmPg3BCybcgctYWjsc4LVCtbO-5z_WLiv07UXkvsEgSQli2_KVvgEc2L6m5PR3-lWsijKBamOmQP-0mFJRhri9pnA18evgEgg3co"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Reform logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARq64EgE_B4ijfttlig3FyOlxksW3JOjfvk9Q9UthXp6H5kOz3crHnxcbJhLPpXaOt5kWPwGA7-M1r9b8v-De-HYetLEyNdK2KfKEUtybDqe49L3t8AZHdNTGQHRL1YtvtgQTpO_3qGUhtYIIBtwKr3QwB0DddL7jLhcuEIePkGuJWAoHNQghgKVKNTZDvfUE3Bf86h0NJrGCAJ_jjMIx3Q9qhxomC5sZdC3HOXS8MMEuYvWC3NpnZVhvIXgJIqeaH4xUFq3PwrDU"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="SavvyCal logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZDxNEkGv91ABymgi89N_KxYbCXYx-cKR_zaopLPzo71zuLKKMVAoctGM0-uePGG-VRiLlvuE5tTBFaiXIlMCSPYlxmOVMcUod_8YqYSYBxYvTKf3tK7k6wASnxmRMaSLiwAkunthPJcjRSqy9DfV0K9cNr8658gdhWVGx2CuZ0kx0GVwrMwAIsy9u0Pt7jNSzll9fDoJdrT7ehhbkJhf_j7PRpfSAM7l-_NPBTyAoRydBtfWFkhEO0bBskXmfTCqsU044xl14Ew"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Tuple logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZl-VlgGxBZx4iO_UCCNXjaIGDSUcVps1-FyhTa0Hl3WnZEYOTq_p8B0_bYKNPDjaFJkJ8gom2q4zF38hkLG29yg-1HQV5geQ3MXu1OEmCscqn8f1qSZPgrOZSTpQPBIioZ9LkwcJ0q-aqZLJs0_gx-ZcuswGgdSroBEjZKkKmFUnaHA_agmMhcRrEj6T0CgUYTKMWesJuq7FaCvbuUQqZqAA9zH9omgS3oQ8p4PvFuDzUPrGakpM0vDEwmc1s56o0nWyqDhLntE"/>
+<img class="h-6 w-auto flex-shrink-0 object-contain brightness-0 invert-[.60] dark:brightness-100 dark:invert-0" data-alt="Statamic logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOLSui2BXq4K_lRyV-iiAcyq6xdbAvQ7wmH8eVC9FggVIQCOPjlotautyg94hQ62CkuP1Ox2CjWcGQdQBgw9phRtSFgRJBMt9ffZEORhx-K7lHmq2l0D8aOmTXGcXiSRPAXjaU0DpSWIHFPjXs0p0aNA_D25_vYQlCW2OJl2_W0_EnKsbBkLTxquw-H_N4P0Wsgzlg-pyhMYR7vo8kMumDdcKqb4upBQSRe9FqkxiK3UYXDdXAe6dx2cVBSOhXrbtRNbhCJ4F8oWw"/>
+</div>
+</section>
+</main>
+<footer class="border-t border-neutral-200 dark:border-neutral-800 px-4 py-8 text-center sm:px-6 lg:px-8">
+<div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+<p class="text-xs text-neutral-500 dark:text-neutral-400">© 2024 OpenInterview.me. All rights reserved.</p>
+<nav class="flex gap-4">
+<a class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-background-light" href="#">About</a>
+<a class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-background-light" href="#">Privacy Policy</a>
+<a class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-background-light" href="#">Contact</a>
+</nav>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</div>
 </body></html>

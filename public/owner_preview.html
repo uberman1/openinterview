@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+            "foreground-light": "#141414",
+            "foreground-dark": "#f7f7f7",
+            "subtle-light": "#e5e5e5",
+            "subtle-dark": "#2a2a2a",
+            "muted-light": "#737373",
+            "muted-dark": "#a3a3a3",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem", //8px
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+<div class="lg:grid lg:grid-cols-12 lg:gap-16">
+<main class="lg:col-span-8 space-y-12">
+<section class="mb-12">
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+<div class="text-center sm:text-left">
+<h2 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Welcome, Ethan!</h2>
+<p class="text-muted-light dark:text-muted-dark mt-1">This is your public interview page. Click 'Edit Profile' to get started.</p>
+</div>
+<div class="flex items-center space-x-4 flex-shrink-0">
+<button data-action="edit-profile" class="bg-background-light dark:bg-subtle-dark border border-subtle-light dark:border-subtle-dark text-foreground-light dark:text-foreground-dark font-bold py-2 px-6 rounded-lg hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors">Edit Profile</button>
+<button data-action="share-profile" class="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition-colors">Share</button>
+</div>
+</div>
+</section>
+<div>
+<div class="relative aspect-video w-full">
+<div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk");'></div>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110">
+<svg class="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+<path d="M6.3 20.3V3.7L20.3 12L6.3 20.3Z"></path>
+</svg>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 p-6 text-white">
+<h1 class="text-3xl font-bold" data-field="person.name">Ethan Carter</h1>
+<p class="text-lg text-white/80" data-field="title">Senior Product Designer</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+<section>
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Attachments</h2>
+<div class="space-y-4" data-field="attachments">
+</div>
+</section>
+<section>
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Highlights</h2>
+<ul class="space-y-4" data-field="highlights">
+</ul>
+</section>
+</div>
+<section class="space-y-6">
+<h2 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Resume</h2>
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg overflow-hidden">
+<div class="bg-background-light dark:bg-subtle-dark p-4 sm:p-6">
+<div class="aspect-[8.5/11] bg-white dark:bg-background-dark shadow-md rounded-md p-8 text-foreground-light dark:text-foreground-dark" data-field="resume">
+</div>
+</div>
+</div>
+</section>
+</main>
+<aside class="lg:col-span-4 mt-12 lg:mt-0">
+<div class="sticky top-12 space-y-12">
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+<div class="text-center space-y-4">
+<img alt="Ethan Carter" class="w-24 h-24 rounded-full mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOyBBUWv-aZFP72bm6P1T0ooUqEElaCh-Z96b7war0IQSiII9PCL1cbQ3i46GqnnWPy4YZtRhZ8FfYw8hdnctP4i1UtYTsDYv8cqwt99zRPuo-o0W4JsZ6LYMBJxzjLzZmN94uXVV8j3h5eatY5GgIacHoEHFgW16iTY1_ddWTvBf8uRGO0-5FbIqgtP1XbJZJ-IgkJYlcTkQdKghrCgOQ9uZ9Hm36hxOzOFQWoM4BoLGXCCdnZYsLl12-E-VKce8Z3uml36Ei8c4"/>
+<div>
+<h3 class="text-xl font-bold text-foreground-light dark:text-foreground-dark" data-field="person.name">Ethan Carter</h3>
+<p class="text-muted-light dark:text-muted-dark" data-field="title">Senior Product Designer</p>
+<p class="text-sm text-muted-light dark:text-muted-dark" data-field="location">San Francisco, CA</p>
+</div>
+</div>
+<p class="text-center text-muted-light dark:text-muted-dark" data-field="about">Experienced product designer with a passion for creating intuitive and impactful user experiences.</p>
+</div>
+</div>
+</aside>
+</div>
+</div>
+
+<!-- Share Modal -->
+<div id="share-modal" class="fixed inset-0 bg-black/30 dark:bg-black/50 hidden items-center justify-center">
+    <div class="relative flex w-full max-w-md flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl">
+        <button data-action="close-share-modal" class="absolute top-4 right-4 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="p-8 pt-12 md:p-10 md:pt-14">
+            <div class="flex flex-col gap-8">
+                <div>
+                    <p class="text-3xl font-black leading-tight tracking-tighter text-primary dark:text-neutral-50">Share Profile</p>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <label class="flex flex-col">
+                        <p class="text-sm font-medium pb-2 text-primary dark:text-neutral-50">Email</p>
+                        <input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-800 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 text-base font-normal" placeholder="Enter email address" value=""/>
+                    </label>
+                    <label class="flex flex-col">
+                        <p class="text-sm font-medium pb-2 text-primary dark:text-neutral-50">Message</p>
+                        <textarea class="form-input flex w-full resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-800 min-h-32 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-4 text-base font-normal" placeholder="Add a personal message (optional)"></textarea>
+                    </label>
+                </div>
+                <div>
+                    <button data-action="send-invite" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-neutral-50 text-base font-bold leading-normal tracking-wide hover:bg-primary/90 dark:hover:bg-primary/80 transition-colors">
+                        <span class="truncate">Send Invite</span>
+                    </button>
+                </div>
+                <div class="flex items-center gap-4">
+                    <hr class="flex-grow border-t border-gray-200 dark:border-gray-700"/>
+                    <span class="text-xs text-gray-400 dark:text-gray-500">OR</span>
+                    <hr class="flex-grow border-t border-gray-200 dark:border-gray-700"/>
+                </div>
+                <div>
+                    <button data-action="copy-link" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-100 dark:bg-gray-800 text-primary dark:text-neutral-50 text-base font-bold leading-normal tracking-wide hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <span class="truncate">Copy Link to Profile</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Limit Reached Modal -->
+<div id="limit-reached-modal" class="fixed inset-0 bg-black/30 dark:bg-black/50 hidden items-center justify-center">
+    <div class="relative flex w-full max-w-md flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl">
+        <button data-action="close-limit-reached-modal" class="absolute top-4 right-4 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="p-8 pt-12 md:p-10 md:pt-14 text-center">
+            <h1 class="text-primary dark:text-neutral-50 tracking-light text-[32px] font-bold leading-tight">You've reached your limit</h1>
+            <p class="text-primary dark:text-neutral-300 text-base font-normal leading-normal pt-2">To continue sharing this profile, complete your account setup.</p>
+        </div>
+        <div class="px-8 md:px-10">
+            <hr class="border-t border-gray-200 dark:border-gray-700"/>
+        </div>
+        <div class="flex p-8 md:p-10">
+            <button data-action="continue" class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-black/80 dark:bg-neutral-50 dark:text-primary dark:hover:bg-neutral-200 transition-colors">
+                <span class="truncate">Continue</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-24 pb-12 text-center text-sm text-muted-light dark:text-muted-dark">
+<div class="flex items-center justify-center space-x-4">
+<p>Powered by OpenInterview.me</p>
+<div class="w-16 h-16 p-1 border border-subtle-light dark:border-subtle-dark rounded-lg">
+<div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDB0gLGf771ZSa4HeTQVhxqjiV26vkvloQjJkhObHc037el4R_sXAUDay1PTiHf6QH35fMwpqo4eEBnVan4AQi2aJzvCQ9r4flDOVtWvqxLqrlZijNcaSC3PFnpT_xEQ-SUzEjy3A6i3w3mHrGMupK3JDMuFyu-44Sb9TNz1MzvRDwfueX0Vw5m9xbT8QRS2ZxSmBaKQIHetUZMNQCvDzHeBtBrV2W54NU-8mDOXHllN0ihTBxlA4AeIvNWRO-99uHoxC-Pzqr9vck");'></div>
+</div>
+</div>
+</footer>
+
+</body></html>
