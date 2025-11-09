@@ -7,13 +7,6 @@ on:
     branches: [ main, master, develop ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
-concurrency:
-  group: e2e-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -26,45 +19,43 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci || npm install
 
-      # If you DO have a CI DB, uncomment and set it here:
-      # - name: Set DB env (optional)
-      #   run: |
-      #     echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+      # If you have a DB for CI, uncomment and add your secret:
+      # - name: Configure DATABASE_URL (optional)
+      #   run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
-      - name: Start server (real or mock)
+      - name: Start server (real if DATABASE_URL set, else mock)
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
           PORT=5000
 
           if [ -n "${DATABASE_URL:-}" ]; then
-            echo "Starting REAL server (DATABASE_URL is set)"
+            echo "Starting REAL server"
             (NODE_ENV=test PORT=$PORT npm start > server.log 2>&1 &)
           else
-            echo "Starting MOCK server (no DATABASE_URL)"
+            echo "Starting MOCK server"
 cat > mock-server.mjs <<'EOF'
 import express from 'express';
-
 const app = express();
 app.use(express.json());
 
-// --- simple auth ---
+// auth guard
 function ensureAuth(req, res, next) {
   const auth = req.headers.authorization || '';
   if (auth === 'Bearer dev') return next();
   return res.status(401).json({ error: 'unauthorized' });
 }
 
-// --- simple in-memory rate limiter for /book ---
-const buckets = new Map(); // key -> timestamps[]
-const MAX = 5; // allow 5, 6th => 429
-const WINDOW = 60 * 60 * 1000; // 1h
+// in-memory rate limit for /book
+const buckets = new Map();
+const MAX = 5;
+const WINDOW = 60 * 60 * 1000;
 
 function rateLimitBook(req, res, next) {
   const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
@@ -81,18 +72,11 @@ function rateLimitBook(req, res, next) {
   next();
 }
 
-// --- endpoints used by tests ---
+// endpoints used by tests
 app.get('/api/v1/scheduler/test', (req, res) => res.json({ ok: true }));
-
-app.post('/api/v1/auth/login', (req, res) => {
-  res.json({ token: 'dev' });
-});
-
+app.post('/api/v1/auth/login', (req, res) => res.json({ token: 'dev' }));
 const bookings = [];
-app.get('/api/v1/scheduler/bookings', ensureAuth, (req, res) => {
-  res.json({ bookings });
-});
-
+app.get('/api/v1/scheduler/bookings', ensureAuth, (req, res) => res.json({ bookings }));
 app.post('/api/v1/scheduler/book', rateLimitBook, (req, res) => {
   const { userId, startTimeUtc, endTimeUtc, name, email } = req.body || {};
   if (!userId || !startTimeUtc || !endTimeUtc || !name || !email) {
@@ -103,11 +87,7 @@ app.post('/api/v1/scheduler/book', rateLimitBook, (req, res) => {
   bookings.push({ userId, startTimeUtc, endTimeUtc, name, email });
   res.json({ ok: true });
 });
-
-app.post('/api/v1/test/reset-rate-limit', (req, res) => {
-  buckets.clear();
-  res.json({ ok: true });
-});
+app.post('/api/v1/test/reset-rate-limit', (req, res) => { buckets.clear(); res.json({ ok: true }); });
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log('Mock server listening on', port));
@@ -115,26 +95,21 @@ EOF
             (NODE_ENV=test PORT=$PORT node mock-server.mjs > server.log 2>&1 &)
           fi
 
-          # Wait for health on 5000 or 3000
+          # Wait for server on 5000 or 3000
           for i in {1..90}; do
-            if curl -fsS http://localhost:5000/api/v1/scheduler/test > /dev/null 2>&1; then
-              echo "Detected server on port 5000"
+            if curl -fsS http://localhost:5000/api/v1/scheduler/test >/dev/null 2>&1; then
               echo "TEST_BASE_URL=http://localhost:5000" >> $GITHUB_ENV
-              DETECTED=1
               break
             fi
-            if curl -fsS http://localhost:3000/api/v1/scheduler/test > /dev/null 2>&1; then
-              echo "Detected server on port 3000"
+            if curl -fsS http://localhost:3000/api/v1/scheduler/test >/dev/null 2>&1; then
               echo "TEST_BASE_URL=http://localhost:3000" >> $GITHUB_ENV
-              DETECTED=1
               break
             fi
             sleep 1
           done
 
-          if [ -z "${DETECTED:-}" ]; then
-            echo "Server did not become healthy on 5000 or 3000"
-            echo "---- server.log (tail) ----"
+          if ! curl -fsS "${TEST_BASE_URL:-http://localhost:5000}/api/v1/scheduler/test" >/dev/null 2>&1; then
+            echo "Server did not become healthy."
             tail -n 200 server.log || true
             exit 1
           fi
@@ -144,7 +119,7 @@ EOF
           TEST_BASE_URL: ${{ env.TEST_BASE_URL }}
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
           echo "Using TEST_BASE_URL=${TEST_BASE_URL}"
           if ls tests/*e2e*.mjs >/dev/null 2>&1; then
             node --test tests/*e2e*.mjs
