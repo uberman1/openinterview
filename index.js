@@ -25,8 +25,11 @@ app.use(express.json());
 let db = JSON.parse(readFileSync(path.join(__dirname, "seed.json"), "utf8"));
 
 // Initialize database connection
-const sql = neon(process.env.DATABASE_URL);
-const dbClient = drizzle(sql);
+let sql, dbClient;
+if (process.env.DATABASE_URL) {
+  sql = neon(process.env.DATABASE_URL);
+  dbClient = drizzle(sql);
+}
 
 // Define assets table schema (inline to avoid TypeScript import issues)
 const assets = pgTable("assets", {
@@ -399,6 +402,9 @@ app.delete("/api/files/:id", (req,res)=>{
 
 // Assets (shared resumes and attachments across profiles) - PostgreSQL backed
 app.get("/api/v1/assets", async (req, res) => {
+  if (!dbClient) {
+    return res.status(503).json({ error: "Database not configured" });
+  }
   try {
     const { type } = req.query;
     
@@ -428,6 +434,9 @@ app.get("/api/v1/assets", async (req, res) => {
 });
 
 app.get("/api/v1/assets/:id", async (req, res) => {
+  if (!dbClient) {
+    return res.status(503).json({ error: "Database not configured" });
+  }
   try {
     const result = await dbClient.select().from(assets).where(eq(assets.id, req.params.id));
     
@@ -452,6 +461,9 @@ app.get("/api/v1/assets/:id", async (req, res) => {
 });
 
 app.post("/api/v1/assets", async (req, res) => {
+  if (!dbClient) {
+    return res.status(503).json({ error: "Database not configured" });
+  }
   try {
     const { id, type, name, url, ownerUserId, tags } = req.body || {};
     
@@ -483,6 +495,9 @@ app.post("/api/v1/assets", async (req, res) => {
 });
 
 app.delete("/api/v1/assets/:id", async (req, res) => {
+  if (!dbClient) {
+    return res.status(503).json({ error: "Database not configured" });
+  }
   try {
     const result = await dbClient.delete(assets).where(eq(assets.id, req.params.id)).returning();
     
@@ -820,6 +835,10 @@ app.get("/api/slots", (req,res) => {
 });
 
 export default app;
+
+app.get("/api/v1/scheduler/test", (req, res) => {
+  res.status(200).send("OK");
+});
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const PORT = process.env.PORT || 3000;
