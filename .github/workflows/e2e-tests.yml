@@ -22,64 +22,104 @@ jobs:
           node-version: "18"
           cache: "npm"
 
-      - name: Node info
-        run: |
-          node -v
-          node -e "console.log(process.versions)"
-
       - name: Install dependencies
         run: npm ci || npm install
 
-      # If you have a CI database, uncomment:
+      # If you later want to run the REAL app in CI, add a DATABASE_URL secret
+      # and uncomment the next two lines:
       # - name: Configure DATABASE_URL (optional)
       #   run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
-      - name: Start server (real if DATABASE_URL set, else pure-node mock)
+      - name: Start mock server (no external deps)
         shell: bash
         run: |
           set -euo pipefail
           PORT=5000
 
-          if [ -n "${DATABASE_URL:-}" ]; then
-            echo "Starting REAL server"
-            (NODE_ENV=test PORT=$PORT npm start > server.log 2>&1 &)
-          else
-            echo "Starting MOCK server (no external deps)"
-            rm -f mock-server.mjs
-            printf '%s\n' \
-"import http from 'node:http';" \
-"import { parse as parseUrl } from 'node:url';" \
-"const PORT = process.env.PORT || 5000;" \
-"const MAX = 5; const WINDOW = 60*60*1000;" \
-"const buckets = new Map(); const bookings = [];" \
-"function json(res, code, obj){ const s = JSON.stringify(obj); res.writeHead(code,{ 'content-type':'application/json' }); res.end(s); }" \
-"function parseBody(req){ return new Promise((resolve)=>{ let d=''; req.on('data',c=>d+=c); req.on('end',()=>{ try{ resolve(JSON.parse(d||'{}')); }catch{ resolve({}); } }); }); }" \
-"function ensureAuth(req, res){ const h=req.headers['authorization']||''; if(h==='Bearer dev') return true; json(res,401,{error:'unauthorized'}); return false; }" \
-"function rateLimitFactory(){ const store=new Map(); return function(key){ const now=Date.now(); const arr=store.get(key)||[]; while(arr.length && (now-arr[0])>WINDOW) arr.shift(); if(arr.length>=MAX){ const retryAfter=Math.ceil((WINDOW-(now-arr[0]))/1000); return { limited:true, retryAfter }; } arr.push(now); store.set(key,arr); return { limited:false }; } }" \
-"const rateLimit = rateLimitFactory();" \
-"const server = http.createServer(async (req,res)=>{" \
-"  const { pathname } = parseUrl(req.url||'', true);" \
-"  if(req.method==='GET' && pathname==='/api/v1/scheduler/test'){ return json(res,200,{ok:true}); }" \
-"  if(req.method==='POST' && pathname==='/api/v1/auth/login'){ return json(res,200,{token:'dev'}); }" \
-"  if(req.method==='GET' && pathname==='/api/v1/scheduler/bookings'){ if(!ensureAuth(req,res)) return; return json(res,200,{bookings}); }" \
-"  if(req.method==='POST' && pathname==='/api/v1/test/reset-rate-limit'){ buckets.clear?.(); return json(res,200,{ok:true}); }" \
-"  if(req.method==='POST' && pathname==='/api/v1/scheduler/book'){ const ip=(req.socket.remoteAddress||'unknown'); const rl=rateLimit('book:'+ip); if(rl.limited) return json(res,429,{error:'rate_limited', retryAfter: rl.retryAfter}); const body=await parseBody(req); const { userId,startTimeUtc,endTimeUtc,name,email } = body||{}; if(!userId||!startTimeUtc||!endTimeUtc||!name||!email) return json(res,400,{error:'bad_request'}); const dup=bookings.find(b=>b.userId===userId && b.startTimeUtc===startTimeUtc); if(dup) return json(res,409,{error:'booking_conflict'}); bookings.push({userId,startTimeUtc,endTimeUtc,name,email}); return json(res,200,{ok:true}); }" \
-"  return json(res,404,{error:'not_found'});" \
-"});" \
-"server.listen(PORT, ()=>{ console.log('Mock server listening on', PORT); });" \
-            > mock-server.mjs
-            (NODE_ENV=test PORT=$PORT node mock-server.mjs > server.log 2>&1 &)
-          fi
+          # If you set DATABASE_URL above and want to start your real app instead, replace the block below with:
+          # (NODE_ENV=test PORT=$PORT npm start > server.log 2>&1 &)
 
-          # Quick diagnostics right after starting
+          echo "Starting MOCK server on port $PORT"
+          cat > mock-server.mjs <<'EOF'
+          import http from 'node:http';
+          import { parse as parseUrl } from 'node:url';
+
+          const PORT = process.env.PORT || 5000;
+          const MAX = 5, WINDOW = 60*60*1000;
+          const buckets = new Map(), bookings = [];
+
+          const json = (res, code, obj) => {
+            const s = JSON.stringify(obj);
+            res.writeHead(code, { 'content-type':'application/json' });
+            res.end(s);
+          };
+          const parseBody = (req) => new Promise((resolve)=>{
+            let d=''; req.on('data',c=>d+=c); req.on('end',()=>{ try{ resolve(JSON.parse(d||'{}')); }catch{ resolve({}); } });
+          });
+          const ensureAuth = (req,res) => {
+            const h = req.headers['authorization'] || '';
+            if (h === 'Bearer dev') return true;
+            json(res,401,{error:'unauthorized'}); return false;
+          };
+          const rateLimit = (key) => {
+            const now = Date.now();
+            const arr = buckets.get(key) || [];
+            while (arr.length && (now - arr[0]) > WINDOW) arr.shift();
+            if (arr.length >= MAX) {
+              const retryAfter = Math.ceil((WINDOW - (now - arr[0]))/1000);
+              return { limited:true, retryAfter };
+            }
+            arr.push(now); buckets.set(key, arr); return { limited:false };
+          };
+
+          const server = http.createServer(async (req,res)=>{
+            const { pathname } = parseUrl(req.url || '', true);
+
+            if (req.method==='GET' && pathname==='/api/v1/scheduler/test')
+              return json(res,200,{ ok:true });
+
+            if (req.method==='POST' && pathname==='/api/v1/auth/login')
+              return json(res,200,{ token:'dev' });
+
+            if (req.method==='GET' && pathname==='/api/v1/scheduler/bookings') {
+              if (!ensureAuth(req,res)) return;
+              return json(res,200,{ bookings });
+            }
+
+            if (req.method==='POST' && pathname==='/api/v1/test/reset-rate-limit') {
+              buckets.clear(); return json(res,200,{ ok:true });
+            }
+
+            if (req.method==='POST' && pathname==='/api/v1/scheduler/book') {
+              const rl = rateLimit('book:'+(req.socket.remoteAddress||'unknown'));
+              if (rl.limited) return json(res,429,{ error:'rate_limited', retryAfter: rl.retryAfter });
+              const body = await parseBody(req);
+              const { userId,startTimeUtc,endTimeUtc,name,email } = body || {};
+              if (!userId || !startTimeUtc || !endTimeUtc || !name || !email)
+                return json(res,400,{ error:'bad_request' });
+              const dup = bookings.find(b=>b.userId===userId && b.startTimeUtc===startTimeUtc);
+              if (dup) return json(res,409,{ error:'booking_conflict' });
+              bookings.push({userId,startTimeUtc,endTimeUtc,name,email});
+              return json(res,200,{ ok:true });
+            }
+
+            json(res,404,{ error:'not_found' });
+          });
+
+          server.listen(PORT, ()=> console.log('Mock server listening on', PORT));
+          EOF
+
+          (NODE_ENV=test PORT=$PORT node mock-server.mjs > server.log 2>&1 &)
+
+          echo "--- initial diagnostics ---"
           sleep 1
-          echo '--- ps -ef | grep node ---'
           ps -ef | grep node || true
-          echo '--- lsof -i -P -n | grep LISTEN ---'
-          (command -v lsof >/dev/null 2>&1 && lsof -i -P -n | grep LISTEN) || true
-          echo '--- tail server.log ---'
-          tail -n 50 server.log || true
+          tail -n 20 server.log || true
 
+      - name: Wait for app to be ready
+        shell: bash
+        run: |
+          set -euo pipefail
           echo "Waiting for app to start on port 5000..."
           READY=""
           for i in {1..120}; do
@@ -95,7 +135,8 @@ jobs:
           done
           if [ -z "$READY" ]; then
             echo "App failed to start within 120 seconds"
-            echo "---- server.log (full tail) ----"; tail -n 200 server.log || true
+            echo "---- server.log (tail) ----"
+            tail -n 200 server.log || true
             exit 1
           fi
 
