@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "csp": "present"
+    },
+    {
+      "pan_leak": "none"
+    },
+    {
+      "last4": "4242"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# profile_pagev2.html — Test Deployment
+Date: 2025-10-08
+
+What this file implements:
+- Sticky hero with **gentle shrink on scroll** (natural page scroll; no body overflow lock).
+- Explicit **spacing** between the hero and the scroll content (small spacer div).
+- Calendar that **always renders**: uses API slots if available, else falls back to sensible static times.
+- Additive classing; stable ID-based selectors to avoid binder conflicts.
+
+Usage:
+- Drop `profile_pagev2.html` into your static/template path and route to it for testing.
+- Pass `?handle=<handle>` to exercise `/api/public/profile/:handle` + `/api/availability?userId=...`.

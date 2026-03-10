@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Profiles — OpenInterview</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:#fff; color:#111; }
+    header, main { max-width: 1040px; margin: 0 auto; padding: 16px; }
+    .card { border:1px solid #111; border-radius:12px; padding:16px; }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .btn { padding:10px 14px; border-radius:8px; border:1px solid #111; background:#111; color:#fff; cursor:pointer; }
+    .btn.secondary { background:#fff; color:#111; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { border:1px solid #111; padding:8px; text-align:left; }
+    caption { text-align:left; font-weight:600; margin-bottom:8px; }
+    #profiles_container, #profiles_table { display:block !important; visibility:visible !important; }
+    .muted { color:#666; font-size:14px; }
+    .hidden { display:none; }
+    .sr-only { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+  </style>
+</head>
+<body>
+  <header>
+    <a id="back_to_home" href="/" class="muted">&larr; Home</a>
+    <h1 id="page_h1">Profiles</h1>
+    <p class="muted">Create, edit, and publish your profiles.</p>
+  </header>
+
+  <main id="content">
+    <section class="card" aria-labelledby="table_h">
+      <div class="row" style="justify-content:space-between;align-items:flex-end;">
+        <h2 id="table_h">Your Profiles</h2>
+        <button id="new_profile_btn" class="btn">New Profile</button>
+      </div>
+
+      <div id="errors" class="muted" role="alert" aria-live="assertive"></div>
+
+      <div id="profiles_container" aria-live="polite">
+        <table id="profiles_table">
+          <caption class="sr-only">List of profiles</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
+              <th scope="col">Updated</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="profiles_tbody">
+            <tr><td colspan="5" class="muted" id="loading_row">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="editor" class="card" aria-labelledby="editor_h">
+      <h2 id="editor_h">Editor</h2>
+      <form id="profile_form">
+        <label for="name">Name</label><br/>
+        <input id="name" name="name" required /><br/><br/>
+        <label for="role">Role</label><br/>
+        <input id="role" name="role" required /><br/><br/>
+        <button id="save_btn" type="submit" class="btn">Save</button>
+        <button id="publish_btn" type="button" class="btn secondary">Publish</button>
+        <span id="form_status" class="muted" role="status" aria-live="polite"></span>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const tbody = document.getElementById('profiles_tbody');
+    const loadingRow = document.getElementById('loading_row');
+    const container = document.getElementById('profiles_container');
+    const table = document.getElementById('profiles_table');
+    const errors = document.getElementById('errors');
+    const form = document.getElementById('profile_form');
+    const formStatus = document.getElementById('form_status');
+    const newBtn = document.getElementById('new_profile_btn');
+    const publishBtn = document.getElementById('publish_btn');
+
+    const protectVisibility = () => {
+      container.style.display = 'block';
+      table.style.display = 'table';
+      container.style.visibility = 'visible';
+      table.style.visibility = 'visible';
+      container.hidden = false;
+      table.hidden = false;
+    };
+
+    protectVisibility();
+
+    function renderRows(items){
+      tbody.innerHTML = '';
+      for (const p of items){
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>'+p.name+'</td><td>'+p.role+'</td><td>'+p.status+
+                       '</td><td>'+p.updated+'</td><td><button class="btn secondary edit_btn" data-id="'+p.id+'">Edit</button></td>';
+        tbody.appendChild(tr);
+      }
+      protectVisibility();
+    }
+
+    function loadProfiles(){
+      protectVisibility();
+      try {
+        setTimeout(()=>{
+          const data = [
+            { id: 'p1', name:'Jordan Lee', role:'PM', status:'Draft', updated:'2025-10-09' },
+            { id: 'p2', name:'Casey Kim', role:'Engineer', status:'Published', updated:'2025-10-10' }
+          ];
+          renderRows(data);
+        }, 300);
+      } catch (e){
+        errors.textContent = 'Failed to load profiles.';
+        protectVisibility();
+      }
+    }
+
+    document.addEventListener('visibilitychange', protectVisibility);
+    window.addEventListener('focus', protectVisibility);
+    window.addEventListener('pageshow', protectVisibility);
+    new MutationObserver(protectVisibility).observe(document.body, { childList:true, subtree:true, attributes:true });
+
+    newBtn.addEventListener('click', () => {
+      document.getElementById('name').value = '';
+      document.getElementById('role').value = '';
+      formStatus.textContent = 'Ready to create a new profile';
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const role = document.getElementById('role').value.trim();
+      if(!name || !role){ errors.textContent='Name and Role are required'; return; }
+      formStatus.textContent = 'Saved';
+      protectVisibility();
+    });
+
+    publishBtn.addEventListener('click', ()=>{
+      formStatus.textContent = 'Published';
+      try {
+        localStorage.setItem('last_published_profile', JSON.stringify({ name: document.getElementById('name').value || 'Jordan Lee'}));
+      } catch(e){}
+    });
+
+    loadProfiles();
+  </script>
+</body>
+</html>

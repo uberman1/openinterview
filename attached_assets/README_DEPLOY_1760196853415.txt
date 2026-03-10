@@ -1,0 +1,36 @@
+Subscription Pack — Stripe Mock Integration (v0.1.1)
+===========================================================
+
+What this bundle does
+- Adds an optional Stripe mock path to the Subscription pack behavior tests.
+- Bumps contract version to v0.1.1.
+- Leaves protected UI and existing flows untouched.
+- No card data stored; still last4-only in UI.
+
+Files in this bundle
+- subscription_mock.patch  → git patch (contract.yml, tests_behavior.py, run.py)
+- subscription_pack/mock_stripe.py → minimal mock driver (create_checkout_session, emit_webhook)
+- deploy.sh → one-shot script to apply the patch and run tests (both modes)
+- RUN.md → quick instructions
+
+How to deploy (manual)
+1) Move this zip to your repo root and unzip.
+2) Ensure you already have subscription_pack/* from the previous version.
+3) Apply patch:
+   git apply --reject --whitespace=fix subscription_mock.patch || true
+   # If any .rej files appear, open and apply the tiny changes manually.
+4) Place the mock module:
+   mkdir -p subscription_pack
+   cp subscription_pack/mock_stripe.py ./subscription_pack/mock_stripe.py
+
+Run tests
+- Non-mock (existing behavior):
+    python subscription_pack/run.py
+- Mock mode (uses mock_stripe.py):
+    export STRIPE_MOCK=1
+    python subscription_pack/run.py
+
+Expected
+- qa/subscription/v0.1.1/* created, all suites PASS.
+- test2.html updated — Subscription section has v0.1.1 (appends " (mock)" when STRIPE_MOCK=1).
+- qa/_state/session.json keeps subscription.status=active, plan=pro.

@@ -1,0 +1,25 @@
+{
+  "name": "openinterview-profile-v4-1",
+  "version": "4.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node guardrails/verify-ui.js && jest --runInBand",
+    "guardrails": "node guardrails/verify-ui.js",
+    "deploy": "npm run guardrails && echo '\u2705 Guardrails passed. Starting server...' && node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jsdom": "^24.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "<rootDir>/tests/jest.setup.js"
+    ]
+  }
+}

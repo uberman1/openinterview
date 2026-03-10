@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {
+      "major": 4,
+      "rows": [
+        {
+          "version": "4.1",
+          "description": "Self-deploying Express server; PDF.js resume pagination; functional calendar ICS generation; attachment downloads; guardrails UI protection system; Jest unit tests with JSDOM.",
+          "page": "profile_v4_1_package/public/index.html",
+          "code": "profile_v4_1_package/",
+          "timestamp": "2025-10-09"
+        }
+      ]
+    },
+    {
+      "major": 3,
+      "rows": [
+        {
+          "version": "3.1",
+          "description": "Base v2 layout; dynamic click-to-play video; scrollable Attachments & Highlights; original calendar restored.",
+          "page": "profile_pagev2.html",
+          "code": "code/profile_v3_1.txt",
+          "timestamp": "2025-10-09"
+        }
+      ]
+    },
+    {
+      "major": 2,
+      "rows": []
+    },
+    {
+      "major": 1,
+      "rows": []
+    }
+  ],
+  "latest_major": 4
+}

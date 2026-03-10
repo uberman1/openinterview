@@ -1,0 +1,29 @@
+✅ Availability Pack v0.1.0 Deployment Summary
+
+Status: 100% PASS (all 5 test suites)
+- Contract: PASS
+- Behavior: PASS (prerequisite: subscription active ✓)
+- A11y: PASS
+- Security: PASS
+- Visual: PASS (3 baselines)
+
+Cross-Pack Dependencies:
+- Subscription Pack → Availability Pack (enforced via prereq_subscription_active())
+
+E2E State Updates:
+- qa/_state/session.json now tracks: password_reset, subscription, availability
+
+Key Features:
+- Slot selection UI with timezone support
+- Confirm/cancel flows with page redirects
+- CSP headers and security compliance
+- ARIA attributes for accessibility
+- Visual regression baselines (3 pages)
+
+Artifacts:
+- Test results: qa/availability/v0.1.0/tests.txt
+- Baselines: qa/availability/v0.1.0/baselines/*.png
+- test2.html: Updated with v0.1.0 row
+
+Guardrails: ✅ Verified (13/13 files match)
+

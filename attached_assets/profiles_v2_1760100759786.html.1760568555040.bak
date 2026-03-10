@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profiles v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --fg:#141414; --border:#e5e7eb; --muted:#f5f5f5; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--fg); }
+    .container{ max-width:1080px; margin:0 auto; padding:24px; }
+    h1{ margin:0 0 16px 0; }
+    table{ width:100%; border-collapse:collapse; }
+    th, td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); }
+    .badge{ display:inline-block; font-size:12px; padding:2px 8px; border:1px solid var(--border); border-radius:999px; background:var(--muted); }
+    a.link{ color:inherit; text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Profiles</h1>
+    <table id="profilesTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Last Updated</th>
+          <th>Test file</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="profilesTbody"></tbody>
+    </table>
+  </div>
+
+  <script type="module">
+    async function fetchJSON(url, init) {
+      const r = await fetch(url, { headers:{'Content-Type': 'application/json'}, ...init });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }
+
+    const API_BASE = ''; // same origin
+
+    function titleFromProfile(p) {
+      if (p.title && p.title.trim().length) return p.title.trim();
+      const s = (p.summary || '').replace(/\s+/g, ' ').trim();
+      return s ? s.slice(0, 60) + (s.length > 60 ? '…' : '') : `Profile ${p.id}`;
+    }
+
+    function testFileHref(profileId) {
+      // Prefer per-profile summary; fallback link kept visible.
+      return `/test_output/profile-${profileId}.summary.md`;
+    }
+
+    async function loadProfiles() {
+      const profiles = await fetchJSON(`${API_BASE}/api/profiles`);
+      const tbody = document.getElementById('profilesTbody');
+      tbody.innerHTML = '';
+
+      profiles.forEach(p => {
+        const tr = document.createElement('tr');
+
+        const tdTitle = document.createElement('td');
+        tdTitle.textContent = titleFromProfile(p);
+
+        const tdStatus = document.createElement('td');
+        tdStatus.innerHTML = `<span class="badge">${p.status || 'draft'}</span>`;
+
+        const tdUpdated = document.createElement('td');
+        const d = new Date(p.updated_at || p.created_at);
+        tdUpdated.textContent = isNaN(d) ? '' : d.toLocaleString();
+
+        const tdTest = document.createElement('td');
+        const a = document.createElement('a');
+        a.href = testFileHref(p.id);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'link';
+        a.textContent = 'View test output';
+        tdTest.appendChild(a);
+
+        const tdActions = document.createElement('td');
+        const open = document.createElement('a');
+        open.href = `/profile/${p.id}`; // adapt to your routing
+        open.className = 'link';
+        open.textContent = 'Open';
+        tdActions.appendChild(open);
+
+        tr.append(tdTitle, tdStatus, tdUpdated, tdTest, tdActions);
+        tbody.appendChild(tr);
+      });
+    }
+
+    loadProfiles();
+  </script>
+</body>
+</html>

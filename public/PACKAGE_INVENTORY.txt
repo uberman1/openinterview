@@ -1,0 +1,109 @@
+OPENINTERVIEW APPLICATION - COMPLETE PACKAGE INVENTORY
+======================================================
+
+Download Files:
+---------------
+1. openinterview-application.tar.gz (450 KB) - Complete application archive
+2. DOWNLOAD_PACKAGE_README.md (6 KB) - Setup and usage instructions
+3. PACKAGE_INVENTORY.txt (this file) - File inventory
+
+Archive Contents (447 files total):
+------------------------------------
+
+PUBLIC PAGES (HTML):
+- home.html - Main dashboard
+- login.html - Login page  
+- password.html - Password management
+- subscription.html - Subscription settings
+- availability.html - Availability editor
+- profiles.html - Profile management
+- profile_edit.html - Profile editor
+- public_profile.html - Public profile view
+- booking_manage.html - Booking management
+- uploads.html - File uploads page
+
+JAVASCRIPT MODULES (public/js/):
+Core Workflow:
+- home-bindings.js - Home page workflow integration
+- data-store.js - LocalStorage data management
+- asset-library.js - File picker and assets
+- profile-editor.js - Inline profile editing
+- availability.js - Availability scheduling
+
+Navigation & UI:
+- nav-patch.js - Navigation unification
+- home.links.bind.js - Dynamic link binding
+- redirect-shim.js - Page redirects
+- header.avatar.bind.js - Avatar management
+
+Feature Scripts:
+- uploads.bind.js - File upload handling
+- subscription.bind.js - Subscription management
+- password.bind.js - Password features
+- profiles.bind.js - Profile management
+- booking_manage.bind.js - Booking features
+
+BACKEND CODE:
+- server/ - Express API backend
+- client/ - React SPA source code
+- shared/ - TypeScript schemas and types
+- adapters/ - Port interfaces
+- mocks/ - Mock implementations
+- config/ - Feature flags
+
+CONFIGURATION:
+- package.json - npm dependencies
+- tsconfig.json - TypeScript config
+- vite.config.ts - Build configuration
+- tailwind.config.ts - Tailwind CSS config
+- drizzle.config.ts - Database ORM
+
+DEPLOYMENT & SCRIPTS:
+- scripts/deploy.mjs - Guardrailed deployment
+- scripts/selftest.mjs - Testing utilities
+- index.js - Main server file
+
+TEST SUITE:
+- tests/playwright/ - E2E tests
+- tests/ - Unit and integration tests
+- profile_v4_1_package/tests/ - Component tests
+
+DATA & ASSETS:
+- public/data/profiles.json - Profile data
+- public/uploads/ - User uploaded files
+- public/css/theme.css - Theme styles
+
+DOCUMENTATION:
+- replit.md - Complete system architecture
+- README.md - Project overview
+- DOWNLOAD_PACKAGE_README.md - Setup guide
+
+HOW TO DOWNLOAD FROM REPLIT:
+-----------------------------
+
+Option 1: Direct Download (Recommended)
+1. Click on "openinterview-application.tar.gz" in the file tree
+2. Click the "..." menu (three dots) in the file viewer
+3. Select "Download"
+4. Save to your computer
+
+Option 2: Multiple Files
+1. Download openinterview-application.tar.gz
+2. Download DOWNLOAD_PACKAGE_README.md
+3. Download PACKAGE_INVENTORY.txt (optional)
+
+Option 3: Git Clone
+1. If this is a Git repository, clone it:
+   git clone <repository-url>
+
+AFTER DOWNLOAD:
+---------------
+1. Extract: tar -xzf openinterview-application.tar.gz
+2. Install: npm install
+3. Configure: Create .env file with required variables
+4. Run: npm run dev
+
+See DOWNLOAD_PACKAGE_README.md for complete setup instructions.
+
+Package Created: October 17, 2025
+Version: Latest with New Interview Workflow

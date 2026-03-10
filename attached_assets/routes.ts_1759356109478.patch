@@ -1,0 +1,5 @@
+// Add this import near other route imports:
++ import { mountDashboardRoutes } from './dashboard.routes';
+
+// Inside registerRoutes(app) AFTER auth is mounted:
++ mountDashboardRoutes(app, API_BASE);

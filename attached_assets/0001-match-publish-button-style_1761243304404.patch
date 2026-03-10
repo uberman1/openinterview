@@ -1,0 +1,16 @@
+From 3c0a2d5 Mon Sep 17 00:00:00 2001
+From: OpenInterview Lead Dev <dev@openinterview.me>
+Date: Thu, 23 Oct 2025 12:00:00 +0000
+Subject: [PATCH] Match "Save & Publish" button style to Edit/Share
+
+--- a/profile_v4_1_package/public/index.html
++++ b/profile_v4_1_package/public/index.html
+@@ -18,7 +18,7 @@
+     </div>
+     <div class="flex items-center gap-3">
+       <button id="btnTplEdit" data-testid="button-template-edit" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Edit</button>
+-      <button id="btnTplPublish" data-testid="button-template-publish" class="h-10 px-5 rounded-lg bg-primary text-white text-sm font-bold">Save &amp; Publish</button>
++      <button id="btnTplPublish" data-testid="button-template-publish" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Save &amp; Publish</button>
+       <button id="btnTplShare" data-testid="button-template-share" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Share</button>
+     </div>
+   </div>

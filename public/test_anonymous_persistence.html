@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous User Persistence Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .test-result {
+            transition: all 0.3s ease;
+        }
+        .test-pass {
+            background-color: #10b981;
+            color: white;
+        }
+        .test-fail {
+            background-color: #ef4444;
+            color: white;
+        }
+        .test-pending {
+            background-color: #f59e0b;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">Anonymous User Persistence Test</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Test Instructions</h2>
+            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                <li>Click "Run Tests" to start the automated test suite</li>
+                <li>The tests will simulate multiple resume uploads</li>
+                <li>Check that returning users reuse the same anonymous ID</li>
+                <li>Verify cookies are properly set and read</li>
+            </ol>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Current Cookie Status</h2>
+            <div id="cookie-status" class="p-4 bg-gray-50 rounded border">
+                <p><strong>Anonymous User ID:</strong> <span id="current-anon-id">Not set</span></p>
+                <p><strong>Cookie Expiration:</strong> <span id="cookie-expiry">N/A</span></p>
+            </div>
+            <button onclick="checkCookieStatus()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Refresh Cookie Status
+            </button>
+            <button onclick="clearCookies()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 ml-2">
+                Clear Cookies
+            </button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Test Results</h2>
+            <div id="test-results" class="space-y-3">
+                <div id="test-1" class="test-result p-4 rounded border">
+                    <strong>Test 1:</strong> First Upload (New Anonymous User) - <span class="status">Pending</span>
+                </div>
+                <div id="test-2" class="test-result p-4 rounded border">
+                    <strong>Test 2:</strong> Second Upload (Reuse Anonymous User) - <span class="status">Pending</span>
+                </div>
+                <div id="test-3" class="test-result p-4 rounded border">
+                    <strong>Test 3:</strong> Upload After Cookie Clear (New Anonymous User) - <span class="status">Pending</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button onclick="runTests()" id="run-tests-btn" class="bg-green-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-green-600 disabled:opacity-50">
+                Run Tests
+            </button>
+        </div>
+
+        <div id="test-log" class="mt-8 bg-black text-green-400 p-4 rounded-lg font-mono text-sm max-h-96 overflow-y-auto hidden">
+            <h3 class="text-white mb-2">Test Log:</h3>
+            <div id="log-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Utility functions
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        function log(message) {
+            const logContent = document.getElementById('log-content');
+            const timestamp = new Date().toLocaleTimeString();
+            logContent.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            logContent.scrollTop = logContent.scrollHeight;
+            document.getElementById('test-log').classList.remove('hidden');
+        }
+
+        function updateTestResult(testId, status, message) {
+            const testElement = document.getElementById(testId);
+            const statusElement = testElement.querySelector('.status');
+            
+            testElement.className = `test-result p-4 rounded border test-${status}`;
+            statusElement.textContent = status.toUpperCase();
+            
+            if (message) {
+                statusElement.textContent += ` - ${message}`;
+            }
+        }
+
+        function checkCookieStatus() {
+            const anonId = getCookie('anonUserId');
+            document.getElementById('current-anon-id').textContent = anonId || 'Not set';
+            
+            if (anonId) {
+                // Try to estimate expiration (we know it's set to 365 days)
+                const now = new Date();
+                const expiry = new Date(now.getTime() + (365 * 24 * 60 * 60 * 1000));
+                document.getElementById('cookie-expiry').textContent = expiry.toLocaleDateString();
+            } else {
+                document.getElementById('cookie-expiry').textContent = 'N/A';
+            }
+        }
+
+        function clearCookies() {
+            document.cookie = 'anonUserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            checkCookieStatus();
+            log('🧹 Cleared all anonymous user cookies');
+        }
+
+        // Create a test file blob
+        function createTestFile(name = 'test-resume.txt') {
+            const content = `Test Resume for Anonymous User Persistence
+            
+Name: Test User
+Email: test@example.com
+Phone: (555) 123-4567
+
+Experience:
+- Software Developer at Test Company (2020-2023)
+- Junior Developer at Another Company (2018-2020)
+
+Skills:
+- JavaScript, Python, React, Node.js
+- Database design and optimization
+- Agile development methodologies
+
+Education:
+- Bachelor of Computer Science, Test University (2018)
+`;
+            return new Blob([content], { type: 'text/plain' });
+        }
+
+        // Test functions
+        async function testFirstUpload() {
+            log('📝 Starting Test 1: First Upload');
+            updateTestResult('test-1', 'pending', 'Running...');
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', createTestFile('first-upload.txt'));
+                
+                const response = await fetch('/api/upload-resume-anon', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.userId && !data.isReturningUser) {
+                    log(`✅ Test 1 PASSED: Created new anonymous user ${data.userId}`);
+                    updateTestResult('test-1', 'pass', `User ID: ${data.userId}`);
+                    return data.userId;
+                } else {
+                    log(`❌ Test 1 FAILED: ${data.error || 'Unexpected response'}`);
+                    updateTestResult('test-1', 'fail', data.error || 'Unexpected response');
+                    return null;
+                }
+            } catch (error) {
+                log(`❌ Test 1 FAILED: ${error.message}`);
+                updateTestResult('test-1', 'fail', error.message);
+                return null;
+            }
+        }
+
+        async function testSecondUpload(expectedUserId) {
+            log('📝 Starting Test 2: Second Upload (Should Reuse User)');
+            updateTestResult('test-2', 'pending', 'Running...');
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', createTestFile('second-upload.txt'));
+                
+                const response = await fetch('/api/upload-resume-anon', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.userId === expectedUserId && data.isReturningUser) {
+                    log(`✅ Test 2 PASSED: Reused anonymous user ${data.userId}`);
+                    updateTestResult('test-2', 'pass', `Reused User ID: ${data.userId}`);
+                    return true;
+                } else {
+                    log(`❌ Test 2 FAILED: Expected ${expectedUserId}, got ${data.userId}, returning: ${data.isReturningUser}`);
+                    updateTestResult('test-2', 'fail', `Expected reuse, got new user`);
+                    return false;
+                }
+            } catch (error) {
+                log(`❌ Test 2 FAILED: ${error.message}`);
+                updateTestResult('test-2', 'fail', error.message);
+                return false;
+            }
+        }
+
+        async function testAfterCookieClear() {
+            log('📝 Starting Test 3: Upload After Cookie Clear');
+            updateTestResult('test-3', 'pending', 'Running...');
+            
+            // Clear cookies first
+            clearCookies();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', createTestFile('third-upload.txt'));
+                
+                const response = await fetch('/api/upload-resume-anon', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.userId && !data.isReturningUser) {
+                    log(`✅ Test 3 PASSED: Created new anonymous user ${data.userId} after cookie clear`);
+                    updateTestResult('test-3', 'pass', `New User ID: ${data.userId}`);
+                    return true;
+                } else {
+                    log(`❌ Test 3 FAILED: Should create new user, got returning: ${data.isReturningUser}`);
+                    updateTestResult('test-3', 'fail', 'Should create new user');
+                    return false;
+                }
+            } catch (error) {
+                log(`❌ Test 3 FAILED: ${error.message}`);
+                updateTestResult('test-3', 'fail', error.message);
+                return false;
+            }
+        }
+
+        async function runTests() {
+            const runButton = document.getElementById('run-tests-btn');
+            runButton.disabled = true;
+            runButton.textContent = 'Running Tests...';
+            
+            log('🚀 Starting Anonymous User Persistence Tests');
+            
+            // Clear previous results
+            ['test-1', 'test-2', 'test-3'].forEach(id => {
+                updateTestResult(id, 'pending', 'Waiting...');
+            });
+            
+            checkCookieStatus();
+            
+            try {
+                // Test 1: First upload
+                const firstUserId = await testFirstUpload();
+                if (!firstUserId) {
+                    log('❌ Cannot continue - first test failed');
+                    return;
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                checkCookieStatus();
+                
+                // Test 2: Second upload (should reuse)
+                const reuseSuccess = await testSecondUpload(firstUserId);
+                
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Test 3: Upload after cookie clear
+                const newUserSuccess = await testAfterCookieClear();
+                
+                // Final status
+                checkCookieStatus();
+                
+                const allPassed = firstUserId && reuseSuccess && newUserSuccess;
+                if (allPassed) {
+                    log('🎉 ALL TESTS PASSED! Anonymous User Persistence is working correctly.');
+                } else {
+                    log('❌ Some tests failed. Check the results above.');
+                }
+                
+            } catch (error) {
+                log(`❌ Test execution failed: ${error.message}`);
+            } finally {
+                runButton.disabled = false;
+                runButton.textContent = 'Run Tests';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkCookieStatus();
+            log('🧪 Anonymous User Persistence Test Page Loaded');
+        });
+    </script>
+</body>
+</html>

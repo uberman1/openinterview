@@ -1,0 +1,14 @@
+{
+  "name": "nav-cleanup-redirect-shim",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "apply": "node apply-nav-cleanup.mjs",
+    "start": "node serve.mjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.2",
+    "express": "^4.19.2"
+  }
+}

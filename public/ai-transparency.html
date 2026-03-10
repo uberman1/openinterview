@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>AI Transparency & Trust | OpenInterview.me</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-neutral-900 dark:text-white antialiased selection:bg-neutral-200 dark:selection:bg-neutral-800">
+    
+    <!-- Header -->
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-200 dark:border-neutral-800 px-4 py-4 md:px-6">
+<a href="/home.html" class="flex items-center gap-4 text-primary dark:text-background-light hover:opacity-80 transition-opacity">
+<div class="h-8 w-auto">
+<img src="/defaults/logo_1.png" alt="OpenInterview Logo" class="h-full w-auto object-contain">
+</div>
+</a>
+<div class="flex flex-1 items-center justify-end gap-6">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/home.html">Home</a>
+          <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/subscription.html">Subscription</a>
+</nav>
+<div id="auth-buttons-container" class="flex items-center gap-4">
+<a href="/login-page.html" id="sign-in-btn" class="flex h-10 items-center justify-center rounded bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors">Sign In</a>
+</div>
+</div>
+      </header>
+
+    <main class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+        
+        <!-- Page Header -->
+        <div class="mb-16 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">AI Transparency & Trust</h1>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400">Understanding how we use AI to help you succeed.</p>
+        </div>
+
+        <!-- Plain English Summary -->
+        <div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-8 mb-12 border border-neutral-200 dark:border-neutral-800">
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-wide text-neutral-500">In Plain English</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span>
+                    <span>AI helps you work faster.</span>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span>
+                    <span>You stay in control.</span>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span>
+                    <span>We don’t sell your data.</span>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-green-600 mt-0.5">check_circle</span>
+                    <span>We don’t make hiring decisions.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <article class="prose prose-neutral dark:prose-invert max-w-none">
+            <p>OpenInterview.me uses artificial intelligence (“AI”) and automated systems to help users create, analyze, and share professional profiles more efficiently. This page explains <strong>how AI is used</strong>, <strong>what it does and does not do</strong>, and <strong>how we protect user trust</strong>.</p>
+            <p>Our goal is transparency, user control, and responsible use.</p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">1. Why We Use AI</h3>
+            <p>AI allows OpenInterview.me to reduce manual work, improve clarity, generate transcripts, and provide suggestions. <strong>AI is used to assist users, not replace human judgment.</strong></p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">2. What AI Is Used For</h3>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Transcribe video and audio recordings</li>
+                <li>Analyze resumes for structure and clarity</li>
+                <li>Generate suggested edits</li>
+                <li>Create summaries</li>
+            </ul>
+            <p>AI outputs are always optional and may be edited, rejected, or ignored by the user.</p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">3. What AI Is NOT Used For</h3>
+            <p>AI is <strong>not</strong> used to:</p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Make hiring decisions</li>
+                <li>Rank or score candidates for employers</li>
+                <li>Determine employment eligibility</li>
+                <li>Guarantee interviews</li>
+            </ul>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">4. Human Control & Responsibility</h3>
+            <p>Users remain fully in control. AI outputs do not publish automatically. You decide what to share.</p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">5. Accuracy & Limitations</h3>
+            <p>AI systems are probabilistic and may produce inaccuracies or omit context. AI outputs should not be treated as factual guarantees.</p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">6. Data Usage & Model Training</h3>
+            <p>OpenInterview.me <strong>does not use user content to train general-purpose AI models</strong>. Data is processed only to provide the requested service.</p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">7. Privacy & Security</h3>
+            <p>AI processing follows our strict privacy and security standards. Data is encrypted and access is restricted.</p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">8. Contact</h3>
+            <p>For AI-related questions: <a href="mailto:trust@openinterview.me" class="text-primary hover:underline dark:text-white">trust@openinterview.me</a></p>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pt-16 pb-12">
+        <!-- Placeholder -->
+    </footer>
+</body>
+</html>

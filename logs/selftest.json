@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "name": "api.health",
+      "ok": true,
+      "detail": {
+        "status": "ok",
+        "env": "development",
+        "version": "0.1.0",
+        "adapters": {
+          "auth": "mock",
+          "storage": "mock",
+          "email": "mock",
+          "payments": "mock"
+        },
+        "flags": {
+          "useMockAdapters": true
+        },
+        "responseTime": "0ms",
+        "timestamp": "2025-09-30T21:06:37.197Z"
+      }
+    },
+    {
+      "name": "profiles.create",
+      "ok": true,
+      "detail": {
+        "profile": {
+          "id": "000003",
+          "name": "Test User",
+          "email": "test@example.com",
+          "createdAt": "2025-09-30T21:06:37.243Z",
+          "updatedAt": "2025-09-30T21:06:37.243Z"
+        }
+      }
+    },
+    {
+      "name": "profiles.list",
+      "ok": true,
+      "count": 3
+    },
+    {
+      "name": "interviews.create",
+      "ok": true
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-09-30T21:06:35.145Z"
+}

@@ -1,0 +1,11 @@
+{
+  "shots": [
+    {
+      "name": "profiles-default",
+      "url": "/profiles_test.html",
+      "diff_ratio": 0.0,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

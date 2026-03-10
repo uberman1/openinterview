@@ -1,0 +1,22 @@
+<!doctype html><html><head>
+<meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/>
+<title>User • Availability</title><link rel='stylesheet' href='/css/theme.css'/></head><body>
+<aside class='sidebar'><div style='font-weight:700;margin-bottom:12px'>OpenInterview.me</div><a class='navlink' href='/profile.html'>Home</a><a class='navlink muted' href='/availability.html'>Availability</a><a class='navlink' href='/profiles.html'>Profiles</a><a class='navlink' href='/uploads.html'>Uploads</a><a class='navlink' href='/subscription.html'>Subscription</a><a class='navlink' href='/password.html'>Password</a><a class='navlink' href='/login.html'>Log Out</a><button class='btn out' style='margin-top:12px' onclick='logout()'>Log Out</button></aside>
+<main class='main'><div class='container'>
+<h1>Availability</h1>
+<div class='section'><h2>Weekly schedule</h2><div id='grid' style='display:grid;grid-template-columns:repeat(7,1fr);gap:8px'></div><button id='save' class='btn' style='margin-top:12px'>Save</button></div>
+</div></main>
+<script type='module'>
+import {api, requireUser} from '/js/app.js';
+const u = requireUser(); const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun']; const grid = document.querySelector('#grid'); let weekly={};
+(async function init(){
+  const data = await api(`/api/availability?userId=${u.id}`); weekly=data.weekly||{};
+  days.forEach(d=>{ const v=(weekly[d]||[]).join(', ');
+    const div=document.createElement('div'); div.className='card'; div.style.padding='10px';
+    div.innerHTML = `<div style="font-weight:600;margin-bottom:6px">${d}</div><input data-day="${d}" class="input" placeholder="e.g. 09:00, 10:00" value="${v}"/>`;
+    grid.appendChild(div);
+  });
+})();
+document.querySelector('#save').onclick = async ()=>{ days.forEach(d=>{ const el=document.querySelector(`[data-day="${d}"]`); weekly[d]=el.value.split(',').map(s=>s.trim()).filter(Boolean); }); await api('/api/availability', {method:'POST', body: JSON.stringify({userId:u.id, weekly, overrides:[]})}); alert('Saved'); };
+</script>
+</body></html>

@@ -1,0 +1,35 @@
+{
+  "contract": {
+    "status": "PASS",
+    "details": {
+      "selectors": 9
+    }
+  },
+  "behavior": {
+    "status": "PASS",
+    "details": {
+      "flows": [
+        "signup",
+        "verify_group_visible"
+      ]
+    }
+  },
+  "a11y": {
+    "status": "PASS",
+    "details": {
+      "live_region": true
+    }
+  },
+  "security": {
+    "status": "PASS",
+    "details": {
+      "csp_meta": true
+    }
+  },
+  "visual": {
+    "status": "PASS",
+    "details": {
+      "baseline": "qa/auth/v0.1.1/baselines/auth-default.png"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "workflows": [
+    {
+      "id": "AV-BOOK-HAPPY",
+      "steps": [
+        {
+          "visit": "/availability_test.html"
+        },
+        {
+          "type": {
+            "selector": "#date"
+          }
+        },
+        {
+          "click": "button.slot[data-slot='10:00']"
+        },
+        {
+          "wait_for": "#confirm_btn:not([disabled])"
+        },
+        {
+          "click": "#confirm_btn"
+        },
+        {
+          "expect_url_contains": "/availability/success"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AV-CANCEL",
+      "steps": [
+        {
+          "visit": "/availability_test.html"
+        },
+        {
+          "click": "#cancel_btn"
+        },
+        {
+          "expect_url_contains": "/availability/canceled"
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "responsive": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "name": "mobile"
+      },
+      "status": "PASS"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "name": "desktop"
+      },
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

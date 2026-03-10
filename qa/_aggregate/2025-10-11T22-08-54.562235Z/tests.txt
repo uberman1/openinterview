@@ -1,0 +1,159 @@
+{
+  "release_gate": "v0.1.0",
+  "started": "2025-10-11T22:08:54.562235Z",
+  "ended": "2025-10-11T22:09:35.050385Z",
+  "env": {
+    "HOME_API": "0",
+    "HEALTH_URL": null,
+    "OI_BASE_URL": "http://127.0.0.1:5000"
+  },
+  "pack_results": {
+    "password": {
+      "version": "v0.1.6",
+      "tests_txt": "qa/password/v0.1.6/tests.txt",
+      "tests_json": null,
+      "json": null
+    },
+    "subscription": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/subscription/v0.1.1/tests.txt",
+      "tests_json": "qa/subscription/v0.1.1/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:09:09.811072+00:00"
+      }
+    },
+    "availability": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/availability/v0.1.0/tests.txt",
+      "tests_json": "qa/availability/v0.1.0/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:09:14.604121+00:00"
+      }
+    },
+    "shareable_profile": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/shareable_profile/v0.1.0/tests.txt",
+      "tests_json": "qa/shareable_profile/v0.1.0/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:09:20.476129+00:00"
+      }
+    },
+    "profiles": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/profiles/v0.1.0/tests.txt",
+      "tests_json": "qa/profiles/v0.1.0/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:09:26.192206+00:00"
+      }
+    },
+    "uploads": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/uploads/v0.1.1/tests.txt",
+      "tests_json": "qa/uploads/v0.1.1/tests.json",
+      "json": {
+        "status": "PASS",
+        "suites": [
+          {
+            "contract": "PASS",
+            "count": 7
+          },
+          {
+            "security": "PASS"
+          },
+          {
+            "a11y": "PASS"
+          },
+          {
+            "behavior-happy": "PASS"
+          },
+          {
+            "behavior-large": "PASS"
+          },
+          {
+            "behavior-cancel": "PASS"
+          },
+          {
+            "behavior-mime-mismatch": "PASS"
+          },
+          {
+            "integration-avatar": "PASS"
+          },
+          {
+            "visual": "PASS",
+            "baseline": "uploads-default.png"
+          }
+        ],
+        "timestamp": "2025-10-11T22:09:26.474460+00:00"
+      }
+    },
+    "home": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/home/v0.1.1/tests.txt",
+      "tests_json": "qa/home/v0.1.1/tests.json",
+      "json": {
+        "status": "PASS",
+        "suites": [
+          {
+            "contract": "PASS",
+            "count": 9
+          },
+          {
+            "security": "PASS"
+          },
+          {
+            "a11y": "PASS"
+          },
+          {
+            "behavior-readiness": "PASS",
+            "label": "System Ready"
+          },
+          {
+            "behavior-nav-hrefs": "PASS",
+            "count": 6
+          },
+          {
+            "visual": "PASS",
+            "baseline": "home-default.png"
+          }
+        ],
+        "version": "v0.1.1",
+        "api_mode": false
+      }
+    }
+  },
+  "pack_status": {
+    "password": "PASS",
+    "subscription": "PASS",
+    "availability": "PASS",
+    "shareable_profile": "PASS",
+    "profiles": "PASS",
+    "uploads": "PASS",
+    "home": "PASS"
+  },
+  "subprocess_failures": [],
+  "status": "PASS"
+}

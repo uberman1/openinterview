@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me - Editable Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem", // 6px
+                        "lg": "0.5rem", // 8px
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        /* Ensure content doesn't overlap with guest banner */
+        body.has-guest-banner {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50">
+<!-- Enterprise Loader -->
+<div id="initial-loader" class="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm transition-opacity duration-500">
+    <div class="text-center">
+        <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+        <h3 class="text-lg font-medium text-primary dark:text-neutral-50">Loading Profile...</h3>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">Please wait while we fetch your data</p>
+    </div>
+</div>
+
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
+<header class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-solid border-[#cccccc] px-4 py-4 sm:px-6 gap-4 sm:gap-0">
+<a href="/home.html" class="flex items-center gap-4 text-primary dark:text-neutral-50 hover:opacity-80 transition-opacity">
+<div class="h-8 w-auto">
+<img src="/defaults/logo_1.png" alt="OpenInterview Logo" class="h-full w-auto object-contain">
+</div>
+</a>
+<div class="flex gap-2">
+<button id="btn-save-profile" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-neutral-50 text-sm font-bold leading-normal tracking-wide">
+<span class="truncate">Save Profile</span>
+</button>
+<!-- <button id="btn-share-profile" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-green-600 text-neutral-50 text-sm font-bold leading-normal tracking-wide">
+<span class="truncate">Share Profile</span>
+</button> -->
+</div>
+</header>
+<main class="p-6 md:p-10 space-y-12">
+    <!-- Storage Limits Section -->
+    <section id="storage-limits-section" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Video Storage -->
+        <div class="bg-background-light dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
+            <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg text-neutral-500">videocam</span>
+                    <h3 class="text-sm font-medium text-primary dark:text-neutral-50">Video Storage</h3>
+                </div>
+                <span id="video-storage-text" class="text-xs font-medium text-neutral-500 dark:text-neutral-400">Loading...</span>
+            </div>
+            <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2 overflow-hidden">
+                <div id="video-storage-bar" class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Doc Storage -->
+        <div class="bg-background-light dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700 p-4">
+            <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg text-neutral-500">folder_open</span>
+                    <h3 class="text-sm font-medium text-primary dark:text-neutral-50">Document Storage</h3>
+                </div>
+                <span id="doc-storage-text" class="text-xs font-medium text-neutral-500 dark:text-neutral-400">Loading...</span>
+            </div>
+            <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2 overflow-hidden">
+                <div id="doc-storage-bar" class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="space-y-4">
+<label class="flex flex-col w-full">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Profile Name</p>
+<input id="input-profile-name" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="e.g. Senior Product Manager Application" value=""/>
+</label>
+</section>
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Resume Auto-populate Section (PRIMARY) -->
+<section id="resume-import-section" class="p-6 bg-background-light dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700 space-y-4">
+<h2 class="text-lg font-semibold leading-tight tracking-tight">Auto-populate with Resume</h2>
+<p class="text-neutral-600 dark:text-neutral-400 text-sm">Upload a new resume to automatically fill out your profile.</p>
+<div class="flex items-center gap-3">
+<button type="button" id="btn-browse-resume" class="flex min-w-[84px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Browse</span>
+</button>
+<div class="relative flex-1">
+<select id="resume-select" class="form-select w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-base pr-10">
+<option selected="" value="">Upload Resume</option>
+<option value="add_new">-- Upload new resume --</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+<span class="material-symbols-outlined text-neutral-500">expand_more</span>
+</div>
+</div>
+</div>
+<input type="file" accept=".pdf,.doc,.docx,.txt,.rtf" class="hidden" id="resume-file-input"/>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Identity Section -->
+<section id="identity-section">
+<div class="flex flex-col md:flex-row gap-8 items-start">
+<div class="flex flex-col gap-4 items-start">
+<div id="avatar-preview" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-32 h-32 bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center text-neutral-500">
+<span class="material-symbols-outlined text-4xl">person</span>
+</div>
+<button id="btn-upload-avatar" class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Upload/Change Photo</span>
+</button>
+<input type="file" accept="image/*" class="hidden" id="avatar-file-input"/>
+</div>
+<div class="flex flex-col justify-center flex-1 w-full gap-4">
+<label class="flex flex-col w-full">
+<input id="input-name" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-transparent bg-transparent h-14 p-0 text-3xl font-bold leading-tight tracking-tight placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="Your Name" value=""/>
+</label>
+<label class="flex flex-col w-full">
+<input id="input-title" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-transparent bg-transparent h-10 p-0 text-xl font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="Your Title" value=""/>
+</label>
+</div>
+</div>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Video Section (Simple Placeholder) -->
+<section id="video-section" class="space-y-6">
+<div class="flex flex-col items-center justify-center bg-neutral-200 dark:bg-neutral-800 rounded-lg p-8 aspect-video w-full">
+<div class="flex flex-col items-center gap-4 text-center">
+<span class="material-symbols-outlined text-6xl text-neutral-500 dark:text-neutral-400">videocam</span>
+<p class="text-neutral-600 dark:text-neutral-300">Your video will appear here.</p>
+<button id="btn-upload-video" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
+<span class="material-symbols-outlined text-xl">upload</span>
+<span class="truncate">Upload Video</span>
+</button>
+<input type="file" accept="video/*" class="hidden" id="video-file-input"/>
+    </div>
+  </div>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Video Thumbnail Section -->
+<section id="thumbnail-section" class="space-y-6">
+  <h2 class="text-2xl font-bold leading-tight tracking-tight">Video Thumbnail</h2>
+  <div class="flex flex-col items-center justify-center bg-neutral-200 dark:bg-neutral-800 rounded-lg p-8 aspect-video w-full max-w-md mx-auto">
+    <div class="flex flex-col items-center gap-4 text-center">
+      <span class="material-symbols-outlined text-6xl text-neutral-500 dark:text-neutral-400">image</span>
+      <p class="text-neutral-600 dark:text-neutral-300">Your video thumbnail will appear here.</p>
+      <button id="btn-upload-thumbnail" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
+        <span class="material-symbols-outlined text-xl">upload</span>
+        <span class="truncate">Upload Thumbnail</span>
+      </button>
+      <input type="file" accept="image/*" class="hidden" id="thumbnail-file-input"/>
+    </div>
+  </div>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Contact & Bio Section -->
+<section id="contact-bio-section" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<div class="space-y-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Contact Information</h2>
+<div class="space-y-4">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Location</p>
+<input id="input-location" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="City, Country" value=""/>
+</label>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Telephone</p>
+<input id="input-phone" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="e.g. +1 234 567 890" value=""/>
+</label>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-primary dark:text-neutral-50 text-base font-medium leading-normal pb-2">Email</p>
+<input id="input-email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="your.email@example.com" value=""/>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Short Bio</h2>
+<label class="flex flex-col min-w-40 flex-1">
+<textarea id="input-bio" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-primary dark:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark min-h-36 p-4 text-base font-normal leading-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500" placeholder="Tell us a little about yourself."></textarea>
+</label>
+</div>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Social Media Section -->
+<section id="social-media-section" class="space-y-6">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Social Media</h2>
+<div class="space-y-4" id="social-links-container">
+<!-- Social links will be populated by JavaScript -->
+</div>
+<button id="btn-add-social-link" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Add Social Link</span>
+</button>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Resume Section (WP2) -->
+<section id="resume-files-section" class="space-y-6"></section>
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Resume</h2>
+<div id="resume-files-container" class="space-y-4">
+<!-- Resume files will be populated by JavaScript -->
+<p class="text-sm text-neutral-500 dark:text-neutral-400">No resumes uploaded yet.</p>
+</div>
+<button id="btn-upload-resume-file" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
+<span class="material-symbols-outlined text-xl">upload</span>
+<span class="truncate">Upload Files</span>
+</button>
+<input type="file" accept=".pdf,.doc,.docx" class="hidden" id="resume-file-upload-input"/>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Attachments Section (WP2) -->
+<section id="attachments-section" class="space-y-6">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Attachments</h2>
+<div id="attachments-container" class="space-y-4">
+<!-- Attachments will be populated by JavaScript -->
+<p class="text-sm text-neutral-500 dark:text-neutral-400">No attachments uploaded yet.</p>
+</div>
+<button id="btn-upload-attachment" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal gap-2">
+<span class="material-symbols-outlined text-xl">upload</span>
+<span class="truncate">Upload Files</span>
+</button>
+<input type="file" accept="*/*" class="hidden" id="attachment-file-input"/>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Highlights Section -->
+<section id="highlights-section" class="space-y-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Highlights</h2>
+<div id="highlights-container" class="space-y-3">
+<!-- Highlights will be populated by JavaScript -->
+</div>
+<button id="btn-add-highlight" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Add Highlight</span>
+</button>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Skills Section -->
+<section id="skills-section" class="space-y-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Skills</h2>
+<div id="skills-container" class="flex flex-wrap gap-2">
+<!-- Skills will be populated by JavaScript -->
+</div>
+<div class="flex gap-2">
+<input id="input-new-skill" type="text" placeholder="Add a skill" class="form-input flex-1 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark h-10 px-4 text-sm"/>
+<button id="btn-add-skill" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Add</span>
+</button>
+</div>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Experience Section -->
+<section id="experience-section" class="space-y-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Experience</h2>
+<div id="experience-container" class="space-y-4">
+<!-- Experience will be populated by JavaScript -->
+</div>
+<button id="btn-add-experience" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Add Experience</span>
+</button>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+
+<!-- Education Section -->
+<section id="education-section" class="space-y-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Education</h2>
+<div id="education-container" class="space-y-4">
+<!-- Education will be populated by JavaScript -->
+</div>
+<button id="btn-add-education" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#ededed] dark:bg-neutral-700 text-primary dark:text-neutral-50 text-sm font-medium leading-normal">
+<span class="truncate">Add Education</span>
+</button>
+</section>
+
+<div class="border-b border-[#cccccc] dark:border-neutral-700"></div>
+<section class="space-y-8">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<h2 class="text-2xl font-bold leading-tight tracking-tight">Set Your Availability</h2>
+</div>
+<div class="border-b border-[#cccccc] dark:border-neutral-700">
+<div class="flex items-center gap-8">
+<button class="py-3 border-b-2 border-primary text-primary dark:text-neutral-50 font-semibold">Weekly Hours</button>
+</div>
+</div>
+<div class="grid grid-cols-1 @lg:grid-cols-[1fr_280px] gap-10">
+<div class="space-y-6">
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="font-semibold">Weekly Hours</h3>
+<div class="relative w-full max-w-xs">
+<select class="form-select w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm">
+<option selected="">UTC -05:00 Eastern Time (US &amp; Canada)</option>
+<option>UTC +01:00 Central European Time</option>
+<option>UTC +08:00 China Standard Time</option>
+</select>
+</div>
+</div>
+<div class="border rounded-lg border-[#cccccc] dark:border-neutral-700 overflow-hidden">
+<div class="divide-y divide-[#cccccc] dark:divide-neutral-700">
+<div class="p-4 flex items-center gap-4 bg-background-light dark:bg-background-dark">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="sun" type="checkbox"/>
+<label class="font-medium" for="sun">SUN</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="mon" type="checkbox"/>
+<label class="font-medium" for="mon">MON</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="tue" type="checkbox"/>
+<label class="font-medium" for="tue">TUE</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="wed" type="checkbox"/>
+<label class="font-medium" for="wed">WED</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="thu" type="checkbox"/>
+<label class="font-medium" for="thu">THU</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="fri" type="checkbox"/>
+<label class="font-medium" for="fri">FRI</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="form-checkbox rounded text-primary focus:ring-primary/50" id="sat" type="checkbox"/>
+<label class="font-medium" for="sat">SAT</label>
+</div>
+<div class="flex-grow text-neutral-500 dark:text-neutral-400 text-sm">Unavailable</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="p-6 border rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark space-y-4">
+<h3 class="font-semibold">Quick Actions</h3>
+<div class="space-y-2">
+<button class="w-full text-left text-sm text-primary dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-lg">Copy daily hours to all...</button>
+<button class="w-full text-left text-sm text-primary dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-lg">Set all to unavailable</button>
+<button class="w-full text-left text-sm text-primary dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-lg">Clear all hours</button>
+</div>
+</div>
+<div class="p-6 border rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark space-y-4">
+<h3 class="font-semibold">Rules</h3>
+<div class="space-y-4">
+<div>
+<label class="text-sm font-medium" for="min-notice">Minimum Notice</label>
+<select class="form-select mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="min-notice">
+<option selected="">24 hours</option>
+<option>48 hours</option>
+<option >72 hours</option>
+</select>
+<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Set the minimum time before an event can be scheduled.</p>
+</div>
+<div>
+            <label class="text-sm font-medium" for="window">Scheduling Window</label>
+            <input class="form-input mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 text-neutral-500 focus:ring-primary/50 focus:border-primary/50 text-sm" id="window" type="text" value="60 days (Fixed)" readonly disabled/>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Bookings can be made up to 60 days in advance.</p>
+          </div>
+          <div>
+            <label class="text-sm font-medium" for="increments">Meeting Duration</label>
+            <select class="form-select mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="increments">
+              <option value="15">15 minutes</option>
+              <option value="30" selected>30 minutes</option>
+              <option value="60">60 minutes</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-sm font-medium">Buffers</label>
+            <div class="flex items-center gap-2 mt-1">
+              <input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="buffer-before" type="number" value="0"/>
+              <span>min before</span>
+            </div>
+            <div class="flex items-center gap-2 mt-1">
+              <input class="form-input w-20 rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="buffer-after" type="number" value="0"/>
+              <span>min after</span>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm font-medium" for="daily-cap">Daily Cap</label>
+            <input class="form-input mt-1 w-full rounded-lg border-[#cccccc] dark:border-neutral-700 bg-background-light dark:bg-background-dark focus:ring-primary/50 focus:border-primary/50 text-sm" id="daily-cap" type="number" value="5"/>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Maximum number of bookings per day.</p>
+          </div>
+          <!-- Durations section removed (Single duration enforced) -->
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Save Button -->
+<div class="flex justify-end pt-8">
+<button id="btn-save-bottom" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-neutral-50 text-base font-bold leading-normal tracking-wide">
+<span class="truncate">Save Updates</span>
+</button>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Error Modal -->
+<div id="error-modal" class="fixed inset-0 z-[200] bg-black/30 dark:bg-black/50 hidden items-center justify-center opacity-0 transition-opacity duration-300">
+    <div class="relative flex w-full max-w-md flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl transform scale-95 transition-transform duration-300">
+        <button id="close-error-modal" class="absolute top-4 right-4 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="p-8 pt-12 md:p-10 md:pt-14 text-center">
+            <div class="w-20 h-20 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-4xl text-red-600 dark:text-red-500">error</span>
+            </div>
+            <h2 id="error-modal-title" class="text-2xl font-bold text-primary dark:text-neutral-50 mb-2">Error</h2>
+            <p id="error-modal-message" class="text-muted-light dark:text-muted-dark text-base font-normal leading-normal">
+                Something went wrong.
+            </p>
+        </div>
+        <div class="px-8 md:px-10 pb-8 md:pb-10">
+            <button id="error-modal-action" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-neutral-50 text-base font-bold leading-normal tracking-wide hover:bg-primary/90 dark:hover:bg-primary/80 transition-colors">
+                <span class="truncate">Close</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+
+
+<!-- UI Utils (Error Modal) -->
+<script src="/js/ui-utils.js"></script>
+
+<!-- WP1: Resume Auto-populate Script -->
+<script src="/js/profile_edit.autopop.bind.js"></script>
+
+<!-- WP2: Save and Share handlers -->
+<script src="/js/profile_edit.bind.js"></script>
+
+<!-- Guest Profile Handler -->
+<script src="/js/guest-profile-handler.js" defer></script>
+
+<!-- Auth Scripts -->
+<script src="/js/auth.js" defer></script>
+<script src="/js/login-modal.js" defer></script>
+<script src="/js/share-profile.js" defer></script>
+
+</body></html>

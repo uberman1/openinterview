@@ -1,0 +1,19 @@
+{
+  "files": {
+    "profile_edit_enhanced.html": true,
+    "profile_edit.bind.js": true,
+    "owner.bind.diff": true,
+    "home-bindings.diff": true,
+    "index.diff": true
+  },
+  "binder_symbols_present": {
+    "wireResumeImportUI": true,
+    "analyzeResumeAndPopulate": true,
+    "wireAvailability": true,
+    "paintAvailability": true,
+    "readAvailabilityFromUI": true,
+    "renderResumeAndAttachments": true,
+    "pickFile": true,
+    "pickFiles": true
+  }
+}

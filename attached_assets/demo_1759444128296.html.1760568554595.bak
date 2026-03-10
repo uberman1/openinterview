@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OpenInterview – Demo Launcher</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { margin:0; font-family:system-ui,Segoe UI,Arial; background:#0b1220; color:#e5e7eb; }
+    .wrap { display:grid; grid-template-columns:240px 1fr; min-height:100vh; }
+    aside { background:#0f172a; padding:16px; border-right:1px solid #1f2937; }
+    main { padding:20px; }
+    h1 { font-size:18px; margin:0 0 12px; color:#93c5fd; }
+    a { display:block; color:#e5e7eb; text-decoration:none; padding:8px 10px; border-radius:8px; }
+    a:hover { background:#1f2937; }
+    .top { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+    button { background:#2563eb; color:#fff; border:none; padding:6px 10px; border-radius:8px; cursor:pointer; }
+    button.secondary { background:#334155; }
+    iframe { width:100%; height:calc(100vh - 40px); border:1px solid #1f2937; border-radius:10px; background:#0b1220; }
+    .note { font-size:12px; color:#9ca3af; margin:8px 0 16px; }
+    .env { font-size:12px; color:#cbd5e1; margin-bottom:8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside>
+      <h1>OpenInterview Demo</h1>
+      <div class="note">Preview any route in demo mode (no auth).</div>
+      <div class="env" id="host"></div>
+      <nav id="routes">
+        <a href="#" data-path="/">Home</a>
+        <a href="#" data-path="/login">Login</a>
+        <a href="#" data-path="/dashboard">Dashboard</a>
+        <a href="#" data-path="/profile">Profile</a>
+        <a href="#" data-path="/jobs">Jobs</a>
+        <a href="#" data-path="/settings">Settings</a>
+      </nav>
+    </aside>
+    <main>
+      <div class="top">
+        <button id="openNew">Open current route in new tab</button>
+        <button id="persist" class="secondary">Persist Demo</button>
+        <button id="clearDemo" class="secondary">Exit Demo</button>
+      </div>
+      <iframe id="view" src="/" title="App Preview"></iframe>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('host').textContent = 'Host: ' + location.origin;
+
+    const base = (location.origin);
+    const frame = document.getElementById('view');
+    const links = document.querySelectorAll('a[data-path]');
+    const openBtn = document.getElementById('openNew');
+    const clearBtn = document.getElementById('clearDemo');
+    const persistBtn = document.getElementById('persist');
+
+    function setDemoSrc(path) {
+      const url = new URL(base + path);
+      url.searchParams.set('demo','1');
+      frame.src = url.toString();
+      window.currentDemoUrl = url.toString();
+    }
+
+    links.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        setDemoSrc(a.getAttribute('data-path'));
+      });
+    });
+
+    openBtn.addEventListener('click', () => {
+      if (window.currentDemoUrl) window.open(window.currentDemoUrl, '_blank');
+    });
+
+    persistBtn.addEventListener('click', () => {
+      try { localStorage.setItem('__DEMO_MODE__', '1'); alert('Demo persisted in this browser.'); } catch {}
+    });
+
+    clearBtn.addEventListener('click', () => {
+      try { localStorage.removeItem('__DEMO_MODE__'); } catch {}
+      alert('Demo mode cleared. Reload pages without ?demo=1 to use real auth.');
+    });
+
+    // Default load
+    setDemoSrc('/');
+  </script>
+</body>
+</html>
