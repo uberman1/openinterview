@@ -14,6 +14,7 @@ import UploadMock from './pages/UploadMock'
 import ShareMock from './pages/ShareMock'
 import Browse from './pages/Browse'
 import AdminConsole from './pages/AdminConsole'
+import StatusPage from './pages/StatusPage'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import { authStore } from './auth'
@@ -34,12 +35,16 @@ export default function App(){
 
   const renderRoute = ()=>{
     const basePath = path.split('?')[0]
+    // Support direct /status URL (pathname-based) in addition to hash routing (#/status).
+    // Guard on !hash so that navigating to #/other while on /status still works correctly.
+    if (window.location.pathname === '/status' && !window.location.hash) return <StatusPage/>
     if (basePath === '/' || basePath === '') return <Dashboard/>
     if (basePath === '/dashboard') return <Dashboard/>
     if (basePath === '/login') return <Login navigate={navigate}/>
     if (basePath === '/profile') return <ProfileEditor/>
     if (basePath === '/upload') return <UploadMock/>
     if (basePath === '/browse') return <Browse/>
+    if (basePath === '/status') return <StatusPage/>
     if (basePath === '/pages') return <PagesIndex/>
     if (basePath.startsWith('/admin')) return <AdminConsole path={basePath}/>
     if (basePath === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
@@ -72,6 +77,7 @@ export default function App(){
             <a href="#/profile" style={{color:'#93c5fd'}} data-testid="nav-profile">My Profile</a>
             <a href="#/upload" style={{color:'#93c5fd'}} data-testid="nav-upload">Uploads</a>
             <a href="#/browse" style={{color:'#93c5fd'}} data-testid="nav-browse">Browse</a>
+            <a href="/status" style={{color:'#93c5fd'}} data-testid="nav-status">Status</a>
             {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}} data-testid="nav-login">Login</a>}
             {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}} data-testid="nav-profiles">Profiles</a>}
             {loggedIn && <a href="#/admin" style={{color:'#93c5fd'}} data-testid="nav-admin">Admin</a>}

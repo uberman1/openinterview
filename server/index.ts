@@ -2,6 +2,8 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { attachShutdown } from "./ops.shutdown";
+// @ts-ignore — JS module inside status feature
+import { startStatusScheduler } from "./status/statusScheduler.js";
 
 const app = express();
 
@@ -82,4 +84,7 @@ app.use((req, res, next) => {
 
   // Attach graceful shutdown handler
   attachShutdown(server, log);
+
+  // Start isolated status monitoring scheduler (2-hour cadence, 15s initial delay)
+  startStatusScheduler();
 })();

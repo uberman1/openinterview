@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"health\\\\|ping\\\\|ready\\\\|live\" /home/runner/workspace/server/*.ts /home/runner/workspace/server/*.js)",
+      "Bash(grep -r \"API_BASE\\\\|PORT\" /home/runner/workspace/shared/constants.*)"
+    ]
+  }
+}

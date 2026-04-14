@@ -21,6 +21,7 @@ import { serveStaticWithCache } from "./ops.static";
 import { router as protectedRouter } from "./protected.routes";
 import { mountAssetRoutes } from "./routes.assets";
 import { mountCloudinaryRoutes } from "./cloudinary.routes";
+import { mountStatusRoutes } from "./status/status.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Mount unified auth router (selects mock vs real via USE_MOCK_AUTH)
@@ -49,6 +50,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Mount Cloudinary upload signing routes
   mountCloudinaryRoutes(app, API_BASE);
+
+  // Mount isolated status generation debug route
+  mountStatusRoutes(app, API_BASE);
   
   // Health endpoint
   app.get(`${API_BASE}/health`, async (req, res) => {
@@ -238,6 +242,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Protected routes (Module 3)
   app.use(`${API_BASE}`, protectedRouter);
+
+  // Status page — serve SPA for direct /status URL access (no hash required).
+  // In development Vite handles it via next(); in production serve index.html directly.
+  app.get('/status', (_req, res, next) => {
+    if (process.env.NODE_ENV === 'development') {
+      return next(); // Vite middleware (registered after registerRoutes) handles it
+    }
+    res.sendFile(path.resolve(process.cwd(), 'dist', 'public', 'index.html'));
+  });
 
   // API 404 handler - must come before static serving
   app.use(`${API_BASE}/*`, (_req, res) => {

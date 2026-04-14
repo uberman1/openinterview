@@ -792,6 +792,12 @@ app.get('/app/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/public/index.html'));
 });
 
+// Public status page — direct clean URL access
+// Serves the same SPA entry so React renders <StatusPage /> from window.location.pathname
+app.get('/status', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/public/index.html'));
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (_req, res) => res.redirect("/home.html"));
