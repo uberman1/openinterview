@@ -1,0 +1,182 @@
+CLAUDE EXECUTION PROTOCOL — MICRO-TASK / LOW-TOKEN MODE
+
+TASK
+Rebuild the OpenInterview public status page UI using the uploaded reference code and screenshots as the structural and styling baseline.
+
+REFERENCE MATERIAL TO USE
+Use the uploaded reference code and screenshots as the source pattern for layout and styling:
+- Cal.com status page HTML/code reference
+- meter/top-graphic reference
+- events/history reference
+
+IMPORTANT
+Do not merely approximate this.
+Use the uploaded code structure and visual patterns directly as the implementation model.
+
+OBJECTIVE
+Replace the current /status page presentation so it looks like a public Cal.com-style status page with:
+
+1. page title + subtitle at top
+2. top operational banner
+3. App / Website / API uptime meter rows
+4. chronological incident/status history beneath
+5. clean standalone public page styling
+6. no internal dashboard/admin UI
+
+CRITICAL NON-IMPACT REQUIREMENTS
+- Do NOT modify schema
+- Do NOT modify backend routes
+- Do NOT modify the status monitoring engine
+- Do NOT modify persistence logic
+- Do NOT change polling logic unless required for compatibility
+- Do NOT touch auth/business logic
+- Do NOT rebuild the data layer
+- Do NOT add app dashboard controls
+- Do NOT add sidebars, account nav, refresh buttons, test buttons, logs panels, adapter panels, or admin cards
+
+CURRENT DATA LAYER TO REUSE
+The page must continue using the existing OpenInterview status data system:
+- snapshot endpoint
+- history endpoint
+- events endpoint
+- existing hook / polling behavior if already working
+
+This is a UI replacement only.
+
+IMPLEMENTATION REQUIREMENTS
+
+PART 1 — REPLACE CURRENT STATUS PAGE LAYOUT
+Completely replace the current StatusPage.jsx layout with a standalone public status page layout based on the uploaded reference code.
+
+The new page must visually follow this structure:
+
+A. Header block
+- OpenInterview.me
+- “See the uptime of OpenInterview.me”
+
+B. Overall status banner
+- Green success banner when operational
+- Overall status label on left
+- Timestamp on right
+- Match the visual rhythm of the uploaded meter/banner reference
+
+C. Uptime monitor rows
+Rows:
+- App
+- Website
+- API
+
+Each row must include:
+- service label
+- uptime percent on right
+- small success/check visual on right
+- 45-day meter bars
+- “45 days ago” on left below
+- “today” on right below
+
+D. Event / incident history
+Below the uptime section, render report history using the uploaded events reference pattern:
+- date column on left
+- incident/report title on right
+- service tags/badges
+- timeline entries beneath:
+  - Investigating
+  - Identified / Monitoring
+  - Resolved
+- timestamp text next to each stage
+- message body under each stage
+
+PART 2 — REMOVE WRONG UI
+Remove all status-page-specific dashboard/admin UI currently visible on /status, including anything like:
+- system overview cards
+- health check cards
+- adapter status cards
+- recent activity dashboard blocks
+- self-test blocks
+- dark app-shell dashboard presentation
+- internal controls
+
+The /status page should look like a public status site, not an internal operations console.
+
+PART 3 — USE REAL DATA
+Map existing real data into the new layout:
+
+Banner:
+- snapshot.overallStatus.label
+- snapshot.generatedAt / lastRefreshedAt
+
+Meters:
+- snapshot.services[*].uptimePercent
+- histories.App
+- histories.Website
+- histories.API
+
+Events:
+- existing events data from the current status hook
+- if grouping is needed, add small feature-local grouping logic
+
+PART 4 — EVENT GROUPING / RENDERING
+If current event data is flat, group it into report blocks in the UI.
+
+Preferred deterministic grouping:
+- group by normalized title + date bucket
+or
+- group by a stable derived incident key from title + affected services + day
+
+Within each group:
+- sort entries chronologically
+- render newest or final stage first if that better matches the reference pattern
+- keep grouping simple and local to the status feature
+
+PART 5 — STYLING
+Use the uploaded code as the styling/markup baseline:
+- light background
+- centered content
+- restrained spacing
+- public status-page typography
+- border, muted text, green/yellow/red severity colors
+- no product dashboard chrome
+
+Do not bring over unrelated controls like:
+- monitors nav
+- get updates button
+- footer extras
+unless they are trivial and match the intended page exactly
+
+Prefer implementing only:
+- header text
+- banner
+- meters
+- report/event history
+
+PART 6 — FILE USAGE
+Prefer modifying only the status page UI files.
+If useful, create a small local helper for:
+- event grouping
+- relative date formatting
+- status color mapping
+
+Do not create a large new architecture.
+
+TESTING REQUIREMENTS
+Verify:
+1. /status renders as a standalone public status page
+2. current admin/dashboard look is gone
+3. top banner matches the intended public style
+4. uptime meter rows render from real data
+5. event history renders beneath
+6. page remains public
+7. no schema/backend/core flow changes were made
+
+OUTPUT REQUIREMENTS
+When complete, report ONLY:
+1. files modified
+2. whether any helper/grouping logic was added
+3. what old UI was removed
+4. what new sections now render
+5. confirmation that backend/schema/core app flows were unchanged
+
+STOP AFTER
+- /status visually matches the uploaded public status page pattern
+- the top graphic and status messages are in place
+- real status data is still powering the page

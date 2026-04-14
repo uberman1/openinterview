@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SENTINEL | Status Monitor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=Space+Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#5bffa3",
+                        "on-primary-container": "#005f34",
+                        "secondary-container": "#ffdead",
+                        "on-surface": "#323232",
+                        "primary-fixed-dim": "#49f096",
+                        "on-primary-fixed-variant": "#006a3b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-dim": "#005f35",
+                        "on-tertiary": "#fff7f6",
+                        "surface-container-high": "#eae8e7",
+                        "on-tertiary-fixed-variant": "#220002",
+                        "outline": "#7b7a7a",
+                        "tertiary": "#c10027",
+                        "surface": "#fcf9f8",
+                        "secondary": "#7f5700",
+                        "surface-tint": "#006d3d",
+                        "inverse-surface": "#0e0e0e",
+                        "surface-dim": "#dbdad9",
+                        "primary": "#006d3d",
+                        "inverse-on-surface": "#9e9c9c",
+                        "outline-variant": "#b3b2b1",
+                        "secondary-dim": "#704c00",
+                        "primary-fixed": "#5bffa3",
+                        "tertiary-fixed": "#fe3346",
+                        "tertiary-dim": "#aa0021",
+                        "surface-container": "#f0eded",
+                        "surface-variant": "#e4e2e2",
+                        "tertiary-container": "#fe3346",
+                        "surface-container-highest": "#e4e2e2",
+                        "error-container": "#fe8983",
+                        "secondary-fixed": "#ffdead",
+                        "on-secondary": "#fff8f2",
+                        "on-error-container": "#752121",
+                        "on-primary": "#e2ffe7",
+                        "surface-bright": "#fcf9f8",
+                        "secondary-fixed-dim": "#ffcc7b",
+                        "on-background": "#323232",
+                        "background": "#fcf9f8",
+                        "on-tertiary-container": "#000000",
+                        "error": "#9f403d",
+                        "on-surface-variant": "#5f5f5f",
+                        "error-dim": "#4e0309",
+                        "on-secondary-container": "#6e4b00",
+                        "inverse-primary": "#57fca0",
+                        "on-primary-fixed": "#004a27",
+                        "on-error": "#fff7f6",
+                        "on-tertiary-fixed": "#000000",
+                        "on-secondary-fixed": "#563a00",
+                        "tertiary-fixed-dim": "#eb233b",
+                        "on-secondary-fixed-variant": "#7b5400"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcf9f8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .ledger-line { width: 2px; height: 100%; position: absolute; left: 7px; top: 24px; background-color: #e4e2e2; }
+        .status-capsule { transition: transform 0.2s ease; }
+        .status-capsule:hover { transform: scaleY(1.2); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- Shared Component: TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fcf9f8]/80 dark:bg-stone-950/80 backdrop-blur-3xl">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#006d3d] dark:text-[#5bffa3]" data-icon="monitoring">monitoring</span>
+<span class="text-xl font-black text-stone-800 dark:text-stone-100 tracking-tighter">SENTINEL</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-stone-900 dark:text-white font-bold font-headline tracking-tight" href="#">Status</a>
+<a class="text-stone-500 dark:text-stone-400 font-headline tracking-tight hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-colors px-2 py-1 rounded-md" href="#">Events</a>
+<a class="text-stone-500 dark:text-stone-400 font-headline tracking-tight hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-colors px-2 py-1 rounded-md" href="#">Monitors</a>
+</nav>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label text-xs uppercase tracking-widest hover:opacity-90 active:scale-95 transition-all">
+                Get updates
+            </button>
+</div>
+</header>
+<main class="pt-24 pb-12 max-w-4xl mx-auto px-6">
+<!-- Header Section -->
+<div class="mb-12">
+<h1 class="text-4xl font-black tracking-tighter mb-2">SENTINEL</h1>
+<p class="text-on-surface-variant font-body">See the uptime of Sentinel Ledger Services</p>
+</div>
+<!-- Banner: Operational Status -->
+<div class="mb-16 p-8 rounded-[0.625rem] bg-gradient-to-br from-primary to-primary-container flex items-center justify-between text-on-primary shadow-sm">
+<div>
+<h2 class="text-2xl font-black tracking-tight mb-1">All Systems Operational</h2>
+<div class="font-label text-xs uppercase tracking-[0.1em] opacity-90">Last updated: April 12, 2024 at 10:45 AM UTC</div>
+</div>
+<span class="material-symbols-outlined text-4xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Uptime Meters Section -->
+<div class="space-y-12 mb-20">
+<!-- App Section -->
+<section>
+<div class="flex justify-between items-end mb-4">
+<h3 class="text-lg font-bold tracking-tight">Application</h3>
+<div class="flex items-center gap-2">
+<span class="font-label text-sm text-primary font-bold">100%</span>
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check">check</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-[0.625rem]">
+<div class="flex items-end gap-[2px] h-8 mb-4">
+<!-- Iterative Bars -->
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<div class="h-8 w-2 bg-secondary rounded-full status-capsule opacity-80"></div>
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>
+<!-- ... repeated bars ... -->
+<div class="flex-1 h-8 flex items-end gap-[2px] overflow-hidden">
+<script>
+                                for(let i=0; i<40; i++) {
+                                    document.write('<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>');
+                                }
+                            </script>
+</div>
+</div>
+<div class="flex justify-between font-label text-[10px] uppercase tracking-widest text-outline">
+<span>45 days ago</span>
+<span>Today</span>
+</div>
+</div>
+</section>
+<!-- Website Section -->
+<section>
+<div class="flex justify-between items-end mb-4">
+<h3 class="text-lg font-bold tracking-tight">Website</h3>
+<div class="flex items-center gap-2">
+<span class="font-label text-sm text-primary font-bold">99.98%</span>
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check">check</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-[0.625rem]">
+<div class="flex items-end gap-[2px] h-8 mb-4">
+<script>
+                            for(let i=0; i<48; i++) {
+                                const opacity = i === 24 ? 'bg-tertiary' : 'bg-primary';
+                                document.write(`<div class="h-8 w-2 ${opacity} rounded-full status-capsule"></div>`);
+                            }
+                        </script>
+</div>
+<div class="flex justify-between font-label text-[10px] uppercase tracking-widest text-outline">
+<span>45 days ago</span>
+<span>Today</span>
+</div>
+</div>
+</section>
+<!-- API Section -->
+<section>
+<div class="flex justify-between items-end mb-4">
+<h3 class="text-lg font-bold tracking-tight">REST API</h3>
+<div class="flex items-center gap-2">
+<span class="font-label text-sm text-primary font-bold">100%</span>
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check">check</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-[0.625rem]">
+<div class="flex items-end gap-[2px] h-8 mb-4">
+<script>
+                            for(let i=0; i<48; i++) {
+                                document.write('<div class="h-8 w-2 bg-primary rounded-full status-capsule"></div>');
+                            }
+                        </script>
+</div>
+<div class="flex justify-between font-label text-[10px] uppercase tracking-widest text-outline">
+<span>45 days ago</span>
+<span>Today</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Events Timeline -->
+<div class="mt-24">
+<h2 class="text-2xl font-black tracking-tight mb-8">Past Incidents</h2>
+<!-- Day Group -->
+<div class="mb-12">
+<div class="font-label text-xs uppercase tracking-[0.2em] text-outline mb-6 border-b border-outline-variant/20 pb-2">Apr 6, 2024</div>
+<div class="relative pl-10 space-y-12">
+<div class="ledger-line"></div>
+<div class="relative">
+<div class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-surface"></div>
+<h3 class="text-lg font-bold tracking-tight mb-4">Intermittent issues loading data on app.cal.com dashboard</h3>
+<div class="space-y-6">
+<div class="max-w-2xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-sm">Resolved</span>
+<span class="text-xs text-outline font-label">— Apr 6, 09:45 AM UTC</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">The issue has been identified and a fix has been deployed. All systems are back to normal operations.</p>
+</div>
+<div class="max-w-2xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-sm text-secondary">Monitoring</span>
+<span class="text-xs text-outline font-label">— Apr 6, 08:52 AM UTC</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">We are monitoring the results of the deployment to ensure stability across all regions.</p>
+</div>
+<div class="max-w-2xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-sm text-tertiary">Investigating</span>
+<span class="text-xs text-outline font-label">— Apr 6, 08:22 AM UTC</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">We are currently investigating reports of slow load times and intermittent failures when accessing the dashboard.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Day Group -->
+<div class="mb-12">
+<div class="font-label text-xs uppercase tracking-[0.2em] text-outline mb-6 border-b border-outline-variant/20 pb-2">Mar 28, 2024</div>
+<div class="pl-10 text-on-surface-variant text-sm font-label">No incidents reported.</div>
+</div>
+</div>
+</main>
+<!-- Shared Component: Footer -->
+<footer class="w-full border-t border-stone-200/15 dark:border-stone-800/15 bg-[#fcf9f8] dark:bg-stone-950">
+<div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-sm font-body text-stone-500">
+                © 2024 Sentinel Ledger. Powered by Status System.
+            </div>
+<div class="flex items-center gap-6">
+<a class="font-label text-[10px] uppercase tracking-widest text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors" href="#">Privacy Policy</a>
+<a class="font-label text-[10px] uppercase tracking-widest text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors" href="#">Support</a>
+<a class="font-label text-[10px] uppercase tracking-widest text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors" href="#">API Docs</a>
+</div>
+</div>
+</footer>
+</body></html>
