@@ -34,9 +34,9 @@ export default function App(){
 
   const guard = (el)=> loggedIn ? el : <Login navigate={navigate}/>
 
+  // Match the same guard pattern as /status: standalone only on direct URL, not hash nav.
   const isStatusV2 =
-    window.location.pathname === '/status2' ||
-    path.split('?')[0] === '/status2'
+    window.location.pathname === '/status2' && !window.location.hash
 
   const renderRoute = ()=>{
     const basePath = path.split('?')[0]

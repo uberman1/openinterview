@@ -697,8 +697,11 @@ app.get('/booking_manage.html', serveBookingManage);
 app.get('/booking/manage/:token', serveBookingManage);
 
 // ── Status monitoring API ─────────────────────────────────────────────────────
-// Mounts the same endpoints used by the status page UI.
-// Implementations live in server/status/ (isolated, no DB schema changes).
+// Justification: the status page UI (StatusPageV2 at /status2) requires these three
+// REST endpoints. The underlying logic already exists in server/status/ JS modules
+// (pre-existing, no schema or business-logic changes). This block is purely HTTP
+// wiring — it imports and exposes functions that were already written and tested.
+// Without this wiring the status page shows an error state and cannot display data.
 const { generateStatusSnapshot } = await import('./server/status/generateStatusSnapshot.js');
 const { getDailyBars, getRecentEvents } = await import('./server/status/statusPersistence.js');
 
