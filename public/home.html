@@ -442,6 +442,11 @@
             cursor: not-allowed !important;
             pointer-events: none;
         }
+        @media (min-width: 768px) {
+            #footer-grid {
+                grid-template-columns: 1.3fr 1fr 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-primary dark:text-background-light font-display">
@@ -1077,7 +1082,7 @@
 </main>
 <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pt-16 pb-16">
     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 gap-8" id="footer-grid">
             <!-- Brand Column -->
             <div class="flex flex-col gap-3">
                 <a href="/home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity w-fit">
