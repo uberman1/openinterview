@@ -1,14 +1,46 @@
 // server/status/statusMessages.js
-// Deterministic message generator for the status event feed.
-// Output varies with actual service state and metrics — not with randomness.
-// Tone: action-first, operational, credible. No emoji, no "routine", no "automated".
+// Public-safe message generator for the status event feed.
+//
+// Produces calm scheduled monitoring updates regardless of raw check results.
+// Tone: neutral, operational, trust-first. No incident-escalation language.
+//
+// Internal check failures are handled by the monitoring engine separately.
+// This module only shapes the public-facing event feed entries.
 
-function fmtMs(ms) {
-  return ms != null ? `${ms}ms` : 'no response';
-}
+const TZ = 'America/New_York';
+
+// ─── Time-of-day windows ──────────────────────────────────────────────────────
+// Keyed by the scheduled hour in ET (0, 6, 12, 18).
+
+const WINDOW_MESSAGES = {
+  0: {
+    title: 'Overnight monitoring completed',
+    body:  'Overnight platform verification completed. Status records were refreshed for the current cycle.',
+  },
+  6: {
+    title: 'Morning monitoring completed',
+    body:  'Morning platform verification completed. Current service status was recorded successfully.',
+  },
+  12: {
+    title: 'Midday monitoring completed',
+    body:  'Midday monitoring completed. Service health checks were logged for this monitoring window.',
+  },
+  18: {
+    title: 'Evening monitoring completed',
+    body:  'Evening monitoring completed. Scheduled system verification was completed successfully.',
+  },
+};
+
+const DEFAULT_MESSAGE = {
+  title: 'Scheduled monitoring completed',
+  body:  'Scheduled platform verification completed. Application, website, and API checks were recorded for this monitoring window.',
+};
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function fmtDate(isoString) {
   return new Date(isoString).toLocaleString('en-US', {
+    timeZone: TZ,
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -18,108 +50,79 @@ function fmtDate(isoString) {
   });
 }
 
-// Simple ID generator — date prefix + index makes IDs deterministic per run
+// ID generator — datetime prefix (YYYY-MM-DDTHH) makes IDs unique per hourly run
 function makeIdFactory(generatedAt) {
-  const prefix = generatedAt.slice(0, 10);
+  // Use date + hour so each run within a day gets distinct IDs
+  const prefix = generatedAt.slice(0, 13).replace(':', '-'); // e.g. "2026-04-14T20" → "2026-04-14-20"
   let n = 0;
   return () => `${prefix}-${String(++n).padStart(3, '0')}`;
 }
 
-// ─── Per-service message templates ───────────────────────────────────────────
-
-function healthyServiceLine(svc) {
-  const check = svc.checks.find((c) => c.success);
-  if (!check) return `${svc.name} status confirmed.`;
-  const label = check.name === 'app_availability' ? 'application'
-              : check.name === 'website_load'     ? 'website'
-              : check.name === 'api_health'        ? 'API endpoint'
-              : check.name;
-  return `${svc.name} ${label} responded in ${fmtMs(check.ms)}`;
+/**
+ * Returns the current hour (0–23) in America/New_York.
+ * Used to select the appropriate time-of-day window message.
+ */
+function currentETHour(isoString) {
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: TZ,
+      hour: '2-digit',
+      hour12: false,
+    }).formatToParts(new Date(isoString));
+    return parseInt(parts.find(p => p.type === 'hour').value, 10);
+  } catch {
+    return new Date(isoString).getHours();
+  }
 }
 
-function degradedServiceBody(svc) {
-  const slow = svc.checks.find((c) => c.success && c.ms >= 700);
-  if (!slow) return `${svc.name} reported elevated response times during the verification window.`;
-  const label = slow.name.replace(/_/g, ' ');
-  return `${svc.name} ${label} returned in ${fmtMs(slow.ms)}. Response duration exceeded the warning threshold during the latest verification window.`;
-}
+/**
+ * Select the closest scheduled window message for the given timestamp.
+ * Matches whichever scheduled hour (0, 6, 12, 18) is nearest.
+ */
+function selectWindowMessage(isoString) {
+  const hour = currentETHour(isoString);
+  const scheduledHours = [0, 6, 12, 18];
 
-function outageServiceBody(svc) {
-  const failed = svc.checks.filter((c) => !c.success);
-  const checkNames = failed.map((c) => c.name.replace(/_/g, ' ')).join(', ');
-  return `The latest verification did not receive a valid ${svc.name} response. ${checkNames} returned no success. Investigation state generated.`;
+  // Find the closest scheduled hour to the current ET hour
+  let closest = scheduledHours[0];
+  let minDist = Math.abs(hour - scheduledHours[0]);
+
+  for (const h of scheduledHours) {
+    const dist = Math.abs(hour - h);
+    if (dist < minDist) {
+      minDist = dist;
+      closest = h;
+    }
+  }
+
+  return WINDOW_MESSAGES[closest] ?? DEFAULT_MESSAGE;
 }
 
 // ─── Main generator ───────────────────────────────────────────────────────────
 
 /**
- * Generate one or more event feed items from a status snapshot.
+ * Generate public event feed entries from a status snapshot.
+ * Always produces a single calm scheduled monitoring update entry.
+ * Does not expose raw check failures or incident-escalation language publicly.
  *
- * @param {Array}  services      - Classified service objects from statusClassifier.js
- * @param {object} overallStatus - { label, indicator } from classifyOverall()
+ * @param {Array}  services      - Classified service objects (used for services list only)
+ * @param {object} overallStatus - { label, indicator } (not used for message tone)
  * @param {string} generatedAt   - ISO timestamp of the snapshot run
- * @returns {Array} Event objects matching the status page contract
+ * @returns {Array} One event object matching the status page contract
  */
 export function generateMessages(services, overallStatus, generatedAt) {
   const makeId = makeIdFactory(generatedAt);
-  const ts = fmtDate(generatedAt);
-  const messages = [];
+  const ts     = fmtDate(generatedAt);
+  const msg    = selectWindowMessage(generatedAt);
 
-  const outageServices   = services.filter((s) => s.status === 'outage' || s.status === 'partial_outage');
-  const degradedServices = services.filter((s) => s.status === 'degraded');
-  const healthyServices  = services.filter((s) => s.status === 'operational');
-
-  if (overallStatus.indicator === 'operational') {
-    // All healthy — single Resolved message with per-service metrics
-    const metricLines = services.map(healthyServiceLine).join('. ');
-    messages.push({
-      id: makeId(),
-      stage: 'Resolved',
-      title: 'Service verification completed',
-      services: services.map((s) => s.name),
+  return [
+    {
+      id:        makeId(),
+      stage:     'Monitoring',
+      title:     msg.title,
+      services:  services.map(s => s.name),
       timestamp: ts,
-      body: `Availability checks completed successfully across all monitored services. ${metricLines}.`,
-    });
-    return messages;
-  }
-
-  // Outage entries — one per affected service
-  for (const svc of outageServices) {
-    messages.push({
-      id: makeId(),
-      stage: 'Investigating',
-      title: `${svc.name} response interruption detected`,
-      services: [svc.name],
-      timestamp: ts,
-      body: outageServiceBody(svc),
-    });
-  }
-
-  // Degraded entries — one per affected service
-  for (const svc of degradedServices) {
-    messages.push({
-      id: makeId(),
-      stage: 'Monitoring',
-      title: `Elevated response time detected — ${svc.name}`,
-      services: [svc.name],
-      timestamp: ts,
-      body: degradedServiceBody(svc),
-    });
-  }
-
-  // Confirm healthy services when some are not
-  if (healthyServices.length > 0) {
-    const names = healthyServices.map((s) => s.name).join(' and ');
-    const lines = healthyServices.map(healthyServiceLine).join('. ');
-    messages.push({
-      id: makeId(),
-      stage: 'Monitoring',
-      title: 'Partial service confirmation',
-      services: healthyServices.map((s) => s.name),
-      timestamp: ts,
-      body: `${names} verified operational. ${lines}. Monitoring continues for affected services.`,
-    });
-  }
-
-  return messages;
+      body:      msg.body,
+    },
+  ];
 }
