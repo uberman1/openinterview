@@ -696,6 +696,43 @@ function serveBookingManage(req, res) {
 app.get('/booking_manage.html', serveBookingManage);
 app.get('/booking/manage/:token', serveBookingManage);
 
+// ── Status monitoring API ─────────────────────────────────────────────────────
+// Mounts the same endpoints used by the status page UI.
+// Implementations live in server/status/ (isolated, no DB schema changes).
+const { generateStatusSnapshot } = await import('./server/status/generateStatusSnapshot.js');
+const { getDailyBars, getRecentEvents } = await import('./server/status/statusPersistence.js');
+
+app.get('/api/v1/status/snapshot', async (_req, res) => {
+  try {
+    const snapshot = await generateStatusSnapshot();
+    res.json(snapshot);
+  } catch (err) {
+    res.status(500).json({ error: 'Status snapshot failed', detail: err.message });
+  }
+});
+
+app.get('/api/v1/status/history', async (req, res) => {
+  const service = String(req.query.service || '').trim();
+  const days    = Math.min(parseInt(req.query.days || '45', 10) || 45, 365);
+  if (!service) return res.status(400).json({ error: '"service" query param required (App | Website | API)' });
+  try {
+    const bars = await getDailyBars(service, days);
+    res.json({ service, days, bars });
+  } catch (err) {
+    res.status(500).json({ error: 'History fetch failed', detail: err.message });
+  }
+});
+
+app.get('/api/v1/status/events', async (req, res) => {
+  const limit = Math.min(parseInt(req.query.limit || '20', 10) || 20, 100);
+  try {
+    const events = await getRecentEvents(limit);
+    res.json({ events });
+  } catch (err) {
+    res.status(500).json({ error: 'Events fetch failed', detail: err.message });
+  }
+});
+
 // Cloudinary video upload signing endpoint (MUST be before static middleware)
 app.post("/api/v1/upload/sign", async (req, res) => {
   const {
@@ -795,6 +832,11 @@ app.get('/app/*', (req, res) => {
 // Public status page — direct clean URL access
 // Serves the same SPA entry so React renders <StatusPage /> from window.location.pathname
 app.get('/status', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/public/index.html'));
+});
+
+// Status page V2 — Cal.com-style standalone public status page
+app.get('/status2', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/public/index.html'));
 });
 

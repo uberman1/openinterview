@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,10 +13,18 @@ import AdminConsole from "@/pages/AdminConsole";
 import Login from "@/pages/Login";
 import PagesIndex from "@/pages/PagesIndex";
 import ProfilePublic from "@/pages/ProfilePublic";
+import StatusPageV2 from "@/pages/StatusPageV2";
 import NotFound from "@/pages/not-found";
 import Sidebar from "@/components/sidebar";
 
 function Router() {
+  const [location] = useLocation();
+
+  // StatusPageV2 is a standalone public page — rendered without sidebar or app chrome
+  if (location === "/status2") {
+    return <StatusPageV2 />;
+  }
+
   return (
     <div className="min-h-screen flex bg-background text-foreground">
       <Sidebar />
