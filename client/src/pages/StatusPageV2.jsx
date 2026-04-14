@@ -7,11 +7,11 @@ import { useStatusData } from '../features/status/useStatusData'
 // ─── Color constants ──────────────────────────────────────────────────────────
 
 const BAR_COLOR = {
-  operational:    '#4ade80',
-  degraded:       '#fb923c',
-  outage:         '#f87171',
-  partial_outage: '#f87171',
-  no_data:        '#e5e7eb',
+  operational:    '#22c55e',
+  degraded:       '#eab308',
+  outage:         '#ef4444',
+  partial_outage: '#ef4444',
+  no_data:        '#e2e8f0',
 }
 
 const BANNER = {
@@ -190,9 +190,17 @@ function UptimeMeter({ bars }) {
   )
 }
 
-function UptimeRow({ name, uptime, bars }) {
+const STATUS_ICON_COLOR = {
+  operational:    { dot: '#22c55e', check: '#16a34a' },
+  degraded:       { dot: '#eab308', check: '#a16207' },
+  outage:         { dot: '#ef4444', check: '#b91c1c' },
+  partial_outage: { dot: '#ef4444', check: '#b91c1c' },
+}
+
+function UptimeRow({ name, uptime, bars, serviceStatus }) {
   const pct = uptime != null ? `${Number(uptime).toFixed(2)}%` : null
-  const allOk = pct === '100.00%'
+  const iconColors = STATUS_ICON_COLOR[serviceStatus] ?? STATUS_ICON_COLOR.operational
+  const pctColor = iconColors.check
 
   return (
     <div style={{ marginBottom: 28 }}>
@@ -201,16 +209,14 @@ function UptimeRow({ name, uptime, bars }) {
         <span style={{ fontSize: 15, fontWeight: 600, color: '#111827' }}>{name}</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           {pct ? (
-            <span style={{ fontSize: 14, fontWeight: 700, color: '#16a34a' }}>{pct}</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: pctColor }}>{pct}</span>
           ) : (
             <Skel h={14} w={50} />
           )}
-          {allOk && (
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="8" fill="#4ade80" opacity="0.25"/>
-              <path d="M5 8.5l2 2 4-4" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          )}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="8" fill={iconColors.dot} opacity="0.25"/>
+            <path d="M5 8.5l2 2 4-4" stroke={iconColors.check} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
       </div>
 
@@ -358,7 +364,7 @@ export default function StatusPageV2() {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: '#ffffff',
+      backgroundColor: '#fcf9f8',
       fontFamily: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
     }}>
       {/* Page content */}
@@ -441,6 +447,7 @@ export default function StatusPageV2() {
                   name={name}
                   uptime={svcMap[name]?.uptimePercent ?? null}
                   bars={histories[name]}
+                  serviceStatus={svcMap[name]?.status ?? 'operational'}
                 />
               ))}
             </div>
