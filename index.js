@@ -838,9 +838,9 @@ app.get('/status', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/public/index.html'));
 });
 
-// Status page V2 — Cal.com-style standalone public status page
+// Status page V2 — standalone HTML (same header as home.html, no React bundle needed)
 app.get('/status2', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/public/index.html'));
+  res.sendFile(path.join(__dirname, 'public/status2.html'));
 });
 
 app.use(express.static(path.join(__dirname, "public")));

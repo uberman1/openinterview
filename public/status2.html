@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Status - OpenInterview.me</title>
+<meta name="description" content="Live uptime and system status for OpenInterview.me"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#141414",
+          "background-light": "#ffffff",
+          "background-dark": "#000000",
+        },
+        fontFamily: { "display": ["Inter", "sans-serif"] },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+      },
+    },
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #fcf9f8; }
+  .bar { display: inline-block; width: 10px; height: 28px; border-radius: 3px; margin: 0 1px; transition: transform 0.15s; }
+  .bar:hover { transform: scaleY(1.15); }
+</style>
+</head>
+<body class="min-h-screen" style="background:#fcf9f8">
+
+<!-- ── Header (identical to home.html) ───────────────────────────────────── -->
+<header class="sticky top-0 z-50 w-full border-b border-solid border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md transition-all duration-300">
+  <div class="flex items-center justify-between px-4 py-4 md:px-6">
+    <a href="/home.html" class="flex items-center gap-4 text-primary dark:text-background-light hover:opacity-80 transition-opacity">
+      <div class="h-8 w-auto">
+        <img src="/defaults/logo_1.png" alt="OpenInterview Logo" class="h-full w-auto object-contain">
+      </div>
+    </a>
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex flex-1 items-center justify-end gap-6">
+      <nav class="flex items-center gap-6">
+        <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/pricing.html">Pricing</a>
+      </nav>
+      <div id="auth-buttons-container" class="flex items-center gap-4">
+        <a href="/login-page.html" id="sign-in-btn" class="flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors">Sign In</a>
+      </div>
+    </div>
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="md:hidden p-2 text-primary dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors" aria-label="Toggle menu">
+      <span class="material-symbols-outlined text-2xl">menu</span>
+    </button>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
+    <nav class="flex flex-col p-4 gap-4">
+      <a class="text-base font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white py-2" href="/pricing.html">Pricing</a>
+      <div id="auth-buttons-container-mobile" class="relative pt-2 border-t border-neutral-100 dark:border-neutral-800">
+        <a href="/login-page.html" class="flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors w-full mt-4">Sign In</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ── Status Content ─────────────────────────────────────────────────────── -->
+<main class="max-w-3xl mx-auto px-4 py-12">
+
+  <!-- Title -->
+  <h1 class="text-2xl font-bold text-neutral-900 mb-1">OpenInterview.me</h1>
+  <p class="text-sm text-neutral-500 mb-8">See the uptime of OpenInterview.me</p>
+
+  <!-- Banner -->
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px" class="flex items-center justify-between px-5 py-4 mb-10">
+    <div class="flex items-center gap-3">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.5l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="color:#15803d" class="text-sm font-semibold">All Systems Operational</span>
+    </div>
+    <span id="banner-ts" class="text-xs text-neutral-400"></span>
+  </div>
+
+  <!-- Services -->
+  <div id="services" class="flex flex-col gap-10 mb-14">
+    <!-- Rendered by JS -->
+  </div>
+
+  <!-- Event History -->
+  <div>
+    <h2 class="text-base font-semibold text-neutral-900 mb-1">Event History</h2>
+    <p class="text-xs text-neutral-400 mb-6">Scheduled monitoring updates and system activity</p>
+    <div id="events-list">
+      <p class="text-sm text-neutral-400">No incidents to display.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const SERVICES = ['App', 'Website', 'API'];
+const GREEN = '#22c55e';
+const GRAY  = '#e2e8f0';
+const N = 45;
+
+function renderServices() {
+  const container = document.getElementById('services');
+  container.innerHTML = SERVICES.map(name => `
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-neutral-900">${name}</span>
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-semibold" style="color:#16a34a">100.00%</span>
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.5l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="flex gap-px">${Array.from({length:N}).map(()=>`<span class="bar" style="background:${GREEN}"></span>`).join('')}</div>
+      <div class="flex justify-between mt-1">
+        <span class="text-xs text-neutral-400">45 days ago</span>
+        <span class="text-xs text-neutral-400">today</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function fmt(iso) {
+  if (!iso) return '';
+  try {
+    return new Date(iso).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
+  } catch { return iso; }
+}
+
+function relDay(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d)) return '';
+  const days = Math.floor((Date.now() - d) / 86400000);
+  if (days === 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  if (days < 30) return `${days} days ago`;
+  return `${Math.floor(days/30)} months ago`;
+}
+
+const STAGE_COLOR = {Resolved:'#16a34a',Monitoring:'#2563eb',Identified:'#d97706',Investigating:'#dc2626'};
+const STAGE_DOT   = {Resolved:'#4ade80',Monitoring:'#60a5fa',Identified:'#fb923c',Investigating:'#f87171'};
+
+async function loadEvents() {
+  try {
+    const res = await fetch('/api/v1/status/events', {credentials:'include'});
+    if (!res.ok) return;
+    const data = await res.json();
+    const events = data.events ?? data ?? [];
+    if (!Array.isArray(events) || events.length === 0) return;
+
+    // Group by title+date
+    const map = new Map();
+    for (const ev of events) {
+      const ts = ev.event_timestamp ?? ev.timestamp ?? '';
+      const dateKey = ts ? ts.slice(0,10) : 'unknown';
+      const key = `${(ev.title||'').toLowerCase().trim()}||${dateKey}`;
+      if (!map.has(key)) map.set(key, {title: ev.title||'Untitled', dateKey, dateLabel: ts, entries:[]});
+      map.get(key).entries.push(ev);
+    }
+
+    // Sort groups newest-first
+    const groups = [...map.values()].sort((a,b) => b.dateKey.localeCompare(a.dateKey));
+
+    const el = document.getElementById('events-list');
+    el.innerHTML = groups.map(g => {
+      const entries = [...g.entries].sort((a,b)=>{
+        const ta = a.event_timestamp ?? a.timestamp ?? '';
+        const tb = b.event_timestamp ?? b.timestamp ?? '';
+        return tb.localeCompare(ta);
+      });
+      return `
+        <div class="flex gap-6 mb-8">
+          <div class="w-28 flex-shrink-0 text-right">
+            <div class="text-xs font-medium text-neutral-900">${relDay(g.dateLabel)}</div>
+            <div class="text-xs text-neutral-400">${g.dateKey}</div>
+          </div>
+          <div class="flex-1 border-l border-neutral-200 pl-6">
+            <div class="text-sm font-semibold text-neutral-900 mb-3">${g.title}</div>
+            ${entries.map(e => {
+              const stage = e.stage || 'Update';
+              const color = STAGE_COLOR[stage] || '#6b7280';
+              const dot   = STAGE_DOT[stage]   || '#d1d5db';
+              return `
+                <div class="flex gap-3 mb-3">
+                  <div class="mt-1.5 w-2 h-2 rounded-full flex-shrink-0" style="background:${dot}"></div>
+                  <div>
+                    <div class="text-xs font-semibold mb-0.5" style="color:${color}">${stage}</div>
+                    ${e.body ? `<div class="text-xs text-neutral-600">${e.body}</div>` : ''}
+                    <div class="text-xs text-neutral-400 mt-0.5">${fmt(e.event_timestamp ?? e.timestamp ?? '')}</div>
+                  </div>
+                </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) { console.warn('events load failed', e); }
+}
+
+// Set banner timestamp
+document.getElementById('banner-ts').textContent = new Date().toLocaleString('en-US',{
+  month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'
+});
+
+renderServices();
+loadEvents();
+
+// Mobile menu toggle
+document.getElementById('mobile-menu-btn')?.addEventListener('click', ()=>{
+  document.getElementById('mobile-menu')?.classList.toggle('hidden');
+});
+</script>
+
+<script src="/js/header.avatar.bind.js" defer></script>
+</body>
+</html>
