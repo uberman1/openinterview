@@ -1,0 +1,87 @@
+Create a reusable OpenInterview use-case template page.
+
+Important:
+This page must NOT duplicate the existing homepage sections into a separate static copy.
+
+What should be new:
+- only the top use-case hero section
+
+What must be reused from the current homepage implementation:
+- header
+- CTA/upload block
+- Why OpenInterview section
+- Wall of Love / testimonials
+- footer
+
+Critical rule:
+Do NOT copy those lower sections verbatim into a new standalone page file if they already exist in the codebase.
+Do NOT fork them.
+Do NOT create a second source of truth.
+
+Instead, the new use-case page should be assembled by:
+- rendering or including the existing homepage sections/components/partials/handlers already used by home.html
+- keeping those sections tied to the current homepage implementation
+- so future homepage updates automatically carry through to the use-case template page
+
+Goal:
+The use-case page should be:
+1. a new custom hero at the top
+2. followed by the existing homepage sections rendered from the same underlying implementation
+
+Default use-case example:
+Tutors
+
+Top hero requirements:
+Create a configurable 2-column hero section with:
+- eyebrowLabel
+- headline
+- description
+- heroImage
+- bullets (array of 5)
+- primaryCtaText
+- secondaryCtaText
+
+Default tutor content:
+Eyebrow: For Tutors
+Headline: Show parents how you teach before they ever book a session.
+Description: OpenInterview helps tutors present more than credentials. Instead of relying on a profile photo and a few lines of text, you can show your communication style, clarity, warmth, and confidence in one simple link. Parents and students get a faster, stronger first impression, which helps you earn trust sooner and convert more profile views into real sessions.
+Bullets:
+- Build trust before the first lesson
+- Show how clearly you explain concepts
+- Stand out from text-only tutor profiles
+- Reduce back-and-forth before booking
+- Convert more views into real sessions
+
+Design requirements:
+- preserve the existing OpenInterview design system
+- Inter font
+- monochrome / neutral palette
+- primary color #141414
+- same spacing rhythm as homepage
+- same button styling as homepage
+- same premium, minimal feel as homepage
+
+Implementation priority:
+1. Build the new top hero section
+2. Reuse the existing homepage sections below it from the current implementation
+3. Add minimal route wiring if needed
+
+Preferred implementation behavior:
+- if shared components/partials/helpers exist, use them
+- if the homepage is currently one file, extract only the minimum needed so the lower sections are shared, not duplicated
+- avoid copying large homepage blocks into a new page unless there is absolutely no reusable mechanism
+- if extraction is required, do minimal extraction only for the shared lower sections
+- keep home.html as the source of truth for those reused sections
+
+Do not:
+- do not make a full static duplicate of home.html
+- do not paste the CTA/upload block, Why OpenInterview, Wall of Love, and footer into a new page as independent copies
+- do not redesign the page
+- do not modify homepage visuals unnecessarily
+- do not build all use-case pages yet
+
+Deliver:
+- one use-case template page for Tutors
+- minimal routing
+- a short summary of files changed
+- explicitly confirm whether the lower sections are shared/reused vs duplicated

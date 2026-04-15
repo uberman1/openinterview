@@ -1,0 +1,87 @@
+Create a reusable OpenInterview use-case template page.
+
+Important: this is a TEMPLATE page for use cases like:
+- freelancers
+- tutors
+- service providers
+- babysitters
+- actors / performers
+- musicians / singers
+- event staffing
+- sales professionals
+- creators
+- startup hiring
+
+Main requirement:
+Only the TOP HERO AREA should be newly created for this template page.
+
+Everything BELOW the hero must use the EXISTING homepage sections already in the project.
+
+Do NOT recreate those lower sections from scratch.
+Do NOT redesign them.
+Do NOT make duplicate versions of them unless absolutely necessary.
+
+Use the existing homepage implementation for:
+- header (if shared / reusable)
+- CTA/upload block
+- Why OpenInterview section
+- Wall of Love section
+- footer
+
+This page should feel like:
+1. a custom use-case hero at the top
+2. then the normal OpenInterview homepage sections below it
+
+Top hero section requirements:
+Build a 2-column hero section that is configurable for different use cases.
+
+Fields to support:
+- eyebrowLabel
+- headline
+- description
+- heroImage
+- bullets (array of 5)
+- primaryCtaText
+- secondaryCtaText
+
+Default example content:
+Eyebrow: For Tutors
+Headline: Show parents how you teach before they ever book a session.
+Description: OpenInterview helps tutors present more than credentials. Instead of relying on a profile photo and a few lines of text, you can show your communication style, clarity, warmth, and confidence in one simple link. Parents and students get a faster, stronger first impression, which helps you earn trust sooner and convert more profile views into real sessions.
+Bullets:
+- Build trust before the first lesson
+- Show how clearly you explain concepts
+- Stand out from text-only tutor profiles
+- Reduce back-and-forth before booking
+- Convert more views into real sessions
+
+Design requirements:
+- preserve the existing OpenInterview design system
+- Inter font
+- monochrome / neutral palette
+- primary color #141414
+- same spacing rhythm as homepage
+- same button styling as homepage
+- same overall premium, minimal look
+
+Implementation guidance:
+- if shared components already exist, reuse/import them
+- if the homepage is currently one file, extract only the minimum needed for reuse
+- if this is a static HTML setup, port the exact existing homepage sections below the hero rather than rebuilding them
+- keep the lower sections visually and structurally identical to the homepage
+
+Create:
+- one reusable use-case template page
+- minimal route wiring if needed
+
+Do not:
+- do not recreate the lower homepage sections from scratch
+- do not redesign the page
+- do not add extra sections
+- do not broadly refactor unrelated files
+- do not build all 10 use-case pages yet
+
+When done, provide:
+- the files changed
+- the route created
+- a short note confirming that the lower sections were reused from the existing homepage implementation, not rebuilt
