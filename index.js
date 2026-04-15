@@ -396,6 +396,21 @@ function serveHome(req, res) {
   } catch (e) { res.status(500).send('Failed to load home.html'); }
 }
 app.get('/home.html', serveHome);
+
+// ---- Serve /for/tutors use-case page ----
+function serveForTutors(req, res) {
+  const p = path.join(__dirname, 'public', 'for-tutors.html');
+  try {
+    let html = fs.readFileSync(p, 'utf8');
+    html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (e) { res.status(500).send('Failed to load for-tutors.html'); }
+}
+app.get('/for/tutors', serveForTutors);
+app.get('/for-tutors', (req, res) => res.redirect(302, '/for/tutors'));
+app.get('/for-tutors.html', (req, res) => res.redirect(302, '/for/tutors'));
+
 app.get('/profile.html', (req, res) => res.redirect(302, '/home.html#profile'));
 app.get('/profile', (req, res) => res.redirect(302, '/home.html#profile'));
 app.get('/account', (req, res) => res.redirect(302, '/home.html#profile'));
