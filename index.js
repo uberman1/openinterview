@@ -411,6 +411,31 @@ app.get('/for/tutors', serveForTutors);
 app.get('/for-tutors', (req, res) => res.redirect(302, '/for/tutors'));
 app.get('/for-tutors.html', (req, res) => res.redirect(302, '/for/tutors'));
 
+// ---- Shared helper for remaining use-case pages ----
+function serveUseCasePage(filename) {
+  return function(req, res) {
+    const p = path.join(__dirname, 'public', filename);
+    try {
+      let html = fs.readFileSync(p, 'utf8');
+      html = html.replace('</body>', '<script src="/js/header.avatar.bind.js" defer></script></body>');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.send(html);
+    } catch (e) { res.status(500).send(`Failed to load ${filename}`); }
+  };
+}
+
+app.get('/for/freelancers',    serveUseCasePage('freelancers.html'));
+app.get('/for/tutors-coaches', serveUseCasePage('tutors.html'));
+app.get('/for/services',       serveUseCasePage('services.html'));
+app.get('/for/caregivers',     serveUseCasePage('caregivers.html'));
+app.get('/for/performers',     serveUseCasePage('performers.html'));
+app.get('/for/musicians',      serveUseCasePage('musicians.html'));
+app.get('/for/events',         serveUseCasePage('events.html'));
+app.get('/for/conventions',    serveUseCasePage('conventions.html'));
+app.get('/for/sales',          serveUseCasePage('sales.html'));
+app.get('/for/creators',       serveUseCasePage('creators.html'));
+app.get('/for/startups',       serveUseCasePage('startups.html'));
+
 app.get('/profile.html', (req, res) => res.redirect(302, '/home.html#profile'));
 app.get('/profile', (req, res) => res.redirect(302, '/home.html#profile'));
 app.get('/account', (req, res) => res.redirect(302, '/home.html#profile'));
