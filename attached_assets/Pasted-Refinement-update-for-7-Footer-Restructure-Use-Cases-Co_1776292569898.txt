@@ -1,0 +1,117 @@
+Refinement update for #7 — Footer Restructure — Use Cases Column
+
+Review the existing plan and execute with the following refinements and safeguards.
+
+Objective
+Update the footer across home.html, for-tutors.html, and all 11 generated use-case pages so the footer surfaces the 11 use-case links while preserving the current visual system and 4-column layout.
+
+Approved structural target
+- Col 1: Brand — unchanged
+- Col 2: Use Cases — 11 links
+- Col 3: Product stacked above Legal & Trust in the same column
+- Col 4: Keep existing fourth column exactly as it currently appears in each file unless confirmed identical and intentionally updated
+
+Important correction
+Do not assume Col 4 is “Security + Contact” unless that text already exists in the actual files.
+Use the live footer markup in each target file as the source of truth.
+If Col 4 is currently Contact, leave it as Contact.
+Do not rename or redesign columns that are not part of this task.
+
+Link set for Use Cases column
+- Freelancers → /for/freelancers
+- Tutors & Coaches → /for/tutors-coaches
+- Service Providers → /for/services
+- Babysitters & Caregivers → /for/caregivers
+- Actors & Performers → /for/performers
+- Musicians & Singers → /for/musicians
+- Event Staffing → /for/events
+- Convention Hiring → /for/conventions
+- Sales & Business Development → /for/sales
+- Influencers & Creators → /for/creators
+- Startup Hiring & Recruiting → /for/startups
+
+Refinements to the implementation plan
+
+1. Do not use broad blind string replacement across full files.
+Use the narrowest possible replacement limited to the footer column block only.
+Match the exact footer region first, then replace only the two middle columns.
+
+2. Verify actual footer consistency before batch replacement.
+Before writing changes:
+- inspect home.html footer
+- inspect for-tutors.html footer
+- inspect one generated use-case page footer
+Confirm whether all use-case pages share identical footer markup.
+If identical, batch update those pages.
+If not identical, handle the differing pattern separately.
+
+3. Preserve all existing classes and dark mode styling.
+The new Use Cases column and stacked Product/Legal column must inherit the same typography, spacing, hover, and dark-mode classes already used in the footer.
+Do not simplify classes.
+Do not restyle spacing.
+Do not alter surrounding grid structure.
+
+4. Preserve column count and responsive layout.
+Keep the outer footer grid exactly as it is now.
+Do not change:
+- grid column count
+- gap spacing
+- padding
+- brand column
+- fourth column
+Only update the contents of columns 2 and 3.
+
+5. Keep link order intentional.
+Use the exact use-case order provided above.
+Do not alphabetize.
+Do not shorten labels.
+
+6. Make column 3 internally stacked, not split into two grid columns.
+Column 3 should remain one footer column containing:
+- Product heading + links
+- Legal & Trust heading + links
+with clear vertical spacing between the two groups.
+
+7. Add a minimal validation step after changes.
+After updating files, verify:
+- all 13 files were changed successfully
+- all 11 use-case links appear in each footer
+- Product and Legal & Trust both appear in column 3
+- no duplicate columns were introduced
+- no footer class regressions occurred
+- all href values match exactly
+
+8. Keep cost and scope tight.
+Do not inspect unrelated files.
+Do not refactor the footer into components.
+Do not introduce templating or shared partials in this task.
+Do not redesign any copy outside the specified columns.
+
+Target files
+- public/home.html
+- public/for-tutors.html
+- public/freelancers.html
+- public/tutors.html
+- public/services.html
+- public/caregivers.html
+- public/performers.html
+- public/musicians.html
+- public/events.html
+- public/conventions.html
+- public/sales.html
+- public/creators.html
+- public/startups.html
+
+Execution note
+Use a script only if it is safer and more deterministic than manual editing.
+If using a script, make the selector/replacement logic narrow and explicit enough to avoid accidental footer corruption.
+
+Output when complete
+- list of files updated
+- confirmation of the final footer column structure
+- note whether home.html required a separate pattern
+- note whether all use-case pages shared one common footer pattern
+- confirmation that validation checks passed
+
+If everything above is clear and correct, approve and proceed.
+If anything conflicts with the live file structure, stop and report the exact mismatch before making broader edits.
