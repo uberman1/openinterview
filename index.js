@@ -425,16 +425,48 @@ function serveUseCasePage(filename) {
 }
 
 app.get('/for/freelancers',    serveUseCasePage('freelancers.html'));
+app.get('/freelancers',        (req, res) => res.redirect(302, '/for/freelancers'));
+app.get('/freelancers.html',   (req, res) => res.redirect(302, '/for/freelancers'));
+
 app.get('/for/tutors-coaches', serveUseCasePage('tutors.html'));
+app.get('/tutors-coaches',     (req, res) => res.redirect(302, '/for/tutors-coaches'));
+app.get('/tutors.html',        (req, res) => res.redirect(302, '/for/tutors-coaches'));
+
 app.get('/for/services',       serveUseCasePage('services.html'));
+app.get('/services',           (req, res) => res.redirect(302, '/for/services'));
+app.get('/services.html',      (req, res) => res.redirect(302, '/for/services'));
+
 app.get('/for/caregivers',     serveUseCasePage('caregivers.html'));
+app.get('/caregivers',         (req, res) => res.redirect(302, '/for/caregivers'));
+app.get('/caregivers.html',    (req, res) => res.redirect(302, '/for/caregivers'));
+
 app.get('/for/performers',     serveUseCasePage('performers.html'));
+app.get('/performers',         (req, res) => res.redirect(302, '/for/performers'));
+app.get('/performers.html',    (req, res) => res.redirect(302, '/for/performers'));
+
 app.get('/for/musicians',      serveUseCasePage('musicians.html'));
+app.get('/musicians',          (req, res) => res.redirect(302, '/for/musicians'));
+app.get('/musicians.html',     (req, res) => res.redirect(302, '/for/musicians'));
+
 app.get('/for/events',         serveUseCasePage('events.html'));
+app.get('/events',             (req, res) => res.redirect(302, '/for/events'));
+app.get('/events.html',        (req, res) => res.redirect(302, '/for/events'));
+
 app.get('/for/conventions',    serveUseCasePage('conventions.html'));
+app.get('/conventions',        (req, res) => res.redirect(302, '/for/conventions'));
+app.get('/conventions.html',   (req, res) => res.redirect(302, '/for/conventions'));
+
 app.get('/for/sales',          serveUseCasePage('sales.html'));
+app.get('/sales',              (req, res) => res.redirect(302, '/for/sales'));
+app.get('/sales.html',         (req, res) => res.redirect(302, '/for/sales'));
+
 app.get('/for/creators',       serveUseCasePage('creators.html'));
+app.get('/creators',           (req, res) => res.redirect(302, '/for/creators'));
+app.get('/creators.html',      (req, res) => res.redirect(302, '/for/creators'));
+
 app.get('/for/startups',       serveUseCasePage('startups.html'));
+app.get('/startups',           (req, res) => res.redirect(302, '/for/startups'));
+app.get('/startups.html',      (req, res) => res.redirect(302, '/for/startups'));
 
 app.get('/profile.html', (req, res) => res.redirect(302, '/home.html#profile'));
 app.get('/profile', (req, res) => res.redirect(302, '/home.html#profile'));
