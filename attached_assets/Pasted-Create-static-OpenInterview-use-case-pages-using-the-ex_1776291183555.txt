@@ -1,0 +1,73 @@
+Create static OpenInterview use-case pages using the existing use-case template pattern already built in the project.
+
+Important:
+- Do NOT redesign the template
+- Do NOT rebuild the shared page structure from scratch
+- Reuse the same existing use-case page pattern already established
+- These should be normal static pages
+- I will paste the use-case content separately
+- Apply the provided use-case content exactly as given
+
+What to create:
+For each use case I provide, generate one static page by swapping only:
+- page name
+- eyebrow
+- headline
+- description
+- bullet list
+- Wall of Love testimonials
+
+Keep unchanged:
+- overall page structure
+- shared lower sections
+- styling system
+- layout rhythm
+- component hierarchy
+- spacing and button styles
+
+Design system requirements:
+- preserve the existing OpenInterview visual system
+- Inter font
+- primary color #141414
+- monochrome / neutral palette
+- same spacing rhythm as homepage/template
+- same button styling
+- same premium minimal visual style
+
+Implementation requirements:
+- create one static page per use case
+- use the same existing template/page pattern for every page
+- only replace the hero + testimonial content per page
+- keep styling consistent across all pages
+- wire routes only if the current project structure requires it
+- do not redesign the shared sections
+- do not create a CMS
+- do not create a data layer
+- do not refactor unrelated files
+
+Cost and efficiency controls:
+- use the lightest-weight implementation possible
+- do not explore the repo broadly
+- do not inspect unrelated files
+- only open files directly required to duplicate the existing template pattern
+- do not propose architecture improvements
+- do not add abstractions unless strictly necessary to avoid repeated manual work
+- prefer simple duplication from the existing use-case template page over broader refactors
+- if multiple pages can be created by following one existing page pattern, do exactly that
+- do not rebuild shared assets or styles
+- do not generate extra variants, experiments, or optional enhancements
+- stop after the requested pages are created
+
+Optimized agent behavior:
+- treat this as an execution task, not a planning task
+- do not re-interpret the page structure
+- do not rewrite copy unless necessary for formatting
+- do not make creative substitutions
+- preserve the provided copy as the source of truth
+- use the existing use-case template page as the base for all new pages
+- keep token/tool usage low by reusing the known pattern across all pages
+
+Output when finished:
+- full list of files created
+- any routes added
+- short confirmation that all pages were generated from the same template pattern
