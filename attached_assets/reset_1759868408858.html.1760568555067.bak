@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reset Password - OpenInterview.me</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: { primary: "#141414", "background-light":"#f7f7f7", "background-dark":"#191919" },
+        fontFamily: { display: ["Inter"] },
+        borderRadius: { DEFAULT: "0.25rem", lg:"0.5rem", xl:"0.75rem", full:"9999px" }
+      },
+    },
+  }
+</script>
+<style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-white">
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-md space-y-8">
+    <div class="text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight">Set a new password</h1>
+      <p id="state" class="mt-2 text-sm text-primary/70 dark:text-white/70">Validating your link…</p>
+    </div>
+    <form id="form" class="space-y-4 hidden">
+      <label class="sr-only" for="password">New password</label>
+      <input id="password" type="password" required placeholder="New password"
+        class="block w-full px-4 py-3 border border-primary/20 dark:border-white/20 rounded-lg bg-transparent text-sm placeholder-primary/50 dark:placeholder-white/50"/>
+      <label class="sr-only" for="confirm">Confirm new password</label>
+      <input id="confirm" type="password" required placeholder="Confirm new password"
+        class="block w-full px-4 py-3 border border-primary/20 dark:border-white/20 rounded-lg bg-transparent text-sm placeholder-primary/50 dark:placeholder-white/50"/>
+      <button class="w-full py-3 rounded-lg text-white bg-primary font-semibold hover:bg-primary/90" type="submit">Update password</button>
+    </form>
+    <div id="done" class="hidden text-center text-sm text-primary/70 dark:text-white/70">
+      Password updated. <a class="font-medium text-primary hover:underline dark:text-white" href="/login.html">Back to sign in</a>
+    </div>
+  </div>
+</div>
+<script>
+const params = new URLSearchParams(location.search);
+const token = params.get('token')||'';
+async function validate(){
+  const r = await fetch('/api/auth/reset/validate?token=' + encodeURIComponent(token));
+  const ok = r.ok;
+  document.getElementById('state').textContent = ok ? 'Enter your new password.' : 'This link is no longer valid. Request a new one.';
+  document.getElementById('form').classList.toggle('hidden', !ok);
+}
+validate();
+document.getElementById('form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const p = document.getElementById('password').value;
+  const c = document.getElementById('confirm').value;
+  if (p !== c){ alert('Passwords do not match'); return; }
+  const r = await fetch('/api/auth/reset', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ token, password:p }) });
+  if (r.ok){ document.getElementById('form').classList.add('hidden'); document.getElementById('done').classList.remove('hidden'); }
+  else { alert('Could not update password. The link may be invalid or expired.'); }
+});
+</script>
+</body></html>

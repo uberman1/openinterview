@@ -1,0 +1,1 @@
+Scope: Only add client/src/types/jsx.d.ts

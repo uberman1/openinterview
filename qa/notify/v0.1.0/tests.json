@@ -1,0 +1,35 @@
+{
+  "contract": {
+    "status": "PASS",
+    "details": {
+      "selectors": 6
+    }
+  },
+  "behavior": {
+    "status": "PASS",
+    "details": {
+      "flows": [
+        "otp",
+        "generic"
+      ]
+    }
+  },
+  "a11y": {
+    "status": "PASS",
+    "details": {
+      "live_region": true
+    }
+  },
+  "security": {
+    "status": "PASS",
+    "details": {
+      "csp_meta": true
+    }
+  },
+  "visual": {
+    "status": "PASS",
+    "details": {
+      "baseline": "qa/notify/v0.1.0/baselines/notify-default.png"
+    }
+  }
+}

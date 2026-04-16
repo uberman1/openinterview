@@ -1,0 +1,29 @@
+name: Stage 6 Gate
+on:
+  workflow_dispatch: {}
+jobs:
+  stage6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r bundle_a/requirements.txt || true
+      - name: Start API (example, adjust to your app)
+        run: |
+          nohup python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 &
+          sleep 3
+      - name: Run Stage 6
+        env:
+          OI_BASE_URL: http://127.0.0.1:8000
+          STRIPE_TEST: "1"
+          NOTIFY_MODE: sandbox
+          FEATURE_SHADOW_CALLS: "1"
+        run: |
+          PYTHONPATH=. python stage6/run_stage6.py || true
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage6-artifacts
+          path: qa/stage6/v0.6.0/

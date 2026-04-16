@@ -1,0 +1,11 @@
+{
+  "name": "Module 4 \u2013 Video Upload (Mock)",
+  "public": [
+    "/"
+  ],
+  "protected": [
+    "/#/upload"
+  ],
+  "admin": [],
+  "notes": "Renders mock upload page and list; persists to localStorage."
+}

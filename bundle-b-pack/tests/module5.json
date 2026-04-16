@@ -1,0 +1,12 @@
+{
+  "name": "Module 5 – Share Links (Mock Tokens)",
+  "public": [
+    "/"
+  ],
+  "protected": [
+    "/#/upload",
+    "/#/s/testtoken"
+  ],
+  "admin": [],
+  "notes": "Smoke /#/s/testtoken route; real tokens verified via human QA."
+}

@@ -1,0 +1,24 @@
+OPENINTERVIEW — PASSWORD RESET QA (Option A)
+
+What this includes
+- public/password_reset.html — a new reset page matching the QA contract
+- password_pack/ — contract-driven test bundle (v0.1.4), already pointing to /password_reset.html
+
+How to run on Replit
+1) Install dependencies & browser:
+   pip install -r password_pack/requirements.txt
+   python -m playwright install --with-deps chromium
+
+2) If your preview URL is not http://127.0.0.1:8000, export it:
+   export OI_BASE_URL="https://<your-replit-preview-domain>"
+
+3) Execute the full test suite:
+   python password_pack/run.py
+
+Outputs
+- qa/password/v0.1.4/* (JSON/TXT artifacts, visual baselines/diffs, page snapshot)
+- test2.html — automatically appends a new row under the Password section with links to the page, source, and tests.
+
+Notes
+- This does NOT modify protected public/password.html.
+- You can restyle password_reset.html freely later; keep the element IDs/attributes to preserve tests.

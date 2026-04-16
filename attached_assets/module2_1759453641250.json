@@ -1,0 +1,13 @@
+{
+  "name": "Module 2 \u2013 Auth Simulation & Redirects",
+  "public": [
+    "/login",
+    "/"
+  ],
+  "protected": [
+    "/dashboard",
+    "/profile"
+  ],
+  "admin": [],
+  "notes": "Expect redirect to /login when not logged in; after simulated login, expect /dashboard."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "home-cleanup",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "apply": "node apply-home-cleanup.mjs"
+  }
+}

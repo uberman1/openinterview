@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    <title>My Bookings - OpenInterview.me</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#141414",
+              "background-light": "#f7f7f7",
+              "background-dark": "#191919",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(10px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              shimmer: {
+                "0%": { backgroundPosition: "-200% 0" },
+                "100%": { backgroundPosition: "200% 0" },
+              },
+            },
+            animation: {
+              shimmer: "shimmer 2s linear infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .skeleton-bg {
+        background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+        background-size: 200% 100%;
+      }
+      .dark .skeleton-bg {
+        background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+        background-size: 200% 100%;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+  <!-- Global Loader -->
+  <div id="global-loader" class="fixed inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-[#191919]/80 backdrop-blur-sm transition-opacity duration-500">
+    <div class="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent dark:border-white dark:border-t-transparent"></div>
+  </div>
+
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden text-primary">
+<div class="flex h-full grow flex-col">
+<app-navbar></app-navbar>
+<main class="flex-1 px-4 md:px-40 py-8 md:py-12">
+<div class="mx-auto flex max-w-[960px] flex-col gap-8 md:gap-12">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl md:text-4xl font-bold tracking-tight min-h-[40px] flex items-center">My Bookings</h1>
+<p class="text-primary/60 dark:text-white/60">Manage your upcoming interviews and requests.</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="stats-container">
+    <div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+        <div class="h-9 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+        <p class="text-sm text-primary/60 dark:text-white/60">Upcoming Bookings</p>
+    </div>
+    <div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+        <div class="h-9 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+        <p class="text-sm text-primary/60 dark:text-white/60">Today's Bookings</p>
+    </div>
+    <div class="flex flex-col gap-1 rounded border border-primary/10 bg-white p-4 dark:border-white/10 dark:bg-primary">
+        <div class="h-9 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+        <p class="text-sm text-primary/60 dark:text-white/60">Pending Approvals</p>
+    </div>
+</div>
+
+<div class="flex flex-col gap-6">
+<h2 class="text-2xl font-bold tracking-tight">All Bookings</h2>
+<div class="overflow-hidden overflow-x-auto rounded border border-primary/10 bg-white dark:border-white/10 dark:bg-primary">
+<table class="w-full text-left min-w-[800px]">
+<thead>
+<tr class="border-b border-primary/10 dark:border-white/10">
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Interview Profile</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Recruiter Name</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Recruiter Email</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Meeting Time</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60">Status</th>
+<th class="px-6 py-3 text-sm font-medium text-primary/60 dark:text-white/60 text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="bookings-table-body" class="divide-y divide-primary/10 dark:divide-white/10">
+<!-- Skeleton Loading State -->
+<tr>
+<td class="px-6 py-4"><div class="h-4 w-32 rounded skeleton-bg animate-shimmer"></div></td>
+<td class="px-6 py-4"><div class="h-4 w-24 rounded skeleton-bg animate-shimmer"></div></td>
+<td class="px-6 py-4"><div class="h-4 w-32 rounded skeleton-bg animate-shimmer"></div></td>
+<td class="px-6 py-4"><div class="h-4 w-24 rounded skeleton-bg animate-shimmer"></div></td>
+<td class="px-6 py-4"><div class="h-6 w-20 rounded skeleton-bg animate-shimmer"></div></td>
+<td class="px-6 py-4 text-right">
+  <div class="flex items-center justify-end gap-2">
+    <div class="h-8 w-8 rounded skeleton-bg animate-shimmer"></div>
+    <div class="h-8 w-8 rounded skeleton-bg animate-shimmer"></div>
+    <div class="h-8 w-8 rounded skeleton-bg animate-shimmer"></div>
+  </div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+</main>
+</div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<!-- Message Modal -->
+<div id="message-modal" class="fixed inset-0 bg-black/30 dark:bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="relative flex w-full max-w-md flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl p-5 md:p-6">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-bold text-primary dark:text-white">Booking Message</h3>
+            <button onclick="closeMessageModal()" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1">
+                <span class="text-sm font-medium text-primary/60 dark:text-white/60">From</span>
+                <p id="modal-booker-info" class="text-base text-primary dark:text-white font-medium"></p>
+            </div>
+            <div class="flex flex-col gap-1">
+                <span class="text-sm font-medium text-primary/60 dark:text-white/60">Profile</span>
+                <p id="modal-profile-name" class="text-base text-primary dark:text-white"></p>
+            </div>
+            <div class="flex flex-col gap-1">
+                <span class="text-sm font-medium text-primary/60 dark:text-white/60">Time</span>
+                <p id="modal-time" class="text-base text-primary dark:text-white"></p>
+            </div>
+            <div class="flex flex-col gap-1 mt-2">
+                <span class="text-sm font-medium text-primary/60 dark:text-white/60">Message</span>
+                <div id="modal-message-content" class="p-3 bg-background-light dark:bg-gray-800 rounded text-primary dark:text-white text-sm min-h-[100px] whitespace-pre-wrap"></div>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+            <button onclick="closeMessageModal()" class="rounded bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary/90 dark:bg-white dark:text-primary dark:hover:bg-white/90">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Status Modal -->
+<div id="status-modal" class="fixed inset-0 bg-black/30 dark:bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="relative flex w-full max-w-sm flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl p-5 md:p-6">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-bold text-primary dark:text-white">Update Status</h3>
+            <button onclick="closeStatusModal()" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <p class="text-sm text-primary/60 dark:text-white/60 mb-6">Change the status of this booking.</p>
+        <div class="flex flex-col gap-3" id="status-actions">
+            <!-- Buttons injected by JS -->
+        </div>
+    </div>
+</div>
+
+<!-- SMS Failure Modal -->
+<div id="sms-error-modal" class="fixed inset-0 bg-black/30 dark:bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="relative flex w-full max-w-md flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl p-5 md:p-6">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-bold text-primary dark:text-white">SMS Failed</h3>
+            <button onclick="closeSmsErrorModal()" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <p class="text-sm text-primary/60 dark:text-white/60 mb-4">
+            Booking is confirmed, but we could not send the SMS notification.
+        </p>
+        <div class="p-3 bg-background-light dark:bg-gray-800 rounded text-primary dark:text-white text-sm min-h-[60px] whitespace-pre-wrap" id="sms-error-message">
+            <!-- Filled by JS -->
+        </div>
+        <div class="mt-6 flex justify-end">
+            <button onclick="closeSmsErrorModal()" class="rounded bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary/90 dark:bg-white dark:text-primary dark:hover:bg-white/90">Close</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/auth.js"></script>
+<script src="/js/components/navbar.js"></script>
+<script src="/js/header.avatar.bind.js"></script>
+<script src="/js/my_bookings.bind.js"></script>
+</body>
+</html>

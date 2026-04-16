@@ -1,0 +1,17 @@
+{
+  "name": "Module 1 \u2013 Navigation Shell & Page Stubs",
+  "public": [
+    "/",
+    "/login"
+  ],
+  "protected": [
+    "/dashboard",
+    "/profile",
+    "/jobs",
+    "/settings"
+  ],
+  "admin": [
+    "/admin"
+  ],
+  "notes": "Ensure shell renders and nav route changes work without reloads."
+}

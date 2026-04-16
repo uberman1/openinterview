@@ -1,0 +1,56 @@
+page: shareable-profile
+version: v0.1.0
+section_id: shareable profile
+url: /shareable_profile_test.html
+
+headers:
+  expect_csp: true
+  allow_meta_csp: true
+
+dom:
+  must_exist:
+    - css: "main#content"
+    - css: "#profile_name"
+    - css: "#profile_title"
+    - css: "#avatar[alt]"
+    - css: "#copy_link_btn"
+    - css: "#copy_status[role='status']"
+    - css: "#about_section"
+    - css: "#toggle_about[aria-controls='about_body']"
+    - css: "#links_section"
+    - css: "#toggle_links[aria-controls='links_body']"
+    - css: "a#back_to_home"
+    - css: "div#errors[role='alert'][aria-live='assertive']"
+
+a11y:
+  ruleset: wcag2aa
+  max_serious: 0
+  max_critical: 0
+
+visual:
+  baselines:
+    - name: profile-default
+      url: /shareable_profile_test.html
+      selector: "main"
+      viewport: { width: 1280, height: 900 }
+  threshold: 0.001
+
+responsive:
+  viewports:
+    - { width: 375, height: 812, name: mobile }
+    - { width: 1280, height: 900, name: desktop }
+
+workflows:
+  - id: PR-COPY-LINK
+    steps:
+      - visit: /shareable_profile_test.html
+      - click: "#copy_link_btn"
+      - wait_for_text: { selector: "#copy_status", contains: "Link copied", timeout_ms: 3000 }
+  - id: PR-TOGGLE-SECTIONS
+    steps:
+      - visit: /shareable_profile_test.html
+      - click: "#toggle_about"
+      - expect_has_class: { selector: "#about_body", class: "hidden" }
+      - click: "#toggle_about"
+      - click: "#toggle_links"
+      - expect_has_class: { selector: "#links_body", class: "hidden" }

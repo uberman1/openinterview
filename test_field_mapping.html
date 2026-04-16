@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Field Mapping</title>
+</head>
+<body>
+    <h1>Test Field Mapping</h1>
+    
+    <div id="experience-container"></div>
+    <div id="education-container"></div>
+    
+    <script>
+        // Simulate the addExperienceBlock function
+        function addExperienceBlock(data = {}) {
+            const container = document.getElementById('experience-container');
+            if (!container) return;
+            
+            const block = document.createElement('div');
+            block.innerHTML = `
+                <h3>Experience Entry</h3>
+                <input type="text" placeholder="Company" value="${data.company || ''}" class="exp-company"/>
+                <input type="text" placeholder="Role/Title" value="${data.role || ''}" class="exp-role"/>
+                <input type="text" placeholder="Start Date" value="${data.startDate || ''}" class="exp-start"/>
+                <input type="text" placeholder="End Date" value="${data.endDate || ''}" class="exp-end"/>
+                <textarea placeholder="Description" class="exp-desc">${data.description || ''}</textarea>
+            `;
+            container.appendChild(block);
+        }
+        
+        function addEducationBlock(data = {}) {
+            const container = document.getElementById('education-container');
+            if (!container) return;
+            
+            const block = document.createElement('div');
+            block.innerHTML = `
+                <h3>Education Entry</h3>
+                <input type="text" placeholder="Institution" value="${data.institution || ''}" class="edu-institution"/>
+                <input type="text" placeholder="Degree" value="${data.degree || ''}" class="edu-degree"/>
+                <input type="text" placeholder="Field of Study" value="${data.field || ''}" class="edu-field"/>
+                <input type="text" placeholder="Year" value="${data.year || ''}" class="edu-year"/>
+            `;
+            container.appendChild(block);
+        }
+        
+        // Test data with old field names (what might be in database)
+        const testProfile = {
+            experience: [
+                {
+                    company: "Test Corp",
+                    title: "Software Engineer", // Old field name
+                    startDate: "2020",
+                    endDate: "2023",
+                    description: "Test description"
+                }
+            ],
+            education: [
+                {
+                    school: "Test University", // Old field name
+                    degree: "Bachelor of Science",
+                    field: "Computer Science",
+                    year: "2020"
+                }
+            ]
+        };
+        
+        // Simulate the fixed populateProfile logic
+        function populateProfile(profile) {
+            console.log('Original profile data:', profile);
+            
+            // Experience - with field mapping
+            if (profile.experience && profile.experience.length > 0) {
+                profile.experience.forEach(exp => {
+                    const mappedExp = {
+                        company: exp.company || '',
+                        role: exp.role || exp.title || '', // Handle both 'role' and 'title'
+                        startDate: exp.startDate || '',
+                        endDate: exp.endDate || '',
+                        description: exp.description || ''
+                    };
+                    console.log('Experience mapping:', exp, '→', mappedExp);
+                    addExperienceBlock(mappedExp);
+                });
+            }
+            
+            // Education - with field mapping
+            if (profile.education && profile.education.length > 0) {
+                profile.education.forEach(edu => {
+                    const mappedEdu = {
+                        institution: edu.institution || edu.school || '', // Handle both 'institution' and 'school'
+                        degree: edu.degree || '',
+                        field: edu.field || '',
+                        year: edu.year || edu.endDate || edu.startDate || ''
+                    };
+                    console.log('Education mapping:', edu, '→', mappedEdu);
+                    addEducationBlock(mappedEdu);
+                });
+            }
+        }
+        
+        // Test the mapping
+        populateProfile(testProfile);
+        
+        // Check if fields are populated correctly
+        setTimeout(() => {
+            const roleField = document.querySelector('.exp-role');
+            const institutionField = document.querySelector('.edu-institution');
+            
+            console.log('Role field value:', roleField ? roleField.value : 'NOT FOUND');
+            console.log('Institution field value:', institutionField ? institutionField.value : 'NOT FOUND');
+            
+            if (roleField && roleField.value === 'Software Engineer') {
+                console.log('✅ Experience role mapping WORKS');
+            } else {
+                console.log('❌ Experience role mapping FAILED');
+            }
+            
+            if (institutionField && institutionField.value === 'Test University') {
+                console.log('✅ Education institution mapping WORKS');
+            } else {
+                console.log('❌ Education institution mapping FAILED');
+            }
+        }, 100);
+    </script>
+</body>
+</html>

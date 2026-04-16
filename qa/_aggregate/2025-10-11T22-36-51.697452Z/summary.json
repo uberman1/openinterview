@@ -1,0 +1,278 @@
+{
+  "release_gate": "v0.1.0",
+  "started": "2025-10-11T22:36:51.697452Z",
+  "ended": "2025-10-11T22:37:05.846287Z",
+  "env": {
+    "HOME_API": "0",
+    "HEALTH_URL": null,
+    "OI_BASE_URL": "http://127.0.0.1:5000"
+  },
+  "pack_results": {
+    "password": {
+      "version": "v0.1.6",
+      "tests_txt": "qa/password/v0.1.6/tests.txt",
+      "tests_json": null,
+      "json": null
+    },
+    "subscription": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/subscription/v0.1.1/tests.txt",
+      "tests_json": "qa/subscription/v0.1.1/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:12:41.879041+00:00"
+      }
+    },
+    "availability": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/availability/v0.1.0/tests.txt",
+      "tests_json": "qa/availability/v0.1.0/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:12:46.898093+00:00"
+      }
+    },
+    "shareable_profile": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/shareable_profile/v0.1.0/tests.txt",
+      "tests_json": "qa/shareable_profile/v0.1.0/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:12:51.558323+00:00"
+      }
+    },
+    "profiles": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/profiles/v0.1.0/tests.txt",
+      "tests_json": "qa/profiles/v0.1.0/tests.json",
+      "json": {
+        "overall": "PASS",
+        "contract": "PASS",
+        "behavior": "PASS",
+        "a11y": "PASS",
+        "security": "PASS",
+        "visual": "PASS",
+        "timestamp": "2025-10-11T22:12:56.757532+00:00"
+      }
+    },
+    "uploads": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/uploads/v0.1.1/tests.txt",
+      "tests_json": "qa/uploads/v0.1.1/tests.json",
+      "json": {
+        "status": "PASS",
+        "suites": [
+          {
+            "contract": "PASS",
+            "count": 7
+          },
+          {
+            "security": "PASS"
+          },
+          {
+            "a11y": "PASS"
+          },
+          {
+            "behavior-happy": "PASS"
+          },
+          {
+            "behavior-large": "PASS"
+          },
+          {
+            "behavior-cancel": "PASS"
+          },
+          {
+            "behavior-mime-mismatch": "PASS"
+          },
+          {
+            "integration-avatar": "PASS"
+          },
+          {
+            "visual": "PASS",
+            "baseline": "uploads-default.png"
+          }
+        ],
+        "timestamp": "2025-10-11T22:12:57.105299+00:00"
+      }
+    },
+    "home": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/home/v0.1.1/tests.txt",
+      "tests_json": "qa/home/v0.1.1/tests.json",
+      "json": {
+        "status": "PASS",
+        "suites": [
+          {
+            "contract": "PASS",
+            "count": 9
+          },
+          {
+            "security": "PASS"
+          },
+          {
+            "a11y": "PASS"
+          },
+          {
+            "behavior-readiness": "PASS",
+            "label": "System Ready"
+          },
+          {
+            "behavior-nav-hrefs": "PASS",
+            "count": 6
+          },
+          {
+            "visual": "PASS",
+            "baseline": "home-default.png"
+          }
+        ],
+        "version": "v0.1.1",
+        "api_mode": false
+      }
+    },
+    "auth": {
+      "version": "v0.1.1",
+      "tests_txt": "qa/auth/v0.1.1/tests.txt",
+      "tests_json": "qa/auth/v0.1.1/tests.json",
+      "json": {
+        "contract": {
+          "status": "PASS",
+          "details": {
+            "selectors": 9
+          }
+        },
+        "behavior": {
+          "status": "PASS",
+          "details": {
+            "flows": [
+              "signup",
+              "verify_group_visible"
+            ]
+          }
+        },
+        "a11y": {
+          "status": "PASS",
+          "details": {
+            "live_region": true
+          }
+        },
+        "security": {
+          "status": "PASS",
+          "details": {
+            "csp_meta": true
+          }
+        },
+        "visual": {
+          "status": "PASS",
+          "details": {
+            "baseline": "qa/auth/v0.1.1/baselines/auth-default.png"
+          }
+        }
+      }
+    },
+    "notify": {
+      "version": "v0.1.0",
+      "tests_txt": "qa/notify/v0.1.0/tests.txt",
+      "tests_json": "qa/notify/v0.1.0/tests.json",
+      "json": {
+        "contract": {
+          "status": "PASS",
+          "details": {
+            "selectors": 6
+          }
+        },
+        "behavior": {
+          "status": "PASS",
+          "details": {
+            "flows": [
+              "otp",
+              "generic"
+            ]
+          }
+        },
+        "a11y": {
+          "status": "PASS",
+          "details": {
+            "live_region": true
+          }
+        },
+        "security": {
+          "status": "PASS",
+          "details": {
+            "csp_meta": true
+          }
+        },
+        "visual": {
+          "status": "PASS",
+          "details": {
+            "baseline": "qa/notify/v0.1.0/baselines/notify-default.png"
+          }
+        }
+      }
+    }
+  },
+  "pack_status": {
+    "password": "PASS",
+    "subscription": "PASS",
+    "availability": "PASS",
+    "shareable_profile": "PASS",
+    "profiles": "PASS",
+    "uploads": "PASS",
+    "home": "PASS",
+    "auth": "PASS",
+    "notify": "PASS"
+  },
+  "subprocess_failures": [
+    [
+      "password",
+      1
+    ],
+    [
+      "subscription",
+      1
+    ],
+    [
+      "availability",
+      1
+    ],
+    [
+      "shareable_profile",
+      1
+    ],
+    [
+      "profiles",
+      1
+    ],
+    [
+      "uploads",
+      1
+    ],
+    [
+      "home",
+      1
+    ],
+    [
+      "auth",
+      1
+    ],
+    [
+      "notify",
+      1
+    ]
+  ],
+  "status": "FAIL"
+}

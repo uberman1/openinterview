@@ -1,0 +1,56 @@
+<!doctype html><html><head>
+<meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/>
+<title>User • Edit Profile</title><link rel='stylesheet' href='/css/theme.css'/></head><body>
+<aside class='sidebar'><div style='font-weight:700;margin-bottom:12px'>OpenInterview.me</div><a class='navlink' href='/profile.html'>Home</a><a class='navlink' href='/availability.html'>Availability</a><a class='navlink muted' href='/profiles.html'>Profiles</a><a class='navlink' href='/uploads.html'>Uploads</a><a class='navlink' href='/subscription.html'>Subscription</a><a class='navlink' href='/password.html'>Password</a><a class='navlink' href='/login.html'>Log Out</a><button class='btn out' style='margin-top:12px' onclick='logout()'>Log Out</button></aside>
+<main class='main'><div class='container'>
+<h1>Edit Profile</h1>
+<div class='section'>
+  <div style='display:flex;gap:8px;justify-content:flex-end;margin-bottom:6px'>
+    <button id='btnShare' class='btn out'>Share</button>
+    <button id='btnDefault' class='btn out'>Set as Default</button>
+  </div>
+  <div style='display:grid;grid-template-columns:1fr 1fr;gap:16px'>
+    <div class='card' style='padding:12px'>
+      <h2>Basics</h2>
+      <label class='muted'>Title</label><input id='title' class='input'/>
+      <label class='muted' style='margin-top:8px'>City</label><input id='city' class='input'/>
+      <label class='muted' style='margin-top:8px'>About</label><textarea id='about' class='input' rows='4'></textarea>
+      <label class='muted' style='margin-top:8px'>Video URL (optional)</label><input id='video' class='input'/>
+      <button id='saveBasics' class='btn' style='margin-top:10px'>Save</button>
+    </div>
+    <div class='card' style='padding:12px'>
+      <h2>Links</h2>
+      <div id='links'></div>
+      <button id='addLink' class='btn out' style='margin-top:8px'>Add Link</button>
+    </div>
+    <div class='card' style='padding:12px'>
+      <h2>Resume (one)</h2>
+      <div id='resumeList'>Loading…</div>
+    </div>
+    <div class='card' style='padding:12px'>
+      <h2>Attachments</h2>
+      <div id='attachList'>Loading…</div>
+      <h3 class='muted' style='margin-top:8px'>Add from Library</h3>
+      <div id='libraryList'>Loading…</div>
+    </div>
+  </div>
+</div>
+</div></main>
+<script type='module'>
+import {api, requireUser} from '/js/app.js'; const u = requireUser();
+const url = new URL(location.href); const id = url.searchParams.get('id');
+let profile=null, library=[];
+function renderLinks(){ const wrap=document.querySelector('#links'); wrap.innerHTML=''; (profile.links||[]).forEach((lnk,idx)=>{ const row=document.createElement('div'); row.style.display='flex'; row.style.gap='8px'; row.style.marginBottom='6px'; row.innerHTML = `<input class="input" data-lab="${idx}" placeholder="Label" value="${lnk.label||''}"/> <input class="input" data-href="${idx}" placeholder="https://…" value="${lnk.href||''}"/>`; wrap.appendChild(row); }); }
+function renderResume(){ const div=document.querySelector('#resumeList'); const opts = library; div.innerHTML = opts.map(f=>`<label style="display:block;margin-top:6px"><input type="radio" name="resume" value="${f.id}" ${profile.resumeFileId===f.id?'checked':''}> ${f.name}</label>`).join('') + '<div style="margin-top:8px"><button id="saveResume" class="btn out">Save Resume</button></div>'; }
+function renderAttachments(){ const assigned=new Set(profile.attachmentFileIds||[]); const att=(profile.attachmentFileIds||[]).map(fid=>library.find(f=>f.id===fid)).filter(Boolean); document.querySelector('#attachList').innerHTML = att.length? att.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:10px;padding:8px;margin-top:6px"><div>${f.name}</div><button class="btn out" data-unassign="${f.id}">Unassign</button></div>`).join('') : '<div class="muted">No attachments</div>'; const lib=library.filter(f=>!assigned.has(f.id)); document.querySelector('#libraryList').innerHTML = lib.length? lib.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:10px;padding:8px;margin-top:6px"><div>${f.name}</div><button class="btn out" data-assign="${f.id}">Assign</button></div>`).join('') : '<div class="muted">No other files</div>'; }
+async function load(){ [profile, library] = await Promise.all([ api(`/api/profiles/${id}`), api(`/api/files?userId=${u.id}`) ]); document.querySelector('#title').value=profile.title||''; document.querySelector('#city').value=profile.city||''; document.querySelector('#about').value=profile.about||''; document.querySelector('#video').value=profile.video||''; renderLinks(); renderResume(); renderAttachments(); }
+document.querySelector('#addLink').onclick=()=>{ profile.links=(profile.links||[]).concat([{label:'',href:''}]); renderLinks(); };
+document.addEventListener('change',(e)=>{ if(e.target.name==='resume') profile.resumeFileId=e.target.value; if(e.target.dataset.lab!==undefined) profile.links[e.target.dataset.lab].label=e.target.value; if(e.target.dataset.href!==undefined) profile.links[e.target.dataset.href].href=e.target.value; });
+document.addEventListener('click', async (e)=>{ if(e.target.id==='saveResume'){ await api(`/api/profiles/${id}/resume`, {method:'PATCH', body: JSON.stringify({fileId: profile.resumeFileId||null})}); alert('Saved resume'); } if(e.target.dataset.assign){ await api(`/api/profiles/${id}/attachments`, {method:'POST', body: JSON.stringify({fileId:e.target.dataset.assign})}); load(); } if(e.target.dataset.unassign){ await api(`/api/profiles/${id}/attachments/${e.target.dataset.unassign}`, {method:'DELETE'}); load(); } });
+document.querySelector('#saveBasics').onclick = async ()=>{ const body = { title: document.querySelector('#title').value.trim(), city: document.querySelector('#city').value.trim(), about: document.querySelector('#about').value.trim(), video: document.querySelector('#video').value.trim(), links: profile.links, resumeFileId: profile.resumeFileId, attachmentFileIds: profile.attachmentFileIds }; await api(`/api/profiles/${id}`, {method:'PATCH', body: JSON.stringify(body)}); alert('Saved'); };
+document.querySelector('#btnDefault').onclick = async ()=>{ await api(`/api/profiles/${id}/default`, {method:'PATCH'}); alert('Set as default'); };
+document.querySelector('#btnShare').onclick = async ()=>{ const url = `${location.origin}/u/${profile.handle}`; await navigator.clipboard.writeText(url); alert('Link copied'); };
+load();
+</script>
+<script type="module" src="/js/enhance_profile_edit.js"></script>
+</body></html>
