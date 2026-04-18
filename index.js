@@ -579,6 +579,18 @@ function serveDownloads(req, res) {
 app.get('/downloads.html', serveDownloads);
 app.get('/downloads', serveDownloads);
 
+// ---- Serve /status2 - public system status page
+function serveStatus2(req, res) {
+  const p = path.join(__dirname, 'public', 'status2.html');
+  try {
+    let html = fs.readFileSync(p, 'utf8');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (e) { res.status(500).send('Failed to load status2.html'); }
+}
+app.get('/status2.html', serveStatus2);
+app.get('/status2', serveStatus2);
+
 // ---- Serve /profile/new with new interview editor
 function serveNewProfile(req, res) {
   const p = path.join(__dirname, 'public', 'profile_v4_1_package', 'public', 'index.html');
