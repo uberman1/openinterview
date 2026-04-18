@@ -1,0 +1,265 @@
+Create static OpenInterview use-case pages for each of the use cases below using the existing use-case template page pattern already built in the project.
+
+Important:
+- Do NOT redesign the template
+- Do NOT rebuild the page structure from scratch
+- Do NOT change the shared lower sections unless necessary for inserting the provided content
+- Reuse the same existing use-case page structure/style already established
+- These should be normal static pages
+- Build one page for each use case using the exact page names and copy below
+
+Goal:
+Create a separate static page for each use case by swapping in:
+- page name
+- eyebrow
+- headline
+- description
+- bullet list
+- Wall of Love testimonials
+
+Use the existing OpenInterview design system:
+- Inter font
+- primary color #141414
+- same spacing rhythm
+- same button styling
+- same premium minimal visual style
+
+Pages to create:
+
+1) freelancers.html
+Eyebrow: For Freelancers
+Headline: Win clients before the first call.
+Description:
+Most freelancers look the same on paper. OpenInterview.me lets you show how you think, communicate, and deliver value—before a client ever reaches out. Instead of long back-and-forth threads, you give clients clarity upfront, making it easier for them to choose you quickly. When they’re ready, they can book time directly—and you’ll know instantly.
+Bullets:
+- Get selected before price becomes the deciding factor
+- Show how you think—not just what you’ve done
+- Turn proposals into decisions, not long message threads
+- Build trust fast so clients feel confident choosing you
+- Spend less time explaining and more time getting paid
+- Get notified instantly when a client is ready to move forward
+Wall of Love:
+Marcus T. — Web Developer
+“I used to lose deals to cheaper freelancers. Now clients understand my approach before we even talk—and I’m closing higher-value projects consistently.”
+Elena R. — Copywriter
+“My conversion rate from proposal to project went way up. People come in already convinced.”
+David K. — Product Designer
+“I’m spending less time explaining myself and more time doing paid work.”
+
+2) tutors.html
+Eyebrow: For Tutors & Coaches
+Headline: Show how you teach before they book.
+Description:
+Parents don’t just want qualifications—they want confidence. OpenInterview.me lets you demonstrate your teaching style, clarity, and personality upfront so families feel comfortable choosing you immediately. Instead of answering the same questions over and over, you give them a clear picture from the start.
+Bullets:
+- Help parents feel confident choosing you in seconds
+- Show how you explain concepts—not just list credentials
+- Turn inquiries into bookings without extra calls
+- Answer the questions parents always ask—before they ask them
+- Stand out by showing clarity, not just experience
+- Let families reach or book you instantly when they’re ready
+Wall of Love:
+Priya S. — Math Tutor
+“Parents tell me they chose me because they could actually see how I explain things. My schedule filled up faster than ever.”
+Jordan L. — SAT Coach
+“I used to do multiple intro calls a day. Now most parents are ready to book after watching my OpenInterview.”
+Melissa D. — Reading Specialist
+“It filters for the right students—people who book already understand how I work.”
+
+3) services.html
+Eyebrow: For Service Providers
+Headline: Be the obvious choice before they compare.
+Description:
+Most customers are choosing between people who look the same. OpenInterview.me lets you introduce yourself clearly—so clients understand your professionalism, communication, and approach right away. Instead of competing on price alone, you stand out on trust and confidence.
+Bullets:
+- Win trust immediately—before they check your competitors
+- Show how you work, not just what you offer
+- Turn quick comparisons into confident decisions
+- Remove hesitation by answering key questions upfront
+- Get chosen for reliability—not just price
+- Let customers reach or book you instantly when they’re ready
+Wall of Love:
+Carlos M. — Contractor
+“I stopped competing on price. Customers feel more confident choosing me before we even meet.”
+Ashley P. — Cleaner
+“It makes me look more professional than anyone else in my area.”
+Ben R. — Personal Trainer
+“Clients come in already comfortable and ready to commit.”
+
+4) caregivers.html
+Eyebrow: For Babysitters & Caregivers
+Headline: Build trust before you even meet.
+Description:
+For parents, trust is everything. OpenInterview.me lets families see your personality, communication, and care style upfront—so they feel confident choosing you right away. Instead of relying on a profile, you give them a real sense of who you are.
+Bullets:
+- Help parents feel safe choosing you—before the first message
+- Show how you communicate with children, not just describe it
+- Turn hesitation into confidence in seconds
+- Get selected faster by standing out on trust, not just experience
+- Reduce back-and-forth by answering their biggest concerns upfront
+- Let parents reach or book you instantly when they’re ready
+Wall of Love:
+Rachel T. — Babysitter
+“Parents tell me they felt comfortable with me before we even met. That’s never happened before.”
+Kevin S. — Nanny
+“I get fewer interviews—but almost every one turns into a job.”
+Laura M. — Caregiver
+“It completely changed how quickly families decide.”
+
+5) performers.html
+Eyebrow: For Actors & Performers
+Headline: Turn every submission into a performance.
+Description:
+Casting is visual and immediate. OpenInterview.me lets you present your presence, delivery, and personality in a way that static profiles can’t. Instead of blending in, you give casting teams a clear sense of who you are from the start.
+Bullets:
+- Get understood in seconds—not skipped in a stack
+- Show your range and presence before they request a tape
+- Turn passive submissions into active consideration
+- Help casting decide faster with real signal, not guesswork
+- Increase callbacks by making a stronger first impression
+- Let casting reach or book you instantly when interest is high
+Wall of Love:
+Alex J. — Actor
+“I started getting callbacks without changing anything else—just adding this.”
+Nina K. — Performer
+“It feels like I’m always making a strong first impression.”
+Tyler W. — Stage Actor
+“Directors understand me faster—it saves time on both sides.”
+
+6) musicians.html
+Eyebrow: For Musicians & Singers
+Headline: Let your talent speak instantly.
+Description:
+In music, first impressions matter. OpenInterview gives you a simple way to showcase your sound, style, and personality so bookers and collaborators can understand your value immediately—without digging through links.
+Bullets:
+- Get understood in seconds—not skipped in a list
+- Let bookers hear your sound without digging through links
+- Turn passive listens into real interest
+- Stand out by showing your style, not just describing it
+- Make it easy to say “yes” on the first impression
+- Get contacted or booked the moment interest is high
+Wall of Love:
+Jasmine R. — Singer
+“People get my style instantly now—it’s changed how I’m booked.”
+Leo M. — Guitarist
+“I don’t have to explain what I do anymore—they just get it.”
+Andre P. — Producer
+“It’s the fastest way I’ve found to communicate my vibe.”
+
+7) events.html
+Eyebrow: For Event Staffing
+Headline: Screen faster. Choose better.
+Description:
+When you’re hiring at scale, clarity matters. OpenInterview lets you quickly understand how candidates communicate and present themselves—so you can make stronger decisions without slowing down.
+Bullets:
+- Identify top candidates in minutes—not hours of interviews
+- See how candidates communicate before scheduling a call
+- Turn high-volume applications into clear shortlists fast
+- Reduce interview load without losing decision quality
+- Make confident hires with real signal—not resumes alone
+- Let candidates schedule instantly when you’re ready to move
+Wall of Love:
+Daniel H. — Event Manager
+“We made better hiring decisions with less time spent interviewing.”
+Sofia L. — Staffing Lead
+“It helped us filter candidates much more effectively.”
+Mark E. — Operations Manager
+“We hired faster without sacrificing quality.”
+
+8) conventions.html
+Eyebrow: For Convention Hiring
+Headline: Handle volume without losing quality.
+Description:
+Convention hiring moves fast—but quality still matters. OpenInterview gives you a quick, consistent way to evaluate candidates so you can scale hiring without losing signal.
+Bullets:
+- Handle high-volume hiring
+- Evaluate candidates consistently
+- Reduce scheduling overhead
+- Maintain hiring quality
+- Move faster with confidence
+Wall of Love:
+Chris D. — Convention Organizer
+“We handled way more applicants without adding complexity.”
+Amanda S. — Hiring Coordinator
+“It brought structure to a chaotic process.”
+Eric J. — Event Director
+“We scaled hiring without lowering our standards.”
+
+9) sales.html
+Eyebrow: For Sales & Business Development
+Headline: Show how you sell—before the interview.
+Description:
+Sales is about communication, not just experience. OpenInterview lets hiring teams see how you present, think, and connect—so you stand out immediately instead of blending into a resume stack.
+Bullets:
+- Show how you communicate—not just what you’ve done
+- Demonstrate confidence and presence from the first click
+- Turn your application into a live sales pitch
+- Prove you can connect, persuade, and close
+- Stand out immediately in a crowded candidate pool
+- Get interviews faster by showing real ability upfront
+Wall of Love:
+Brian T. — Account Executive
+“It finally showed what I’m actually good at—closing and communicating.”
+Lauren M. — SDR
+“I started getting more interviews without changing my resume.”
+Chris P. — Sales Lead
+“It highlights the exact skills hiring managers care about.”
+
+10) creators.html
+Eyebrow: For Influencers & Creators
+Headline: Turn your profile into a real introduction.
+Description:
+Brands don’t just evaluate numbers—they evaluate presence. OpenInterview lets you present yourself clearly so partners understand your personality, voice, and value immediately.
+Bullets:
+- Show who you are—not just your follower count
+- Help brands understand your voice and fit instantly
+- Turn inbound interest into real partnership conversations
+- Stand out in a crowded creator landscape
+- Build trust before the first call or pitch
+- Get contacted or booked when interest is highest
+Wall of Love:
+Maya K. — Creator
+“Brands respond faster because they actually understand me now.”
+Jake L. — Influencer
+“It made my outreach feel much more professional.”
+Olivia R. — Content Creator
+“I feel more confident sharing my profile with brands.”
+
+11) startups.html
+Eyebrow: For Startup Hiring & Recruiting
+Headline: See the candidate before the interview.
+Description:
+Startups need fast, high-signal decisions. OpenInterview lets you evaluate communication, clarity, and fit upfront—so you spend less time screening and more time hiring the right people.
+Bullets:
+- Identify top candidates early—before competitors reach them
+- See how candidates communicate, not just what they’ve done
+- Turn resume stacks into clear, high-signal shortlists
+- Reduce screening time without lowering hiring quality
+- Make faster decisions with confidence—not guesswork
+- Let candidates move quickly when you’re ready to engage
+Wall of Love:
+Ryan C. — Founder
+“We made faster hiring decisions with better confidence.”
+Emma V. — Recruiter
+“It improved the quality of candidates we moved forward.”
+Josh L. — Hiring Manager
+“We got stronger signal before even scheduling interviews.”
+
+12) conventions.html special note
+For Convention Hiring, keep the existing template and structure identical, but use the convention-specific copy above. If a sixth bullet is needed for layout consistency, add:
+- Keep hiring momentum high during peak volume
+
+Implementation requirements:
+- create one static page for each file above
+- keep the same shared layout/template structure
+- only replace the hero/testimonial content per page
+- keep styling consistent across all pages
+- wire routes only if needed by the current project structure
+- do not redesign the shared sections
+- do not create a new CMS or data layer
+- do not refactor unrelated files
+
+When done, provide:
+- the full list of files created
+- any routes added
+- a short confirmation that all pages were generated from the same template pattern

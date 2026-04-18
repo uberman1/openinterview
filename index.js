@@ -750,8 +750,23 @@ function serveForTutors(req, res) {
   }
 }
 
-app.get('/for/tutors', serveForTutors);
-app.get('/for/tutors-coaches', serveForTutors);
+// ---- Use-case landing pages (static files)
+function serveUseCasePage(filename) {
+  return (req, res) => res.sendFile(path.join(__dirname, 'public', filename));
+}
+
+app.get('/for/tutors',        serveUseCasePage('tutors.html'));
+app.get('/for/tutors-coaches',serveUseCasePage('tutors.html'));
+app.get('/for/freelancers',   serveUseCasePage('freelancers.html'));
+app.get('/for/services',      serveUseCasePage('services.html'));
+app.get('/for/caregivers',    serveUseCasePage('caregivers.html'));
+app.get('/for/performers',    serveUseCasePage('performers.html'));
+app.get('/for/musicians',     serveUseCasePage('musicians.html'));
+app.get('/for/events',        serveUseCasePage('events.html'));
+app.get('/for/conventions',   serveUseCasePage('conventions.html'));
+app.get('/for/sales',         serveUseCasePage('sales.html'));
+app.get('/for/creators',      serveUseCasePage('creators.html'));
+app.get('/for/startups',      serveUseCasePage('startups.html'));
 
 // ---- Serve /profile/new with new interview editor
 function serveNewProfile(req, res) {
