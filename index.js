@@ -712,8 +712,7 @@ function serveForTutors(req, res) {
     const headEnd = html.indexOf(HEAD_CLOSE) + HEAD_CLOSE.length;
     if (headEnd < HEAD_CLOSE.length) throw new Error('</head> not found');
     const headHtml = html.slice(0, headEnd)
-      .replace('<title>OpenInterview.me</title>',
-               '<title>For Tutors &amp; Coaches \u2013 OpenInterview.me</title>');
+      .replace(/<title>[^<]*<\/title>/, '<title>For Tutors &amp; Coaches \u2013 OpenInterview.me</title>');
     if ((headHtml.match(/<title>/g) || []).length !== 1) {
       throw new Error('Title replacement produced duplicate <title> tags');
     }
