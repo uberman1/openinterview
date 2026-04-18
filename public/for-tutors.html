@@ -2234,16 +2234,16 @@
             }
 
             // Browse button click
-            browseBtn.addEventListener("click", (e) => {
-                e.stopPropagation(); // Prevent event from bubbling to dropZone
-                e.preventDefault(); // Prevent any default behavior
+            if (browseBtn) browseBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 if (!isProcessing) {
                     fileInput.click();
                 }
             });
 
             // File input change
-            fileInput.addEventListener("change", (e) => {
+            if (fileInput) fileInput.addEventListener("change", (e) => {
                 if (!isProcessing && fileInput.files.length > 0) {
                     isProcessing = true;
                     handleFileSelect();
@@ -2251,29 +2251,28 @@
             });
 
             // Drag and drop with enhanced UX
-            dropZone.addEventListener("click", (e) => {
+            if (dropZone) dropZone.addEventListener("click", (e) => {
                 if (
                     !isProcessing &&
                     e.target !== browseBtn &&
-                    !browseBtn.contains(e.target)
+                    !(browseBtn && browseBtn.contains(e.target))
                 ) {
                     fileInput.click();
                 }
             });
 
-            dropZone.addEventListener("dragover", (e) => {
+            if (dropZone) dropZone.addEventListener("dragover", (e) => {
                 e.preventDefault();
                 dropZone.classList.add("drag-over");
             });
 
-            dropZone.addEventListener("dragleave", (e) => {
-                // Only remove drag-over if we're actually leaving the drop zone
+            if (dropZone) dropZone.addEventListener("dragleave", (e) => {
                 if (!dropZone.contains(e.relatedTarget)) {
                     dropZone.classList.remove("drag-over");
                 }
             });
 
-            dropZone.addEventListener("drop", (e) => {
+            if (dropZone) dropZone.addEventListener("drop", (e) => {
                 e.preventDefault();
                 dropZone.classList.remove("drag-over");
 
