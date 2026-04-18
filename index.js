@@ -615,82 +615,68 @@ function validateHomeStructure(html) {
 }
 
 const TUTORS_HERO_HTML = `
-                            <section class="w-full bg-white dark:bg-neutral-950 py-16 md:py-24 relative overflow-hidden">
-                                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-100/80 via-transparent to-transparent dark:from-white/3 pointer-events-none -z-10"></div>
+                            <section class="w-full bg-white dark:bg-neutral-950 py-14 md:py-20">
                                 <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                                        <!-- Left column: copy -->
-                                        <div class="flex flex-col gap-6">
-                                            <!-- Eyebrow badge -->
-                                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 w-fit shadow-sm">
-                                                <span class="relative flex h-2 w-2">
-                                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                                </span>
-                                                <span class="text-xs font-bold text-neutral-600 dark:text-neutral-300 uppercase tracking-wider">For Tutors &amp; Coaches</span>
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+                                        <!-- LEFT: eyebrow + headline + description + CTAs -->
+                                        <div class="flex flex-col gap-5">
+                                            <!-- Eyebrow -->
+                                            <div class="inline-flex items-center gap-2 w-fit">
+                                                <span class="text-sm font-semibold text-neutral-500 dark:text-neutral-400">&gt;For Tutors &amp; Coaches</span>
                                             </div>
                                             <!-- Headline -->
-                                            <h1 class="text-4xl font-black leading-tight tracking-tighter md:text-5xl lg:text-6xl text-neutral-900 dark:text-white">
+                                            <h1 class="text-4xl font-black leading-tight tracking-tighter md:text-5xl lg:text-[3.25rem] text-neutral-900 dark:text-white">
                                                 Show parents how you teach before they ever book a session.
                                             </h1>
                                             <!-- Description -->
-                                            <p class="text-lg font-normal leading-relaxed text-neutral-600 dark:text-neutral-400">
+                                            <p class="text-base leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-lg">
                                                 OpenInterview helps tutors present more than credentials. Instead of relying on a profile photo and a few lines of text, you can show your communication style, clarity, warmth, and confidence in one simple link. Parents and students get a faster, stronger first impression, which helps you earn trust sooner and convert more profile views into real sessions.
                                             </p>
-                                            <!-- Bullets -->
-                                            <ul class="flex flex-col gap-3">
-                                                <li class="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center">
-                                                        <svg class="w-3 h-3 text-white dark:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                                                    </span>
-                                                    <span class="font-medium">Build trust before the first lesson</span>
-                                                </li>
-                                                <li class="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center">
-                                                        <svg class="w-3 h-3 text-white dark:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                                                    </span>
-                                                    <span class="font-medium">Show how clearly you explain concepts</span>
-                                                </li>
-                                                <li class="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center">
-                                                        <svg class="w-3 h-3 text-white dark:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                                                    </span>
-                                                    <span class="font-medium">Stand out from text-only tutor profiles</span>
-                                                </li>
-                                                <li class="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center">
-                                                        <svg class="w-3 h-3 text-white dark:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                                                    </span>
-                                                    <span class="font-medium">Reduce back-and-forth before booking</span>
-                                                </li>
-                                                <li class="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center">
-                                                        <svg class="w-3 h-3 text-white dark:text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                                                    </span>
-                                                    <span class="font-medium">Convert more views into real sessions</span>
-                                                </li>
-                                            </ul>
                                             <!-- CTAs -->
-                                            <div class="flex flex-col sm:flex-row gap-4 pt-2">
-                                                <a href="/login-page.html" class="inline-flex items-center justify-center rounded-full bg-neutral-900 dark:bg-white px-8 py-4 text-base font-bold text-white dark:text-neutral-900 shadow-sm hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-all hover:scale-105">
+                                            <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                                                <a href="/login-page.html" class="inline-flex items-center justify-center rounded-full bg-neutral-900 dark:bg-white px-7 py-3.5 text-sm font-bold text-white dark:text-neutral-900 shadow-sm hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-all hover:scale-105">
                                                     Create Your Free Interview
                                                 </a>
-                                                <a href="#" class="inline-flex items-center justify-center rounded-full border border-neutral-300 dark:border-neutral-600 bg-transparent px-8 py-4 text-base font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all hover:scale-105">
+                                                <a href="#" class="inline-flex items-center justify-center rounded-full border border-neutral-300 dark:border-neutral-600 bg-transparent px-7 py-3.5 text-sm font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
                                                     See an Example
                                                 </a>
                                             </div>
                                         </div>
-                                        <!-- Right column: image -->
-                                        <div class="flex items-center justify-center lg:justify-end">
-                                            <div class="relative w-full max-w-lg">
-                                                <div class="absolute inset-0 bg-gradient-to-tr from-neutral-100 to-transparent dark:from-neutral-800 rounded-2xl -z-10 scale-105 blur-xl opacity-60"></div>
-                                                <img
-                                                    src="/defaults/screenShotOfApp.png"
-                                                    alt="OpenInterview profile preview for tutors and coaches"
-                                                    class="w-full h-auto rounded-2xl shadow-2xl border border-neutral-100 dark:border-neutral-800"
-                                                />
-                                            </div>
+
+                                        <!-- RIGHT: photo (top) + bullets (bottom) -->
+                                        <div class="flex flex-col gap-5">
+                                            <!-- Photo -->
+                                            <img
+                                                src="/defaults/tutors-hero.png"
+                                                alt="Tutor working with a student"
+                                                class="w-full h-auto rounded-2xl shadow-md object-cover"
+                                            />
+                                            <!-- Bullets — simple dot list matching reference design -->
+                                            <ul class="flex flex-col gap-2.5 pl-1">
+                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                    <span class="text-sm font-medium">Build trust before the first lesson</span>
+                                                </li>
+                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                    <span class="text-sm font-medium">Show how clearly you explain concepts</span>
+                                                </li>
+                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                    <span class="text-sm font-medium">Stand out from text-only tutor profiles</span>
+                                                </li>
+                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                    <span class="text-sm font-medium">Reduce back-and-forth before booking</span>
+                                                </li>
+                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                    <span class="text-sm font-medium">Convert more views into real sessions</span>
+                                                </li>
+                                            </ul>
                                         </div>
+
                                     </div>
                                 </div>
                             </section>`;

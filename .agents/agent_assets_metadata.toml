@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "akspZUYt7N_p4OSBhX7A5"
+uri = "file://public/defaults/tutors-hero.png"
+type = "image"
+title = "generated_image"
