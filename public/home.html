@@ -566,6 +566,7 @@
         class="bg-background-light dark:bg-background-dark text-primary dark:text-background-light font-display"
     >
         <div class="relative flex min-h-screen w-full flex-col">
+            <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
             <div class="layout-container flex h-full grow flex-col">
                 <div class="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:px-8">
                     <div class="layout-content-container flex flex-1 flex-col">
@@ -592,7 +593,7 @@
                                 <div
                                     class="hidden md:flex flex-1 items-center justify-end gap-6"
                                 >
-                                    <nav class="flex items-center gap-6">
+                                    <nav class="flex items-center gap-6" aria-label="Main navigation">
                                         <a
                                             class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white"
                                             href="/pricing.html"
@@ -617,6 +618,8 @@
                                     id="mobile-menu-btn"
                                     class="md:hidden p-2 text-primary dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
                                     aria-label="Toggle menu"
+                                    aria-expanded="false"
+                                    aria-controls="mobile-menu"
                                 >
                                     <span
                                         class="material-symbols-outlined text-2xl"
@@ -629,8 +632,9 @@
                             <div
                                 id="mobile-menu"
                                 class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900"
+                                aria-hidden="true"
                             >
-                                <nav class="flex flex-col p-4 gap-4">
+                                <nav class="flex flex-col p-4 gap-4" aria-label="Mobile navigation">
                                     <a
                                         class="text-base font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white py-2"
                                         href="/pricing.html"
@@ -650,6 +654,7 @@
                             </div>
                         </header>
                         <main
+                            id="main-content"
                             class="flex flex-col gap-8 py-16 md:gap-12 md:py-24 overflow-hidden relative"
                         >
                             <!-- Background Gradient/Spotlight -->
@@ -660,6 +665,7 @@
                             <!--resume upload section and hero-->
                             <section
                                 class="flex flex-col items-center gap-8 px-4 text-center md:gap-12 relative z-10"
+                                aria-label="Introduction"
                             >
                                 <div
                                     class="flex flex-col items-center gap-4 animate-fade-in-up"
@@ -955,6 +961,7 @@
                             <!-- Why OpenInterview Section -->
                             <section
                                 class="w-full bg-neutral-50 dark:bg-neutral-900 py-12"
+                                aria-label="Why OpenInterview"
                             >
                                 <div
                                     class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
@@ -1136,6 +1143,7 @@
                             <!-- How It Works Section -->
                             <section
                                 class="w-full bg-background-light dark:bg-background-dark py-6 md:py-12"
+                                aria-label="Feature highlights"
                             >
                                 <div
                                     class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
@@ -1322,6 +1330,8 @@
                                                     <div class="relative">
                                                         <button
                                                             class="px-5 py-2 bg-primary text-white rounded-lg shadow-sm flex items-center gap-2 animate-button-press"
+                                                            aria-hidden="true"
+                                                            tabindex="-1"
                                                         >
                                                             <span
                                                                 class="material-symbols-outlined text-sm"
@@ -1367,7 +1377,7 @@
                             </section>
 
                             <!-- How It Works Visual -->
-                            <section class="w-full bg-background-light dark:bg-background-dark pt-6 md:pt-12 pb-3 md:pb-6">
+                            <section class="w-full bg-background-light dark:bg-background-dark pt-6 md:pt-12 pb-3 md:pb-6" aria-label="How it works">
                                 <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
                                     <div
                                         class="flex flex-col items-center text-center mb-8 animate-fade-in-up"
@@ -1460,6 +1470,9 @@
                                                     <div
                                                         id="home-resume-carousel"
                                                         class="w-full max-w-[360px] md:max-w-[320px] aspect-[4/3] rounded-xl overflow-hidden relative"
+                                                        role="region"
+                                                        aria-label="Sample OpenInterview profiles"
+                                                        aria-roledescription="carousel"
                                                     >
                                                         <div
                                                             id="home-resume-carousel-track"
@@ -1538,6 +1551,7 @@
                             <!-- Testimonials Section -->
                             <section
                                 class="w-full bg-white dark:bg-neutral-900 py-12 border-t border-neutral-100 dark:border-neutral-800"
+                                aria-label="Testimonials"
                             >
                                 <div
                                     class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
@@ -2112,6 +2126,7 @@
                             <!-- CTA Section -->
                             <section
                                 class="w-full bg-white dark:bg-neutral-900 py-6"
+                                aria-label="Get started"
                             >
                                 <div
                                     class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
@@ -2205,6 +2220,7 @@
                         </main>
                         <footer
                             class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pt-16 pb-16"
+                            role="contentinfo"
                         >
                             <div
                                 class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
@@ -2437,7 +2453,10 @@
 
             if (mobileMenuBtn && mobileMenu) {
                 mobileMenuBtn.addEventListener("click", () => {
+                    const isExpanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
+                    mobileMenuBtn.setAttribute("aria-expanded", String(!isExpanded));
                     mobileMenu.classList.toggle("hidden");
+                    mobileMenu.setAttribute("aria-hidden", String(isExpanded));
                 });
             }
 
