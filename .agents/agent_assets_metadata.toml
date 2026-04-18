@@ -6,3 +6,69 @@ id = "akspZUYt7N_p4OSBhX7A5"
 uri = "file://public/defaults/tutors-hero.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "qIfXJX8f69IaGVC3LuWYZ"
+uri = "file://public/defaults/caregivers-hero.png"
+type = "image"
+title = "caregiver with elderly person"
+
+[[generated]]
+id = "hOVQ3yehapEtwMi0OLcjL"
+uri = "file://public/defaults/conventions-hero.png"
+type = "image"
+title = "convention hall exhibitors"
+
+[[generated]]
+id = "h0ONwY9kcTT5TSfqG2JWe"
+uri = "file://public/defaults/creators-hero.png"
+type = "image"
+title = "content creator studio"
+
+[[generated]]
+id = "Qr-gxsIvNDVkcyOpobt0K"
+uri = "file://public/defaults/events-hero.png"
+type = "image"
+title = "outdoor live event crowd"
+
+[[generated]]
+id = "GhxuG68PL1ZM9NfA0YJdr"
+uri = "file://public/defaults/freelancers-hero.png"
+type = "image"
+title = "freelancer at laptop coworking"
+
+[[generated]]
+id = "dtlKujAkH6RyCO_Oszsyu"
+uri = "file://public/defaults/musicians-hero.png"
+type = "image"
+title = "musician performing on stage"
+
+[[generated]]
+id = "1dYsDlhFrSIE-IhvImfzl"
+uri = "file://public/defaults/performers-hero.png"
+type = "image"
+title = "stage performer theatrical"
+
+[[generated]]
+id = "4Bp8dLYMnzWMA3wJMaTYS"
+uri = "file://public/defaults/sales-hero.png"
+type = "image"
+title = "sales professional meeting"
+
+[[generated]]
+id = "WGPMp09as_CxBAcH_9wVu"
+uri = "file://public/defaults/services-hero.png"
+type = "image"
+title = "service professional at work"
+
+[[generated]]
+id = "qLczmpbPc7drCQRKdxr2Q"
+uri = "file://public/defaults/startups-hero.png"
+type = "image"
+title = "startup team brainstorming"
+
+[[generated]]
+id = "95ZwEm8rjuqafdqmVsjej"
+uri = "file://public/defaults/for-tutors-hero.png"
+type = "image"
+title = "tutor helping student classroom"
