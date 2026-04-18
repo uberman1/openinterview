@@ -635,11 +635,8 @@ const TUTORS_HERO_HTML = `
                                             </p>
                                             <!-- CTAs -->
                                             <div class="flex flex-col sm:flex-row gap-3 pt-1">
-                                                <a href="/login-page.html" class="inline-flex items-center justify-center rounded-full bg-neutral-900 dark:bg-white px-7 py-3.5 text-sm font-bold text-white dark:text-neutral-900 shadow-sm hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-all hover:scale-105">
-                                                    Create Your Free Interview
-                                                </a>
-                                                <a href="#" class="inline-flex items-center justify-center rounded-full border border-neutral-300 dark:border-neutral-600 bg-transparent px-7 py-3.5 text-sm font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
-                                                    See an Example
+                                                <a href="#more-than-paper" class="inline-flex items-center justify-center rounded-full bg-neutral-900 dark:bg-white px-7 py-3.5 text-sm font-bold text-white dark:text-neutral-900 shadow-sm hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-all hover:scale-105">
+                                                    Create Your Openterview
                                                 </a>
                                             </div>
                                         </div>
@@ -656,23 +653,23 @@ const TUTORS_HERO_HTML = `
                                             <ul class="flex flex-col gap-2.5 pl-1">
                                                 <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-medium">Build trust before the first lesson</span>
+                                                    <span class="text-sm font-bold">Build trust before the first lesson</span>
                                                 </li>
                                                 <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-medium">Show how clearly you explain concepts</span>
+                                                    <span class="text-sm font-bold">Show how clearly you explain concepts</span>
                                                 </li>
                                                 <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-medium">Stand out from text-only tutor profiles</span>
+                                                    <span class="text-sm font-bold">Stand out from text-only tutor profiles</span>
                                                 </li>
                                                 <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-medium">Reduce back-and-forth before booking</span>
+                                                    <span class="text-sm font-bold">Reduce back-and-forth before booking</span>
                                                 </li>
                                                 <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-medium">Convert more views into real sessions</span>
+                                                    <span class="text-sm font-bold">Convert more views into real sessions</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -715,7 +712,12 @@ function serveForTutors(req, res) {
     if (sharedStart >= mainCloseIdx) {
       throw new Error('Shared marker appears after </main> — unexpected structure');
     }
-    const sharedContent = html.slice(sharedStart, mainCloseIdx);
+    // Inject scroll anchor onto the "You are more than a piece of paper" CTA section
+    const sharedContent = html.slice(sharedStart, mainCloseIdx)
+      .replace(
+        '<!-- CTA Section -->\n                            <section\n                                class="w-full bg-white dark:bg-neutral-900 py-6"',
+        '<!-- CTA Section -->\n                            <section id="more-than-paper"\n                                class="w-full bg-white dark:bg-neutral-900 py-6"'
+      );
 
     // Block E: footer + closing wrapper divs + ALL scripts (<footer → </body>)
     // Slicing from <footer to lastIndexOf('</body>') captures everything intact:
