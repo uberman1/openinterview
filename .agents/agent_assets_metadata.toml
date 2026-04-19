@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "akspZUYt7N_p4OSBhX7A5"
@@ -72,3 +71,9 @@ id = "95ZwEm8rjuqafdqmVsjej"
 uri = "file://public/defaults/for-tutors-hero.png"
 type = "image"
 title = "tutor helping student classroom"
+
+[[outputs]]
+id = "Yi0WhxYfrzasw_WAkPG65"
+uri = "file://attached_assets/stock_images/job-seekers-hero.jpg"
+type = "image"
+title = "professional job seeker on laptop preparing for interview, modern office setting, confident person"
