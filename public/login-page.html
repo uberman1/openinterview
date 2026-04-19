@@ -32,7 +32,8 @@
   </script>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50 min-h-screen flex items-center justify-center p-4">
-  <div class="w-full max-w-md">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
+  <main id="main-content" class="w-full max-w-md" aria-label="Sign in">
     <!-- Logo -->
     <div class="text-center mb-8">
       <a href="/home.html" class="inline-flex items-center gap-2">
@@ -52,7 +53,7 @@
       <!-- Google Sign In -->
       <button type="button" id="google-btn" onclick="window.location.href='/auth/google'"
         class="cursor-pointer w-full flex items-center justify-center gap-3 h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white font-medium hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors mb-4">
-        <svg class="w-5 h-5" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
           <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
           <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -62,40 +63,40 @@
       </button>
       
       <!-- Divider -->
-      <div class="relative my-6">
-        <div class="absolute inset-0 flex items-center">
+      <div class="relative my-6" role="separator" aria-label="or continue with email">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
           <div class="w-full border-t border-neutral-300 dark:border-neutral-600"></div>
         </div>
-        <div class="relative flex justify-center text-sm">
+        <div class="relative flex justify-center text-sm" aria-hidden="true">
           <span class="px-4 bg-white dark:bg-neutral-800 text-neutral-500">or continue with email</span>
         </div>
       </div>
       
       <!-- Login Form -->
-      <form id="auth-form" class="space-y-4">
+      <form id="auth-form" class="space-y-4" aria-label="Authentication form">
         <div id="name-field" class="hidden">
-          <label class="block text-sm font-medium mb-1">Name</label>
-          <input type="text" name="name"
+          <label for="input-name" class="block text-sm font-medium mb-1">Name</label>
+          <input type="text" id="input-name" name="name" autocomplete="name"
             class="w-full h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="Your name">
         </div>
         
         <div>
-          <label class="block text-sm font-medium mb-1">Email</label>
-          <input type="email" name="email" required
+          <label for="input-email" class="block text-sm font-medium mb-1">Email</label>
+          <input type="email" id="input-email" name="email" required autocomplete="email"
             class="w-full h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="you@example.com">
         </div>
         
         <div>
-          <label class="block text-sm font-medium mb-1">Password</label>
-          <input type="password" name="password" required minlength="6"
+          <label for="input-password" class="block text-sm font-medium mb-1">Password</label>
+          <input type="password" id="input-password" name="password" required minlength="6" autocomplete="current-password"
             class="w-full h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="••••••••">
         </div>
         
         <!-- Error Message -->
-        <div id="error-message" class="hidden text-red-600 text-sm text-center py-2"></div>
+        <div id="error-message" class="hidden text-red-600 text-sm text-center py-2" role="alert" aria-live="polite"></div>
         
         <!-- Submit Button -->
         <button type="submit" id="submit-btn"
@@ -117,7 +118,7 @@
     <div class="text-center mt-6">
       <a href="/" class="text-neutral-500 hover:text-primary dark:hover:text-white text-sm">← Back to home</a>
     </div>
-  </div>
+  </main>
   
   <script>
     const form = document.getElementById('auth-form');

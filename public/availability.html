@@ -8,8 +8,9 @@
   <style> body{font-family:'Inter',sans-serif} .day-chip{width:2.25rem;height:2.25rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:700;background:#f7f7f7;border:1px solid #e5e5e5} .icon-btn{border:1px solid #e5e5e5;border-radius:.5rem;padding:.375rem .5rem;line-height:1} .icon-inline{font-weight:700;padding:0 .25rem} </style>
 </head>
 <body class="bg-background-light text-foreground-light">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-    <header class="mb-8">
+    <header class="mb-8" role="banner" aria-label="Availability settings header">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 class="text-2xl sm:text-3xl font-bold">Availability</h1>
         <div class="flex items-center gap-3">
@@ -20,16 +21,17 @@
       <p class="text-sm text-muted-light mt-2">Define weekly hours, rules, and exceptions. These settings power your public booking widget.</p>
     </header>
 
-    <nav class="border-b border-subtle-light mb-6">
-      <ul class="flex flex-wrap gap-1">
-        <li><button data-tab="weekly" class="tab px-4 py-2 rounded-t-lg bg-primary text-white">Weekly Hours</button></li>
-        <li><button data-tab="rules" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Rules</button></li>
+    <nav class="border-b border-subtle-light mb-6" aria-label="Availability settings tabs">
+      <ul class="flex flex-wrap gap-1" role="tablist">
+        <li role="none"><button id="tab-btn-weekly" data-tab="weekly" class="tab px-4 py-2 rounded-t-lg bg-primary text-white" role="tab" aria-selected="true" aria-controls="tab-weekly" tabindex="0">Weekly Hours</button></li>
+        <li role="none"><button id="tab-btn-rules" data-tab="rules" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light" role="tab" aria-selected="false" aria-controls="tab-rules" tabindex="-1">Rules</button></li>
         
         </ul>
     </nav>
 
+    <main id="main-content" aria-label="Availability settings">
     <!-- WEEKLY (vertical layout) -->
-    <section id="tab-weekly">
+    <section id="tab-weekly" role="tabpanel" aria-label="Weekly Hours" aria-labelledby="tab-btn-weekly" aria-hidden="false">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div class="lg:col-span-8">
           <div class="rounded-xl border border-subtle-light p-6">
@@ -122,7 +124,7 @@
     </section>
 
     <!-- RULES / EXCEPTIONS / PREVIEW / TROUBLESHOOT preserved from prior patch -->
-    <section id="tab-rules" class="hidden">
+    <section id="tab-rules" class="hidden" role="tabpanel" aria-label="Scheduling rules" aria-labelledby="tab-btn-rules" aria-hidden="true">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="border border-subtle-light rounded-lg p-4">
           <h4 class="font-semibold mb-3">Minimum scheduling notice</h4>
@@ -193,6 +195,7 @@
 
     
 
+  </main>
   </div>
   <script type="module" src="/js/availability.js"></script>
 <script type="module" src="/js/nav-patch.js"></script>

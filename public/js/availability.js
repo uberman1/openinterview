@@ -35,12 +35,17 @@ async function saveToAPI(){
 
 function showTab(name){
   ['weekly','rules'].forEach(t=>{
-    $('#tab-'+t).classList.toggle('hidden', t!==name);
+    const panel = $('#tab-'+t);
+    const isActive = t === name;
+    panel.classList.toggle('hidden', !isActive);
+    panel.setAttribute('aria-hidden', String(!isActive));
   });
   $$('.tab').forEach(b=>{
     const active = b.dataset.tab===name;
     b.classList.toggle('bg-primary', active);
     b.classList.toggle('text-white', active);
+    b.setAttribute('aria-selected', String(active));
+    b.setAttribute('tabindex', active ? '0' : '-1');
   });
 }
 
