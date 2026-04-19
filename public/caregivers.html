@@ -1968,6 +1968,120 @@
                                                 </div>
                                             </div>
 
+                                            <p
+                                                id="file-name"
+                                                class="text-sm text-white/80 hidden animate-fade-in mt-2"
+                                            ></p>
+                                            <div
+                                                id="upload-progress"
+                                                class="w-full max-w-lg hidden mt-4"
+                                            >
+                                                <!-- Professional Upload Progress Container -->
+                                                <div
+                                                    class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-6 shadow-lg"
+                                                >
+                                                    <!-- Header with animated icon -->
+                                                    <div
+                                                        class="flex items-center gap-4 mb-4"
+                                                    >
+                                                        <div class="relative">
+                                                            <div
+                                                                class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center upload-icon"
+                                                            >
+                                                                <span
+                                                                    class="material-symbols-outlined text-2xl text-primary"
+                                                                    >cloud_upload</span
+                                                                >
+                                                            </div>
+                                                            <!-- Spinning border overlay -->
+                                                            <div
+                                                                class="absolute inset-0 w-12 h-12 border-2 border-transparent border-t-primary rounded-full animate-spin"
+                                                            ></div>
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <h3
+                                                                class="font-semibold text-lg text-neutral-900 dark:text-white"
+                                                            >
+                                                                Processing
+                                                                Resume
+                                                            </h3>
+                                                            <p
+                                                                id="upload-status"
+                                                                class="text-sm text-neutral-500 dark:text-neutral-400"
+                                                            ></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Progress Section -->
+                                                    <div class="space-y-3">
+                                                        <!-- Progress Bar -->
+                                                        <div
+                                                            class="relative w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-3 overflow-hidden"
+                                                        >
+                                                            <div
+                                                                id="progress-bar"
+                                                                class="bg-gradient-to-r from-primary to-neutral-600 h-3 rounded-full transition-all duration-500 ease-out relative overflow-hidden"
+                                                                style="width: 0%"
+                                                            >
+                                                                <!-- Shimmer effect -->
+                                                                <div
+                                                                    class="absolute inset-0 progress-shimmer"
+                                                                ></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Progress Details -->
+                                                        <div
+                                                            class="flex justify-between items-center text-sm"
+                                                        >
+                                                            <span
+                                                                id="progress-text"
+                                                                class="text-neutral-500 dark:text-neutral-400"
+                                                                >Initializing...</span
+                                                            >
+                                                            <span
+                                                                id="progress-percentage"
+                                                                class="font-medium text-neutral-900 dark:text-white"
+                                                                >0%</span
+                                                            >
+                                                        </div>
+
+                                                        <!-- File Info -->
+                                                        <div
+                                                            class="flex items-center gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-700"
+                                                        >
+                                                            <span
+                                                                class="material-symbols-outlined text-lg text-neutral-400"
+                                                                >description</span
+                                                            >
+                                                            <span
+                                                                id="file-info"
+                                                                class="text-sm text-neutral-500 dark:text-neutral-400"
+                                                            ></span>
+                                                        </div>
+
+                                                        <!-- Processing Steps -->
+                                                        <div
+                                                            id="processing-steps"
+                                                            class="space-y-2 pt-2"
+                                                        >
+                                                            <div
+                                                                class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400"
+                                                            >
+                                                                <div
+                                                                    class="w-2 h-2 bg-primary rounded-full animate-pulse"
+                                                                ></div>
+                                                                <span
+                                                                    >Uploading
+                                                                    to secure
+                                                                    cloud
+                                                                    storage...</span
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                                                     <!-- Screen reader announcements for upload status -->
                                             <div
                                                 id="upload-announce"
