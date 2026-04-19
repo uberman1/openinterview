@@ -103,7 +103,7 @@ async function insertHistoricalEvent(pool, hour, dateET) {
     VALUES ($1, $2, $3, $4, $5, $6, $7)
     ON CONFLICT (scheduled_window) DO NOTHING
   `;
-  await pool.query(sql, [
+  const result = await pool.query(sql, [
     title,
     'Completed',
     body,
@@ -112,6 +112,7 @@ async function insertHistoricalEvent(pool, hour, dateET) {
     windowKey,
     uptime,
   ]);
+  return result.rowCount > 0; // true = inserted, false = skipped (conflict)
 }
 
 export async function seedHistoricalEvents(pool) {
@@ -125,17 +126,18 @@ export async function seedHistoricalEvents(pool) {
     console.log('[status-scheduler] Seeding 30 days of historical events...');
     const now = getNowET();
     let inserted = 0;
+    let skipped = 0;
 
     for (let daysBack = 30; daysBack >= 1; daysBack--) {
       const day = new Date(now);
       day.setDate(day.getDate() - daysBack);
       for (const hour of TRIGGER_HOURS) {
-        await insertHistoricalEvent(pool, hour, day);
-        inserted++;
+        const wasInserted = await insertHistoricalEvent(pool, hour, day);
+        if (wasInserted) inserted++; else skipped++;
       }
     }
 
-    console.log(`[status-scheduler] ✅ Seeded ${inserted} historical events`);
+    console.log(`[status-scheduler] ✅ Seeded ${inserted} historical events (${skipped} skipped as duplicates)`);
   } catch (err) {
     console.error('[status-scheduler] Seed error:', err.message);
   }
