@@ -123,6 +123,9 @@ async function autoInitializeSchema(client) {
     // Profile public access tokens (recruiter link exchange)
     await applyPublicAccessMigration(client);
 
+    // Status events for /status2 page
+    await applyStatusEventsMigration(client);
+
   } catch (error) {
     console.error('[pg] ⚠️  Schema auto-initialization failed:', error.message);
     console.error('[pg] 💡 You may need to run: node server/db/init-neon.js');
@@ -2074,3 +2077,39 @@ export default {
   getActivePlanLimits,
   atomicUpdateStorageUsage
 };
+
+async function applyStatusEventsMigration(client) {
+  try {
+    // Check if status_events table has the expected scheduled_window column
+    const { rows: colRows } = await client.query(`
+      SELECT column_name FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'status_events'
+        AND column_name = 'scheduled_window'
+    `);
+    if (colRows.length > 0) {
+      console.log('[pg] ✅ status_events table exists');
+      return;
+    }
+
+    // Table is missing or has old schema — drop and recreate
+    console.log('[pg] 🔄 Recreating status_events table with scheduler schema...');
+    await client.query('DROP TABLE IF EXISTS status_events CASCADE');
+    await client.query(`
+      CREATE TABLE status_events (
+        id               SERIAL PRIMARY KEY,
+        title            TEXT         NOT NULL,
+        stage            TEXT         NOT NULL DEFAULT 'Completed',
+        body             TEXT         NOT NULL,
+        services         JSONB        NOT NULL DEFAULT '[]',
+        event_timestamp  TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+        scheduled_window TEXT         NOT NULL,
+        uptime_30d       NUMERIC(5,2) NOT NULL DEFAULT 99.70,
+        created_at       TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+        CONSTRAINT status_events_window_unique UNIQUE (scheduled_window)
+      )
+    `);
+    console.log('[pg] ✅ status_events table created with scheduler schema');
+  } catch (err) {
+    console.error('[pg] ⚠️  status_events migration failed:', err.message);
+  }
+}

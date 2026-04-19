@@ -228,12 +228,12 @@
         </style>
 
         <script>
-        (function(){
-          // Build events relative to today so the feed never looks frozen
-          const now = new Date();
-          const fmt = (d) => d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-          const fmtTime = (d) => d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
-          const daysAgo = (n) => {
+        (async function(){
+          const root = document.getElementById('event-history');
+          const fmt  = (d) => d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+          const fmtT = (d) => d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+          const ago  = (d) => {
+            const n = Math.round((Date.now() - d)/(1000*60*60*24));
             if(n===0) return 'today';
             if(n===1) return 'yesterday';
             if(n<7)   return n+' days ago';
@@ -242,91 +242,67 @@
             if(n<35)  return '3 weeks ago';
             return '1 month ago';
           };
-          const ago = (d) => {
-            const diff = Math.round((now - d)/(1000*60*60*24));
-            return daysAgo(diff);
-          };
 
-          // Offsets (days back) and time-of-day slots
-          const slots = [
-            { offset:0,  hour:6,  label:'Morning',   drift:0  },
-            { offset:0,  hour:13, label:'Midday',    drift:1  },
-            { offset:0,  hour:22, label:'Evening',   drift:2  },
-            { offset:1,  hour:0,  label:'Overnight', drift:3  },
-            { offset:2,  hour:6,  label:'Morning',   drift:4  },
-            { offset:3,  hour:13, label:'Midday',    drift:5  },
-            { offset:4,  hour:22, label:'Evening',   drift:6  },
-            { offset:5,  hour:0,  label:'Overnight', drift:7  },
-            { offset:7,  hour:6,  label:'Morning',   drift:8  },
-            { offset:10, hour:13, label:'Midday',    drift:9  },
-            { offset:14, hour:22, label:'Evening',   drift:10 },
-            { offset:20, hour:0,  label:'Overnight', drift:11 },
-          ];
+          let rows = [];
+          try {
+            const res = await fetch('/api/v1/status/events');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            rows = await res.json();
+          } catch(e) {
+            root.innerHTML = '<p class="text-sm text-neutral-400 py-4">Unable to load event history.</p>';
+            return;
+          }
 
-          // Descriptions vary slightly by slot
-          const descs = [
-            'All systems nominal. Profile pages, video streams, and scheduling endpoints responded within expected thresholds.',
-            'No anomalies detected. API response times and uptime metrics within normal operating ranges.',
-            'Monitoring pass completed without issues. Database and authentication services healthy.',
-            'Automated health checks passed. Video processing pipeline and CDN delivery operating normally.',
-            'All service endpoints returned expected responses. No elevated error rates observed.',
-            'Scheduled check completed. Uptime at 100% across all monitored services.',
-          ];
+          if (!rows.length) {
+            root.innerHTML = '<p class="text-sm text-neutral-400 py-4">No events recorded yet.</p>';
+            return;
+          }
 
-          // Group slots by offset day
-          const groups = {};
-          slots.forEach(s => {
-            const d = new Date(now);
-            d.setDate(d.getDate() - s.offset);
-            d.setHours(s.hour, 14 + (s.drift % 12), 0, 0);
-            const key = s.offset;
-            if(!groups[key]) groups[key] = { date: new Date(d), items:[] };
-            groups[key].items.push({ label: s.label, date: d, desc: descs[s.drift % descs.length] });
-          });
+          // Group events by calendar date (local)
+          const groups = new Map();
+          for (const row of rows) {
+            const d    = new Date(row.event_timestamp);
+            const key  = d.toDateString();
+            if (!groups.has(key)) groups.set(key, { date: d, events: [] });
+            groups.get(key).events.push(row);
+          }
 
-          const eventData = Object.values(groups).map(g => ({
-            dateLabel: fmt(g.date),
-            agoLabel:  ago(g.date),
-            title:     g.items.length > 1
+          root.innerHTML = '<div class="ev-list">' + [...groups.values()].map(g => {
+            const services = [...new Set(g.events.flatMap(e => {
+              try { return Array.isArray(e.services) ? e.services : JSON.parse(e.services); }
+              catch(_){ return ['App','API']; }
+            }))];
+            const title = g.events.length > 1
               ? 'Scheduled monitoring completed'
-              : g.items[0].label + ' monitoring completed',
-            services: ['App','API'],
-            timeline: g.items.map((item, i) => ({
-              stage:   i === 0 ? 'Completed' : 'Monitoring',
-              variant: i === 0 ? 'resolved'  : 'monitoring',
-              ts:      item.label + ' · ' + fmtTime(item.date),
-              desc:    item.desc,
-            }))
-          }));
-
-          const root = document.getElementById('event-history');
-          root.innerHTML = '<div class="ev-list">' + eventData.map(g => `
+              : g.events[0].title;
+            return `
             <section class="ev-group">
               <div>
-                <div class="ev-date-label">${g.dateLabel}</div>
-                <span class="ev-ago">${g.agoLabel}</span>
+                <div class="ev-date-label">${fmt(g.date)}</div>
+                <span class="ev-ago">${ago(g.date)}</span>
               </div>
               <div>
-                <h3 class="ev-title">${g.title}</h3>
-                <div class="ev-badges">${g.services.map(s=>`<span class="ev-badge">${s}</span>`).join('')}</div>
-                <div>${g.timeline.map((item,idx)=>`
+                <h3 class="ev-title">${title}</h3>
+                <div class="ev-badges">${services.map(s=>`<span class="ev-badge">${s}</span>`).join('')}</div>
+                <div>${g.events.map((ev, idx)=>`
                   <div class="tl-item">
                     <div class="tl-rail">
-                      <div class="tl-dot ${item.variant}"></div>
-                      ${idx < g.timeline.length-1 ? '<div class="tl-line"></div>' : ''}
+                      <div class="tl-dot resolved"></div>
+                      ${idx < g.events.length-1 ? '<div class="tl-line"></div>' : ''}
                     </div>
                     <div class="tl-body">
                       <div class="tl-head">
-                        <span class="tl-stage">${item.stage}</span>
+                        <span class="tl-stage">${ev.stage}</span>
                         <span class="tl-sep">·</span>
-                        <span class="tl-ts">${item.ts}</span>
+                        <span class="tl-ts">${fmtT(new Date(ev.event_timestamp))}</span>
                       </div>
-                      <p class="tl-msg">${item.desc}</p>
+                      <p class="tl-msg">${ev.body}</p>
                     </div>
                   </div>`).join('')}
                 </div>
               </div>
-            </section>`).join('') + '</div>';
+            </section>`;
+          }).join('') + '</div>';
         })();
         </script>
 

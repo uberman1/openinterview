@@ -3,6 +3,8 @@ import 'dotenv/config';
 
 import fs from "fs";
 import multer from "multer";
+import { startStatusScheduler } from './server/services/statusScheduler.js';
+import { getPool } from './server/db/pg-client.js';
 import { fileTypeFromBuffer } from "file-type";
 
 import express from "express";
@@ -590,6 +592,53 @@ function serveStatus2(req, res) {
 }
 app.get('/status2.html', serveStatus2);
 app.get('/status2', serveStatus2);
+
+// ---- Status events API (/api/v1/status/events) ----
+app.get('/api/v1/status/events', async (req, res) => {
+  try {
+    const { rows } = await getPool().query(`
+      SELECT id, title, stage, body, services, event_timestamp, scheduled_window, uptime_30d
+      FROM status_events
+      WHERE event_timestamp >= NOW() - INTERVAL '30 days'
+      ORDER BY event_timestamp DESC
+      LIMIT 60
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('[status-events] GET error:', err.message);
+    res.status(500).json({ error: 'Failed to load status events' });
+  }
+});
+
+app.post('/api/v1/status/events', async (req, res) => {
+  try {
+    const { title, stage, body, services, scheduled_window, uptime_30d } = req.body;
+    if (!title || !body || !scheduled_window) {
+      return res.status(400).json({ error: 'title, body, and scheduled_window are required' });
+    }
+    const { rows } = await getPool().query(`
+      INSERT INTO status_events (title, stage, body, services, scheduled_window, uptime_30d)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      ON CONFLICT (scheduled_window) DO NOTHING
+      RETURNING id
+    `, [
+      title,
+      stage || 'Completed',
+      body,
+      JSON.stringify(services || ['App', 'API']),
+      scheduled_window,
+      uptime_30d || 99.70
+    ]);
+    if (rows.length > 0) {
+      res.status(201).json({ id: rows[0].id, scheduled_window });
+    } else {
+      res.status(200).json({ message: 'Event already exists for this window', scheduled_window });
+    }
+  } catch (err) {
+    console.error('[status-events] POST error:', err.message);
+    res.status(500).json({ error: 'Failed to insert status event' });
+  }
+});
 
 // ---- /for/tutors — dynamic assembly from home.html
 
@@ -4893,7 +4942,10 @@ app.get("/api/v1/scheduler/test", (req, res) => {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const PORT = process.env.PORT || 3012;
-  const server = app.listen(PORT, '0.0.0.0', () => console.log("Server running on", PORT));
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log("Server running on", PORT);
+    startStatusScheduler(getPool());
+  });
   server.setTimeout(300000); // 5 minutes timeout for uploads
 }
 

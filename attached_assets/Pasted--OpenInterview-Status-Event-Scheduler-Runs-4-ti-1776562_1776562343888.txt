@@ -1,0 +1,93 @@
+/**
+ * OpenInterview Status Event Scheduler
+ * -----------------------------------
+ * - Runs 4 times per day (12AM, 6AM, 12PM, 6PM)
+ * - Generates calm monitoring events
+ * - Slightly fluctuates 30-day uptime (never below 98.50%)
+ * - Optional POST to your API
+ */
+
+const axios = require('axios');
+
+// ================= CONFIG =================
+const STATUS_API_URL = process.env.STATUS_API_URL || 'http://localhost:5000/api/v1/status/events';
+const DRY_RUN = process.env.STATUS_DRY_RUN !== 'false'; // default true
+const TIMEZONE = 'America/New_York';
+
+// ==========================================
+
+// Utility: get EST time safely
+function getNow() {
+  return new Date(new Date().toLocaleString('en-US', { timeZone: TIMEZONE }));
+}
+
+// Determine which window we're in
+function getWindowLabel(hour) {
+  if (hour === 0) return 'Overnight monitoring completed';
+  if (hour === 6) return 'Morning monitoring completed';
+  if (hour === 12) return 'Midday monitoring completed';
+  if (hour === 18) return 'Evening monitoring completed';
+  return 'Scheduled monitoring completed';
+}
+
+// Slight uptime fluctuation (never below 98.50)
+function generateUptime() {
+  const base = 99.6;
+  const variation = (Math.random() - 0.5) * 0.4; // +/- 0.2
+  const value = base + variation;
+  return Math.max(98.5, parseFloat(value.toFixed(2)));
+}
+
+// Generate event payload
+function generateEvent() {
+  const now = getNow();
+  const hour = now.getHours();
+
+  const title = getWindowLabel(hour);
+  const uptime = generateUptime();
+
+  return {
+    title,
+    stage: 'Monitoring',
+    timestamp: now.toISOString(),
+    services: ['App', 'Website', 'API'],
+    uptime_30d: uptime,
+    message: `${title}. System checks completed successfully. 30-day uptime recorded at ${uptime}%.`
+  };
+}
+
+// Send or log event
+async function postEvent() {
+  const event = generateEvent();
+
+  if (DRY_RUN) {
+    console.log('[DRY RUN] Event:', event);
+    return;
+  }
+
+  try {
+    const res = await axios.post(STATUS_API_URL, event);
+    console.log('[POSTED]', res.data);
+  } catch (err) {
+    console.error('[ERROR POSTING EVENT]', err.message);
+  }
+}
+
+// ================= SCHEDULER =================
+
+// Runs every minute, triggers only at exact times
+setInterval(() => {
+  const now = getNow();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+
+  const triggerHours = [0, 6, 12, 18];
+
+  if (triggerHours.includes(hour) && minute === 0) {
+    console.log(`[SCHEDULER] Triggering event at ${now}`);
+    postEvent();
+  }
+}, 60 * 1000);
+
+// Start log
+console.log('[STATUS SCHEDULER STARTED]');
