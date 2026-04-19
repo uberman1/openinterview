@@ -1,10 +1,11 @@
 /**
- * Help handbook text loaded once at process startup (not per request).
+ * Help handbook text loaded once at startup via initHelpKnowledge().
+ * Call initHelpKnowledge() before the server starts accepting requests.
  * Separate from resume parsing / resumeParser.js.
  */
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { extractDocxPlainSync } from '../utils/docxPlainText.js';
+import { extractDocxPlain } from '../utils/docxPlainText.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DOCX_PATH = path.join(
@@ -13,13 +14,16 @@ const DOCX_PATH = path.join(
 );
 
 let knowledgeText = '';
-try {
-  knowledgeText = extractDocxPlainSync(DOCX_PATH);
-  console.log('[help-doc] Knowledge base loaded:', knowledgeText.length, 'chars');
-} catch (e) {
-  console.error('[help-doc] Failed to load knowledge docx:', e.message);
-  knowledgeText =
-    'Help documentation is currently unavailable. Please try again later or contact support@openinterview.me.';
+
+export async function initHelpKnowledge() {
+  try {
+    knowledgeText = await extractDocxPlain(DOCX_PATH);
+    console.log('[help-doc] Knowledge base loaded:', knowledgeText.length, 'chars');
+  } catch (e) {
+    console.error('[help-doc] Failed to load knowledge docx:', e.message);
+    knowledgeText =
+      'Help documentation is currently unavailable. Please try again later or contact support@openinterview.me.';
+  }
 }
 
 export function getHelpKnowledgeText() {

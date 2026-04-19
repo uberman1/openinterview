@@ -61,12 +61,16 @@ import { getCreditsInfo, getUpgradedCredits } from './server/services/credits.js
 
 // Help Center Q&A (OpenAI + Vercel AI SDK) — separate from resumeParser.js
 import { streamHelpDocAnswer } from './server/services/helpDocChat.js';
+import { initHelpKnowledge } from './server/services/helpDocKnowledge.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Initialize PostgreSQL connection
 await initDatabase();
+
+// Initialize help AI knowledge base (loads DOCX into memory)
+await initHelpKnowledge();
 
 const app = express();
 app.use(cors({
