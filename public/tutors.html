@@ -1955,6 +1955,14 @@
                                                 </div>
                                             </div>
 
+                                                                    <!-- Screen reader announcements for upload status -->
+                                            <div
+                                                id="upload-announce"
+                                                aria-live="polite"
+                                                aria-atomic="true"
+                                                class="sr-only"
+                                            ></div>
+
                                             <p
                                                 class="mt-8 text-sm text-white/60"
                                             >
@@ -2212,6 +2220,13 @@
             const signInBtn = document.getElementById("sign-in-btn");
             const fileName = document.getElementById("file-name");
             const uploadStatus = document.getElementById("upload-status");
+            const announceEl = document.getElementById("upload-announce");
+
+            function announceUpload(msg) {
+                if (!announceEl) return;
+                announceEl.textContent = "";
+                setTimeout(function () { announceEl.textContent = msg; }, 50);
+            }
 
             let isProcessing = false; // Flag to prevent double-triggering
 
@@ -2438,6 +2453,7 @@
             <span>Authentication Required</span>
           </div>
         `;
+                            announceUpload("Authentication Required. Please sign in to continue.");
 
                             progressText.textContent =
                                 data.message ||
@@ -2497,6 +2513,7 @@
         <span class="text-white font-medium">${successMessage}</span>
       </div>
     `;
+                    announceUpload(successMessage);
 
                     processingSteps.innerHTML = `
       <div class="flex items-center gap-2 text-xs text-white">
@@ -2524,6 +2541,7 @@
         <span>Upload failed</span>
       </div>
     `;
+                    announceUpload("Upload failed. " + error.message);
 
                     progressText.textContent = `Error: ${error.message}`;
                     progressBar.style.width = "0%";
