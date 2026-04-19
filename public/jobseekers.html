@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>For Tutors &amp; Coaches – OpenInterview.me</title>
+        <title>For Job Seekers – OpenInterview.me</title>
         <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
         <script>
             tailwind.config = {
@@ -571,7 +571,6 @@
         class="bg-background-light dark:bg-background-dark text-primary dark:text-background-light font-display"
     >
         <div class="relative flex min-h-screen w-full flex-col">
-            <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
             <div class="layout-container flex h-full grow flex-col">
                 <div class="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:px-8">
                     <div class="layout-content-container flex flex-1 flex-col">
@@ -598,7 +597,7 @@
                                 <div
                                     class="hidden md:flex flex-1 items-center justify-end gap-6"
                                 >
-                                    <nav class="flex items-center gap-6" aria-label="Main navigation">
+                                    <nav class="flex items-center gap-6">
                                         <a
                                             class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white"
                                             href="/pricing.html"
@@ -623,8 +622,6 @@
                                     id="mobile-menu-btn"
                                     class="md:hidden p-2 text-primary dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
                                     aria-label="Toggle menu"
-                                    aria-expanded="false"
-                                    aria-controls="mobile-menu"
                                 >
                                     <span
                                         class="material-symbols-outlined text-2xl"
@@ -637,9 +634,8 @@
                             <div
                                 id="mobile-menu"
                                 class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900"
-                                aria-hidden="true"
                             >
-                                <nav class="flex flex-col p-4 gap-4" aria-label="Mobile navigation">
+                                <nav class="flex flex-col p-4 gap-4">
                                     <a
                                         class="text-base font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white py-2"
                                         href="/pricing.html"
@@ -659,8 +655,8 @@
                             </div>
                         </header>
                         
-                        <main id="main-content" class="w-full">
-                            <section class="w-full bg-white dark:bg-neutral-950 py-14 md:py-20" aria-label="Introduction">
+                        <main class="w-full">
+                            <section class="w-full bg-white dark:bg-neutral-950 py-14 md:py-20">
                                 <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
@@ -668,15 +664,15 @@
                                         <div class="flex flex-col gap-5">
                                             <!-- Eyebrow -->
                                             <div class="inline-flex items-center gap-2 w-fit">
-                                                <span class="text-sm font-semibold text-neutral-500 dark:text-neutral-400">&gt;For Tutors &amp; Coaches</span>
+                                                <span class="text-sm font-semibold text-neutral-500 dark:text-neutral-400">&gt;For Full-Time &amp; Part-Time Job Seekers</span>
                                             </div>
                                             <!-- Headline -->
                                             <h1 class="text-4xl font-black leading-tight tracking-tighter md:text-5xl lg:text-[3.25rem] text-neutral-900 dark:text-white">
-                                                Show parents how you teach before they ever book a session.
+                                                Show who you are before the interview.
                                             </h1>
                                             <!-- Description -->
                                             <p class="text-base leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-lg">
-                                                OpenInterview helps tutors present more than credentials. Instead of relying on a profile photo and a few lines of text, you can show your communication style, clarity, warmth, and confidence in one simple link. Parents and students get a faster, stronger first impression, which helps you earn trust sooner and convert more profile views into real sessions.
+                                                A resume can list your experience, but it cannot show your communication, confidence, and presence. OpenInterview.me lets you introduce yourself before the first interview so employers can understand your value faster and remember you more clearly. Instead of blending into a stack of applications, you give hiring teams a stronger first impression from the very beginning.
                                             </p>
                                             <!-- CTAs -->
                                             <div class="flex flex-col sm:flex-row gap-3 pt-1">
@@ -690,33 +686,37 @@
                                         <div class="flex flex-col gap-5">
                                             <!-- Photo -->
                                             <img
-                                                src="/defaults/for-tutors-hero.png"
-                                                alt="A tutor helping a student one-on-one in a classroom"
+                                                src="/defaults/tutors-hero.png"
+                                                alt="Job seeker preparing for an interview"
                                                 class="w-full h-auto rounded-2xl shadow-md object-cover"
                                             />
-                                            <!-- Bullets — simple dot list matching reference design -->
-                                            <ul class="flex flex-col gap-2.5 pl-1">
-                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-bold">Build trust before the first lesson</span>
-                                                </li>
-                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-bold">Show how clearly you explain concepts</span>
-                                                </li>
-                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-bold">Stand out from text-only tutor profiles</span>
-                                                </li>
-                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-bold">Reduce back-and-forth before booking</span>
-                                                </li>
-                                                <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
-                                                    <span class="text-sm font-bold">Convert more views into real sessions</span>
-                                                </li>
-                                            </ul>
+                                                                                               <!-- Bullets — simple dot list matching reference design -->
+                                                   <ul class="flex flex-col gap-2.5 pl-1">
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Stand out before the first interview is scheduled</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Show how you communicate—not just what's on your resume</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Turn applications into stronger first impressions</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Help hiring teams evaluate fit faster and with more confidence</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Reduce the risk of being overlooked in a crowded candidate pool</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Let employers reach or book you instantly when interest is high</span>
+                                                       </li>
+                                                   </ul>
                                         </div>
 
                                     </div>
@@ -726,7 +726,6 @@
                             <!-- Why OpenInterview Section -->
                             <section
                                 class="w-full bg-neutral-50 dark:bg-neutral-900 py-12"
-                                aria-label="Why OpenInterview"
                             >
                                 <div
                                     class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
@@ -908,7 +907,6 @@
                             <!-- How It Works Section -->
                             <section
                                 class="w-full bg-background-light dark:bg-background-dark py-6 md:py-12"
-                                aria-label="Feature highlights"
                             >
                                 <div
                                     class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
@@ -1095,8 +1093,6 @@
                                                     <div class="relative">
                                                         <button
                                                             class="px-5 py-2 bg-primary text-white rounded-lg shadow-sm flex items-center gap-2 animate-button-press"
-                                                            aria-hidden="true"
-                                                            tabindex="-1"
                                                         >
                                                             <span
                                                                 class="material-symbols-outlined text-sm"
@@ -1142,7 +1138,7 @@
                             </section>
 
                             <!-- How It Works Visual -->
-                            <section class="w-full bg-background-light dark:bg-background-dark pt-6 md:pt-12 pb-3 md:pb-6" aria-label="How it works">
+                            <section class="w-full bg-background-light dark:bg-background-dark pt-6 md:pt-12 pb-3 md:pb-6">
                                 <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
                                     <div
                                         class="flex flex-col items-center text-center mb-8 animate-fade-in-up"
@@ -1235,9 +1231,6 @@
                                                     <div
                                                         id="home-resume-carousel"
                                                         class="w-full max-w-[360px] md:max-w-[320px] aspect-[4/3] rounded-xl overflow-hidden relative"
-                                                        role="region"
-                                                        aria-label="Sample OpenInterview profiles"
-                                                        aria-roledescription="carousel"
                                                     >
                                                         <div
                                                             id="home-resume-carousel-track"
@@ -1316,7 +1309,6 @@
                             <!-- Testimonials Section -->
                             <section
                                 class="w-full bg-white dark:bg-neutral-900 py-12 border-t border-neutral-100 dark:border-neutral-800"
-                                aria-label="Testimonials"
                             >
                                 <div
                                     class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
@@ -1355,535 +1347,171 @@
                                     <div
                                         class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
                                     >
-                                        <!-- Card 1 -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold"
-                                                >
-                                                    PF
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Praveena F.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Senior Developer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "I was able to speak about my
-                                                highlights for a specific
-                                                project I knew they cared about,
-                                                I got the job."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 2 -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold"
-                                                >
-                                                    RF
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Ritesh F.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Software Engineer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "I received confirmed interviews
-                                                without any back-and-forth
-                                                emails. It saved me so much
-                                                time."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 3 -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400 font-bold"
-                                                >
-                                                    CJ
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Carlos J.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Web Developer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "I get nervous in first
-                                                interviews, this way they saw my
-                                                best first impression without
-                                                nerves."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 4 -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center text-pink-600 dark:text-pink-400 font-bold"
-                                                >
-                                                    PM
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Patrick M.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Customer Service
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "Sharing one simple link felt
-                                                much better than attaching my
-                                                resume over and over again."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 5 -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold"
-                                                >
-                                                    PF
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Peter F.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Project Manager
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "I created a custom video
-                                                interview for each job I applied
-                                                to, not a general resume. It
-                                                made a huge difference."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 6 -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center text-teal-600 dark:text-teal-400 font-bold"
-                                                >
-                                                    JB
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Jennifer B.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Marketing Pro
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "I answered all of the questions
-                                                I knew they would ask directly
-                                                in my interview, they called me
-                                                back immediately."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 7 (New) -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold"
-                                                >
-                                                    SL
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Sarah L.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        UX Designer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "The platform is so intuitive.
-                                                It felt like I was just having a
-                                                conversation, not a
-                                                high-pressure interview."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 8 (New) -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold"
-                                                >
-                                                    MK
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Michael K.
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Sales Executive
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "Being able to showcase my
-                                                communication skills upfront
-                                                gave me a huge advantage over
-                                                other candidates."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 9 (New) -->
-                                        <div
-                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
-                                        >
-                                            <div
-                                                class="flex items-center gap-4 mb-4"
-                                            >
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold"
-                                                >
-                                                    WL
-                                                </div>
-                                                <div>
-                                                    <h4
-                                                        class="font-bold text-primary dark:text-white text-sm"
-                                                    >
-                                                        Wei Liu
-                                                    </h4>
-                                                    <p
-                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
-                                                    >
-                                                        Software Engineer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
-                                            >
-                                                "The hiring manager told me my
-                                                openinterview set me apart from
-                                                the gate. I got a callback and
-                                                the job."
-                                            </p>
-                                            <div
-                                                class="flex text-yellow-400 text-xs mt-4"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                                <span
-                                                    class="material-symbols-outlined text-sm filled"
-                                                    >star</span
-                                                >
-                                            </div>
-                                        </div>
+                                                                                                                          <!-- Danielle R. -->
+                                         <div
+                                             class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                         >
+                                             <div
+                                                 class="flex items-center gap-4 mb-4"
+                                             >
+                                                 <div
+                                                     class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400 font-bold"
+                                                 >
+                                                     DR
+                                                 </div>
+                                                 <div>
+                                                     <h4
+                                                         class="font-bold text-primary dark:text-white text-sm"
+                                                     >
+                                                         Danielle R.
+                                                     </h4>
+                                                     <p
+                                                         class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                     >
+                                                         Customer Support Specialist
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <p
+                                                 class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                             >
+                                                 "I applied to dozens of jobs and heard nothing. Then I added my OpenInterview link to my application. The next week I had three callbacks. Hiring managers said they could tell right away I was someone worth talking to."
+                                             </p>
+                                             <div
+                                                 class="flex text-yellow-400 text-xs mt-4"
+                                             >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                             </div>
+                                         </div>
+                                         <!-- Marcus L. -->
+                                         <div
+                                             class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                         >
+                                             <div
+                                                 class="flex items-center gap-4 mb-4"
+                                             >
+                                                 <div
+                                                     class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold"
+                                                 >
+                                                     ML
+                                                 </div>
+                                                 <div>
+                                                     <h4
+                                                         class="font-bold text-primary dark:text-white text-sm"
+                                                     >
+                                                         Marcus L.
+                                                     </h4>
+                                                     <p
+                                                         class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                     >
+                                                         Warehouse Associate
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <p
+                                                 class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                             >
+                                                 "I'm not great at writing cover letters, but I know how to show up and communicate. OpenInterview let me do that. I got hired within two weeks of creating my profile—faster than I've ever landed a job before."
+                                             </p>
+                                             <div
+                                                 class="flex text-yellow-400 text-xs mt-4"
+                                             >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                             </div>
+                                         </div>
+                                         <!-- Alyssa P. -->
+                                         <div
+                                             class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                         >
+                                             <div
+                                                 class="flex items-center gap-4 mb-4"
+                                             >
+                                                 <div
+                                                     class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold"
+                                                 >
+                                                     AP
+                                                 </div>
+                                                 <div>
+                                                     <h4
+                                                         class="font-bold text-primary dark:text-white text-sm"
+                                                     >
+                                                         Alyssa P.
+                                                     </h4>
+                                                     <p
+                                                         class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                     >
+                                                         Part-Time Retail Associate
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <p
+                                                 class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                             >
+                                                 "I was worried I'd get lost because I only have part-time experience. But my OpenInterview profile showed my energy and how I talk to people. The manager said she hired me because of it before we even met in person."
+                                             </p>
+                                             <div
+                                                 class="flex text-yellow-400 text-xs mt-4"
+                                             >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                             </div>
+                                         </div>
                                     </div>
                                 </div>
                             </section>
@@ -1891,7 +1519,6 @@
                             <!-- CTA Section -->
                             <section id="more-than-paper"
                                 class="w-full bg-white dark:bg-neutral-900 py-6"
-                                aria-label="Get started"
                             >
                                 <div
                                     class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
@@ -1976,120 +1603,6 @@
                                                 </div>
                                             </div>
 
-                                            <p
-                                                id="file-name"
-                                                class="text-sm text-white/80 hidden animate-fade-in mt-2"
-                                            ></p>
-                                            <div
-                                                id="upload-progress"
-                                                class="w-full max-w-lg hidden mt-4"
-                                            >
-                                                <!-- Professional Upload Progress Container -->
-                                                <div
-                                                    class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-6 shadow-lg"
-                                                >
-                                                    <!-- Header with animated icon -->
-                                                    <div
-                                                        class="flex items-center gap-4 mb-4"
-                                                    >
-                                                        <div class="relative">
-                                                            <div
-                                                                class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center upload-icon"
-                                                            >
-                                                                <span
-                                                                    class="material-symbols-outlined text-2xl text-primary"
-                                                                    >cloud_upload</span
-                                                                >
-                                                            </div>
-                                                            <!-- Spinning border overlay -->
-                                                            <div
-                                                                class="absolute inset-0 w-12 h-12 border-2 border-transparent border-t-primary rounded-full animate-spin"
-                                                            ></div>
-                                                        </div>
-                                                        <div class="flex-1">
-                                                            <h3
-                                                                class="font-semibold text-lg text-neutral-900 dark:text-white"
-                                                            >
-                                                                Processing
-                                                                Resume
-                                                            </h3>
-                                                            <p
-                                                                id="upload-status"
-                                                                class="text-sm text-neutral-500 dark:text-neutral-400"
-                                                            ></p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Progress Section -->
-                                                    <div class="space-y-3">
-                                                        <!-- Progress Bar -->
-                                                        <div
-                                                            class="relative w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-3 overflow-hidden"
-                                                        >
-                                                            <div
-                                                                id="progress-bar"
-                                                                class="bg-gradient-to-r from-primary to-neutral-600 h-3 rounded-full transition-all duration-500 ease-out relative overflow-hidden"
-                                                                style="width: 0%"
-                                                            >
-                                                                <!-- Shimmer effect -->
-                                                                <div
-                                                                    class="absolute inset-0 progress-shimmer"
-                                                                ></div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Progress Details -->
-                                                        <div
-                                                            class="flex justify-between items-center text-sm"
-                                                        >
-                                                            <span
-                                                                id="progress-text"
-                                                                class="text-neutral-500 dark:text-neutral-400"
-                                                                >Initializing...</span
-                                                            >
-                                                            <span
-                                                                id="progress-percentage"
-                                                                class="font-medium text-neutral-900 dark:text-white"
-                                                                >0%</span
-                                                            >
-                                                        </div>
-
-                                                        <!-- File Info -->
-                                                        <div
-                                                            class="flex items-center gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-700"
-                                                        >
-                                                            <span
-                                                                class="material-symbols-outlined text-lg text-neutral-400"
-                                                                >description</span
-                                                            >
-                                                            <span
-                                                                id="file-info"
-                                                                class="text-sm text-neutral-500 dark:text-neutral-400"
-                                                            ></span>
-                                                        </div>
-
-                                                        <!-- Processing Steps -->
-                                                        <div
-                                                            id="processing-steps"
-                                                            class="space-y-2 pt-2"
-                                                        >
-                                                            <div
-                                                                class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400"
-                                                            >
-                                                                <div
-                                                                    class="w-2 h-2 bg-primary rounded-full animate-pulse"
-                                                                ></div>
-                                                                <span
-                                                                    >Uploading
-                                                                    to secure
-                                                                    cloud
-                                                                    storage...</span
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                                                     <!-- Screen reader announcements for upload status -->
                                             <div
                                                 id="upload-announce"
@@ -2112,7 +1625,6 @@
                         </main>
                         <footer
                             class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pt-16 pb-16"
-                            role="contentinfo"
                         >
                             <div
                                 class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
@@ -2226,13 +1738,12 @@
                                                     Recruiting</a
                                                 >
                                             </li>
-                                        
                                             <li>
                                                 <a href="/for/job-seekers"
                                                     >Job Seekers</a
                                                 >
                                             </li>
-</ul>
+                                        </ul>
                                     </div>
 
                                     <!-- Product + Legal & Trust -->
@@ -2351,27 +1862,7 @@
 
             if (mobileMenuBtn && mobileMenu) {
                 mobileMenuBtn.addEventListener("click", () => {
-                    const isExpanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
-                    mobileMenuBtn.setAttribute("aria-expanded", String(!isExpanded));
                     mobileMenu.classList.toggle("hidden");
-                    mobileMenu.setAttribute("aria-hidden", String(isExpanded));
-                    if (!isExpanded) {
-                        // Menu is now open: move focus to first focusable item
-                        const firstFocusable = mobileMenu.querySelector("a, button, [tabindex]:not([tabindex='-1'])");
-                        if (firstFocusable) firstFocusable.focus();
-                    } else {
-                        // Menu is now closed: restore focus to toggle button
-                        mobileMenuBtn.focus();
-                    }
-                });
-                // Close menu on Escape key when focus is inside menu
-                mobileMenu.addEventListener("keydown", (e) => {
-                    if (e.key === "Escape") {
-                        mobileMenu.classList.add("hidden");
-                        mobileMenu.setAttribute("aria-hidden", "true");
-                        mobileMenuBtn.setAttribute("aria-expanded", "false");
-                        mobileMenuBtn.focus();
-                    }
                 });
             }
 
@@ -2386,7 +1877,6 @@
 
             function announceUpload(msg) {
                 if (!announceEl) return;
-                // Clear first, then set – forces re-announcement even for same message
                 announceEl.textContent = "";
                 setTimeout(function () { announceEl.textContent = msg; }, 50);
             }

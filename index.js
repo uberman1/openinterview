@@ -816,6 +816,7 @@ app.get('/for/conventions',   serveUseCasePage('conventions.html'));
 app.get('/for/sales',         serveUseCasePage('sales.html'));
 app.get('/for/creators',      serveUseCasePage('creators.html'));
 app.get('/for/startups',      serveUseCasePage('startups.html'));
+app.get('/for/job-seekers',   serveUseCasePage('jobseekers.html'));
 
 // ---- Serve /profile/new with new interview editor
 function serveNewProfile(req, res) {
