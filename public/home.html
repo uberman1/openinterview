@@ -955,6 +955,12 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <div
+                                        id="upload-announcer"
+                                        aria-live="polite"
+                                        aria-atomic="true"
+                                        class="sr-only"
+                                    ></div>
                                 </div>
                             </section>
 
@@ -2489,6 +2495,15 @@
                 }
             }
 
+            function announceUpload(message) {
+                const announcer = document.getElementById("upload-announcer");
+                if (!announcer) return;
+                announcer.textContent = "";
+                requestAnimationFrame(() => {
+                    announcer.textContent = message;
+                });
+            }
+
             // Browse button click
             browseBtn.addEventListener("click", (e) => {
                 e.stopPropagation(); // Prevent event from bubbling to dropZone
@@ -2688,6 +2703,8 @@
           </div>
         `;
 
+                            announceUpload("Authentication required. Please sign in to upload resumes.");
+
                             progressText.textContent =
                                 data.message ||
                                 "This account requires sign-in to upload resumes";
@@ -2747,6 +2764,8 @@
       </div>
     `;
 
+                    announceUpload(successMessage + " Redirecting to your profile.");
+
                     processingSteps.innerHTML = `
       <div class="flex items-center gap-2 text-xs text-white">
         <div class="w-2 h-2 bg-white rounded-full"></div>
@@ -2773,6 +2792,8 @@
         <span>Upload failed</span>
       </div>
     `;
+
+                    announceUpload("Upload failed. " + (error.message || "Please try again."));
 
                     progressText.textContent = `Error: ${error.message}`;
                     progressBar.style.width = "0%";
