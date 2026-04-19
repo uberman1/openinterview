@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 import fs from "fs";
 import multer from "multer";
-import { startStatusScheduler } from './server/services/statusScheduler.js';
+import { startStatusScheduler, seedHistoricalEvents } from './server/services/statusScheduler.js';
 import { getPool } from './server/db/pg-client.js';
 import { fileTypeFromBuffer } from "file-type";
 
@@ -601,7 +601,7 @@ app.get('/api/v1/status/events', async (req, res) => {
       FROM status_events
       WHERE event_timestamp >= NOW() - INTERVAL '30 days'
       ORDER BY event_timestamp DESC
-      LIMIT 60
+      LIMIT 120
     `);
     res.json(rows);
   } catch (err) {
@@ -4945,6 +4945,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const server = app.listen(PORT, '0.0.0.0', () => {
     console.log("Server running on", PORT);
     startStatusScheduler(getPool());
+    seedHistoricalEvents(getPool());
   });
   server.setTimeout(300000); // 5 minutes timeout for uploads
 }
