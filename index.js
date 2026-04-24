@@ -63,6 +63,10 @@ import { getCreditsInfo, getUpgradedCredits } from './server/services/credits.js
 import { streamHelpDocAnswer } from './server/services/helpDocChat.js';
 import { initHelpKnowledge } from './server/services/helpDocKnowledge.js';
 
+// ResumeGPT server-to-server import integration
+import internalRoutes from './server/routes.internal.js';
+import { applyParsedResumeToProfile } from './server/services/resumeImportService.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -381,6 +385,9 @@ app.use(passport.session());
 
 // WP3: Mount auth routes
 app.use('/auth', authRoutes);
+
+// ResumeGPT server-to-server import integration
+app.use(internalRoutes);
 
 /** Recruiter cookie grant: valid signed cookie + non-revoked DB row. Owner and env bypass. */
 async function recruiterMayViewPublicProfile(req, profile) {
@@ -2830,61 +2837,8 @@ app.post("/api/profiles/:id/ingest", aiParseRateLimiter, async (req, res) => {
       });
     }
 
-    // Generate profileName like the auto-populate script does
-    let profileName = '';
-    const name = parsedData.name || '';
-    const title = parsedData.title || '';
-
-    if (name && title) {
-      profileName = `${name} - ${title}`;
-    } else if (name) {
-      profileName = name;
-    } else if (title) {
-      profileName = title;
-    }
-
-    // Build updated profile with parsed data (only use parsed data, no fallbacks)
-    const updatedProfile = await pgClient.updateProfile(id, {
-      profileName: profileName, // Add the missing profileName field
-      person: { ...profile.person, name: name },
-      title: title,
-      location: parsedData.location || '',
-      city: parsedData.location || '',
-      about: parsedData.summary || '',
-      summary: parsedData.summary || '',
-      highlights: parsedData.highlights.map((text, idx) => ({ id: `hi_${idx + 1}`, text, pin: idx < 3, order: idx + 1 })),
-      skills: parsedData.skills || [],
-      social: {
-        linkedin: parsedData.linkedin || '',
-        website: parsedData.website || '',
-        github: parsedData.github||''
-      },
-      contact: {
-        email: parsedData.email || '',
-        phone: parsedData.phone || ''
-      },
-      experience: (parsedData.experience || []).map(exp => {
-        const mapped = {
-          company: exp.company || '',
-          role: exp.title || '', // Map 'title' to 'role'
-          startDate: exp.startDate || '',
-          endDate: exp.endDate || '',
-          description: exp.description || ''
-        };
-        console.log(`[ingest] Mapping experience:`, exp, '→', mapped);
-        return mapped;
-      }),
-      education: (parsedData.education || []).map(edu => {
-        const mapped = {
-          institution: edu.school || '', // Map 'school' to 'institution'
-          degree: edu.degree || '',
-          field: edu.field || '',
-          year: edu.endDate || edu.startDate || '' // Use endDate (graduation year) or startDate as fallback
-        };
-        console.log(`[ingest] Mapping education:`, edu, '→', mapped);
-        return mapped;
-      })
-    });
+    // Apply parsed data to profile (shared with /api/internal/resume-import)
+    const updatedProfile = await applyParsedResumeToProfile(id, parsedData, profile);
 
     console.log(`[ingest] Profile ${id} updated successfully`);
 

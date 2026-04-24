@@ -126,6 +126,9 @@ async function autoInitializeSchema(client) {
     // Status events for /status2 page
     await applyStatusEventsMigration(client);
 
+    // ResumeGPT server-to-server import integration
+    await applyResumeGPTMigration(client);
+
   } catch (error) {
     console.error('[pg] ⚠️  Schema auto-initialization failed:', error.message);
     console.error('[pg] 💡 You may need to run: node server/db/init-neon.js');
@@ -2111,5 +2114,32 @@ async function applyStatusEventsMigration(client) {
     console.log('[pg] ✅ status_events table created with scheduler schema');
   } catch (err) {
     console.error('[pg] ⚠️  status_events migration failed:', err.message);
+  }
+}
+
+async function applyResumeGPTMigration(client) {
+  try {
+    const { rows } = await client.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_schema = 'public' AND table_name = 'resumegpt_imports'
+      ) AS exists;
+    `);
+    if (!rows[0]?.exists) {
+      console.log('[pg] 🔄 Applying ResumeGPT import migration...');
+      const { readFileSync } = await import('fs');
+      const { fileURLToPath } = await import('url');
+      const { dirname, join } = await import('path');
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = dirname(__filename);
+      const migrationPath = join(__dirname, 'migrations', 'add-resumegpt-import.sql');
+      const migration = readFileSync(migrationPath, 'utf8');
+      await client.query(migration);
+      console.log('[pg] ✅ ResumeGPT import tables ready');
+    } else {
+      console.log('[pg] ✅ ResumeGPT import tables exist');
+    }
+  } catch (error) {
+    console.error('[pg] ⚠️  ResumeGPT migration failed:', error.message);
   }
 }
