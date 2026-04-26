@@ -1,0 +1,13 @@
+{
+  "name": "Module 6 \u2013 Supabase Auth",
+  "public": [
+    "/#/login"
+  ],
+  "protected": [
+    "/#/dashboard",
+    "/#/profile",
+    "/#/settings"
+  ],
+  "admin": [],
+  "notes": "Validates real auth pages render and navigation works post-login."
+}

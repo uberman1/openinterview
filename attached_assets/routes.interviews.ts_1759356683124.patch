@@ -1,0 +1,11 @@
+// server/routes.interviews.ts.patch
+// Extend your existing interviews routes with:
+// 1) Add fields: scheduledAt (ISO string), status ('draft'|'scheduled'|'completed'|'canceled'), notes?
+// 2) POST /interviews: allow initial status 'draft' or 'scheduled'. Validate profileId. Save createdAt/updatedAt.
+// 3) PATCH /interviews/:id: allow updates to { title?, scheduledAt?, status?, notes? } with transition rules:
+//    - draft→scheduled
+//    - scheduled→completed|canceled
+//    - completed/canceled are terminal
+// 4) POST /interviews/:id/remind → 204 and append a line to logs/mod-09.log
+// 5) GET /interviews: support filters ?status=..., ?from=ISO, ?to=ISO in addition to existing q and profileId filters.
+// 6) Keep pagination behavior and sorting.

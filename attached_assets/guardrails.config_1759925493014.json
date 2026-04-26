@@ -1,0 +1,16 @@
+{
+  "allowed_write_paths": [
+    "client/public/manage-booking.html",
+    "client/public/js/booking-success.js",
+    "server/routes/publicBookings.js",
+    "server/services/booking.adapter.js",
+    "guardrails/guardrails.config.json",
+    "guardrails/verify-guardrails.cjs",
+    "guardrails/apply_patch.mjs",
+    "tests/selftest.mod-oi-manage-booking.json",
+    "tests/api/publicBookings.test.mjs",
+    "tests/frontend/manage-booking.spec.mjs",
+    "package.json",
+    "README.md"
+  ]
+}

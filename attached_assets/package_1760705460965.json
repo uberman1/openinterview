@@ -1,0 +1,13 @@
+{
+  "name": "new-interview-guardrailed-update",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "node scripts/deploy.mjs --target public/js --tests public/tests --guards public/guards",
+    "selftest": "node scripts/selftest.mjs --target public/js --tests public/tests --guards public/guards",
+    "test:e2e": "playwright test public/tests/playwright"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2"
+  }
+}

@@ -1,0 +1,12 @@
+Scope: Add file-backed persistence + search/pagination for Profiles & Interviews. Do not change package.json or install packages.
+
+Allowed:
+- Add /server/data/fsStore.ts
+- Edit existing routes for profiles and interviews to use fsStore, add validation, search, pagination
+- Replace /scripts/selftest.js with provided version
+
+Run:
+  npm run build
+  MODULE_NUM=07 node scripts/selftest.js
+
+Success: profiles.create, profiles.search, interviews.create, interviews.list, profiles.pagination, profiles.duplicate, client.build all PASS and logs are written.

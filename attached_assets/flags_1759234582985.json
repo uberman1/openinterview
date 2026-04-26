@@ -1,0 +1,9 @@
+{
+  "useMockAdapters": true,
+  "adapters": {
+    "auth": "mock",
+    "storage": "mock",
+    "email": "mock",
+    "payments": "mock"
+  }
+}

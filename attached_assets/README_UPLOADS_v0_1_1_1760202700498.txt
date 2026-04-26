@@ -1,0 +1,21 @@
+OPENINTERVIEW — Uploads Pack v0.1.1 (Patch)
+
+Changes vs v0.1.0
+- Added MIME/extension validation on client (rejects disguised files)
+- Pre-seeds profiles_list from E2E state (or creates demo) so avatar integration = PASS
+- Added Behavior test: MIME-mismatch ('.png' name but non-image mimeType) → 'Unsupported file type'
+- Keeps all prior suites; still updates test2.html with v0.1.1 row
+
+Run (Replit)
+1) unzip at repo root:
+   unzip uploads_pack_v0.1.1.zip -d .
+
+2) deps:
+   pip install -r uploads_pack/requirements.txt
+   python -m playwright install --with-deps chromium
+
+3) (optional) preview URL:
+   # export OI_BASE_URL="https://<replit-preview-domain>"
+
+4) run:
+   python uploads_pack/run.py

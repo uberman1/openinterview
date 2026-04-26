@@ -1,0 +1,28 @@
+OPENINTERVIEW — Home Pack v0.1.1 (API-mode readiness)
+
+Adds optional backend health signal to the Home readiness banner.
+
+New
+- API-mode (env-flagged):
+  * HOME_API=1 enables backend ping
+  * HEALTH_URL=<absolute URL to /health or similar> is fetched by the page (via localStorage) and by the test runner
+- Readiness = UI state (packs) AND (if enabled) backend health
+- New suite: behavior-api-health (only when HOME_API=1 && HEALTH_URL set)
+
+Install & Run
+1) unzip:
+   unzip home_pack_v0.1.1.zip -d .
+2) deps:
+   pip install -r home_pack/requirements.txt
+   python -m playwright install --with-deps chromium
+3) optional API-mode:
+   export HOME_API=1
+   export HEALTH_URL="https://<replit-preview-domain>/health"
+4) run:
+   python home_pack/run.py
+
+Outputs
+- qa/home/v0.1.1/tests.txt, tests.json
+- qa/home/v0.1.1/home.html.txt
+- qa/home/v0.1.1/baselines/home-default.png
+- test2.html gets a new Home v0.1.1 row

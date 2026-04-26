@@ -1,0 +1,124 @@
+-- -- ============================================================================
+-- -- DEPRECATED: This file is no longer used for runtime schema initialization.
+-- -- ============================================================================
+-- -- 
+-- -- The canonical schema is now docker-init.sql, which runs automatically
+-- -- when the Docker Postgres container starts.
+-- -- 
+-- -- This file is kept only as a historical reference.
+-- -- DO NOT use this file for migrations or schema creation.
+-- -- ============================================================================
+
+-- -- OpenInterview.me Database Schema
+-- -- WP8: Postgres Migration (DEPRECATED - Use docker-init.sql instead)
+
+-- -- Users table
+-- CREATE TABLE IF NOT EXISTS users (
+--   id VARCHAR(50) PRIMARY KEY,
+--   email VARCHAR(255) UNIQUE NOT NULL,
+--   name VARCHAR(255),
+--   password_hash VARCHAR(255),
+--   google_id VARCHAR(255),
+--   avatar TEXT,
+--   timezone VARCHAR(100) DEFAULT 'America/Los_Angeles',
+--   role VARCHAR(20) DEFAULT 'user',
+--   created_at TIMESTAMP DEFAULT NOW(),
+--   updated_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Profiles table
+-- CREATE TABLE IF NOT EXISTS profiles (
+--   id VARCHAR(50) PRIMARY KEY,
+--   user_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+--   title VARCHAR(255),
+--   city VARCHAR(255),
+--   about TEXT,
+--   video_url TEXT,
+--   public_handle VARCHAR(100) UNIQUE,
+--   visibility VARCHAR(20) DEFAULT 'private',
+--   resume_file_id VARCHAR(50),
+--   person_name VARCHAR(255),
+--   highlights JSONB DEFAULT '[]',
+--   skills JSONB DEFAULT '[]',
+--   social JSONB DEFAULT '{}',
+--   contact JSONB DEFAULT '{}',
+--   experience JSONB DEFAULT '[]',
+--   education JSONB DEFAULT '[]',
+--   view_count INTEGER DEFAULT 0,
+--   booking_count INTEGER DEFAULT 0,
+--   is_default BOOLEAN DEFAULT false,
+--   created_at TIMESTAMP DEFAULT NOW(),
+--   updated_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Entitlements table
+-- CREATE TABLE IF NOT EXISTS entitlements (
+--   user_id VARCHAR(50) PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+--   plan VARCHAR(20) DEFAULT 'free',
+--   shares_used INTEGER DEFAULT 0,
+--   shares_limit INTEGER DEFAULT 1,
+--   bookings_used INTEGER DEFAULT 0,
+--   bookings_limit INTEGER DEFAULT 0,
+--   credits_reset_at TIMESTAMP,
+--   stripe_customer_id VARCHAR(255),
+--   stripe_subscription_id VARCHAR(255),
+--   stripe_subscription_status VARCHAR(50),
+--   created_at TIMESTAMP DEFAULT NOW(),
+--   updated_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Bookings table
+-- CREATE TABLE IF NOT EXISTS bookings (
+--   id VARCHAR(50) PRIMARY KEY,
+--   profile_id VARCHAR(50) REFERENCES profiles(id) ON DELETE CASCADE,
+--   owner_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+--   booker_name VARCHAR(255),
+--   booker_email VARCHAR(255),
+--   message TEXT,
+--   duration INTEGER DEFAULT 30,
+--   start_time TIMESTAMP,
+--   status VARCHAR(20) DEFAULT 'confirmed',
+--   ics_content TEXT,
+--   created_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Files table
+-- CREATE TABLE IF NOT EXISTS files (
+--   id VARCHAR(50) PRIMARY KEY,
+--   user_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+--   name VARCHAR(255),
+--   mime VARCHAR(100),
+--   size_label VARCHAR(20),
+--   url TEXT,
+--   uploaded_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Analytics table
+-- CREATE TABLE IF NOT EXISTS analytics (
+--   id SERIAL PRIMARY KEY,
+--   profile_id VARCHAR(50) REFERENCES profiles(id) ON DELETE CASCADE,
+--   event_type VARCHAR(50) NOT NULL,
+--   visitor_ip VARCHAR(64),
+--   visitor_ua TEXT,
+--   created_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Availability table
+-- CREATE TABLE IF NOT EXISTS availability (
+--   user_id VARCHAR(50) PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+--   timezone VARCHAR(100) DEFAULT 'America/Los_Angeles',
+--   weekly JSONB DEFAULT '{"Mon":[],"Tue":[],"Wed":[],"Thu":[],"Fri":[],"Sat":[],"Sun":[]}',
+--   rules JSONB DEFAULT '{"minNoticeMinutes":120,"windowDays":30,"incrementsMinutes":30,"bufferBeforeMinutes":30,"bufferAfterMinutes":10,"maxPerDay":5,"durations":[15,30,45],"defaultDuration":30}',
+--   exceptions JSONB DEFAULT '[]',
+--   updated_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- -- Indexes for performance
+-- CREATE INDEX IF NOT EXISTS idx_profiles_user_id ON profiles(user_id);
+-- CREATE INDEX IF NOT EXISTS idx_profiles_public_handle ON profiles(public_handle);
+-- CREATE INDEX IF NOT EXISTS idx_bookings_profile_id ON bookings(profile_id);
+-- CREATE INDEX IF NOT EXISTS idx_bookings_owner_id ON bookings(owner_id);
+-- CREATE INDEX IF NOT EXISTS idx_analytics_profile_id ON analytics(profile_id);
+-- CREATE INDEX IF NOT EXISTS idx_analytics_created_at ON analytics(created_at);
+-- CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+-- CREATE INDEX IF NOT EXISTS idx_users_google_id ON users(google_id);

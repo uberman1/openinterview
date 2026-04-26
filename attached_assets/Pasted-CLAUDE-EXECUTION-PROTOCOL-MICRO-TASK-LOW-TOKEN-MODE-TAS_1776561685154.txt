@@ -1,0 +1,223 @@
+CLAUDE EXECUTION PROTOCOL — MICRO-TASK / LOW-TOKEN MODE
+
+TASK
+Restore and implement the Event History section functionality on the existing /status2 page, using a timeline design with small colored status dots (not full-row coloring).
+
+OBJECTIVE
+The page is already built and working.
+Only reinstate the Events section so it:
+- displays scheduled monitoring updates
+- matches the visual structure of the provided reference
+- uses small colored circles for status indicators instead of coloring entire rows
+
+DO NOT rebuild or modify any other part of the page.
+
+---
+
+CRITICAL REQUIREMENTS
+- Do NOT redesign the full page
+- Do NOT modify banner or uptime sections
+- Do NOT modify schema or backend logic unless absolutely required
+- Do NOT introduce icons
+- Do NOT use full-row color backgrounds for status
+- Keep all changes isolated to the Event History section
+
+---
+
+FIRST: VERIFY TARGET
+Before making changes:
+1. confirm which file/component renders /status2
+2. confirm where the Event History section exists in that file
+3. ensure you are modifying the LIVE rendered section (not an unused file)
+
+---
+
+SECTION UPDATE REQUIREMENTS
+
+1. HEADER
+Replace:
+- "Incident History"
+
+With:
+- "Event History"
+
+Optional subtitle:
+- "Scheduled monitoring updates and system activity"
+
+---
+
+2. REMOVE EMPTY STATE
+
+Remove:
+- “No incidents reported in the last 90 days.”
+
+---
+
+3. EVENT STRUCTURE
+
+Each event block must follow this structure:
+
+- Left column: date + relative time (e.g. "3 days ago")
+- Right column:
+  - event title
+  - service badge(s)
+  - timeline entries stacked vertically
+
+---
+
+4. TIMELINE DESIGN (CRITICAL CHANGE)
+
+Replace any existing styling where:
+- the entire row is colored
+
+WITH:
+
+- a vertical timeline line (light gray)
+- a small colored circular dot BEFORE the status label
+- neutral background for all rows
+
+Each timeline entry should include:
+
+- colored dot (status indicator)
+- bold status label (Resolved / Monitoring / etc.)
+- timestamp
+- description below
+
+---
+
+5. REQUIRED HTML STRUCTURE
+
+Each timeline entry should follow this pattern:
+
+<div class="event-row">
+  <div class="status-line"></div>
+
+  <div class="status-item">
+    <span class="status-dot resolved"></span>
+    <span class="status-text">
+      <strong>Resolved</strong> · April 15 at 12:22 PM
+    </span>
+  </div>
+
+  <p class="status-desc">
+    The delays for webhook deliveries have been fixed.
+  </p>
+</div>
+
+---
+
+6. REQUIRED CSS BEHAVIOR
+
+Implement:
+
+- vertical timeline line (light gray)
+- small circular dots per status
+- no row background colors
+- clean spacing and alignment
+
+Status color mapping:
+
+- resolved → green (#22c55e)
+- monitoring → blue (#3b82f6)
+- investigating → red (#ef4444)
+
+Dot size:
+- ~10px circle
+- positioned left of the label
+
+---
+
+7. MESSAGE MODEL (IMPORTANT)
+
+Events represent scheduled monitoring updates, not incidents.
+
+Allowed:
+- Monitoring
+- Completed
+- Resolved (only if already present)
+
+Preferred titles:
+- Overnight monitoring completed
+- Morning monitoring completed
+- Midday monitoring completed
+- Evening monitoring completed
+- Scheduled monitoring completed
+
+Do NOT introduce by default:
+- Investigating
+- Major outage
+- Partial outage
+- API interruption detected
+
+---
+
+8. DATA / FUNCTIONALITY
+
+- Restore connection to the existing event data source if available
+- If events were previously generated, reconnect that feed
+- Do NOT create a parallel system unless necessary
+
+---
+
+9. DAILY VARIATION
+
+Ensure the system does not appear static:
+
+- slight variation in timestamps / wording
+- subtle metric drift if applicable
+- no large swings
+- no alarming changes
+
+Goal:
+- page feels alive, not frozen
+
+---
+
+10. NO ICONS
+
+Strict rule:
+- no check icons
+- no warning icons
+- no emojis
+- no decorative icons
+
+Only:
+- text
+- dots
+- lines
+- spacing
+
+---
+
+TESTING REQUIREMENTS
+
+Verify:
+
+1. /status2 renders Event History (not Incident History)
+2. events appear (no empty placeholder)
+3. timeline uses colored dots, NOT full-row colors
+4. vertical timeline line is visible
+5. events use calm monitoring language
+6. no icons appear anywhere
+7. no other page sections changed
+
+---
+
+OUTPUT REQUIREMENTS
+
+Return ONLY:
+
+1. exact file(s) modified
+2. which file renders /status2
+3. confirmation Event History replaced Incident History
+4. confirmation dot-based timeline is implemented
+5. confirmation no other page sections were changed
+
+---
+
+STOP AFTER
+
+- Event History section is fully restored
+- timeline uses dot-based status indicators
+- feed is visible and non-static
+- rest of page remains unchanged

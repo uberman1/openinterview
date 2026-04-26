@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "name": "auth.signup",
+      "ok": true,
+      "status": 201
+    },
+    {
+      "name": "auth.login",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "dashboard.auth.required",
+      "ok": true,
+      "status": 401
+    },
+    {
+      "name": "dashboard.fetch",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-10-01T22:04:31.258Z",
+  "module": "08"
+}

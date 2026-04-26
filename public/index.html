@@ -1,0 +1,12 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Redirecting…</title>
+<script>
+  // Resume-First Flow: Redirect to home page (not login)
+  // Users can upload resumes without authentication
+  try {
+    location.replace('/home.html');
+  } catch (e) {
+    window.location.href = '/home.html';
+  }
+</script>

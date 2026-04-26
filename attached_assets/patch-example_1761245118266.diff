@@ -1,0 +1,10 @@
+*** Example unified diff ***
+--- a/profile_edit_enhanced.html
++++ b/profile_edit_enhanced.html
+@@ -5,6 +5,8 @@
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <link rel="stylesheet" href="/css/tailwind.css"/>
++  <!-- TEMP: anti-blank watchdog (remove once fixed) -->
++  <script src="/js/safe-render-shim.js"></script>
+ </head>

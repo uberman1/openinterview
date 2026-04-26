@@ -1,0 +1,23 @@
+Scope: Extend Interviews with scheduling and statuses. Do not change package.json, install packages, or edit env/config. Keep TS/Vite architecture.
+
+Allowed actions:
+- Edit /server/routes.interviews.(ts|js) to add:
+  * PATCH /api/v1/interviews/:id  (fields: status, scheduledAt, title?, notes?)
+  * POST  /api/v1/interviews/:id/remind  (simulate reminder; return 204; append to logs/mod-09.log)
+  * GET   /api/v1/interviews supports filters: ?status=scheduled|completed|canceled and optional ?from=ISO&to=ISO
+  * Validate transitions: allowed flows: draft→scheduled, scheduled→completed|canceled; completed/canceled are terminal
+- Keep using fsStore (profiles.json, interviews.json) introduced in Module 07.
+- Replace /scripts/selftest.js with provided version including Module 09 checks.
+- Write logs/selftest.mod-09.json and logs/mod-09.log.
+
+Run exactly:
+  npm run build
+  MODULE_NUM=09 node scripts/selftest.js
+
+Success criteria:
+- interviews.create 201 with scheduledAt, status default 'draft' or set to 'scheduled'
+- interviews.update 200 updates fields
+- interviews.remind 204 and writes a log line
+- interviews.list with filters works
+- invalid transition (completed→scheduled) yields 400
+- Selftest prints ALL CHECKS PASSED; logs written

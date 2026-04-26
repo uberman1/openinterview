@@ -1,0 +1,10 @@
+{
+  "version": "v0.1.2",
+  "page_path": "public/password.html",
+  "report_dir": "qa/password/v0.1.2",
+  "test2_path": "test2.html",
+  "page_public_url": "/password.html",
+  "code_txt_name": "password.html.txt",
+  "report_txt_name": "tests.txt",
+  "description": "Password page QA: unit & story tests executed; reports generated; test2.html updated (Option C)."
+}

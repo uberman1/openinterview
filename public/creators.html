@@ -1,0 +1,3320 @@
+<!doctype html>
+
+<html class="light" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>For Influencers &amp; Creators – OpenInterview.me</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script>
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#141414",
+                            "background-light": "#ffffff",
+                            "background-dark": "#000000",
+                        },
+                        fontFamily: {
+                            display: ["Inter", "sans-serif"],
+                        },
+                        borderRadius: {
+                            DEFAULT: "0.25rem",
+                            lg: "0.5rem",
+                            xl: "0.75rem",
+                            full: "9999px",
+                        },
+                    },
+                },
+            };
+        </script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+            }
+
+            /* Enterprise-level professional animations */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes bounceSubtle {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-10px);
+                }
+                60% {
+                    transform: translateY(-5px);
+                }
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideInFromLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes slideInFromRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes scaleIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            @keyframes iconFloat {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+
+            @keyframes shimmer {
+                0% {
+                    background-position: -200px 0;
+                }
+                100% {
+                    background-position: calc(200px + 100%) 0;
+                }
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.7;
+                }
+            }
+
+            @keyframes infinite-scroll {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .animate-infinite-scroll {
+                animation: infinite-scroll 25s linear infinite;
+            }
+
+            /* Micro-interaction Animations */
+            @keyframes file-float {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+            }
+
+            /* Resume Upload Animation Keyframes */
+            @keyframes resume-drop {
+                0% {
+                    transform: translateY(-40px) scale(1);
+                    opacity: 0;
+                }
+                10% {
+                    transform: translateY(-40px) scale(1);
+                    opacity: 1;
+                }
+                40% {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translateY(10px) scale(0.5);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateY(10px) scale(0.5);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes profile-appear {
+                0%,
+                45% {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+                60% {
+                    transform: scale(1.05);
+                    opacity: 1;
+                }
+                70% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                90% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes cursor-path {
+                0% {
+                    transform: translate(30px, -30px);
+                    opacity: 0;
+                }
+                10% {
+                    transform: translate(30px, -30px);
+                    opacity: 1;
+                }
+                40% {
+                    transform: translate(0, 0);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translate(0, 0);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translate(0, 0);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes toggle-slide {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+                50% {
+                    transform: translateX(14px);
+                }
+            }
+
+            @keyframes fade-in-out {
+                0%,
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, 10px);
+                }
+                50% {
+                    opacity: 1;
+                    transform: translate(-50%, -20px);
+                }
+            }
+
+            @keyframes cursor-move {
+                0% {
+                    transform: translate(0, 0);
+                }
+                40% {
+                    transform: translate(40px, 40px);
+                }
+                50% {
+                    transform: translate(40px, 40px) scale(0.9);
+                }
+                60% {
+                    transform: translate(40px, 40px) scale(1);
+                }
+                100% {
+                    transform: translate(0, 0);
+                }
+            }
+
+            @keyframes button-press {
+                0%,
+                45% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(0.95);
+                }
+                55%,
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            .animate-file-float {
+                animation: file-float 3s ease-in-out infinite;
+            }
+            .animate-toggle-slide {
+                animation: toggle-slide 3s ease-in-out infinite alternate;
+            }
+            .animate-cursor-move {
+                animation: cursor-move 4s ease-in-out infinite;
+            }
+            .animate-button-press {
+                animation: button-press 4s ease-in-out infinite;
+            }
+
+            .animate-fade-in-up {
+                animation: fadeInUp 0.8s ease-out forwards;
+                opacity: 0;
+            }
+
+            .animate-bounce-subtle {
+                animation: bounceSubtle 2s infinite;
+            }
+
+            .animate-fade-in {
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+
+            .animate-slide-in-left {
+                animation: slideInFromLeft 0.8s ease-out forwards;
+                opacity: 0;
+            }
+
+            .animate-slide-in-right {
+                animation: slideInFromRight 0.8s ease-out forwards;
+                opacity: 0;
+            }
+
+            .animate-scale-in {
+                animation: scaleIn 0.6s ease-out forwards;
+                opacity: 0;
+            }
+
+            .animate-icon-float {
+                animation: iconFloat 3s ease-in-out infinite;
+            }
+
+            .animate-pulse-subtle {
+                animation: pulse 2s ease-in-out infinite;
+            }
+
+            /* Interactive card effects */
+            .feature-card {
+                position: relative;
+                overflow: hidden;
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+                border: 1px solid #e9ecef;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .feature-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                border-color: #141414;
+            }
+
+            .feature-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(20, 20, 20, 0.05),
+                    transparent
+                );
+                transition: left 0.6s;
+            }
+
+            .feature-card:hover::before {
+                left: 100%;
+            }
+
+            .feature-card .icon-container {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .feature-card:hover .icon-container {
+                transform: scale(1.1) rotate(5deg);
+                background: linear-gradient(135deg, #141414, #333333);
+            }
+
+            .feature-card:hover .icon-container .material-symbols-outlined {
+                color: white;
+            }
+
+            .feature-card h2 {
+                transition: color 0.3s ease;
+            }
+
+            .feature-card:hover h2 {
+                color: #141414;
+            }
+
+            /* Dark mode adjustments */
+            .dark .feature-card {
+                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+                border-color: #404040;
+            }
+
+            .dark .feature-card:hover {
+                border-color: #ffffff;
+                box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+            }
+
+            .dark .feature-card::before {
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent
+                );
+            }
+
+            .dark .feature-card:hover .icon-container {
+                background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            }
+
+            .dark
+                .feature-card:hover
+                .icon-container
+                .material-symbols-outlined {
+                color: #141414;
+            }
+
+            .dark .feature-card:hover h2 {
+                color: #ffffff;
+            }
+
+            /* Staggered animation delays */
+            .stagger-1 {
+                animation-delay: 0.1s;
+            }
+            .stagger-2 {
+                animation-delay: 0.2s;
+            }
+            .stagger-3 {
+                animation-delay: 0.3s;
+            }
+            .stagger-4 {
+                animation-delay: 0.4s;
+            }
+            .stagger-5 {
+                animation-delay: 0.5s;
+            }
+            .stagger-6 {
+                animation-delay: 0.6s;
+            }
+
+            /* Enhanced drop zone styles */
+            #drop-zone:focus-visible {
+                outline: 3px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 3px;
+                box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.3);
+            }
+            #drop-zone.drag-over {
+                border-color: #141414 !important;
+                background-color: #f8f9fa !important;
+                transform: scale(1.02);
+            }
+
+            /* Professional loading animations */
+            @keyframes uploadPulse {
+                0%,
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.05);
+                    opacity: 0.8;
+                }
+            }
+
+            @keyframes progressShimmer {
+                0% {
+                    background-position: -200px 0;
+                }
+                100% {
+                    background-position: calc(200px + 100%) 0;
+                }
+            }
+
+            @keyframes floatUpDown {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-6px);
+                }
+            }
+
+            .upload-processing {
+                background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+                border: 2px solid #141414;
+                animation: uploadPulse 2s ease-in-out infinite;
+            }
+
+            /* Dark mode upload processing */
+            .dark .upload-processing {
+                background: linear-gradient(135deg, #374151, #4b5563);
+                border: 2px solid #6b7280;
+            }
+
+            .upload-processing .upload-icon {
+                animation: floatUpDown 2s ease-in-out infinite;
+            }
+
+            .progress-shimmer {
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.4),
+                    transparent
+                );
+                background-size: 200px 100%;
+                animation: progressShimmer 1.5s infinite;
+            }
+
+            /* Success state */
+            .upload-success {
+                background: linear-gradient(135deg, #10b981, #059669);
+                border: 2px solid #059669;
+                color: white;
+            }
+
+            /* Ensure all text in success state is readable */
+            .upload-success * {
+                color: white !important;
+            }
+
+            /* Success state text overrides */
+            .upload-success .text-green-600,
+            .upload-success .text-foreground-light,
+            .upload-success .text-foreground-dark,
+            .upload-success .text-muted-light,
+            .upload-success .text-muted-dark {
+                color: white !important;
+            }
+
+            /* Success state progress container styling */
+            .upload-success #upload-progress {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .upload-success #upload-progress * {
+                color: white !important;
+            }
+
+            /* Error state */
+            .upload-error {
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+                border: 2px solid #dc2626;
+                color: white;
+            }
+
+            /* Disabled state for buttons */
+            .btn-disabled {
+                opacity: 0.5;
+                cursor: not-allowed !important;
+                pointer-events: none;
+            }
+        </style>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+    <body
+        class="bg-background-light dark:bg-background-dark text-primary dark:text-background-light font-display"
+    >
+        <div class="relative flex min-h-screen w-full flex-col">
+            <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
+            <div class="layout-container flex h-full grow flex-col">
+                <div class="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:px-8">
+                    <div class="layout-content-container flex flex-1 flex-col">
+                        <header
+                            class="sticky top-0 z-50 w-full border-b border-solid border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md transition-all duration-300"
+                        >
+                            <div
+                                class="flex items-center justify-between px-4 py-4 md:px-6"
+                            >
+                                <a
+                                    href="/home.html"
+                                    class="flex items-center gap-4 text-primary dark:text-background-light hover:opacity-80 transition-opacity"
+                                >
+                                    <div class="h-8 w-auto">
+                                        <img
+                                            src="/defaults/logo_1.png"
+                                            alt="OpenInterview Logo"
+                                            class="h-full w-auto object-contain"
+                                        />
+                                    </div>
+                                </a>
+
+                                <!-- Desktop Nav -->
+                                <div
+                                    class="hidden md:flex flex-1 items-center justify-end gap-6"
+                                >
+                                    <nav class="flex items-center gap-6" aria-label="Main navigation">
+                                        <a
+                                            class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white"
+                                            href="/pricing.html"
+                                            >Pricing</a
+                                        >
+                                    </nav>
+                                    <div
+                                        id="auth-buttons-container"
+                                        class="flex items-center gap-4"
+                                    >
+                                        <a
+                                            href="/login-page.html"
+                                            id="sign-in-btn"
+                                            class="flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors"
+                                            >Sign In</a
+                                        >
+                                    </div>
+                                </div>
+
+                                <!-- Mobile Menu Button -->
+                                <button
+                                    id="mobile-menu-btn"
+                                    class="md:hidden p-2 text-primary dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+                                    aria-label="Toggle menu"
+                                    aria-expanded="false"
+                                    aria-controls="mobile-menu"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-2xl"
+                                        >menu</span
+                                    >
+                                </button>
+                            </div>
+
+                            <!-- Mobile Menu -->
+                            <div
+                                id="mobile-menu"
+                                class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900"
+                                aria-hidden="true"
+                            >
+                                <nav class="flex flex-col p-4 gap-4" aria-label="Mobile navigation">
+                                    <a
+                                        class="text-base font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white py-2"
+                                        href="/pricing.html"
+                                        >Pricing</a
+                                    >
+                                    <div
+                                        id="auth-buttons-container-mobile"
+                                        class="relative pt-2 border-t border-neutral-100 dark:border-neutral-800"
+                                    >
+                                        <a
+                                            href="/login-page.html"
+                                            class="flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors w-full mt-4"
+                                            >Sign In</a
+                                        >
+                                    </div>
+                                </nav>
+                            </div>
+                        </header>
+                        
+                        <main id="main-content" class="w-full">
+                            <section class="w-full bg-white dark:bg-neutral-950 py-14 md:py-20" aria-label="Introduction">
+                                <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+                                        <!-- LEFT: eyebrow + headline + description + CTAs -->
+                                        <div class="flex flex-col gap-5">
+                                            <!-- Eyebrow -->
+                                            <div class="inline-flex items-center gap-2 w-fit">
+                                                <span class="text-sm font-semibold text-neutral-500 dark:text-neutral-400">&gt;For Influencers &amp; Creators</span>
+                                            </div>
+                                            <!-- Headline -->
+                                            <h1 class="text-4xl font-black leading-tight tracking-tighter md:text-5xl lg:text-[3.25rem] text-neutral-900 dark:text-white">
+                                                Turn your profile into a real introduction.
+                                            </h1>
+                                            <!-- Description -->
+                                            <p class="text-base leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-lg">
+                                                Brands don’t just evaluate numbers—they evaluate presence. OpenInterview lets you present yourself clearly so partners understand your personality, voice, and value immediately.
+                                            </p>
+                                            <!-- CTAs -->
+                                            <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                                                <a href="#more-than-paper" class="inline-flex items-center justify-center rounded-full bg-neutral-900 dark:bg-white px-7 py-3.5 text-sm font-bold text-white dark:text-neutral-900 shadow-sm hover:bg-neutral-700 dark:hover:bg-neutral-100 transition-all hover:scale-105">
+                                                    Create Your Openterview
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- RIGHT: photo (top) + bullets (bottom) -->
+                                        <div class="flex flex-col gap-5">
+                                            <!-- Photo -->
+                                            <img
+                                                src="/defaults/creators-hero.png"
+                                                alt="A content creator filming a video in a home studio"
+                                                class="w-full h-auto rounded-2xl shadow-md object-cover"
+                                            />
+                                                                                               <!-- Bullets — simple dot list matching reference design -->
+                                                   <ul class="flex flex-col gap-2.5 pl-1">
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Show who you are—not just your follower count</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Help brands understand your voice and fit instantly</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Turn inbound interest into real partnership conversations</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Stand out in a crowded creator landscape</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Build trust before the first call or pitch</span>
+                                                       </li>
+                                                       <li class="flex items-center gap-2.5 text-neutral-700 dark:text-neutral-300">
+                                                           <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 flex-shrink-0"></span>
+                                                           <span class="text-sm font-bold">Get contacted or booked when interest is highest</span>
+                                                       </li>
+                                                   </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Why OpenInterview Section -->
+                            <section
+                                class="w-full bg-neutral-50 dark:bg-neutral-900 py-12"
+                                aria-label="Why OpenInterview"
+                            >
+                                <div
+                                    class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
+                                >
+                                    <div
+                                        class="flex flex-col items-center text-center mb-16 animate-fade-in-up"
+                                    >
+                                        <h2
+                                            class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6 text-primary dark:text-white"
+                                        >
+                                            Why OpenInterview?
+                                        </h2>
+                                        <p
+                                            class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed"
+                                        >
+                                            The most effective way to
+                                            communicate your skills and
+                                            experience at first click. Separate
+                                            from the pile and
+                                            <span
+                                                class="font-bold text-primary dark:text-white"
+                                                >get the interview</span
+                                            >.
+                                        </p>
+                                    </div>
+
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-3 gap-6 grid-rows-2 h-auto md:h-[600px]"
+                                    >
+                                        <!-- Feature 1: Large Card (Span 2 cols, 2 rows) -->
+                                        <div
+                                            class="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-3xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm hover:shadow-xl transition-all duration-500 min-h-[300px] md:min-h-0"
+                                        >
+                                            <div
+                                                class="absolute top-0 right-0 w-full md:w-[80%] h-full md:h-[80%] z-0 pointer-events-none transform translate-x-0 translate-y-0 group-hover:scale-105 transition-transform duration-700"
+                                            >
+                                                <video
+                                                    id="why-openinterview-feature-video"
+                                                    class="w-full h-full object-contain object-top md:object-right-top opacity-100 drop-shadow-2xl pointer-events-none"
+                                                    autoplay
+                                                    muted
+                                                    loop
+                                                    playsinline
+                                                    preload="auto"
+                                                    poster="defaults/screenShotOfApp.png"
+                                                    aria-hidden="true"
+                                                    tabindex="-1"
+                                                    disablepictureinpicture
+                                                >
+                                                    <source
+                                                        src="/assets_crousel/other/interview_video.mp4"
+                                                        type="video/mp4"
+                                                    />
+                                                </video>
+                                            </div>
+                                            <div
+                                                class="relative h-full flex flex-col justify-end items-start px-4 md:px-12 pt-8 md:pt-12 pb-2 md:pb-4 z-10 pointer-events-none"
+                                            >
+                                                <div
+                                                    class="bg-white/95 dark:bg-neutral-800/95 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-700 pointer-events-auto inline-block w-auto max-w-[85%] md:max-w-sm text-left"
+                                                >
+                                                    <h3
+                                                        class="text-base sm:text-lg md:text-2xl font-bold mb-1 md:mb-2 text-primary dark:text-white"
+                                                    >
+                                                        Record Once, Share
+                                                        Everywhere.
+                                                    </h3>
+                                                    <p
+                                                        class="text-[10px] sm:text-xs md:text-sm text-neutral-600 dark:text-neutral-300"
+                                                    >
+                                                        Your professional video
+                                                        introduction with
+                                                        unlimited sharing. No
+                                                        extra fees.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Feature 2: Small Card (Span 1 col, 1 row) -->
+                                        <div
+                                            class="group relative overflow-hidden rounded-3xl bg-primary dark:bg-neutral-700 border border-transparent shadow-sm hover:shadow-xl transition-all duration-500"
+                                        >
+                                            <div
+                                                class="absolute top-4 right-4 opacity-20 group-hover:opacity-30 transition-opacity"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-6xl text-white"
+                                                    >star</span
+                                                >
+                                            </div>
+                                            <div
+                                                class="relative h-full flex flex-col justify-between p-8"
+                                            >
+                                                <div
+                                                    class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm"
+                                                >
+                                                    <span
+                                                        class="material-symbols-outlined text-2xl text-white"
+                                                        >star</span
+                                                    >
+                                                </div>
+                                                <div>
+                                                    <h3
+                                                        class="text-xl font-bold mb-2 text-white"
+                                                    >
+                                                        Stand Out
+                                                    </h3>
+                                                    <p
+                                                        class="text-white/80 text-sm"
+                                                    >
+                                                        Showcase your
+                                                        personality and
+                                                        communication skills
+                                                        before the first
+                                                        interview.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Feature 3: Small Card (Span 1 col, 1 row) -->
+                                        <div
+                                            class="group relative overflow-hidden rounded-3xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm hover:shadow-xl transition-all duration-500"
+                                        >
+                                            <div
+                                                class="absolute -bottom-8 -right-8 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:rotate-12 duration-700"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-[150px] text-primary dark:text-white"
+                                                    >share</span
+                                                >
+                                            </div>
+                                            <div
+                                                class="relative h-full flex flex-col justify-between p-8"
+                                            >
+                                                <div
+                                                    class="w-12 h-12 bg-primary/10 dark:bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm"
+                                                >
+                                                    <span
+                                                        class="material-symbols-outlined text-2xl text-primary dark:text-white"
+                                                        >share</span
+                                                    >
+                                                </div>
+                                                <div>
+                                                    <a
+                                                        href="https://openinterview.me/mark"
+                                                        id="dynamic-link"
+                                                        target="_blank"
+                                                        class="text-sm font-bold text-primary/80 dark:text-white/80 mb-2 font-mono bg-neutral-100 dark:bg-neutral-700/50 px-2 py-1 rounded inline-block hover:underline hover:text-primary dark:hover:text-white transition-colors break-all max-w-full"
+                                                    >
+                                                        <span class="opacity-60"
+                                                            >openinterview.me/</span
+                                                        ><span
+                                                            id="dynamic-username"
+                                                            class="inline-block transition-all duration-300 transform"
+                                                            >mark</span
+                                                        >
+                                                    </a>
+                                                    <h3
+                                                        class="text-xl font-bold mb-2 text-primary dark:text-white"
+                                                    >
+                                                        Seamless Sharing
+                                                    </h3>
+                                                    <p
+                                                        class="text-neutral-600 dark:text-neutral-300 text-sm"
+                                                    >
+                                                        A simple, professional
+                                                        link for recruiters. No
+                                                        downloads required.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- How It Works Section -->
+                            <section
+                                class="w-full bg-background-light dark:bg-background-dark py-6 md:py-12"
+                                aria-label="Feature highlights"
+                            >
+                                <div
+                                    class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
+                                >
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+                                    >
+                                        <!-- Card 1 -->
+                                        <div
+                                            class="group flex flex-col bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-1"
+                                        >
+                                            <div class="mb-4">
+                                                <span
+                                                    class="text-sm font-medium text-neutral-500 dark:text-neutral-400"
+                                                    >01</span
+                                                >
+                                            </div>
+                                            <h3
+                                                class="text-lg font-bold mb-3 text-primary dark:text-white"
+                                            >
+                                                Create Once, Share Endlessly.
+                                            </h3>
+                                            <p
+                                                class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-6"
+                                            >
+                                                Upload your resume and see a
+                                                clean, recruiter-ready profile
+                                                appear in seconds — no
+                                                formatting, no setup.
+                                            </p>
+                                            <div
+                                                class="mt-auto aspect-[4/3] bg-neutral-50 dark:bg-neutral-800/50 rounded-xl border border-neutral-100 dark:border-neutral-800 overflow-hidden relative group-hover:border-neutral-200 dark:group-hover:border-neutral-700 transition-colors"
+                                            >
+                                                <!-- Animation: Drag & Drop -->
+                                                <div
+                                                    class="absolute inset-0 flex items-center justify-center"
+                                                >
+                                                    <div
+                                                        class="w-48 h-32 border-2 border-dashed border-neutral-200 dark:border-neutral-700 rounded-lg flex items-center justify-center bg-white dark:bg-neutral-900/50 relative"
+                                                    >
+                                                        <div
+                                                            class="absolute inset-0 flex flex-col items-center justify-center opacity-50"
+                                                        >
+                                                            <span
+                                                                class="material-symbols-outlined text-neutral-300 dark:text-neutral-600"
+                                                                >cloud_upload</span
+                                                            >
+                                                        </div>
+                                                        <!-- Floating File -->
+                                                        <div
+                                                            class="animate-file-float absolute z-10 w-16 h-20 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg shadow-sm flex flex-col items-center justify-center gap-2"
+                                                        >
+                                                            <div
+                                                                class="w-8 h-1 bg-neutral-200 dark:bg-neutral-600 rounded-full"
+                                                            ></div>
+                                                            <div
+                                                                class="w-8 h-1 bg-neutral-200 dark:bg-neutral-600 rounded-full"
+                                                            ></div>
+                                                            <div
+                                                                class="w-5 h-1 bg-neutral-200 dark:bg-neutral-600 rounded-full mr-3"
+                                                            ></div>
+                                                            <div
+                                                                class="absolute -right-1 -top-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center"
+                                                            >
+                                                                <span
+                                                                    class="material-symbols-outlined text-[10px] text-white"
+                                                                    >check</span
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 2 -->
+                                        <div
+                                            class="group flex flex-col bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-2"
+                                        >
+                                            <div class="mb-4">
+                                                <span
+                                                    class="text-sm font-medium text-neutral-500 dark:text-neutral-400"
+                                                    >02</span
+                                                >
+                                            </div>
+                                            <h3
+                                                class="text-lg font-bold mb-3 text-primary dark:text-white"
+                                            >
+                                                Own the First Impression.
+                                            </h3>
+                                            <p
+                                                class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-6"
+                                            >
+                                                Upload your interview video,
+                                                edit details and availability so
+                                                your profile presents you
+                                                exactly how you want.
+                                            </p>
+                                            <div
+                                                class="mt-auto aspect-[4/3] bg-neutral-50 dark:bg-neutral-800/50 rounded-xl border border-neutral-100 dark:border-neutral-800 overflow-hidden relative group-hover:border-neutral-200 dark:group-hover:border-neutral-700 transition-colors"
+                                            >
+                                                <!-- Animation: Settings Toggles -->
+                                                <div
+                                                    class="absolute inset-0 flex flex-col justify-center p-8 gap-3 select-none"
+                                                >
+                                                    <div
+                                                        class="flex items-center justify-between p-2.5 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-100 dark:border-neutral-800 shadow-sm"
+                                                    >
+                                                        <div
+                                                            class="w-16 h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full"
+                                                        ></div>
+                                                        <div
+                                                            class="w-8 h-4 bg-neutral-200 dark:bg-neutral-700 rounded-full relative"
+                                                        >
+                                                            <div
+                                                                class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"
+                                                            ></div>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="flex items-center justify-between p-2.5 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-100 dark:border-neutral-800 shadow-sm transform scale-105 z-10"
+                                                    >
+                                                        <div
+                                                            class="w-20 h-2 bg-neutral-800 dark:bg-neutral-500 rounded-full"
+                                                        ></div>
+                                                        <!-- Animated Toggle -->
+                                                        <div
+                                                            class="w-8 h-4 bg-neutral-200 dark:bg-neutral-700 rounded-full relative overflow-hidden group-hover:bg-primary/20 transition-colors"
+                                                        >
+                                                            <div
+                                                                class="absolute left-0.5 top-0.5 w-3 h-3 bg-white dark:bg-neutral-200 rounded-full shadow-sm animate-toggle-slide"
+                                                            ></div>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="flex items-center justify-between p-2.5 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-100 dark:border-neutral-800 shadow-sm opacity-60"
+                                                    >
+                                                        <div
+                                                            class="w-14 h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full"
+                                                        ></div>
+                                                        <div
+                                                            class="w-8 h-4 bg-neutral-200 dark:bg-neutral-700 rounded-full relative"
+                                                        >
+                                                            <div
+                                                                class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"
+                                                            ></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 3 -->
+                                        <div
+                                            class="group flex flex-col bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-3"
+                                        >
+                                            <div class="mb-4">
+                                                <span
+                                                    class="text-sm font-medium text-neutral-500 dark:text-neutral-400"
+                                                    >03</span
+                                                >
+                                            </div>
+                                            <h3
+                                                class="text-lg font-bold mb-3 text-primary dark:text-white"
+                                            >
+                                                Recruiters Love it!
+                                            </h3>
+                                            <p
+                                                class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-6"
+                                            >
+                                                Share it! Make it easy for
+                                                hiring managers to see your
+                                                best-self and schedule an
+                                                interview all in one place. No
+                                                back-and-forth emails.
+                                            </p>
+                                            <div
+                                                class="mt-auto aspect-[4/3] bg-neutral-50 dark:bg-neutral-800/50 rounded-xl border border-neutral-100 dark:border-neutral-800 overflow-hidden relative group-hover:border-neutral-200 dark:group-hover:border-neutral-700 transition-colors"
+                                            >
+                                                <!-- Animation: Cursor Click -->
+                                                <div
+                                                    class="absolute inset-0 flex items-center justify-center"
+                                                >
+                                                    <div class="relative">
+                                                        <button
+                                                            class="px-5 py-2 bg-primary text-white rounded-lg shadow-sm flex items-center gap-2 animate-button-press"
+                                                            aria-hidden="true"
+                                                            tabindex="-1"
+                                                        >
+                                                            <span
+                                                                class="material-symbols-outlined text-sm"
+                                                                >calendar_month</span
+                                                            >
+                                                            <span
+                                                                class="text-xs font-bold"
+                                                                >Book
+                                                                Interview</span
+                                                            >
+                                                        </button>
+                                                        <!-- Animated Cursor -->
+                                                        <div
+                                                            class="animate-cursor-move absolute -bottom-8 -right-8 z-20 drop-shadow-lg"
+                                                        >
+                                                            <svg
+                                                                width="24"
+                                                                height="24"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path
+                                                                    d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z"
+                                                                    fill="#141414"
+                                                                    stroke="white"
+                                                                    stroke-width="1"
+                                                                />
+                                                            </svg>
+                                                        </div>
+                                                        <!-- Success Tooltip (Appears on click logic simulation) -->
+                                                        <div
+                                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-[10px] px-2 py-1 rounded opacity-0 animate-[fade-in-out_4s_infinite_2s]"
+                                                        >
+                                                            Booked!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- How It Works Visual -->
+                            <section class="w-full bg-background-light dark:bg-background-dark pt-6 md:pt-12 pb-3 md:pb-6" aria-label="How it works">
+                                <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+                                    <div
+                                        class="flex flex-col items-center text-center mb-8 animate-fade-in-up"
+                                    >
+                                        <div
+                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 mb-6 shadow-sm"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined text-sm text-primary dark:text-white"
+                                                >auto_awesome</span
+                                            >
+                                            <span
+                                                class="text-xs font-bold text-primary dark:text-white uppercase tracking-wider"
+                                                >How it works</span
+                                            >
+                                        </div>
+                                        <h2
+                                            class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6 text-primary dark:text-white"
+                                        >
+                                            Separate Yourself from the Pile
+                                        </h2>
+                                        <div
+                                            class="w-full max-w-6xl mt-8 md:mt-10 mb-8 md:mb-10"
+                                        >
+                                            <div
+                                                class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8 lg:gap-10 items-start"
+                                            >
+                                                <div
+                                                    class="flex flex-col items-center"
+                                                >
+                                                    <div
+                                                        class="w-full max-w-[360px] md:max-w-[320px] aspect-[4/3] rounded-xl overflow-hidden"
+                                                    >
+                                                        <img
+                                                            src="/assets_crousel/other/first.png"
+                                                            alt="Resume with OpenInterview profile link"
+                                                            class="w-full h-full object-contain"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                    <h3
+                                                        class="mt-4 text-lg font-bold text-primary dark:text-white leading-tight"
+                                                    >
+                                                        1. Add a Link to Your
+                                                        Resume.
+                                                    </h3>
+                                                </div>
+
+                                                <div
+                                                    class="flex flex-col items-center w-full"
+                                                >
+                                                    <div
+                                                        class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900"
+                                                    >
+                                                        <!-- Zoom past baked-in letterboxing / wide framing so the UI reads as tall as cols 1 & 3 -->
+                                                        <video
+                                                            id="home-col2-video"
+                                                            class="absolute inset-0 h-full w-full object-cover object-center"
+                                                            style="
+                                                                transform: scale(
+                                                                    1.25
+                                                                );
+                                                                transform-origin: center
+                                                                    center;
+                                                            "
+                                                            autoplay
+                                                            muted
+                                                            loop
+                                                            playsinline
+                                                            preload="metadata"
+                                                            aria-label="Sharing OpenInterview profile by direct message"
+                                                        >
+                                                            <source
+                                                                src="/assets_crousel/other/video.mp4"
+                                                                type="video/mp4"
+                                                            />
+                                                        </video>
+                                                    </div>
+                                                    <h3
+                                                        class="mt-4 text-lg font-bold text-primary dark:text-white leading-tight"
+                                                    >
+                                                        2. Send as a Direct
+                                                        Message.
+                                                    </h3>
+                                                </div>
+
+                                                <div
+                                                    class="flex flex-col items-center"
+                                                >
+                                                    <div
+                                                        id="home-resume-carousel"
+                                                        class="w-full max-w-[360px] md:max-w-[320px] aspect-[4/3] rounded-xl overflow-hidden relative"
+                                                        role="region"
+                                                        aria-label="Sample OpenInterview profiles"
+                                                        aria-roledescription="carousel"
+                                                    >
+                                                        <div
+                                                            id="home-resume-carousel-track"
+                                                            class="h-full flex will-change-transform"
+                                                        >
+                                                            <img
+                                                                src="/assets_crousel/UI1.png"
+                                                                alt="OpenInterview resume preview 1"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                            <img
+                                                                src="/assets_crousel/lisa.png"
+                                                                alt="OpenInterview resume preview 2"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                            <img
+                                                                src="/assets_crousel/michael.png"
+                                                                alt="OpenInterview resume preview 3"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                            <img
+                                                                src="/assets_crousel/peter.png"
+                                                                alt="OpenInterview resume preview 4"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                            <img
+                                                                src="/assets_crousel/profile1.png"
+                                                                alt="OpenInterview resume preview 5"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                            <img
+                                                                src="/assets_crousel/profile8.png"
+                                                                alt="OpenInterview resume preview 6"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                            <img
+                                                                src="/assets_crousel/wei.png"
+                                                                alt="OpenInterview resume preview 7"
+                                                                class="basis-full flex-none w-full h-full object-contain"
+                                                                loading="lazy"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <h3
+                                                        class="mt-4 text-lg font-bold text-primary dark:text-white leading-tight"
+                                                    >
+                                                        3. Get the Interview.
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p
+                                            class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed"
+                                        >
+                                            Add your openinterview link to your
+                                            resume or send it directly to
+                                            recruiters via email or DM. Share
+                                            <span
+                                                class="italic font-bold text-primary dark:text-white"
+                                                >more</span
+                                            >
+                                            than a resume. Send a professional
+                                            openinterview instead.
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </section>
+
+                            <!-- Testimonials Section -->
+                            <section
+                                class="w-full bg-white dark:bg-neutral-900 py-12 border-t border-neutral-100 dark:border-neutral-800"
+                                aria-label="Testimonials"
+                            >
+                                <div
+                                    class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
+                                >
+                                    <!-- Header -->
+                                    <div
+                                        class="flex flex-col items-center text-center mb-16 animate-fade-in-up"
+                                    >
+                                        <div
+                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 dark:bg-orange-900/30 border border-orange-100 dark:border-orange-800 mb-6 shadow-sm"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined text-sm text-orange-600 dark:text-orange-400"
+                                                >favorite</span
+                                            >
+                                            <span
+                                                class="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider"
+                                                >Wall of Love</span
+                                            >
+                                        </div>
+                                        <h2
+                                            class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6 text-primary dark:text-white"
+                                        >
+                                            Loved by job seekers worldwide
+                                        </h2>
+                                        <p
+                                            class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed"
+                                        >
+                                            Join thousands of candidates who are
+                                            landing their dream jobs faster with
+                                            OpenInterview.
+                                        </p>
+                                    </div>
+
+                                    <!-- Masonry Grid -->
+                                    <div
+                                        class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+                                    >
+                                                                                 <!-- Card 1 -->
+                                         <div
+                                             class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                         >
+                                             <div
+                                                 class="flex items-center gap-4 mb-4"
+                                             >
+                                                 <div
+                                                     class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold"
+                                                 >
+                                                     MK
+                                                 </div>
+                                                 <div>
+                                                     <h4
+                                                         class="font-bold text-primary dark:text-white text-sm"
+                                                     >
+                                                         Maya K.
+                                                     </h4>
+                                                     <p
+                                                         class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                     >
+                                                         Creator
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <p
+                                                 class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                             >
+                                                 "Brands respond faster because they actually understand me now."
+                                             </p>
+                                             <div
+                                                 class="flex text-yellow-400 text-xs mt-4"
+                                             >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                             </div>
+                                         </div>
+                                         <!-- Card 2 -->
+                                         <div
+                                             class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                         >
+                                             <div
+                                                 class="flex items-center gap-4 mb-4"
+                                             >
+                                                 <div
+                                                     class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold"
+                                                 >
+                                                     JL
+                                                 </div>
+                                                 <div>
+                                                     <h4
+                                                         class="font-bold text-primary dark:text-white text-sm"
+                                                     >
+                                                         Jake L.
+                                                     </h4>
+                                                     <p
+                                                         class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                     >
+                                                         Influencer
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <p
+                                                 class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                             >
+                                                 "It made my outreach feel much more professional."
+                                             </p>
+                                             <div
+                                                 class="flex text-yellow-400 text-xs mt-4"
+                                             >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                             </div>
+                                         </div>
+                                         <!-- Card 3 -->
+                                         <div
+                                             class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                         >
+                                             <div
+                                                 class="flex items-center gap-4 mb-4"
+                                             >
+                                                 <div
+                                                     class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400 font-bold"
+                                                 >
+                                                     OR
+                                                 </div>
+                                                 <div>
+                                                     <h4
+                                                         class="font-bold text-primary dark:text-white text-sm"
+                                                     >
+                                                         Olivia R.
+                                                     </h4>
+                                                     <p
+                                                         class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                     >
+                                                         Content Creator
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <p
+                                                 class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                             >
+                                                 "I feel more confident sharing my profile with brands."
+                                             </p>
+                                             <div
+                                                 class="flex text-yellow-400 text-xs mt-4"
+                                             >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                                 <span
+                                                     class="material-symbols-outlined text-sm filled"
+                                                     >star</span
+                                                 >
+                                             </div>
+                                         </div>
+<!-- Card 4 -->
+                                        <div
+                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                        >
+                                            <div
+                                                class="flex items-center gap-4 mb-4"
+                                            >
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-pink-100 dark:bg-pink-900/50 flex items-center justify-center text-pink-600 dark:text-pink-400 font-bold"
+                                                >
+                                                    PM
+                                                </div>
+                                                <div>
+                                                    <h4
+                                                        class="font-bold text-primary dark:text-white text-sm"
+                                                    >
+                                                        Patrick M.
+                                                    </h4>
+                                                    <p
+                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                    >
+                                                        Customer Service
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                            >
+                                                "Sharing one simple link felt
+                                                much better than attaching my
+                                                resume over and over again."
+                                            </p>
+                                            <div
+                                                class="flex text-yellow-400 text-xs mt-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 5 -->
+                                        <div
+                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                        >
+                                            <div
+                                                class="flex items-center gap-4 mb-4"
+                                            >
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold"
+                                                >
+                                                    PF
+                                                </div>
+                                                <div>
+                                                    <h4
+                                                        class="font-bold text-primary dark:text-white text-sm"
+                                                    >
+                                                        Peter F.
+                                                    </h4>
+                                                    <p
+                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                    >
+                                                        Project Manager
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                            >
+                                                "I created a custom video
+                                                interview for each job I applied
+                                                to, not a general resume. It
+                                                made a huge difference."
+                                            </p>
+                                            <div
+                                                class="flex text-yellow-400 text-xs mt-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 6 -->
+                                        <div
+                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                        >
+                                            <div
+                                                class="flex items-center gap-4 mb-4"
+                                            >
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center text-teal-600 dark:text-teal-400 font-bold"
+                                                >
+                                                    JB
+                                                </div>
+                                                <div>
+                                                    <h4
+                                                        class="font-bold text-primary dark:text-white text-sm"
+                                                    >
+                                                        Jennifer B.
+                                                    </h4>
+                                                    <p
+                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                    >
+                                                        Marketing Pro
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                            >
+                                                "I answered all of the questions
+                                                I knew they would ask directly
+                                                in my interview, they called me
+                                                back immediately."
+                                            </p>
+                                            <div
+                                                class="flex text-yellow-400 text-xs mt-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 7 (New) -->
+                                        <div
+                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                        >
+                                            <div
+                                                class="flex items-center gap-4 mb-4"
+                                            >
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold"
+                                                >
+                                                    SL
+                                                </div>
+                                                <div>
+                                                    <h4
+                                                        class="font-bold text-primary dark:text-white text-sm"
+                                                    >
+                                                        Sarah L.
+                                                    </h4>
+                                                    <p
+                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                    >
+                                                        UX Designer
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                            >
+                                                "The platform is so intuitive.
+                                                It felt like I was just having a
+                                                conversation, not a
+                                                high-pressure interview."
+                                            </p>
+                                            <div
+                                                class="flex text-yellow-400 text-xs mt-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 8 (New) -->
+                                        <div
+                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                        >
+                                            <div
+                                                class="flex items-center gap-4 mb-4"
+                                            >
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold"
+                                                >
+                                                    MK
+                                                </div>
+                                                <div>
+                                                    <h4
+                                                        class="font-bold text-primary dark:text-white text-sm"
+                                                    >
+                                                        Michael K.
+                                                    </h4>
+                                                    <p
+                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                    >
+                                                        Sales Executive
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                            >
+                                                "Being able to showcase my
+                                                communication skills upfront
+                                                gave me a huge advantage over
+                                                other candidates."
+                                            </p>
+                                            <div
+                                                class="flex text-yellow-400 text-xs mt-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 9 (New) -->
+                                        <div
+                                            class="break-inside-avoid bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:shadow-lg transition-all hover:-translate-y-1"
+                                        >
+                                            <div
+                                                class="flex items-center gap-4 mb-4"
+                                            >
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold"
+                                                >
+                                                    WL
+                                                </div>
+                                                <div>
+                                                    <h4
+                                                        class="font-bold text-primary dark:text-white text-sm"
+                                                    >
+                                                        Wei Liu
+                                                    </h4>
+                                                    <p
+                                                        class="text-xs text-neutral-500 dark:text-neutral-400"
+                                                    >
+                                                        Software Engineer
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed"
+                                            >
+                                                "The hiring manager told me my
+                                                openinterview set me apart from
+                                                the gate. I got a callback and
+                                                the job."
+                                            </p>
+                                            <div
+                                                class="flex text-yellow-400 text-xs mt-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                                <span
+                                                    class="material-symbols-outlined text-sm filled"
+                                                    >star</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- CTA Section -->
+                            <section id="more-than-paper"
+                                class="w-full bg-white dark:bg-neutral-900 py-6"
+                                aria-label="Get started"
+                            >
+                                <div
+                                    class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
+                                >
+                                    <div
+                                        class="relative overflow-hidden rounded-3xl bg-primary dark:bg-neutral-800 px-6 py-16 shadow-2xl sm:px-16 sm:py-24"
+                                    >
+                                        <!-- Background Pattern -->
+                                        <div
+                                            class="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl"
+                                        ></div>
+                                        <div
+                                            class="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl"
+                                        ></div>
+
+                                        <div
+                                            class="relative flex flex-col items-center text-center"
+                                        >
+                                            <h2
+                                                class="text-3xl font-black tracking-tight text-white sm:text-4xl md:text-5xl mb-6 max-w-2xl"
+                                            >
+                                                You are more than a piece of
+                                                paper.
+                                            </h2>
+                                            <p
+                                                class="mx-auto max-w-xl text-lg text-white/80 mb-10 leading-relaxed"
+                                            >
+                                                Join thousands of candidates
+                                                separating from the pile and
+                                                getting more interviews with a
+                                                professional openinterview.
+                                            </p>
+                                            <div
+                                                class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8"
+                                            >
+                                                <a
+                                                    href="#"
+                                                    class="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-primary shadow-sm hover:bg-neutral-50 transition-all hover:scale-105"
+                                                >
+                                                    Get Started for Free
+                                                </a>
+                                                <!-- <a href="#" class="inline-flex items-center justify-center rounded-full border border-white/30 bg-transparent px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition-all hover:scale-105 backdrop-blur-sm">
+                                View Pricing
+                            </a> -->
+                                            </div>
+
+                                            <!-- Resume Drop Zone -->
+                                            <div
+                                                class="w-full max-w-lg mx-auto"
+                                            >
+                                                <div class="relative group">
+                                                    <div
+                                                        class="absolute inset-0 bg-white/20 rounded-2xl blur-sm group-hover:blur-md transition-all duration-300"
+                                                    ></div>
+                                                    <div
+                                                        id="drop-zone"
+                                                        tabindex="0"
+                                                        role="button"
+                                                        aria-label="Upload your resume – press Enter or Space to browse files"
+                                                        class="relative flex flex-col items-center justify-center w-full h-48 rounded-2xl border-2 border-dashed border-white/30 bg-white/5 hover:bg-white/10 transition-all duration-300 p-6 text-center cursor-pointer"
+                                                    >
+                                                        <div
+                                                            class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"
+                                                        >
+                                                            <span
+                                                                class="material-symbols-outlined text-3xl text-white"
+                                                                >cloud_upload</span
+                                                            >
+                                                        </div>
+                                                        <p
+                                                            class="text-white font-medium text-2xl mb-1"
+                                                        >
+                                                            Drop your resume
+                                                            here
+                                                        </p>
+                                                        <p
+                                                            class="text-white/60 text-sm"
+                                                        >
+                                                            PDF, DOCX up to 10MB
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <p
+                                                id="file-name"
+                                                class="text-sm text-white/80 hidden animate-fade-in mt-2"
+                                            ></p>
+                                            <div
+                                                id="upload-progress"
+                                                class="w-full max-w-lg hidden mt-4"
+                                            >
+                                                <!-- Professional Upload Progress Container -->
+                                                <div
+                                                    class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-6 shadow-lg"
+                                                >
+                                                    <!-- Header with animated icon -->
+                                                    <div
+                                                        class="flex items-center gap-4 mb-4"
+                                                    >
+                                                        <div class="relative">
+                                                            <div
+                                                                class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center upload-icon"
+                                                            >
+                                                                <span
+                                                                    class="material-symbols-outlined text-2xl text-primary"
+                                                                    >cloud_upload</span
+                                                                >
+                                                            </div>
+                                                            <!-- Spinning border overlay -->
+                                                            <div
+                                                                class="absolute inset-0 w-12 h-12 border-2 border-transparent border-t-primary rounded-full animate-spin"
+                                                            ></div>
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <h3
+                                                                class="font-semibold text-lg text-neutral-900 dark:text-white"
+                                                            >
+                                                                Processing
+                                                                Resume
+                                                            </h3>
+                                                            <p
+                                                                id="upload-status"
+                                                                class="text-sm text-neutral-500 dark:text-neutral-400"
+                                                            ></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Progress Section -->
+                                                    <div class="space-y-3">
+                                                        <!-- Progress Bar -->
+                                                        <div
+                                                            class="relative w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-3 overflow-hidden"
+                                                        >
+                                                            <div
+                                                                id="progress-bar"
+                                                                class="bg-gradient-to-r from-primary to-neutral-600 h-3 rounded-full transition-all duration-500 ease-out relative overflow-hidden"
+                                                                style="width: 0%"
+                                                            >
+                                                                <!-- Shimmer effect -->
+                                                                <div
+                                                                    class="absolute inset-0 progress-shimmer"
+                                                                ></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Progress Details -->
+                                                        <div
+                                                            class="flex justify-between items-center text-sm"
+                                                        >
+                                                            <span
+                                                                id="progress-text"
+                                                                class="text-neutral-500 dark:text-neutral-400"
+                                                                >Initializing...</span
+                                                            >
+                                                            <span
+                                                                id="progress-percentage"
+                                                                class="font-medium text-neutral-900 dark:text-white"
+                                                                >0%</span
+                                                            >
+                                                        </div>
+
+                                                        <!-- File Info -->
+                                                        <div
+                                                            class="flex items-center gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-700"
+                                                        >
+                                                            <span
+                                                                class="material-symbols-outlined text-lg text-neutral-400"
+                                                                >description</span
+                                                            >
+                                                            <span
+                                                                id="file-info"
+                                                                class="text-sm text-neutral-500 dark:text-neutral-400"
+                                                            ></span>
+                                                        </div>
+
+                                                        <!-- Processing Steps -->
+                                                        <div
+                                                            id="processing-steps"
+                                                            class="space-y-2 pt-2"
+                                                        >
+                                                            <div
+                                                                class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400"
+                                                            >
+                                                                <div
+                                                                    class="w-2 h-2 bg-primary rounded-full animate-pulse"
+                                                                ></div>
+                                                                <span
+                                                                    >Uploading
+                                                                    to secure
+                                                                    cloud
+                                                                    storage...</span
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                                    <!-- Screen reader announcements for upload status -->
+                                            <div
+                                                id="upload-announce"
+                                                aria-live="polite"
+                                                aria-atomic="true"
+                                                class="sr-only"
+                                            ></div>
+
+                                            <p
+                                                class="mt-8 text-sm text-white/60"
+                                            >
+                                                No credit card required · Free
+                                                plan available
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        
+                        </main>
+                        <footer
+                            class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 pt-16 pb-16"
+                            role="contentinfo"
+                        >
+                            <div
+                                class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
+                            >
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_0.7fr_1fr] gap-8"
+                                >
+                                    <!-- Brand Column -->
+                                    <div class="flex flex-col gap-3">
+                                        <a href="/home.html" ...
+                                            ><img
+                                                src="/defaults/logo_1.png"
+                                                ...
+                                        /></a>
+                                        <p class="text-sm font-bold ...">
+                                            The #1 Modern Interview Platform.
+                                        </p>
+                                        <p class="text-sm text-neutral-600 ...">
+                                            Connecting 1B openinterviews to real
+                                            opportunities by 2030.
+                                        </p>
+                                        <a href="/status2"
+                                            ><img
+                                                src="/defaults/sysbutton.png"
+                                                style="max-height: 32px"
+                                        /></a>
+                                        <p class="text-xs font-bold ...">
+                                            Works with:
+                                        </p>
+                                        <img
+                                            src="/defaults/logos.png"
+                                            class="w-full h-auto"
+                                        />
+                                        <div class="flex flex-col gap-1 mt-2">
+                                            <p class="text-xs ...">
+                                                openinterview.me® registered
+                                                trademark ...
+                                            </p>
+                                            <p class="text-xs ...">
+                                                © 2024 openInterview.me
+                                            </p>
+                                            <p class="text-xs ...">
+                                                Need Help?
+                                                support@openinterview.me ...
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Use Cases -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Use Cases</h3>
+                                        <ul
+                                            class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400"
+                                        >
+                                            <li>
+                                                <a href="/for/job-seekers"
+                                                    >Full-Time &amp; Part-Time Job Seekers</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/freelancers"
+                                                    >Freelancers</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/tutors-coaches"
+                                                    >Tutors &amp; Coaches</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/services"
+                                                    >Service Providers</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/caregivers"
+                                                    >Babysitters &amp;
+                                                    Caregivers</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/performers"
+                                                    >Actors &amp; Performers</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/musicians"
+                                                    >Musicians &amp; Singers</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/events"
+                                                    >Event Staffing</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/conventions"
+                                                    >Convention Hiring</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/sales"
+                                                    >Sales &amp; Business
+                                                    Development</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/creators"
+                                                    >Influencers &amp;
+                                                    Creators</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/for/startups"
+                                                    >Startup Hiring &amp;
+                                                    Recruiting</a
+                                                >
+                                            </li>
+</ul>
+                                    </div>
+
+                                    <!-- Product + Legal & Trust -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Product</h3>
+                                        <ul
+                                            class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-10"
+                                        >
+                                            <li>
+                                                <a href="/home.html">Home</a>
+                                            </li>
+                                            <li>
+                                                <a href="/status2"
+                                                    >System Performance</a
+                                                >
+                                            </li>
+                                            <li><a href="https://openinterview.me/docs/help/dashboard">Support &amp; Help Docs</a></li>
+                                            <li>
+                                                <a href="/pricing.html"
+                                                    >Pricing</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/login-page.html"
+                                                    >Sign In</a
+                                                >
+                                            </li>
+                                        </ul>
+                                        <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Legal &amp; Trust</h3>
+                                        <ul
+                                            class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400"
+                                        >
+                                            <li>
+                                                <a
+                                                    href="/privacy-terms.html#terms"
+                                                    >Terms of Use</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    href="/privacy-terms.html#privacy"
+                                                    >Privacy Policy</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="/ai-transparency.html"
+                                                    >AI Transparency</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Contact -->
+                                    <div>
+                                        <div class="mb-8">
+                                            <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Security</h3>
+                                            <p class="text-xs ...">
+                                                Powered by industry-leading PCI,
+                                                SOC 2, &amp; ISO-aligned ...
+                                            </p>
+                                            <img
+                                                src="/defaults/certs.png"
+                                                class="w-full h-auto mb-3"
+                                            />
+                                            <ul class="space-y-1 text-xs ...">
+                                                <li>
+                                                    Stripe (PCI DSS Level 1)
+                                                </li>
+                                                <li>
+                                                    Cloudflare (SOC 2, ISO
+                                                    27001)
+                                                </li>
+                                                <li>
+                                                    Supabase (SOC 2-aligned
+                                                    infrastructure)
+                                                </li>
+                                                <li>
+                                                    Twilio (SOC 2, ISO 27001)
+                                                </li>
+                                                <li>and more...</li>
+                                            </ul>
+                                        </div>
+                                        <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Contact</h3>
+                                        <ul
+                                            class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400"
+                                        >
+                                            <li>
+                                                8 The Green STE A, Dover, DE
+                                                19901
+                                            </li>
+                                            <li>
+                                                <a href="tel:7706097463"
+                                                    >tel: 770-609-7463</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    href="mailto:info@openinterview.me"
+                                                    >email:
+                                                    info@openinterview.me</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Header Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener("click", () => {
+                    const isExpanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
+                    mobileMenuBtn.setAttribute("aria-expanded", String(!isExpanded));
+                    mobileMenu.classList.toggle("hidden");
+                    mobileMenu.setAttribute("aria-hidden", String(isExpanded));
+                    if (!isExpanded) {
+                        // Menu is now open: move focus to first focusable item
+                        const firstFocusable = mobileMenu.querySelector("a, button, [tabindex]:not([tabindex='-1'])");
+                        if (firstFocusable) firstFocusable.focus();
+                    } else {
+                        // Menu is now closed: restore focus to toggle button
+                        mobileMenuBtn.focus();
+                    }
+                });
+                // Close menu on Escape key when focus is inside menu
+                mobileMenu.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") {
+                        mobileMenu.classList.add("hidden");
+                        mobileMenu.setAttribute("aria-hidden", "true");
+                        mobileMenuBtn.setAttribute("aria-expanded", "false");
+                        mobileMenuBtn.focus();
+                    }
+                });
+            }
+
+            // Resume upload handling
+            const dropZone = document.getElementById("drop-zone");
+            const fileInput = document.getElementById("resume-file-input");
+            const browseBtn = document.getElementById("browse-files-btn");
+            const signInBtn = document.getElementById("sign-in-btn");
+            const fileName = document.getElementById("file-name");
+            const uploadStatus = document.getElementById("upload-status");
+            const announceEl = document.getElementById("upload-announce");
+
+            function announceUpload(msg) {
+                if (!announceEl) return;
+                // Clear first, then set – forces re-announcement even for same message
+                announceEl.textContent = "";
+                setTimeout(function () { announceEl.textContent = msg; }, 50);
+            }
+
+            let isProcessing = false; // Flag to prevent double-triggering
+
+            // Utility functions for button state management
+            function disableButtons() {
+                if (browseBtn) browseBtn.classList.add("btn-disabled");
+                if (signInBtn) signInBtn.classList.add("btn-disabled");
+                if (dropZone) {
+                    dropZone.style.pointerEvents = "none";
+                    dropZone.style.opacity = "0.6";
+                }
+            }
+
+            function enableButtons() {
+                if (browseBtn) browseBtn.classList.remove("btn-disabled");
+                if (signInBtn) signInBtn.classList.remove("btn-disabled");
+                if (dropZone) {
+                    dropZone.style.pointerEvents = "auto";
+                    dropZone.style.opacity = "1";
+                }
+            }
+
+            // Browse button click
+            if (browseBtn) browseBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (!isProcessing) {
+                    fileInput.click();
+                }
+            });
+
+            // File input change
+            if (fileInput) fileInput.addEventListener("change", (e) => {
+                if (!isProcessing && fileInput.files.length > 0) {
+                    isProcessing = true;
+                    handleFileSelect();
+                }
+            });
+
+            // Drag and drop with enhanced UX
+            if (dropZone) dropZone.addEventListener("click", (e) => {
+                if (
+                    !isProcessing &&
+                    e.target !== browseBtn &&
+                    !(browseBtn && browseBtn.contains(e.target))
+                ) {
+                    fileInput.click();
+                }
+            });
+
+            if (dropZone) dropZone.addEventListener("keydown", (e) => {
+                if ((e.key === "Enter" || e.key === " ") && !isProcessing) {
+                    e.preventDefault();
+                    fileInput.click();
+                }
+            });
+
+            if (dropZone) dropZone.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZone.classList.add("drag-over");
+            });
+
+            if (dropZone) dropZone.addEventListener("dragleave", (e) => {
+                if (!dropZone.contains(e.relatedTarget)) {
+                    dropZone.classList.remove("drag-over");
+                }
+            });
+
+            if (dropZone) dropZone.addEventListener("drop", (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("drag-over");
+
+                const files = e.dataTransfer.files;
+                if (files.length > 0 && !isProcessing) {
+                    isProcessing = true;
+                    fileInput.files = files;
+                    handleFileSelect();
+                }
+            });
+
+            function handleFileSelect() {
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                // Disable buttons immediately
+                disableButtons();
+
+                fileName.textContent = file.name;
+                fileName.classList.remove("hidden");
+
+                uploadFile(file);
+            }
+
+            // Utility function to read cookies
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(";").shift();
+                return null;
+            }
+
+            async function uploadFile(file) {
+                const progressContainer =
+                    document.getElementById("upload-progress");
+                const progressBar = document.getElementById("progress-bar");
+                const progressText = document.getElementById("progress-text");
+                const progressPercentage = document.getElementById(
+                    "progress-percentage",
+                );
+                const fileInfo = document.getElementById("file-info");
+                const processingSteps =
+                    document.getElementById("processing-steps");
+
+                // Show enhanced progress UI with professional styling
+                progressContainer.classList.remove("hidden");
+                dropZone.classList.add("upload-processing");
+
+                // Set file info
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                fileInfo.textContent = `${file.name} (${fileSize} MB)`;
+
+                // Initial status
+                uploadStatus.textContent =
+                    "Analyzing and processing your resume with AI...";
+                progressText.textContent =
+                    "Uploading to secure cloud storage...";
+                progressPercentage.textContent = "0%";
+
+                // Enhanced progress simulation with realistic steps
+                let progress = 0;
+                let currentStep = 0;
+                const steps = [
+                    {
+                        text: "Uploading to secure cloud storage...",
+                        duration: 2000,
+                    },
+                    { text: "Scanning document structure...", duration: 1500 },
+                    {
+                        text: "Extracting text and formatting...",
+                        duration: 2000,
+                    },
+                    {
+                        text: "AI analyzing skills and experience...",
+                        duration: 2500,
+                    },
+                    { text: "Creating your profile...", duration: 1000 },
+                    { text: "Finalizing setup...", duration: 500 },
+                ];
+
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 12 + 3; // More consistent progress
+                    if (progress > 85) progress = 85; // Stop at 85% until upload completes
+
+                    progressBar.style.width = `${progress}%`;
+                    progressPercentage.textContent = `${Math.round(progress)}%`;
+
+                    // Update processing steps
+                    const stepIndex = Math.floor(
+                        (progress / 85) * steps.length,
+                    );
+                    if (stepIndex !== currentStep && stepIndex < steps.length) {
+                        currentStep = stepIndex;
+                        progressText.textContent = steps[stepIndex].text;
+
+                        // Update processing steps visual
+                        processingSteps.innerHTML = `
+        <div class="flex items-center gap-2 text-xs text-muted-light dark:text-muted-dark">
+          <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+          <span>${steps[stepIndex].text}</span>
+        </div>
+      `;
+                    }
+                }, 200);
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                // Check for existing user ID from cookie
+                const existingUserId = getCookie("anonUserId");
+                if (existingUserId) {
+                    formData.append("anonUserId", existingUserId);
+                    console.log(
+                        `[frontend] Found existing user ID: ${existingUserId}`,
+                    );
+
+                    // Update status to indicate returning user (could be anonymous or registered)
+                    uploadStatus.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary animate-pulse">person</span>
+        <span>Welcome back! Processing your resume with AI...</span>
+      </div>
+    `;
+                } else {
+                    console.log(
+                        `[frontend] No existing user ID found, will create new anonymous user`,
+                    );
+                    uploadStatus.textContent =
+                        "Analyzing and processing your resume with AI...";
+                }
+
+                try {
+                    const response = await fetch("/api/upload-resume-anon", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    const data = await response.json();
+
+                    // Complete progress
+                    clearInterval(progressInterval);
+                    progressBar.style.width = "100%";
+                    progressPercentage.textContent = "100%";
+                    progressText.textContent = "Processing complete!";
+
+                    if (!response.ok) {
+                        if (response.status === 401 && data.requiresAuth) {
+                            // User needs to authenticate
+                            dropZone.classList.remove("upload-processing");
+                            dropZone.classList.add("upload-error");
+
+                            uploadStatus.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-red-600">lock</span>
+            <span>Authentication Required</span>
+          </div>
+        `;
+                            announceUpload("Authentication Required. Please sign in to continue.");
+
+                            progressText.textContent =
+                                data.message ||
+                                "This account requires sign-in to upload resumes";
+
+                            processingSteps.innerHTML = `
+          <div class="flex items-center gap-2 text-xs text-red-600">
+            <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+            <span>Please <a href="${data.loginUrl || "/login-page.html"}" class="underline font-bold">sign in</a> to continue</span>
+          </div>
+        `;
+
+                            // Reset after 5 seconds
+                            setTimeout(() => {
+                                dropZone.classList.remove("upload-error");
+                                progressContainer.classList.add("hidden");
+                                fileName.classList.add("hidden");
+                                isProcessing = false;
+                                fileInput.value = "";
+                                enableButtons();
+                            }, 5000);
+
+                            return;
+                        }
+
+                        throw new Error(data.error || "Upload failed");
+                    }
+
+                    // Success state with enhanced animation
+                    dropZone.classList.remove("upload-processing");
+                    dropZone.classList.add("upload-success");
+
+                    // Show different messages for new vs returning users
+                    let successMessage, processingMessage;
+
+                    if (data.isReturningUser) {
+                        if (data.userStatus === "registered") {
+                            successMessage =
+                                "Welcome back! Your profile has been updated";
+                            processingMessage =
+                                "Profile updated successfully! Redirecting...";
+                        } else {
+                            successMessage =
+                                "Welcome back! Your profile has been updated";
+                            processingMessage =
+                                "Profile updated successfully! Redirecting...";
+                        }
+                    } else {
+                        successMessage = "Success! Your profile is ready";
+                        processingMessage =
+                            "Profile created successfully! Redirecting...";
+                    }
+
+                    uploadStatus.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-white animate-bounce">check_circle</span>
+        <span class="text-white font-medium">${successMessage}</span>
+      </div>
+    `;
+                    announceUpload(successMessage);
+
+                    processingSteps.innerHTML = `
+      <div class="flex items-center gap-2 text-xs text-white">
+        <div class="w-2 h-2 bg-white rounded-full"></div>
+        <span class="text-white">${processingMessage}</span>
+      </div>
+    `;
+
+                    // Redirect to profile editor with guest flag
+                    setTimeout(() => {
+                        window.location.href =
+                            data.redirectUrl ||
+                            `/profile_edit.html?id=${data.profileId}&guest=true`;
+                    }, 2000);
+                } catch (error) {
+                    clearInterval(progressInterval);
+
+                    // Error state with enhanced styling
+                    dropZone.classList.remove("upload-processing");
+                    dropZone.classList.add("upload-error");
+
+                    uploadStatus.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-red-600">error</span>
+        <span>Upload failed</span>
+      </div>
+    `;
+                    announceUpload("Upload failed. " + error.message);
+
+                    progressText.textContent = `Error: ${error.message}`;
+                    progressBar.style.width = "0%";
+                    progressPercentage.textContent = "0%";
+
+                    processingSteps.innerHTML = `
+      <div class="flex items-center gap-2 text-xs text-red-600">
+        <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+        <span>Upload failed. Please try again.</span>
+      </div>
+    `;
+
+                    console.error("Upload error:", error);
+
+                    // Reset after 4 seconds with smooth transition
+                    setTimeout(() => {
+                        dropZone.classList.remove("upload-error");
+                        progressContainer.classList.add("hidden");
+                        fileName.classList.add("hidden");
+                        isProcessing = false;
+                        fileInput.value = "";
+                        enableButtons(); // Re-enable buttons on error
+                    }, 4000);
+                }
+            }
+
+            // Enterprise-level interactive card effects
+            document.addEventListener("DOMContentLoaded", function () {
+                const featureCards = document.querySelectorAll(".feature-card");
+
+                featureCards.forEach((card, index) => {
+                    // Add mouse tracking for subtle tilt effect
+                    card.addEventListener("mousemove", (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+
+                        const rotateX = (y - centerY) / 10;
+                        const rotateY = (centerX - x) / 10;
+
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+                    });
+
+                    card.addEventListener("mouseleave", () => {
+                        card.style.transform = "";
+                    });
+
+                    // Add click ripple effect
+                    card.addEventListener("click", (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+
+                        const ripple = document.createElement("div");
+                        ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(20, 20, 20, 0.1);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        left: ${x - 10}px;
+        top: ${y - 10}px;
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+      `;
+
+                        card.appendChild(ripple);
+
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+                    });
+
+                    // Intersection Observer for scroll animations
+                    const observer = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                    entry.target.style.animationPlayState =
+                                        "running";
+                                }
+                            });
+                        },
+                        { threshold: 0.1 },
+                    );
+
+                    observer.observe(card);
+                });
+
+                // Add ripple animation keyframes
+                const style = document.createElement("style");
+                style.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+                document.head.appendChild(style);
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const featureVideo = document.getElementById(
+                    "why-openinterview-feature-video",
+                );
+                if (featureVideo) {
+                    const ensurePlayback = () => {
+                        featureVideo.muted = true;
+                        featureVideo.defaultMuted = true;
+                        featureVideo.playsInline = true;
+                        const playPromise = featureVideo.play();
+                        if (
+                            playPromise &&
+                            typeof playPromise.catch === "function"
+                        ) {
+                            playPromise.catch(() => {});
+                        }
+                    };
+
+                    ensurePlayback();
+                    featureVideo.addEventListener("ended", () => {
+                        featureVideo.currentTime = 0;
+                        ensurePlayback();
+                    });
+                    featureVideo.addEventListener("canplay", ensurePlayback);
+                }
+
+                // const usernames = ['mark', 'ethan', 'carter', 'sarah', 'alex', 'jessica'];
+                const usernames = [
+                    "Ritesh",
+                    "Sarah",
+                    "Wei",
+                    "Priya",
+                    "Rohan",
+                    "Mark",
+                    "Jing",
+                ];
+                let currentIndex = 0;
+                const usernameEl = document.getElementById("dynamic-username");
+                const linkEl = document.getElementById("dynamic-link");
+
+                if (usernameEl && linkEl) {
+                    setInterval(() => {
+                        // Slide up and fade out
+                        usernameEl.style.opacity = "0";
+                        usernameEl.style.transform = "translateY(-10px)";
+
+                        setTimeout(() => {
+                            currentIndex =
+                                (currentIndex + 1) % usernames.length;
+                            const newName = usernames[currentIndex];
+
+                            // Update content
+                            usernameEl.textContent = newName;
+                            linkEl.href = `https://openinterview.me/${newName}`;
+
+                            // Prepare for slide in (move to bottom hidden)
+                            usernameEl.style.transition = "none";
+                            usernameEl.style.transform = "translateY(10px)";
+
+                            // Force reflow
+                            void usernameEl.offsetWidth;
+
+                            // Slide in and fade in
+                            usernameEl.style.transition = "all 300ms ease-out";
+                            usernameEl.style.opacity = "1";
+                            usernameEl.style.transform = "translateY(0)";
+                        }, 300);
+                    }, 3000);
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const carousel = document.getElementById(
+                    "home-resume-carousel",
+                );
+                const track = document.getElementById(
+                    "home-resume-carousel-track",
+                );
+
+                if (!carousel || !track) return;
+
+                const prefersReducedMotion = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)",
+                ).matches;
+                const slides = Array.from(track.children);
+
+                if (slides.length < 2) return;
+
+                const firstClone = slides[0].cloneNode(true);
+                firstClone.setAttribute("aria-hidden", "true");
+                track.appendChild(firstClone);
+
+                const allSlides = Array.from(track.children);
+                const totalSlides = slides.length;
+                let slideWidth = 0;
+                let currentIndex = 0;
+                let isPaused = false;
+                let isAnimating = false;
+                let intervalId = null;
+                let resizeObserver = null;
+
+                const applyTransform = (withTransition = true) => {
+                    track.style.transition = withTransition
+                        ? "transform 650ms ease-in-out"
+                        : "none";
+                    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+                };
+
+                const updateSlideSizes = () => {
+                    slideWidth = carousel.clientWidth;
+                    if (!slideWidth) return;
+                    allSlides.forEach((slide) => {
+                        slide.style.width = `${slideWidth}px`;
+                    });
+                    applyTransform(false);
+                };
+
+                const goToNextSlide = () => {
+                    if (isPaused || isAnimating || !slideWidth) return;
+                    isAnimating = true;
+                    currentIndex += 1;
+                    applyTransform(true);
+                };
+
+                track.addEventListener("transitionend", () => {
+                    if (currentIndex === totalSlides) {
+                        currentIndex = 0;
+                        applyTransform(false);
+                    }
+                    isAnimating = false;
+                });
+
+                carousel.addEventListener("mouseenter", () => {
+                    isPaused = true;
+                });
+                carousel.addEventListener("mouseleave", () => {
+                    isPaused = false;
+                });
+
+                if (prefersReducedMotion) {
+                    updateSlideSizes();
+                    applyTransform(false);
+                    return;
+                }
+
+                window.requestAnimationFrame(() => {
+                    updateSlideSizes();
+                    applyTransform(false);
+                });
+
+                resizeObserver = new ResizeObserver(() => {
+                    updateSlideSizes();
+                });
+                resizeObserver.observe(carousel);
+
+                intervalId = window.setInterval(goToNextSlide, 2800);
+
+                window.addEventListener("beforeunload", () => {
+                    if (intervalId) {
+                        window.clearInterval(intervalId);
+                    }
+                    if (resizeObserver) {
+                        resizeObserver.disconnect();
+                    }
+                });
+            });
+        </script>
+        <style>
+            /* Help assistant FAB + anchored chat (shared logic with /js/help-ai-chat.js) */
+            .home-help-ai-fab {
+                position: fixed;
+                bottom: 1.25rem;
+                right: 1.25rem;
+                z-index: 55;
+                display: inline-flex;
+                height: 3.5rem;
+                width: 3.5rem;
+                align-items: center;
+                justify-content: center;
+                border-radius: 9999px;
+                background: linear-gradient(135deg, #1f1f1f 0%, #141414 100%);
+                color: #fafafa;
+                box-shadow:
+                    0 4px 24px -4px rgba(99, 102, 241, 0.45),
+                    0 8px 20px -8px rgba(0, 0, 0, 0.35);
+                transition:
+                    transform 0.25s ease,
+                    opacity 0.25s ease,
+                    box-shadow 0.25s ease;
+            }
+            .home-help-ai-fab:hover {
+                transform: scale(1.06);
+                box-shadow:
+                    0 8px 32px -4px rgba(99, 102, 241, 0.5),
+                    0 12px 28px -8px rgba(0, 0, 0, 0.4);
+            }
+            .home-help-ai-fab--hidden {
+                opacity: 0;
+                pointer-events: none;
+                transform: scale(0.85);
+            }
+
+            /* Closed: hide entire overlay (backdrop was still covering the page and blurring it) */
+            .help-ai-modal-root {
+                transition:
+                    opacity 0.28s ease,
+                    visibility 0.28s ease;
+            }
+            .help-ai-modal-root:not(.help-ai-modal--open) {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+            .help-ai-modal-root.help-ai-modal--open {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+            .help-ai-modal-root:not(.help-ai-modal--open) .help-ai-backdrop {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            .help-ai-modal-root.help-ai-modal--fab {
+                display: block;
+            }
+            .help-ai-modal-root.help-ai-modal--fab .help-ai-fab-shell {
+                pointer-events: none;
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+                padding: 0.75rem;
+                padding-bottom: 5.5rem;
+            }
+            @media (min-width: 640px) {
+                .help-ai-modal-root.help-ai-modal--fab .help-ai-fab-shell {
+                    padding: 1.25rem;
+                    padding-bottom: 6rem;
+                }
+            }
+            .help-ai-modal-root.help-ai-modal--fab .help-ai-dialog-panel {
+                pointer-events: auto;
+                transform-origin: bottom right;
+                transition:
+                    transform 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 0.3s ease;
+            }
+            .help-ai-modal-root.help-ai-modal--fab:not(.help-ai-modal--open)
+                .help-ai-dialog-panel {
+                transform: translateY(1.25rem) scale(0.94);
+                opacity: 0;
+            }
+            .help-ai-modal-root.help-ai-modal--fab.help-ai-modal--open
+                .help-ai-dialog-panel {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            .help-ai-md :first-child {
+                margin-top: 0;
+            }
+            .help-ai-md :last-child {
+                margin-bottom: 0;
+            }
+            .help-ai-md p {
+                margin: 0.45em 0;
+            }
+            .help-ai-md h1 {
+                font-size: 1.125rem;
+                font-weight: 800;
+                margin: 0.75em 0 0.35em;
+            }
+            .help-ai-md h2 {
+                font-size: 1.05rem;
+                font-weight: 700;
+                margin: 0.7em 0 0.3em;
+            }
+            .help-ai-md h3,
+            .help-ai-md h4 {
+                font-size: 1rem;
+                font-weight: 700;
+                margin: 0.65em 0 0.25em;
+            }
+            .help-ai-md ul,
+            .help-ai-md ol {
+                margin: 0.4em 0;
+                padding-left: 1.35rem;
+            }
+            .help-ai-md ul {
+                list-style: disc;
+            }
+            .help-ai-md ol {
+                list-style: decimal;
+            }
+            .help-ai-md li {
+                margin: 0.2em 0;
+            }
+            .help-ai-md strong {
+                font-weight: 600;
+            }
+            .help-ai-md code {
+                font-size: 0.88em;
+                background: rgba(0, 0, 0, 0.06);
+                padding: 0.12em 0.4em;
+                border-radius: 0.25rem;
+            }
+            .dark .help-ai-md code {
+                background: rgba(255, 255, 255, 0.1);
+            }
+            .help-ai-md a {
+                color: #2563eb;
+                text-decoration: underline;
+            }
+            .dark .help-ai-md a {
+                color: #93c5fd;
+            }
+            @keyframes help-ai-cursor-blink {
+                0%,
+                45% {
+                    opacity: 1;
+                }
+                50%,
+                100% {
+                    opacity: 0.15;
+                }
+            }
+            .help-ai-cursor {
+                display: inline-block;
+                width: 2px;
+                height: 1em;
+                margin-left: 1px;
+                vertical-align: text-bottom;
+                background: currentColor;
+                animation: help-ai-cursor-blink 1s step-end infinite;
+            }
+            .help-ai-thread-area {
+                background:
+                    radial-gradient(
+                        ellipse 85% 55% at 50% -5%,
+                        rgba(99, 102, 241, 0.07),
+                        transparent 55%
+                    ),
+                    rgba(250, 250, 250, 0.65);
+            }
+            .dark .help-ai-thread-area {
+                background:
+                    radial-gradient(
+                        ellipse 85% 55% at 50% -5%,
+                        rgba(99, 102, 241, 0.12),
+                        transparent 55%
+                    ),
+                    rgba(10, 10, 10, 0.5);
+            }
+        </style>
+
+        <button
+            type="button"
+            id="home-help-ai-fab"
+            class="home-help-ai-fab"
+            aria-label="Open help assistant"
+            aria-expanded="false"
+            aria-controls="home-help-ai-dialog-panel"
+        >
+            <span
+                class="material-symbols-outlined text-[28px]"
+                aria-hidden="true"
+                >smart_toy</span
+            >
+        </button>
+
+        <div
+            id="home-help-ai-modal"
+            class="help-ai-modal-root help-ai-modal--fab fixed inset-0 z-[60]"
+            aria-hidden="true"
+        >
+            <div
+                id="home-help-ai-backdrop"
+                class="help-ai-backdrop absolute inset-0 bg-black/45 backdrop-blur-[2px]"
+                aria-hidden="true"
+            ></div>
+            <div class="help-ai-fab-shell">
+                <div
+                    id="home-help-ai-dialog-panel"
+                    role="dialog"
+                    aria-labelledby="home-help-ai-title"
+                    aria-describedby="home-help-ai-subtitle"
+                    aria-modal="true"
+                    class="help-ai-dialog-panel flex w-full max-w-md flex-col overflow-hidden rounded-2xl border border-neutral-200/90 bg-background-light shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] ring-1 ring-black/[0.08] dark:border-neutral-700 dark:bg-neutral-950 dark:ring-white/10"
+                >
+                    <div
+                        class="border-b border-neutral-200 bg-gradient-to-b from-neutral-50 to-neutral-50/30 px-4 py-3.5 dark:border-neutral-800 dark:from-neutral-900/80 dark:to-neutral-950/30 sm:px-5"
+                    >
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex min-w-0 gap-3">
+                                <div
+                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-neutral-800 text-white shadow-md dark:from-neutral-100 dark:to-neutral-300 dark:text-primary"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[22px]"
+                                        aria-hidden="true"
+                                        >smart_toy</span
+                                    >
+                                </div>
+                                <div class="min-w-0 pt-0.5">
+                                    <h2
+                                        id="home-help-ai-title"
+                                        class="text-base font-bold tracking-tight text-primary dark:text-white"
+                                    >
+                                        Help assistant
+                                    </h2>
+                                    <p
+                                        id="home-help-ai-subtitle"
+                                        class="mt-0.5 text-xs leading-snug text-neutral-500 dark:text-neutral-400"
+                                    >
+                                        Ask about OpenInterview using the
+                                        handbook.
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                id="home-help-ai-close"
+                                class="shrink-0 rounded-xl p-2 text-neutral-500 transition-colors hover:bg-neutral-200/90 dark:hover:bg-neutral-800 dark:hover:text-white"
+                                aria-label="Close"
+                            >
+                                <span
+                                    class="material-symbols-outlined"
+                                    aria-hidden="true"
+                                    >close</span
+                                >
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        id="home-help-ai-thread-wrap"
+                        class="help-ai-thread-area relative flex min-h-[180px] flex-1 flex-col"
+                    >
+                        <div
+                            id="home-help-ai-empty"
+                            class="flex flex-1 flex-col items-center justify-center gap-2 px-5 py-8 text-center"
+                        >
+                            <span
+                                class="material-symbols-outlined text-4xl text-neutral-300 dark:text-neutral-600"
+                                aria-hidden="true"
+                                >chat_bubble</span
+                            >
+                            <p
+                                class="max-w-sm text-sm text-neutral-500 dark:text-neutral-400"
+                            >
+                                Questions about dashboards, profiles, or
+                                sharing? Type below.
+                            </p>
+                        </div>
+                        <div
+                            id="home-help-ai-thread"
+                            class="hidden max-h-[min(38vh,300px)] min-h-[120px] space-y-4 overflow-y-auto px-4 py-3 text-sm"
+                        ></div>
+                    </div>
+                    <p
+                        id="home-help-ai-error"
+                        class="hidden border-t border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300"
+                    ></p>
+                    <form
+                        id="home-help-ai-form"
+                        class="border-t border-neutral-200 bg-gradient-to-t from-neutral-50/50 to-background-light p-3 dark:border-neutral-800 dark:from-neutral-950 dark:to-neutral-950 sm:p-4"
+                    >
+                        <label
+                            class="mb-1 block text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400"
+                            for="home-help-ai-input"
+                            >Message</label
+                        >
+                        <textarea
+                            id="home-help-ai-input"
+                            rows="2"
+                            placeholder="Type your question…"
+                            class="mb-2 w-full resize-y rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
+                        ></textarea>
+                        <div class="flex justify-end gap-2">
+                            <button
+                                type="button"
+                                id="home-help-ai-cancel"
+                                class="rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-medium text-neutral-700 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-200"
+                            >
+                                Close
+                            </button>
+                            <button
+                                type="submit"
+                                id="home-help-ai-send"
+                                class="inline-flex min-w-[4.5rem] items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:opacity-95 disabled:opacity-45"
+                            >
+                                <span id="home-help-ai-send-label">Send</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initHelpAiChat } from "/js/help-ai-chat.js";
+            const fab = document.getElementById("home-help-ai-fab");
+            initHelpAiChat({
+                idPrefix: "home-",
+                placement: "fab",
+                fabButton: fab || undefined,
+            });
+        </script>
+        <script type="module" src="/js/header.avatar.bind.js"></script>
+    
+    </body>
+</html>

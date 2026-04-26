@@ -1,0 +1,7 @@
+{
+  "enableEmails": true,
+  "enablePayments": false,
+  "enableCloudStorage": false,
+  "enableSupabase": false,
+  "enableVideoPipeline": false
+}
