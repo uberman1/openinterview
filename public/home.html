@@ -1987,6 +1987,101 @@
                                 </div>
                             </section>
 
+                            <!-- From Our Users Section -->
+                            <section class="w-full bg-[#f5f5f5] dark:bg-neutral-950 py-12 md:py-20" aria-label="From our users">
+                                <style>
+                                    @keyframes marquee-scroll {
+                                        0%   { transform: translateX(0); }
+                                        100% { transform: translateX(-50%); }
+                                    }
+                                    .marquee-track {
+                                        display: flex;
+                                        width: max-content;
+                                        animation: marquee-scroll 28s linear infinite;
+                                    }
+                                    .marquee-track:hover { animation-play-state: paused; }
+                                    .marquee-wrapper { overflow: hidden; }
+                                </style>
+                                <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+
+                                    <!-- Heading -->
+                                    <h2 class="text-3xl md:text-5xl font-black tracking-tight text-[#141414] dark:text-white text-center mb-10 md:mb-14">
+                                        from our users...
+                                    </h2>
+
+                                    <!-- Two-column layout -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
+
+                                        <!-- Left: 120-second video card -->
+                                        <div class="flex flex-col">
+                                            <div class="relative rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-[0_4px_24px_rgba(0,0,0,0.10)] bg-white dark:bg-neutral-900 group cursor-pointer" id="video-card-120">
+                                                <!-- Thumbnail overlay -->
+                                                <div id="video-thumb-120" class="relative">
+                                                    <img
+                                                        src="/thumbnail-120sec.png"
+                                                        alt="Created my first openinterview in 120 seconds – a short film"
+                                                        class="w-full h-auto block"
+                                                    />
+                                                    <!-- Play button -->
+                                                    <div class="absolute inset-0 flex items-center justify-center">
+                                                        <div class="w-16 h-16 rounded-full bg-black/70 flex items-center justify-center shadow-lg group-hover:bg-black/90 transition-colors">
+                                                            <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M8 5v14l11-7z"/>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Video (hidden until play clicked) -->
+                                                <video
+                                                    id="video-120"
+                                                    class="w-full h-auto hidden"
+                                                    controls
+                                                    preload="none"
+                                                    src="/120sec.mp4"
+                                                ></video>
+                                            </div>
+                                            <script>
+                                                (function() {
+                                                    var card = document.getElementById("video-card-120");
+                                                    var thumb = document.getElementById("video-thumb-120");
+                                                    var video = document.getElementById("video-120");
+                                                    if (card && thumb && video) {
+                                                        thumb.addEventListener("click", function() {
+                                                            thumb.style.display = "none";
+                                                            video.classList.remove("hidden");
+                                                            video.play();
+                                                        });
+                                                    }
+                                                })();
+                                            </script>
+                                        </div>
+
+                                        <!-- Right: profile carousel -->
+                                        <div class="flex flex-col justify-start">
+                                            <div class="marquee-wrapper rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
+                                                <div class="marquee-track">
+                                                    <!-- First set -->
+                                                    <img src="/profile-duaa.png"     alt="Duaa Azhar openinterview profile"    class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-wei.png"      alt="Wei Yu openinterview profile"        class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-praveena.png" alt="Praveena openinterview profile"      class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-peter.png"    alt="Peter Foster openinterview profile"  class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-michael.png"  alt="Michael Johnson openinterview profile" class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-sarah.png"    alt="Sarah L openinterview profile"       class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <!-- Duplicate set for seamless loop -->
+                                                    <img src="/profile-duaa.png"     alt="Duaa Azhar openinterview profile"    class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-wei.png"      alt="Wei Yu openinterview profile"        class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-praveena.png" alt="Praveena openinterview profile"      class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-peter.png"    alt="Peter Foster openinterview profile"  class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-michael.png"  alt="Michael Johnson openinterview profile" class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                    <img src="/profile-sarah.png"    alt="Sarah L openinterview profile"       class="h-[360px] w-auto object-cover flex-shrink-0 rounded-xl mx-1 shadow-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+
                             <!-- CTA Section -->
                             <section
                                 class="w-full bg-white dark:bg-neutral-900 py-6"
