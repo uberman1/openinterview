@@ -17,7 +17,7 @@ let helpSearchMatches = [];
 let helpSearchMatchIndex = 0;
 
 /** Loaded from /js/help-center/screenshot-map.json — maps `pageSlug/sectionId` → image filenames */
-let screenshotMapData = { baseUrl: '/assets_crousel/helping_docs/screenshots/', bySection: {} };
+let screenshotMapData = { baseUrl: 'https://res.cloudinary.com/dwlencbgv/image/upload/openinterview/static/screenshots/', bySection: {} };
 
 function escapeHtml(s) {
   return String(s)
@@ -58,7 +58,7 @@ function renderScreenshotsBlock(pageSlug, sectionId) {
   const key = `${pageSlug}/${sectionId}`;
   const list = screenshotMapData.bySection?.[key];
   if (!Array.isArray(list) || !list.length) return '';
-  const base = (screenshotMapData.baseUrl || '/assets_crousel/helping_docs/screenshots/').replace(/\/?$/, '/');
+  const base = (screenshotMapData.baseUrl || 'https://res.cloudinary.com/dwlencbgv/image/upload/openinterview/static/screenshots/').replace(/\/?$/, '/');
   const figures = list
     .map((fn) => {
       const name = String(fn).trim();

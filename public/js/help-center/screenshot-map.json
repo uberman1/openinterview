@@ -1,5 +1,5 @@
 {
-  "baseUrl": "/assets_crousel/helping_docs/screenshots/",
+  "baseUrl": "https://res.cloudinary.com/dwlencbgv/image/upload/openinterview/static/screenshots/",
   "bySection": {
     "edit-profile/identity-media": [
       "profile_photo.png",
