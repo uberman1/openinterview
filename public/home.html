@@ -2174,7 +2174,7 @@
                                                     <span class="from-users-kicker">Profile film</span>
                                                     <span class="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">Auto preview</span>
                                                 </div>
-                                                <div class="from-users-premium-card from-users-media-card group" id="video-card-120">
+                                                <div class="from-users-premium-card from-users-media-card group" id="video-card-120" style="position:relative;cursor:pointer;">
                                                     <video
                                                         id="video-120"
                                                         class="from-users-video"
@@ -2193,6 +2193,21 @@
                                                         />
                                                         Your browser does not support the video tag.
                                                     </video>
+                                                    <!-- Play button overlay -->
+                                                    <div id="play-overlay-120" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5;">
+                                                        <div style="width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,0.72);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,0.28);transition:transform 0.15s ease,opacity 0.15s ease;">
+                                                            <svg width="26" height="26" viewBox="0 0 24 24" fill="white" style="margin-left:3px;"><polygon points="5,3 19,12 5,21"/></svg>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        (function() {
+                                                            var v = document.getElementById('video-120');
+                                                            var o = document.getElementById('play-overlay-120');
+                                                            if (!v || !o) return;
+                                                            v.addEventListener('play', function() { o.style.opacity = '0'; o.style.pointerEvents = 'none'; });
+                                                            v.addEventListener('pause', function() { o.style.opacity = '1'; });
+                                                        })();
+                                                    </script>
                                                 </div>
                                             </div>
 
