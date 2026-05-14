@@ -2178,7 +2178,6 @@
                                                     <video
                                                         id="video-120"
                                                         class="from-users-video"
-                                                        autoplay
                                                         muted
                                                         loop
                                                         playsinline
@@ -2186,6 +2185,7 @@
                                                         poster="/thumbnail-120sec.png"
                                                         aria-label="Created my first openinterview in 120 seconds"
                                                         disablepictureinpicture
+                                                        controls
                                                     >
                                                         <source
                                                             src="https://res.cloudinary.com/dwlencbgv/video/upload/v1777327726/120sec.mp4"
@@ -2193,30 +2193,7 @@
                                                         />
                                                         Your browser does not support the video tag.
                                                     </video>
-                                                    <div class="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
-                                                        <div class="inline-flex rounded-full border border-white/20 bg-black/35 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/90 backdrop-blur-md">
-                                                            120 second profile
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                                <script>
-                                                    (function() {
-                                                        var video = document.getElementById("video-120");
-                                                        if (video) {
-                                                            var playVideo = function() {
-                                                                video.muted = true;
-                                                                video.defaultMuted = true;
-                                                                video.playsInline = true;
-                                                                var playPromise = video.play();
-                                                                if (playPromise && typeof playPromise.catch === "function") {
-                                                                    playPromise.catch(function() {});
-                                                                }
-                                                            };
-                                                            playVideo();
-                                                            video.addEventListener("canplay", playVideo);
-                                                        }
-                                                    })();
-                                                </script>
                                             </div>
 
                                             <!-- Vertical divider (desktop only) -->
