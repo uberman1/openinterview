@@ -1,0 +1,8 @@
+*** a/public/js/home-bindings.js
+--- b/public/js/home-bindings.js
+***************
+*** 45,52 ****
+-   window.location.href = `/profile_edit.html?id=${encodeURIComponent(p.id)}`;
++   // New flow: land on template preview (dummy) before enhanced editor
++   window.location.href = `/profile/${encodeURIComponent(p.id)}/template?templateId=default`;
+---

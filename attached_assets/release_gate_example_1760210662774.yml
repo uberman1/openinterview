@@ -1,0 +1,52 @@
+name: Release Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  qa-release-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r release_gate/requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: (Optional) Configure API-mode readiness
+        env:
+          HOME_API: ${{ secrets.HOME_API }}
+          HEALTH_URL: ${{ secrets.HEALTH_URL }}
+          OI_BASE_URL: ${{ secrets.OI_BASE_URL }}
+        run: |
+          echo "HOME_API=${HOME_API:-0}"
+          echo "HEALTH_URL=${HEALTH_URL:-unset}"
+          echo "OI_BASE_URL=${OI_BASE_URL:-http://127.0.0.1:8000}"
+
+      - name: Run release gate
+        env:
+          HOME_API: ${{ secrets.HOME_API }}
+          HEALTH_URL: ${{ secrets.HEALTH_URL }}
+          OI_BASE_URL: ${{ secrets.OI_BASE_URL }}
+        run: |
+          PYTHONPATH=. python release_gate/run_all.py
+
+      - name: Upload QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-artifacts
+          path: |
+            qa/**/*
+            public/test2.html

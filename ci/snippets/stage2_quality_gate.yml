@@ -1,0 +1,76 @@
+name: Stage 2 Quality Gate - Guardrails
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  guardrails-verification:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+      
+      - name: Verify Guardrails
+        run: |
+          python stage2/verify_guardrails.py
+      
+      - name: Upload verification results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-guardrails-results
+          path: |
+            qa/stage2/verification_results.json
+            qa/stage2/gate_results.json
+          retention-days: 30
+      
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const results = JSON.parse(fs.readFileSync('qa/stage2/verification_results.json', 'utf8'));
+            
+            let comment = '## ❌ Stage 2 Guardrails Failed\\n\\n';
+            comment += `**Status:** ${results.status}\\n`;
+            comment += `**Total files:** ${results.total}\\n`;
+            comment += `**Passed:** ${results.passed}\\n`;
+            comment += `**Violations:** ${results.violations}\\n`;
+            comment += `**Missing:** ${results.missing}\\n\\n`;
+            
+            if (results.details.violations.length > 0) {
+              comment += '### Modified Files\\n';
+              results.details.violations.forEach(v => {
+                comment += `- ❌ \`${v.file}\`\\n`;
+              });
+            }
+            
+            if (results.details.missing.length > 0) {
+              comment += '\\n### Missing Files\\n';
+              results.details.missing.forEach(m => {
+                comment += `- ❌ \`${m}\`\\n`;
+              });
+            }
+            
+            comment += '\\n**Action required:** Restore protected files or update baselines with \`python stage2/lock_baselines.py\`';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

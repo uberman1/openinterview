@@ -1,0 +1,100 @@
+AVAILABILITY PATCH - ERRORS ENCOUNTERED AND RESOLUTIONS
+========================================================
+
+Date: October 6, 2025
+Status: All tests passing (11 guardrails + 5 DOM + 6 API = 22/22 ✓)
+
+ERRORS ENCOUNTERED:
+-------------------
+
+1. ERROR: db.availability.find is not a function
+   CAUSE: seed.json had availability as an object instead of array
+   RESOLUTION: Changed seed.json structure from object to array
+   
+   Before: "availability": { "u1": { weekly: {...} } }
+   After:  "availability": []
+
+2. ERROR: Duplicate API endpoints causing conflicts
+   CAUSE: Old availability endpoints existed (object-based storage)
+         New patch endpoints used array-based storage
+   RESOLUTION: Removed old duplicate endpoints that used object syntax:
+   - Deleted: db.availability[userId] pattern
+   - Kept: db.availability.find(a=>a.userId===userId) pattern
+
+3. ERROR: API endpoints not registered (404 errors)
+   CAUSE: Patch script appended endpoints AFTER "export default app" statement
+         Routes must be registered BEFORE export to be active
+   RESOLUTION: Moved all availability endpoints before export statement
+   
+   Correct order:
+   1. Helper functions (toMin, fromMin, addMinutes)
+   2. GET /api/availability
+   3. POST /api/availability  
+   4. GET /api/slots
+   5. export default app
+
+4. ERROR: daysOut calculation returns NaN
+   CAUSE: Line 117 in patch used invalid date construction:
+         new Date(today.toDateString()+"T00:00:00Z") = Invalid Date
+   RESOLUTION: Fixed date calculation using UTC methods:
+   
+   Before:
+   const daysOut = Math.floor((new Date(date+"T00:00:00Z") - 
+                   new Date(today.toDateString()+"T00:00:00Z"))/86400000);
+   
+   After:
+   const todayMidnight = new Date(Date.UTC(today.getUTCFullYear(), 
+                         today.getUTCMonth(), today.getUTCDate()));
+   const targetMidnight = new Date(date+"T00:00:00Z");
+   const daysOut = Math.floor((targetMidnight - todayMidnight) / 86400000);
+
+5. ERROR: expected.sha256.json missing new file checksums
+   CAUSE: New files (availability.js) not added to guardrails
+   RESOLUTION: Updated expected.sha256.json with new checksums:
+   - public/availability.html: 1ae1a75c...
+   - public/js/availability.js: 2b3822824...
+
+RECOMMENDATIONS FOR FUTURE PATCHES:
+-----------------------------------
+
+1. ROUTE REGISTRATION ORDER
+   - Always add routes BEFORE "export default app" statement
+   - Check route registration order during patch review
+   - Use grep to verify no routes exist after export
+
+2. DATA STRUCTURE CONSISTENCY
+   - Verify seed.json structure matches API expectations
+   - Document data format (array vs object) in patch notes
+   - Test with empty/fresh database state
+
+3. DATE HANDLING
+   - Use UTC methods for date calculations to avoid timezone issues
+   - Test date arithmetic with explicit UTC construction
+   - Avoid string concatenation for date creation
+
+4. PATCH SCRIPT IMPROVEMENTS
+   - Add validation to check for "export default" location
+   - Insert routes at specific marker comment instead of append
+   - Include automated route ordering verification
+
+5. TESTING WORKFLOW
+   - Run all three selftests (guardrails, DOM, API) before completion
+   - Verify checksum updates for all modified/new files
+   - Test with server restart between changes
+
+FINAL STATUS:
+-------------
+✓ 11 guardrails checksums verified
+✓ 5 DOM structure tests passing  
+✓ 6 API functionality tests passing
+✓ Availability page live at /availability.html
+✓ All endpoints functioning correctly
+
+VERIFIED FUNCTIONALITY:
+-----------------------
+- Weekly hours configuration with 7-day grid
+- Rules management (notice period, window, increments, buffers)
+- Exception/override date management
+- Slot generation with proper filtering
+- Preview and troubleshooting tools
+- Tailwind-based responsive UI

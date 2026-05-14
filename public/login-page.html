@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Sign In - OpenInterview.me</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-neutral-50 min-h-screen flex items-center justify-center p-4">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
+  <main id="main-content" class="w-full max-w-md" aria-label="Sign in">
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <a href="/home.html" class="inline-flex items-center gap-2">
+        <div class="h-12 w-auto">
+          <img src="/defaults/logo_1.png" alt="OpenInterview Logo" class="h-full w-auto object-contain">
+        </div>
+      </a>
+    </div>
+    
+    <!-- Card -->
+    <div class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-6 sm:p-8">
+      <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold" id="form-title">Sign In</h1>
+        <p class="text-neutral-600 dark:text-neutral-400 mt-2" id="form-subtitle">Welcome back! Sign in to continue.</p>
+      </div>
+      
+      <!-- Google Sign In -->
+      <button type="button" id="google-btn" onclick="window.location.href='/auth/google'"
+        class="cursor-pointer w-full flex items-center justify-center gap-3 h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white font-medium hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors mb-4">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+      
+      <!-- Divider -->
+      <div class="relative my-6" role="separator" aria-label="or continue with email">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+          <div class="w-full border-t border-neutral-300 dark:border-neutral-600"></div>
+        </div>
+        <div class="relative flex justify-center text-sm" aria-hidden="true">
+          <span class="px-4 bg-white dark:bg-neutral-800 text-neutral-500">or continue with email</span>
+        </div>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="auth-form" class="space-y-4" aria-label="Authentication form">
+        <div id="name-field" class="hidden">
+          <label for="input-name" class="block text-sm font-medium mb-1">Name</label>
+          <input type="text" id="input-name" name="name" autocomplete="name"
+            class="w-full h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            placeholder="Your name">
+        </div>
+        
+        <div>
+          <label for="input-email" class="block text-sm font-medium mb-1">Email</label>
+          <input type="email" id="input-email" name="email" required autocomplete="email"
+            class="w-full h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            placeholder="you@example.com">
+        </div>
+        
+        <div>
+          <label for="input-password" class="block text-sm font-medium mb-1">Password</label>
+          <input type="password" id="input-password" name="password" required minlength="6" autocomplete="current-password"
+            class="w-full h-12 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-primary dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            placeholder="••••••••">
+        </div>
+        
+        <!-- Error Message -->
+        <div id="error-message" class="hidden text-red-600 text-sm text-center py-2" role="alert" aria-live="polite"></div>
+        
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn"
+          class="cursor-pointer w-full h-12 bg-primary text-white font-bold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50">
+          Sign In
+        </button>
+      </form>
+      
+      <!-- Toggle -->
+      <div class="mt-6 text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          <span id="toggle-text">Don't have an account?</span>
+          <button type="button" id="toggle-btn" class="cursor-pointer text-primary dark:text-white font-medium hover:underline ml-1">Sign up</button>
+        </p>
+      </div>
+    </div>
+    
+    <!-- Back to home -->
+    <div class="text-center mt-6">
+      <a href="/" class="text-neutral-500 hover:text-primary dark:hover:text-white text-sm">← Back to home</a>
+    </div>
+  </main>
+  
+  <script>
+    const form = document.getElementById('auth-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const toggleBtn = document.getElementById('toggle-btn');
+    const toggleText = document.getElementById('toggle-text');
+    const formTitle = document.getElementById('form-title');
+    const formSubtitle = document.getElementById('form-subtitle');
+    const nameField = document.getElementById('name-field');
+    const errorMessage = document.getElementById('error-message');
+    
+    let isSignup = false;
+    
+    // Check for error in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error')) {
+      errorMessage.textContent = 'Authentication failed. Please try again.';
+      errorMessage.classList.remove('hidden');
+    }
+
+    // Reset button state on page show (e.g. from bfcache)
+    window.addEventListener('pageshow', (event) => {
+        // Always reset state on page show, regardless of persistence, 
+        // to ensure clean state if user navigates back
+        submitBtn.disabled = false;
+        
+        // Restore correct text based on current mode
+        if (isSignup) {
+            submitBtn.textContent = 'Sign Up';
+        } else {
+            submitBtn.textContent = 'Sign In';
+        }
+        
+        // Re-enable other controls
+        const googleBtn = document.getElementById('google-btn');
+        if (googleBtn) {
+            googleBtn.classList.remove('pointer-events-none', 'opacity-50');
+        }
+        toggleBtn.disabled = false;
+        
+        // Reset toggle button container if we modified it (though we modify the button directly)
+        toggleBtn.classList.remove('pointer-events-none', 'opacity-50');
+    });
+    
+    // Toggle between login and signup
+    toggleBtn.addEventListener('click', () => {
+      isSignup = !isSignup;
+      
+      if (isSignup) {
+        formTitle.textContent = 'Create Account';
+        formSubtitle.textContent = 'Sign up to get started.';
+        submitBtn.textContent = 'Sign Up';
+        toggleText.textContent = 'Already have an account?';
+        toggleBtn.textContent = 'Sign in';
+        nameField.classList.remove('hidden');
+      } else {
+        formTitle.textContent = 'Sign In';
+        formSubtitle.textContent = 'Welcome back! Sign in to continue.';
+        submitBtn.textContent = 'Sign In';
+        toggleText.textContent = "Don't have an account?";
+        toggleBtn.textContent = 'Sign up';
+        nameField.classList.add('hidden');
+      }
+      
+      errorMessage.classList.add('hidden');
+    });
+    
+    // Form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      const name = form.name?.value?.trim();
+      
+      errorMessage.classList.add('hidden');
+      submitBtn.disabled = true;
+      submitBtn.textContent = isSignup ? 'Creating account...' : 'Signing in...';
+      
+      // Disable other controls
+      const googleBtn = document.getElementById('google-btn');
+      if (googleBtn) {
+          googleBtn.classList.add('pointer-events-none', 'opacity-50');
+      }
+      
+      // Disable toggle button completely
+      toggleBtn.disabled = true;
+      toggleBtn.classList.add('pointer-events-none', 'opacity-50');
+      
+      try {
+        const endpoint = isSignup ? '/auth/signup' : '/auth/login';
+        const returnTo = urlParams.get('returnTo');
+        const action = urlParams.get('action');
+        const body = isSignup ? { email, password, name, returnTo, action } : { email, password, returnTo, action };
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(body)
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Authentication failed');
+        }
+        
+        // Success - redirect
+        console.log('🔥 [LOGIN-DEBUG] Login successful!');
+        console.log('🔥 [LOGIN-DEBUG] returnTo:', returnTo);
+        console.log('🔥 [LOGIN-DEBUG] action:', action);
+        console.log('🔥 [LOGIN-DEBUG] Current URL:', window.location.href);
+        
+        if (returnTo) {
+          console.log('🔥 [LOGIN-DEBUG] Redirecting to returnTo:', returnTo);
+          window.location.href = returnTo;
+        } else if (isSignup) {
+          // New users go to dashboard
+          console.log('🔥 [LOGIN-DEBUG] New user, redirecting to dashboard');
+          window.location.href = '/dashboard.html';
+        } else {
+          // Existing users go to dashboard
+          console.log('🔥 [LOGIN-DEBUG] Existing user, redirecting to dashboard');
+          window.location.href = '/dashboard.html';
+        }
+        
+      } catch (error) {
+        errorMessage.textContent = error.message;
+        errorMessage.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = isSignup ? 'Sign Up' : 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>

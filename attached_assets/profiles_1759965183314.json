@@ -1,0 +1,175 @@
+[
+  {
+    "id": "alex-johnson",
+    "name": "Alex Johnson",
+    "title": "Product Manager",
+    "location": "Atlanta, GA",
+    "avatar": "",
+    "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "about": "Product leader focused on 0\u21921 launches, growth loops, and AI\u2011assisted workflows.",
+    "highlights": [
+      "Launched 3 products to $100k+ ARR",
+      "Cut onboarding time by 45% with AI automations",
+      "Led cross\u2011functional teams of 8\u201312"
+    ],
+    "skills": [
+      "Product Strategy",
+      "User Research",
+      "A/B Testing",
+      "SQL",
+      "Prompt Engineering"
+    ],
+    "links": [
+      {
+        "label": "OpenInterview",
+        "href": "#"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/"
+      },
+      {
+        "label": "Portfolio",
+        "href": "#"
+      }
+    ],
+    "resume_url": "#",
+    "experience": [
+      {
+        "role": "Senior PM",
+        "company": "Acme Co",
+        "dates": "2022\u2013Present",
+        "summary": "Own growth strategy and roadmap across 3 product lines."
+      },
+      {
+        "role": "PM",
+        "company": "Startly",
+        "dates": "2019\u20132022",
+        "summary": "Scaled self\u2011serve funnel and pricing experiments."
+      }
+    ],
+    "availability": {
+      "timezone": "America/New_York",
+      "slots": [
+        "Mon 2\u20134 PM",
+        "Tue 10\u201312 AM",
+        "Thu 1\u20133 PM"
+      ]
+    }
+  },
+  {
+    "id": "taylor-rivera",
+    "name": "Taylor Rivera",
+    "title": "Full\u2011Stack Engineer",
+    "location": "New York, NY",
+    "avatar": "",
+    "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "about": "Engineer specializing in TypeScript, React, and serverless backends with pragmatic DX.",
+    "highlights": [
+      "99.95% uptime on serverless APIs",
+      "Built internal design\u2011system with 40+ components",
+      "Drove Core Web Vitals to all\u2011green"
+    ],
+    "skills": [
+      "TypeScript",
+      "React",
+      "Node",
+      "Postgres",
+      "Supabase",
+      "TailwindCSS"
+    ],
+    "links": [
+      {
+        "label": "OpenInterview",
+        "href": "#"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/"
+      },
+      {
+        "label": "Website",
+        "href": "#"
+      }
+    ],
+    "resume_url": "#",
+    "experience": [
+      {
+        "role": "Senior Engineer",
+        "company": "Nimbus",
+        "dates": "2021\u2013Present",
+        "summary": "Own end\u2011to\u2011end feature delivery in a small platform team."
+      },
+      {
+        "role": "Engineer",
+        "company": "Foxtrot",
+        "dates": "2018\u20132021",
+        "summary": "Built growth experiments and internal tooling."
+      }
+    ],
+    "availability": {
+      "timezone": "America/New_York",
+      "slots": [
+        "Wed 9\u201311 AM",
+        "Thu 3\u20135 PM"
+      ]
+    }
+  },
+  {
+    "id": "priya-singh",
+    "name": "Priya Singh",
+    "title": "Data Analyst",
+    "location": "Austin, TX",
+    "avatar": "",
+    "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "about": "Analyst focused on product analytics, cohort models, and revenue attribution.",
+    "highlights": [
+      "Built pCM90 forecast improving accuracy by 12%",
+      "Designed self\u2011serve dashboards used by 50+ stakeholders",
+      "Owner: experimentation taxonomy & guardrails"
+    ],
+    "skills": [
+      "SQL",
+      "Python",
+      "Tableau",
+      "Experimentation",
+      "Statistics"
+    ],
+    "links": [
+      {
+        "label": "OpenInterview",
+        "href": "#"
+      },
+      {
+        "label": "Kaggle",
+        "href": "https://www.kaggle.com/"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/"
+      }
+    ],
+    "resume_url": "#",
+    "experience": [
+      {
+        "role": "Senior Analyst",
+        "company": "Orbit",
+        "dates": "2020\u2013Present",
+        "summary": "Built analytics layer for subscription product."
+      },
+      {
+        "role": "Analyst",
+        "company": "DataCo",
+        "dates": "2017\u20132020",
+        "summary": "Partnered with PMs to guide roadmap via insights."
+      }
+    ],
+    "availability": {
+      "timezone": "America/New_York",
+      "slots": [
+        "Tue 1\u20134 PM",
+        "Fri 10\u201312 AM"
+      ]
+    }
+  }
+]

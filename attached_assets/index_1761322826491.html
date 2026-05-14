@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+  <link rel="stylesheet" href="/css/tailwind.css"/>
+<!-- PDF.js CDN -->
+
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  #resumeCanvas { width: 100%; height: 100%; display: block; }
+  .visually-hidden { position: absolute; left: -9999px; }
+  #toast { position: fixed; inset-inline: 0; top: 1rem; margin-inline: auto; max-width: 28rem; z-index: 50; display: none; }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark" data-profile-version="4.1">
+
+<!-- Template Topbar: Edit / Save & Publish / Share -->
+<div class="sticky top-0 z-40 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur border-b border-subtle-light dark:border-subtle-dark">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <div class="text-sm text-muted-light dark:text-muted-dark">
+      <span class="font-medium">Profile</span>
+      <span class="mx-2 opacity-50">•</span>
+      <span id="tplProfileStatus" class="uppercase tracking-wide text-xs">DRAFT</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="btnTplEdit" data-testid="button-template-edit" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Edit</button>
+      <button id="btnTplPublish" data-testid="button-template-publish" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Save &amp; Publish</button>
+      <button id="btnTplShare" data-testid="button-template-share" class="h-10 px-4 rounded-lg border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark text-sm font-semibold">Share</button>
+    </div>
+  </div>
+</div>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+<div class="lg:grid lg:grid-cols-12 lg:gap-16">
+<main class="lg:col-span-8 space-y-12">
+<div>
+<!-- REGION:HEADER_VIDEO_BLOCK_START -->
+<div class="relative aspect-video w-full">
+  <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk");'></div>
+  <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+    <button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110" aria-label="Play video">
+      <svg class="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6.3 20.3V3.7L20.3 12L6.3 20.3Z"></path></svg>
+    </button>
+  </div>
+  <div class="absolute bottom-0 left-0 p-6 text-white">
+    <h1 class="text-3xl font-bold">Ethan Carter</h1>
+    <p class="text-lg text-white/80">Senior Product Designer</p>
+  </div>
+</div>
+<!-- REGION:HEADER_VIDEO_BLOCK_END -->
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<section>
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Attachments</h2>
+<!-- REGION:ATTACHMENTS_SECTION_START -->
+<div class="space-y-4">
+  <a class="flex items-center justify-between p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors attachment-link" href="#" data-file-url="/files/resume.pdf" data-file-name="Ethan-Carter-Resume.pdf">
+    <span class="font-medium">Resume</span>
+    <svg class="h-6 w-6 text-muted-light dark:text-muted-dark" fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </a>
+  <a class="flex items-center justify-between p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors attachment-link" href="#" data-file-url="/files/portfolio.pdf" data-file-name="Ethan-Carter-Portfolio.pdf">
+    <span class="font-medium">Portfolio</span>
+    <svg class="h-6 w-6 text-muted-light dark:text-muted-dark" fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </a>
+  <a class="flex items-center justify-between p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors attachment-link" href="#" data-file-url="/files/linkedin-export.pdf" data-file-name="Ethan-Carter-LinkedIn.pdf">
+    <span class="font-medium">LinkedIn</span>
+    <svg class="h-6 w-6 text-muted-light dark:text-muted-dark" fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </a>
+</div>
+<!-- REGION:ATTACHMENTS_SECTION_END -->
+</section>
+
+<section>
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Highlights</h2>
+<ul class="space-y-4">
+<li class="flex items-start"><span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark">5+ years of experience in product design</p></li>
+<li class="flex items-start"><span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark">Strong portfolio showcasing user-centered design</p></li>
+<li class="flex items-start"><span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark">Excellent communication and collaboration skills</p></li>
+</ul>
+</section>
+</div>
+
+<section class="space-y-6">
+<h2 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Resume</h2>
+<!-- REGION:RESUME_SECTION_START -->
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg overflow-hidden" id="resumeSection" data-resume-url="/files/resume.pdf">
+<div class="bg-background-light dark:bg-subtle-dark p-4 sm:p-6">
+<div class="aspect-[8.5/11] bg-white dark:bg-background-dark shadow-md rounded-md p-0 text-foreground-light dark:text-foreground-dark flex items-stretch justify-stretch">
+  <canvas id="resumeCanvas" class="rounded-md"></canvas>
+</div>
+</div>
+<div class="flex items-center justify-center p-4 bg-background-light dark:bg-subtle-dark border-t border-subtle-light dark:border-subtle-dark">
+<div class="flex items-center space-x-4">
+<button id="prevPageBtn" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-primary/50 disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Previous page" disabled>
+  <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<span id="pageIndicator" class="text-sm font-medium text-muted-light dark:text-muted-dark">Page 1</span>
+<button id="nextPageBtn" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-primary/50 disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Next page" disabled>
+  <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<!-- REGION:RESUME_SECTION_END -->
+</section>
+</main>
+
+<aside class="lg:col-span-4 mt-12 lg:mt-0">
+<div class="sticky top-12 space-y-12">
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+<div class="text-center space-y-4">
+<img alt="Ethan Carter" class="w-24 h-24 rounded-full mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOyBBUWv-aZFP72bm6P1T0ooUqEElaCh-Z96b7war0IQSiII9PCL1cbQ3i46GqnnWPy4YZtRhZ8FfYw8hdnctP4i1UtYTsDYv8cqwt99zRPuo-o0W4JsZ6LYMBJxzjLzZmN94uXVV8j3h5eatY5GgIacHoEHFgW16iTY1_ddWTvBf8uRGO0-5FbIqgtP1XbJZJ-IgkJYlcTkQdKghrCgOQ9uZ9Hm36hxOzOFQWoM4BoLGXCCdnZYsLl12-E-VKce8Z3uml36Ei8c4"/>
+<div>
+<h3 class="text-xl font-bold text-foreground-light dark:text-foreground-dark">Ethan Carter</h3>
+<p class="text-muted-light dark:text-muted-dark">Senior Product Designer</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">San Francisco, CA</p>
+</div>
+</div>
+<p class="text-center text-muted-light dark:text-muted-dark">Experienced product designer with a passion for creating intuitive and impactful user experiences.</p>
+</div>
+
+<!-- REGION:CALENDAR_CARD_START -->
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6" id="bookingCard" data-cal-link="yourteam/jane-intro" data-profile-handle="demo">
+<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book a time</h2>
+
+<!-- Cal.com inline mount point -->
+<div id="calEmbedContainer" class="w-full min-h-[740px]"></div>
+
+<!-- Fallback appears only if Cal fails or no handle/link is set -->
+<div id="bookingFallback" class="mt-4 hidden">
+  <p class="text-sm text-muted-light dark:text-muted-dark mb-2">
+    The scheduler couldn't load. You can still add this to your calendar via .ics.
+  </p>
+  <div class="grid gap-3">
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Choose a date</label>
+    <input type="date" id="fallbackDate" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Choose a time</label>
+    <input type="time" id="fallbackTime" value="09:00" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <label class="text-sm font-medium text-muted-light dark:text-muted-dark">Your email</label>
+    <input type="email" id="fallbackEmail" placeholder="you@example.com" class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2"/>
+    <button id="fallbackConfirm" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors">
+      Download invite (.ics)
+    </button>
+  </div>
+</div>
+</div>
+<!-- REGION:CALENDAR_CARD_END -->
+</div>
+</aside>
+</div>
+</div>
+<footer class="mt-24 pb-12 text-center text-sm text-muted-light dark:text-muted-dark">
+<div class="flex items-center justify-center space-x-4">
+<p>Powered by OpenInterview.me</p>
+<div class="w-16 h-16 p-1 border border-subtle-light dark:border-subtle-dark rounded-lg">
+<div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDB0gLGf771ZSa4HeTQVhxqjiV26vkvloQjJkhObHc037el4R_sXAUDay1PTiHf6QH35fMwpqo4eEBnVan4AQi2aJzvCQ9r4flDOVtWvqxLqrlZijNcaSC3PFnpT_xEQ-SUzEjy3A6i3w3mHrGMupK3JDMuFyu-44Sb9TNz1MzvRDwfueX0Vw5m9xbT8QRS2ZxSmBaKQIHetUZMNQCvDzHeBtBrV2W54NU-8mDOXHllN0ihTBxlA4AeIvNWRO-99uHoxC-Pzqr9vck");'></div>
+</div>
+</div>
+</footer>
+
+<!-- Share Modal -->
+<div id="shareModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/40" data-dismiss="share"></div>
+  <div class="relative mx-4 w-full max-w-md rounded-xl border border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-background-dark p-6">
+    <h3 class="text-lg font-bold mb-2">Share Profile</h3>
+    <p id="shareHint" class="text-sm text-muted-light dark:text-muted-dark mb-4"></p>
+    <div class="flex gap-2 mb-4">
+      <input id="shareUrl" class="flex-1 rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark px-3 py-2" readonly />
+      <button id="btnCopyLink" data-testid="button-copy-link" class="px-3 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Copy</button>
+    </div>
+    <div class="flex gap-2">
+      <button id="btnShareNative" data-testid="button-share-native" class="px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm">Share…</button>
+      <a id="btnShareEmail" data-testid="button-share-email" class="px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm" href="#" target="_blank" rel="noopener">Email</a>
+      <button class="ml-auto px-3 py-2 rounded-lg border border-subtle-light dark:border-subtle-dark text-sm" data-dismiss="share" data-testid="button-close-share">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Functional logic -->
+<script src="./app.js"></script>
+<script type="module" src="/js/nav-patch.js"></script>
+<script type="module" src="/js/redirect-shim.js"></script>
+
+<!-- ✅ Cal.com embed loader (must be before the binder) -->
+<script async src="https://cal.com/embed.js"></script>
+
+<!-- ✅ Our binder (initializes Cal or shows fallback) -->
+<script type="module" src="/js/cal-embed.bind.js"></script>
+
+<script type="module">
+  import { store } from '/js/data-store.js';
+  const params = new URLSearchParams(location.search);
+  const profileId = params.get('id') || (window.__oi?.currentProfileId ?? null);
+
+  (async () => {
+    try {
+      if (!profileId) return;
+      const prof = store.getProfile({id: profileId});
+      const el = document.getElementById('tplProfileStatus');
+      if (el && prof?.status) el.textContent = String(prof.status).toUpperCase();
+    } catch {}
+  })();
+
+  document.getElementById('btnTplEdit')?.addEventListener('click', () => {
+    const to = profileId ? `/profile_edit_enhanced.html?id=${encodeURIComponent(profileId)}` : '/profile_edit_enhanced.html';
+    location.assign(to);
+  });
+
+  document.getElementById('btnTplPublish')?.addEventListener('click', async () => {
+    if (!profileId) return console.warn('[publish] missing profileId');
+    try {
+      store.publishProfile(profileId);
+      const el = document.getElementById('tplProfileStatus');
+      if (el) el.textContent = 'LIVE';
+      if (window.toast) window.toast('Profile published and shareable.', 'success');
+    } catch (e) {
+      console.error('[publish] failed', e);
+      if (window.toast) window.toast('Failed to publish. Please try again.', 'error');
+    }
+  });
+
+  const shareBtn = document.getElementById('btnTplShare');
+  const shareModal = document.getElementById('shareModal');
+  const shareUrlInput = document.getElementById('shareUrl');
+  const shareHint = document.getElementById('shareHint');
+  const copyBtn = document.getElementById('btnCopyLink');
+  const nativeBtn = document.getElementById('btnShareNative');
+  const emailBtn = document.getElementById('btnShareEmail');
+
+  const buildShareUrl = async () => {
+    let url = new URL(location.href);
+    if (profileId) url.searchParams.set('id', profileId);
+    try {
+      const prof = profileId ? store.getProfile({id: profileId}) : null;
+      const isLive = String(prof?.status || '').toLowerCase() === 'live';
+      shareHint.textContent = isLive
+        ? 'Anyone with this link can view your profile.'
+        : 'This profile is not published. Click "Save & Publish" to make the link public.';
+    } catch {
+      shareHint.textContent = 'Share your profile with this link.';
+    }
+    return url.toString();
+  };
+
+  const openShare = async () => {
+    shareUrlInput.value = await buildShareUrl();
+    shareModal.classList.remove('hidden');
+    shareModal.classList.add('flex');
+    shareUrlInput.focus();
+    shareUrlInput.select();
+  };
+
+  shareBtn?.addEventListener('click', openShare);
+  shareModal?.addEventListener('click', (e) => {
+    if (e.target && (e.target.getAttribute('data-dismiss') === 'share')) {
+      shareModal.classList.add('hidden');
+      shareModal.classList.remove('flex');
+    }
+  });
+
+  copyBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrlInput.value);
+      if (window.toast) window.toast('Link copied to clipboard.', 'success');
+    } catch {
+      shareUrlInput.select();
+      document.execCommand('copy');
+    }
+  });
+
+  nativeBtn?.addEventListener('click', async () => {
+    const url = shareUrlInput.value;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'OpenInterview Profile', url }); } catch {}
+    } else {
+      if (window.toast) window.toast('Native share not supported on this device.', 'info');
+    }
+  });
+
+  emailBtn?.addEventListener('click', () => {
+    const url = encodeURIComponent(shareUrlInput.value);
+    const subject = encodeURIComponent('My OpenInterview Profile');
+    const body = encodeURIComponent(`Hi,\n\nHere is my OpenInterview profile:\n${decodeURIComponent(url)}\n`);
+    emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
+  });
+
+  // Auto-open share modal if #share hash is present
+  if (window.location.hash === '#share') {
+    setTimeout(() => {
+      openShare();
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }, 100);
+  }
+</script>
+</body></html>

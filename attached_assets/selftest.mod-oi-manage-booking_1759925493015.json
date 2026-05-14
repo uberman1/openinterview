@@ -1,0 +1,23 @@
+{
+  "module": "OI-Manage-Booking",
+  "owner": "OpenInterview",
+  "checks": [
+    {
+      "id": "files.present",
+      "desc": "Patch files exist"
+    },
+    {
+      "id": "guardrails.verify",
+      "desc": "Allowed paths only"
+    },
+    {
+      "id": "api.tests",
+      "desc": "API endpoints behave as expected"
+    },
+    {
+      "id": "frontend.tests",
+      "desc": "Manage Booking page renders key elements"
+    }
+  ],
+  "status": "PENDING"
+}

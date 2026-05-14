@@ -1,0 +1,4 @@
+// Edit your interviews routes to use fsStore:
+// + import { load, save, paginate } from './data/fsStore';
+// POST /interviews: require { profileId, title }, 404 if profileId not found, create with id + createdAt, save to interviews.json, return 201 { interview }
+// GET /interviews: optional ?profileId=..., optional ?q=title (ci), sort createdAt desc then id, paginate(limit,cursor)

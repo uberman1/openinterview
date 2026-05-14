@@ -1,0 +1,394 @@
+{
+  "pages": [
+    {
+      "slug": "/docs/help/dashboard",
+      "title": "Dashboard",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "text": "The Dashboard is your home base in OpenInterview. From here you manage interviews, resumes, storage, and account activity in one place.\n\nThis guide covers:\n\n• Overview and storage\n• Interviews list\n• Resumes and attachments\n• Metrics and plan limits"
+        },
+        {
+          "id": "what-this-page-is",
+          "title": "What this page is",
+          "text": "The Dashboard is your control center for OpenInterview.\n\nIt shows you:\n\n• Storage usage (video and documents)\n• Interview performance metrics\n• Quick access to interviews and resumes\n• Plan limits and upgrade options"
+        },
+        {
+          "id": "when-to-use",
+          "title": "When to use this page",
+          "text": "Use the Dashboard when you want to:\n\n• Monitor how many interviews you have created and shared\n• Track views and engagement\n• Manage uploaded resumes and attachments\n• Check storage limits\n• Upgrade your plan when you need more capacity"
+        },
+        {
+          "id": "page-overview",
+          "title": "Page overview",
+          "text": "The Dashboard is organized into five main areas:\n\n• Storage usage\n• Performance metrics\n• Plan status and upgrades\n• Interviews table\n• File management (resumes and attachments)"
+        },
+        {
+          "id": "storage-usage",
+          "title": "Storage usage",
+          "text": "The storage section shows how much of your plan you are using.\n\nVideo storage\nShows recorded interview video usage.\nFormat example: X MB / Y GB\nIncludes: recorded interview videos, uploaded video responses.\n\nDocument storage\nTracks resumes, attachments, and other documents.\nFormat example: X KB / Y MB\nIncludes: PDF resumes, images, supporting documents.\n\nNotes\nLimits depend on your plan. If you exceed limits, new uploads may be blocked until you free space or upgrade."
+        },
+        {
+          "id": "performance-metrics",
+          "title": "Performance metrics",
+          "text": "Performance metrics give a quick snapshot of activity.\n\nShares (published)\nNumber of interviews that are published and shareable.\nFormat example: X / Y (X = active published, Y = allowed on your plan).\n\nTotal views\nTotal views across shared interviews, including public profile views and shared link visits.\n\nBookings\nInterview booking activity. On paid plans you see active counts; on the free plan booking may show as 0 / 0 or be unavailable."
+        },
+        {
+          "id": "plan-and-upgrade",
+          "title": "Plan and upgrade",
+          "text": "This area shows your current plan limits and ways to upgrade.\n\nThe upgrade panel may include an Upgrade Plan action and messaging about benefits such as more shares, booking access, and higher limits.\n\nConsider upgrading if you:\n\n• Hit your share limit\n• Need booking functionality\n• Need more storage"
+        },
+        {
+          "id": "my-interviews",
+          "title": "My Interviews",
+          "text": "The My Interviews table lists every interview in your account.\n\nColumns:\n\n• Title — name of the interview\n• Date — creation date\n• Shared — whether the interview is publicly shared\n• Views — view count\n• Status — Draft or Published\n• Actions — actions available for that row\n\nStatus types:\n\n• Draft — not visible publicly; cannot be shared\n• Published — publicly accessible; can be shared via link\n\nTypical actions include viewing the profile, sharing, editing, and deleting an interview.\n\nSharing rules: only published interviews can be shared. Draft interviews must be published first."
+        },
+        {
+          "id": "my-resumes",
+          "title": "My Resumes",
+          "text": "My Resumes lists your uploaded resumes.\n\nColumns: file name, upload date, and file size.\n\nYou can keep multiple versions of the same resume. Resumes are used on interview profiles and when sharing with employers."
+        },
+        {
+          "id": "my-attachments",
+          "title": "My Attachments",
+          "text": "My Attachments lists other files you uploaded beyond core resume files.\n\nSupported types include images (PNG, JPG), video (MP4), and documents.\n\nColumns: file name, upload date, and size.\n\nCommon uses: portfolio samples, supporting documents, and profile assets."
+        },
+        {
+          "id": "common-workflows",
+          "title": "Common workflows",
+          "text": "Create and share an interview\n1. Click New Interview\n2. Complete setup\n3. Publish\n4. Share the generated link\n\nUpload a resume\n1. Open the Dashboard\n2. Go to My Resumes\n3. Upload your file\n4. Attach it to an interview if needed\n\nMonitor engagement\nCheck Total Views and per-interview views to see what is performing well.\n\nManage storage\nReview storage indicators, remove unused files, or upgrade if you are close to your limits."
+        },
+        {
+          "id": "limitations-free-plan",
+          "title": "Limitations (Free plan)",
+          "text": "On the free plan you may have:\n\n• A limited number of published interviews\n• No booking functionality\n• Lower storage limits than paid plans"
+        }
+      ]
+    },
+    {
+      "slug": "/docs/help/create-first-openinterview",
+      "title": "Create Your First OpenInterview",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "text": "This guide walks you through creating your first OpenInterview: uploading your resume, processing, and the generated profile page.\n\nTopics covered:\n\n• Overview\n• Upload your resume\n• Resume processing\n• Profile layout: header, video, summary, bookings\n• Attachments, Connect, highlights, resume preview\n• Next steps: edit, video, availability, share"
+        },
+        {
+          "id": "summary",
+          "title": "Overview",
+          "text": "Create your first OpenInterview by uploading your resume, letting the platform generate your initial profile, then refining the content before you share it publicly."
+        },
+        {
+          "id": "what-guide-covers",
+          "title": "What this guide covers",
+          "text": "This guide covers the first part of the setup flow:\n\n• Upload your resume\n• Wait while it is processed\n• Review the generated profile\n• Understand each section of the profile page\n• Move on to editing, video, calendar, and sharing"
+        },
+        {
+          "id": "before-you-begin",
+          "title": "Before you begin",
+          "text": "Have ready:\n\n• An up-to-date resume (PDF)\n• Your preferred role title and summary in mind\n• A headshot, profile image, or intro video if you plan to personalize the page further"
+        },
+        {
+          "id": "step-1",
+          "title": "Step 1: Upload your resume",
+          "text": "On the OpenInterview creation page, upload your resume using the upload area.\n\nWhat you will see\n\n• A headline introducing the OpenInterview experience\n• A drag-and-drop upload area\n• A Browse Files button for manual upload\n\nHow to upload\n\n• Drag and drop your file into the upload box, or\n• Click Browse Files and select your resume from your device.\n\nAfter upload\n\n• The file name appears below the upload area\n• OpenInterview starts processing the document\n• You move into the resume analysis stage"
+        },
+        {
+          "id": "step-2",
+          "title": "Step 2: Resume processing",
+          "text": "OpenInterview analyzes your resume and prepares your first profile draft.\n\nThe processing screen may show\n\n• The uploaded file name\n• A progress bar and percentage\n• A status message such as \"Finalizing setup...\"\n\nWhat happens during this step\n\nThe platform extracts and organizes information from your resume, including your name, role, location, summary, highlights, and content formatted for a public page.\n\nWhat to expect\n\n• A structured profile layout\n• Automatically generated content blocks\n• A profile page ready for review and editing"
+        },
+        {
+          "id": "step-3",
+          "title": "Step 3: Review your generated profile",
+          "text": "When processing finishes, you are taken to your new profile page.\n\nThis is your first live interview profile draft: populated from your resume and organized into sections. It is a strong starting point; you should still review and edit before sharing."
+        },
+        {
+          "id": "profile-page-overview",
+          "title": "Profile page overview",
+          "text": "The generated profile has a main content area and a profile panel on the right."
+        },
+        {
+          "id": "top-action-bar",
+          "title": "Top action bar",
+          "text": "At the top you will see a welcome banner and primary actions.\n\nIncludes\n\n• A greeting with your name\n• A short note that this is your public interview page\n• Edit Profile\n• Share\n\nEdit Profile — refine each section.\nShare — use when the profile is ready to publish.\nAt first, focus on Edit Profile."
+        },
+        {
+          "id": "main-video",
+          "title": "Main video section",
+          "text": "The large video area is the centerpiece of the page.\n\nPurpose — your OpenInterview video introduction.\n\nBefore you upload a video you may see a placeholder, thumbnail area, or play overlay.\n\nAfter you upload, this becomes the main introduction recruiters see first.\n\nIt is the most personal part of the page and helps differentiate you beyond the resume."
+        },
+        {
+          "id": "profile-card",
+          "title": "Right-side profile card",
+          "text": "The right column shows your core summary: image or avatar, name, role, location, and a short professional summary (initially from your resume).\n\nCheck name formatting, title, location, and summary tone.\n\nThis is the quickest way for viewers to see who you are and what roles you fit."
+        },
+        {
+          "id": "bookings-panel",
+          "title": "Bookings panel",
+          "text": "Below the summary card is the bookings calendar. Viewers will use this to see availability and request time.\n\nEarly on you may see a month view, timezone, and no slots — availability is set later in Edit Profile.\n\nAfter you configure availability, this becomes your live booking area."
+        },
+        {
+          "id": "attachments",
+          "title": "Attachments section",
+          "text": "Under the main video you may see Attachments for supporting files (portfolio, certifications, samples, and similar).\n\nIf nothing is uploaded yet, the section may say no attachments are available."
+        },
+        {
+          "id": "connect",
+          "title": "Connect section",
+          "text": "Below Attachments, Connect offers more ways to reach you — for example a LinkedIn link. It extends your profile with another trusted professional context."
+        },
+        {
+          "id": "highlights",
+          "title": "Highlights section",
+          "text": "Highlights are quick bullets from your resume: experience, technical strengths, specialization, domain expertise, collaboration or leadership, and similar.\n\nThey help hiring teams scan your strengths without reading the full resume first.\n\nConfirm accuracy, that key strengths appear, and wording matches how you want to present yourself."
+        },
+        {
+          "id": "resume-section",
+          "title": "Resume section",
+          "text": "Further down, your full resume is embedded: preview, file name, and Download Resume.\n\nViewers can read or download without leaving the page — combining a modern profile with a traditional resume."
+        },
+        {
+          "id": "what-done",
+          "title": "What OpenInterview has done for you so far",
+          "text": "By this point OpenInterview has:\n\n• Accepted your resume\n• Processed the document\n• Extracted core details\n• Built a formatted public profile structure\n• Generated summary and highlights\n• Embedded your resume\n• Prepared the booking area for later setup\n\nYou get a complete starting point instead of a blank profile."
+        },
+        {
+          "id": "review-before-editing",
+          "title": "What to review before editing",
+          "text": "Before Edit Profile, check:\n\nIdentity — name, role title, location\nSummary — positioning, clarity, tone\nHighlights — strongest points, alignment with your goals\nResume preview — correct file, readable layout, download works\nCompleteness — attachments, links (e.g. LinkedIn), readiness for video and calendar setup"
+        },
+        {
+          "id": "next-step-edit",
+          "title": "Next step: Edit your profile",
+          "text": "Click Edit Profile to refine wording, summary and highlights, links and attachments, calendar availability, your video, and sharing."
+        },
+        {
+          "id": "what-comes-next",
+          "title": "What comes next",
+          "text": "Next you polish the draft into a public-facing profile: final copy, video, booking availability, and sharing your link."
+        }
+      ]
+    },
+    {
+      "slug": "/docs/help/edit-profile",
+      "title": "Edit Your OpenInterview Profile",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "text": "This guide covers Edit Profile: name and optional resume re-upload, photo and video, contact and bio, social links, resume and attachments, highlights through education, availability and booking rules, then save and share.\n\nSections in this doc match the page from top to bottom."
+        },
+        {
+          "id": "summary",
+          "title": "Overview",
+          "text": "Refine, personalize, and complete your OpenInterview profile before you share it publicly."
+        },
+        {
+          "id": "what-page",
+          "title": "What this page is",
+          "text": "Edit Profile turns your auto-generated draft into a polished, recruiter-ready profile. After resume processing you already have a strong base; here you refine wording, add personal elements, set availability, and prepare to share."
+        },
+        {
+          "id": "when-use",
+          "title": "When to use this page",
+          "text": "Use Edit Profile to:\n\n• Finalize content\n• Upload your video introduction\n• Adjust highlights, skills, and experience\n• Configure booking availability\n• Prepare for public sharing"
+        },
+        {
+          "id": "page-overview",
+          "title": "Page overview",
+          "text": "The page is organized top to bottom: profile setup, identity and media, personal details, resume and attachments, professional content (highlights through education), availability and scheduling rules, then save and share."
+        },
+        {
+          "id": "profile-setup",
+          "title": "Profile setup",
+          "text": "Profile setup and optional resume (see Professional content — Profile Name and Auto-populate)."
+        },
+        {
+          "id": "identity-media",
+          "title": "Identity and media",
+          "text": "Photo and video sections — see Professional content — Identity and media."
+        },
+        {
+          "id": "personal-details",
+          "title": "Personal details",
+          "text": "Contact, short bio, and social links — see Professional content — Personal details."
+        },
+        {
+          "id": "resume-attachments",
+          "title": "Resume and attachments",
+          "text": "Resume file and extra attachments — see Professional content — Resume and attachments."
+        },
+        {
+          "id": "professional-content",
+          "title": "Professional content",
+          "text": "Profile name\n\nDefines your OpenInterview title (may show when shared). Example: \"Rajesh Venkataraman – Data Engineer\". Best practice: \"Full Name – Role\", clear and professional.\n\nAuto-populate with resume (optional)\n\nUpload a new resume to regenerate content.\n\n• Optional — many users skip because the profile already came from the first resume and everything can be edited manually.\n• Use when you want a newer resume, a more targeted version, or to regenerate highlights automatically.\n• Actions: upload resume, then Auto-populate from Resume.\n\nIdentity and media\n\nProfile photo — upload or update. Use a clear, professional headshot and neutral background; builds credibility.\n\nVideo — your OpenInterview intro. Includes preview and Change Video. Upload or replace; keep audio and framing clear. This is the strongest part of your profile for communication and personality.\n\nVideo thumbnail — custom still for the player. Clear and professional; avoids dark or blurry images.\n\nPersonal details\n\nContact — location, phone, email. Keep accurate; only list what you are comfortable sharing publicly.\n\nShort bio — 2–4 sentences: years of experience, strengths, domain, target roles.\n\nSocial media — add links (e.g. LinkedIn, portfolio, GitHub). Add platform, URL, or remove.\n\nResume and attachments\n\nResume — shows the active file. Upload, replace, or delete. This is what visitors see; keep it current.\n\nAttachments — optional extras such as portfolio samples, certifications, projects, case studies.\n\nProfessional content (highlights, skills, experience, education)\n\nHighlights — short bullets. Edit, delete, or add; keep concise and impact-focused.\n\nSkills — tags (e.g. Python, SQL, AWS). Add or remove; stay relevant, avoid clutter.\n\nExperience — company, role, dates, description. Emphasize impact and metrics; add, edit, or delete entries.\n\nEducation — institution, degree, field, year. Add, edit, or delete entries."
+        },
+        {
+          "id": "availability",
+          "title": "Availability (Bookings)",
+          "text": "Weekly hours — choose days, time ranges per day, and timezone. If no days are selected, bookings are unavailable. This drives your public calendar.\n\nQuick actions — copy hours to all days, set all unavailable, or clear hours.\n\nScheduling rules:\n\n• Minimum notice — e.g. 24 hours before someone can book\n• Scheduling window — how far ahead bookings open (e.g. 60 days)\n• Meeting duration — e.g. 30 minutes\n• Buffers — time before/after each booking (e.g. 0 / 0)\n• Daily cap — max bookings per day (e.g. 5)"
+        },
+        {
+          "id": "save-profile",
+          "title": "Save your profile",
+          "text": "Click Save Updates to apply changes. Nothing is saved until you do."
+        },
+        {
+          "id": "final-share",
+          "title": "Final step: Share your profile",
+          "text": "When complete: save, return to your public profile, then Share. You can send your link to recruiters, add it to applications, or use it as a modern resume alternative."
+        },
+        {
+          "id": "complete-includes",
+          "title": "What a complete profile includes",
+          "text": "Before sharing, aim to have:\n\n• Profile photo and video introduction\n• Polished bio, highlights, experience, and skills\n• Resume uploaded and current\n• Availability configured if you use bookings"
+        }
+      ]
+    },
+    {
+      "slug": "/docs/help/share-profile",
+      "title": "Share Your OpenInterview Profile",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "text": "How to share your completed profile: return to the profile page, use Share, send by email or copy the link, and follow best practices.\n\nTopics: overview, when to share, Share button and modal, email vs link, what viewers see, and tips."
+        },
+        {
+          "id": "overview",
+          "title": "Overview",
+          "text": "When your profile is complete and saved, share it with recruiters, hiring managers, or anyone evaluating you.\n\nYou can send direct email invites or copy a shareable link. The profile is live and ready to view."
+        },
+        {
+          "id": "when-share",
+          "title": "When to share your profile",
+          "text": "Share after you have:\n\n• Finished main sections (bio, highlights, experience)\n• Uploaded your video introduction\n• Set availability if you use bookings"
+        },
+        {
+          "id": "return-profile",
+          "title": "Return to your profile page",
+          "text": "After Save Updates on Edit Profile you return to the public page with your video (if any), updated bio and highlights, resume preview, image, and booking calendar if configured.\n\nTop actions: Edit Profile and Share."
+        },
+        {
+          "id": "share-button",
+          "title": "Share button",
+          "text": "Click Share to open the sharing UI: a modal where you can email your profile or copy the link."
+        },
+        {
+          "id": "share-modal",
+          "title": "Share modal overview",
+          "text": "The modal supports:\n\n• Send via email\n• Copy a direct profile link"
+        },
+        {
+          "id": "share-via-email",
+          "title": "Share via email",
+          "text": "Fields:\n\n• Email — recipient address\n• Message (optional) — short note, e.g. \"Hi, please review my OpenInterview — it includes a video intro and highlights.\"\n\nClick Send Invite. The recipient gets a link to your profile and your message if you added one."
+        },
+        {
+          "id": "copy-link",
+          "title": "Copy profile link",
+          "text": "Click Copy Link to Profile, then paste it into applications, LinkedIn, email, or your portfolio."
+        },
+        {
+          "id": "when-each",
+          "title": "When to use each option",
+          "text": "Email — direct outreach to a recruiter, personalized intros, follow-ups after a conversation.\n\nLink only — job portals, broad LinkedIn sharing, or any channel where you paste a URL."
+        },
+        {
+          "id": "recruiters-see",
+          "title": "What recruiters see",
+          "text": "Viewers see your video, summary, highlights, resume preview and download, attachments if any, and the booking calendar if enabled."
+        },
+        {
+          "id": "best-practices",
+          "title": "Best practices for sharing",
+          "text": "• Keep outreach messages short — let the profile do the work.\n• Video strongly improves engagement — include it before sharing widely.\n• Personalize when it helps response rates.\n• Use the same link consistently: applications, signature, LinkedIn."
+        },
+        {
+          "id": "now-live",
+          "title": "You’re now live",
+          "text": "Your profile is complete, shareable, and ready for recruiters — a dynamic alternative to a static resume alone."
+        }
+      ]
+    },
+    {
+      "slug": "/docs/help/create-new-openinterview",
+      "title": "Create a New OpenInterview",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "text": "After your first OpenInterview, you can add more profiles for other roles or resume versions.\n\nFlow: New Interview → new editor → upload resume (required) → auto-populate → same setup as before → save and share."
+        },
+        {
+          "id": "overview",
+          "title": "Overview",
+          "text": "Additional OpenInterview profiles let you target different roles, companies, or messaging while keeping each profile separate."
+        },
+        {
+          "id": "what-step",
+          "title": "What this step is",
+          "text": "Each new OpenInterview is its own profile — for example a different role (Data Engineer vs Product Manager), a tailored resume for one job, or an alternate positioning."
+        },
+        {
+          "id": "when-create",
+          "title": "When to create a new OpenInterview",
+          "text": "Create one when you:\n\n• Apply to different kinds of roles\n• Tailor for a specific company\n• Test different positioning\n• Maintain multiple resume versions"
+        },
+        {
+          "id": "access-new",
+          "title": "Access New Interview",
+          "text": "Click New Interview in the top navigation. This opens a fresh editor and does not overwrite existing profiles."
+        },
+        {
+          "id": "new-editor",
+          "title": "New editor overview",
+          "text": "Like initial setup but empty: Profile Name (blank), auto-populate section, Upload Resume, and storage indicators for video and documents."
+        },
+        {
+          "id": "upload-required",
+          "title": "Upload resume (required)",
+          "text": "For a new profile, upload is required — there is no prior data. OpenInterview needs the resume to build bio, highlights, and experience.\n\nClick Upload Resume, pick your file, confirm. Then the file is processed and the profile can be generated."
+        },
+        {
+          "id": "auto-populate",
+          "title": "Auto-populate profile",
+          "text": "Click Auto-populate from Resume. OpenInterview extracts your details, builds structure, creates highlights and summary, and prepares the page for editing."
+        },
+        {
+          "id": "continue-setup",
+          "title": "Continue profile setup",
+          "text": "After auto-population, continue like your first profile: review content, Edit Profile, refine sections, add video, set availability."
+        },
+        {
+          "id": "key-difference",
+          "title": "Key difference from first OpenInterview",
+          "text": "Comparison:\n\n• Resume upload — first interview: already done once; new profile: required.\n• Auto-populate — first time: optional/skip in some flows; new profile: required after upload.\n• Starting point — first: pre-generated from first upload; new: blank until you upload.\n\nEach additional profile starts empty until you add a resume."
+        },
+        {
+          "id": "save-profile",
+          "title": "Save your profile",
+          "text": "When setup is done: Save Profile, review the public page, and confirm all sections look right."
+        },
+        {
+          "id": "share-new",
+          "title": "Share your new profile",
+          "text": "Use Share to email or copy the link. Every OpenInterview has its own URL."
+        },
+        {
+          "id": "best-practices",
+          "title": "Best practices",
+          "text": "• Build role-specific profiles.\n• Upload resumes tuned to each goal.\n• Align bio, highlights, and video with that role."
+        },
+        {
+          "id": "manage-multiple",
+          "title": "You can now manage multiple profiles",
+          "text": "Profiles are independent: keep different versions, target different opportunities, and share the most relevant link per application."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pricing | OpenInterview.me</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
+        .animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
+    </style>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body class="bg-background-light dark:bg-background-dark text-primary dark:text-white transition-colors duration-300">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none">Skip to main content</a>
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 w-full border-b border-solid border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md transition-all duration-300">
+        <div class="flex items-center justify-between px-4 py-4 md:px-6">
+            <a href="/home.html" class="flex items-center gap-4 text-primary dark:text-background-light hover:opacity-80 transition-opacity">
+                <div class="h-8 w-auto">
+                    <img src="/defaults/logo_1.png" alt="OpenInterview Logo" class="h-full w-auto object-contain">
+                </div>
+            </a>
+            
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex flex-1 items-center justify-end gap-6">
+                <nav class="flex items-center gap-6" aria-label="Main navigation">
+                    <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/pricing.html">Pricing</a>
+                </nav>
+                <div id="auth-buttons-container" class="flex items-center gap-4">
+                    <a href="/login-page.html" id="sign-in-btn" class="flex h-10 items-center justify-center rounded bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors">Sign In</a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-primary dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900" aria-hidden="true">
+            <nav class="flex flex-col p-4 gap-4" aria-label="Mobile navigation">
+                <a class="text-base font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white py-2" href="/pricing.html">Pricing</a>
+                <div id="auth-buttons-container-mobile" class="relative pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                    <a href="/login-page.html" class="flex h-10 items-center justify-center rounded bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors w-full mt-4">Sign In</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-12 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" aria-label="Pricing plans">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-8 animate-fadeInUp">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-black mb-2">Pricing Plans</h1>
+                <!-- <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400">Choose the perfect plan for your needs.</p> -->
+            </div>
+        </div>
+
+        <!-- Plans Grid -->
+        <div id="plans-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Loading State -->
+            <div class="col-span-full flex justify-center py-12">
+                <span class="material-symbols-outlined animate-spin text-4xl">refresh</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/pricing.js"></script>
+    <script src="/js/header.avatar.bind.js"></script>
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenuBtn.setAttribute('aria-expanded', String(!isExpanded));
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.setAttribute('aria-hidden', String(isExpanded));
+            });
+        }
+    </script>
+</body>
+</html>

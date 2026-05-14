@@ -1,0 +1,34 @@
+name: Stage 4 – Go-Live Readiness
+on:
+  workflow_dispatch:
+    inputs:
+      prod_url:
+        description: "Base URL for production/staging"
+        required: true
+        default: "https://your-domain.example.com"
+jobs:
+  stage4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install deps
+        run: |
+          pip install -r stage4/requirements.txt
+      - name: Run Stage 4 Gate
+        env:
+          PROD_URL: ${{ github.event.inputs.prod_url }}
+          HEALTH_URL: ${{ github.event.inputs.prod_url }}/health
+          EXPECT_LIVE: "0"
+          ALLOW_PROVIDER_MOCK: "1"
+        run: |
+          PYTHONPATH=. python stage4/run_stage4.py
+      - name: Update test index (optional if repo hosts public/test2.html)
+        run: |
+          PYTHONPATH=. python scripts/update_test2_index_stage4.py || true
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4-artifacts
+          path: qa/stage4/v0.4.0/**

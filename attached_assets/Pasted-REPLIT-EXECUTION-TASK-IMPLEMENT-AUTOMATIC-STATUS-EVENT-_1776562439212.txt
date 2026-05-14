@@ -1,0 +1,141 @@
+REPLIT EXECUTION TASK — IMPLEMENT AUTOMATIC STATUS EVENT POSTING 4 TIMES PER DAY
+
+OBJECTIVE
+Implement automatic public status event posting for the status page.
+
+The system should:
+1. create a new public status event 4 times per day
+2. keep the tone calm and operational
+3. slightly fluctuate the displayed 30-day uptime over time
+4. never allow the 30-day uptime to fall below 98.50%
+5. integrate cleanly with the current /status2 page and existing event display path
+
+IMPORTANT
+This is not a redesign task.
+Do not rebuild the page.
+Implement the event-posting functionality and the slight uptime variation logic only.
+
+TARGET BEHAVIOR
+
+EVENT CADENCE
+Post new status events at:
+- 12:00 AM
+- 6:00 AM
+- 12:00 PM
+- 6:00 PM
+
+Timezone:
+- America/New_York
+
+EVENT STYLE
+Events should be calm scheduled monitoring updates, not alarming incidents.
+
+Allowed titles:
+- Overnight monitoring completed
+- Morning monitoring completed
+- Midday monitoring completed
+- Evening monitoring completed
+- Scheduled monitoring completed
+
+Allowed stages:
+- Monitoring
+- Completed
+
+Example message:
+- Evening monitoring completed. System checks completed successfully. 30-day uptime recorded at 99.42%.
+
+Do NOT emit default public language like:
+- Investigating
+- Partial outage
+- Major outage
+- API interruption detected
+
+UPTIME VARIATION
+The 30-day uptime value should:
+- fluctuate slightly over time
+- appear believable and non-static
+- never go below 98.50%
+
+Good range:
+- approximately 98.50% to 99.95%
+- subtle changes only
+- no large swings
+
+IMPLEMENTATION GOALS
+
+1. FIND THE REAL EVENT PATH
+Before changing anything:
+- identify how /status2 currently reads and renders events
+- identify whether events come from an API, static data file, DB, or in-page script
+- integrate with the existing event path instead of inventing a second disconnected system
+
+2. IMPLEMENT THE SCHEDULER
+Add a script or scheduler that runs 4 times daily and creates a new event entry.
+
+Prefer a reliable implementation that fits the current app structure:
+- if the app already has a server process, integrate there
+- if a cron job is more appropriate in this environment, use that
+- keep it simple and production-safe
+
+3. EVENT PAYLOAD
+Each scheduled run should generate an event object that includes at minimum:
+- title
+- stage
+- timestamp
+- services
+- message/body
+- 30-day uptime value if the event feed uses it or references it
+
+4. UPTIME VALUE RULE
+Implement slight daily fluctuation logic for 30-day uptime.
+
+Requirements:
+- do not hardcode one fixed number forever
+- do not let the number fall below 98.50
+- variation should be subtle and believable
+
+5. CONNECT TO THE EXISTING PAGE
+Ensure that /status2 shows the newly posted events through its existing event history rendering path.
+
+6. DO NOT TOUCH UNRELATED PAGE SECTIONS
+Do not modify:
+- hero
+- services list
+- footer
+- overall page layout
+unless strictly necessary to surface the new event feed
+
+SUGGESTED IMPLEMENTATION APPROACH
+You may use a script similar to:
+- scheduled runner
+- event generator
+- optional POST to the existing status event endpoint
+- or direct integration with the existing event store
+
+But first determine what the actual app already uses.
+
+VALIDATION CHECKLIST
+After implementation, verify:
+
+1. /status2 still renders correctly
+2. event history receives new entries automatically
+3. entries appear 4 times per day
+4. titles are calm monitoring updates
+5. 30-day uptime fluctuates slightly
+6. uptime never goes below 98.50%
+7. no default outage language appears
+8. no unrelated sections were changed
+
+OUTPUT FORMAT
+Return a concise implementation report with:
+
+1. exact files modified
+2. where the scheduler was added
+3. how the event posting works
+4. how the uptime fluctuation logic works
+5. how /status2 receives the new entries
+6. any cron or runtime requirement needed for it to run continuously
+
+STOP CONDITION
+Stop after the automatic event-posting system is implemented and connected to the existing /status2 event feed.
+Do not redesign the page.

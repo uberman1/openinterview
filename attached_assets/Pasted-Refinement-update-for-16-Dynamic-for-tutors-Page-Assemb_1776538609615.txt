@@ -1,0 +1,105 @@
+Refinement update for #16 — Dynamic /for/tutors Page Assembly
+
+Review the plan and proceed with the following refinements and safeguards.
+
+Objective
+Implement /for/tutors as a dynamically assembled page using public/home.html as the single source of truth for all shared sections. No static HTML file should be created.
+
+Critical confirmations (must be followed exactly)
+- home.html is the ONLY source of truth for shared sections
+- No duplication of lower sections into new files
+- No creation of public/for-tutors.html
+- Page must be assembled in-memory on every request
+- Only the hero section is custom
+
+Key refinement requirements
+
+1. Marker robustness (highest risk area)
+Do NOT rely on fragile string matching like spacing or exact newline patterns.
+
+Instead:
+- Match stable anchor strings (e.g. `<!-- Why OpenInterview Section -->`, `<footer`)
+- Add defensive checks:
+  - If any marker is not found, log a clear error and return a safe fallback (do not silently fail)
+- Avoid brittle assumptions like fixed indentation or exact whitespace
+
+2. Wrapper integrity validation
+Ensure the final assembled HTML:
+- preserves all wrapper `<div>` structure
+- does not duplicate `<main>` or `<footer>`
+- results in valid DOM structure
+
+Add a quick validation step:
+- confirm exactly one `<main>` open/close pair
+- confirm exactly one `<footer>`
+
+3. Script extraction safety
+The mobile-menu script extraction is fragile.
+
+Refinement:
+- Extract the FULL `<script>...</script>` block that contains the mobile menu logic
+- Do NOT partially slice using comment offsets like `-12`
+- Ensure:
+  - script tag is complete
+  - no truncated JS
+  - no broken closing tags
+
+4. Image + asset safety
+Ensure all assets used in the hero:
+- use existing paths from home.html (e.g. `/defaults/screenShotOfApp.png`)
+- do not introduce new missing assets
+- verify image loads (no broken src)
+
+5. Route consistency
+Confirm:
+- both routes return identical output:
+  - /for/tutors
+  - /for/tutors-coaches
+- both use the SAME handler (no duplication)
+
+6. Head integrity
+When replacing the `<title>`:
+- ensure no duplicate `<title>` tags
+- ensure meta tags, Tailwind config, fonts remain untouched
+
+7. Performance guardrail
+- Only read home.html once per request
+- Do not read additional files
+- Do not introduce caching layer in this task
+
+8. Strict scope control
+Do NOT:
+- modify home.html
+- create new HTML files
+- refactor other routes
+- implement other use-case pages yet
+- generalize prematurely
+
+9. Failure handling (important)
+If any extraction step fails:
+- return a clear error in logs
+- do NOT return a partially broken page
+- do NOT silently continue
+
+Validation checklist before completion
+- /for/tutors returns 200
+- /for/tutors-coaches returns 200
+- page renders correctly (no broken layout)
+- nav works (mobile menu functional)
+- no missing styles or scripts
+- hero appears above Why OpenInterview section
+- footer renders exactly as in home.html
+
+Files changed
+- index.js only
+
+Reference
+Use public/home.html as the source of truth for all extraction points :contentReference[oaicite:0]{index=0}
+
+Approval instructions
+If all constraints and safeguards are understood:
+- confirm “Approved — executing dynamic assembly exactly as specified”
+- then proceed with implementation
+
+If any ambiguity exists in markers or structure:
+- STOP and report the exact mismatch before proceeding

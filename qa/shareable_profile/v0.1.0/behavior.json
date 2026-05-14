@@ -1,0 +1,68 @@
+{
+  "workflows": [
+    {
+      "id": "PR-COPY-LINK",
+      "steps": [
+        {
+          "visit": "/shareable_profile_test.html"
+        },
+        {
+          "click": "#copy_link_btn"
+        },
+        {
+          "wait_for_text": "Link copied"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "PR-TOGGLE-SECTIONS",
+      "steps": [
+        {
+          "visit": "/shareable_profile_test.html"
+        },
+        {
+          "click": "#toggle_about"
+        },
+        {
+          "expect_has_class": {
+            "selector": "#about_body",
+            "class": "hidden"
+          }
+        },
+        {
+          "click": "#toggle_about"
+        },
+        {
+          "click": "#toggle_links"
+        },
+        {
+          "expect_has_class": {
+            "selector": "#links_body",
+            "class": "hidden"
+          }
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "responsive": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "name": "mobile"
+      },
+      "status": "PASS"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "name": "desktop"
+      },
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

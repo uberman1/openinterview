@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenInterview Event History Example</title>
+  <style>
+    :root {
+      --text: #141414;
+      --muted: #737373;
+      --muted-light: #a3a3a3;
+      --border: #e5e5e5;
+      --bg: #ffffff;
+      --badge: #f5f5f5;
+      --resolved: #22c55e;
+      --monitoring: #3b82f6;
+      --identified: #eab308;
+      --investigating: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .section-kicker {
+      margin: 0 0 18px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted-light);
+    }
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+    }
+    .event-group {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      column-gap: 26px;
+      align-items: start;
+    }
+    .event-date {
+      position: sticky;
+      top: 24px;
+    }
+    .event-date .date {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .event-date .ago {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--badge);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .event-card {
+      border-radius: 10px;
+      padding: 0;
+    }
+    .event-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--badge);
+      color: #525252;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid #ededed;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      column-gap: 18px;
+    }
+    .timeline-rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 7px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 3px #fff;
+    }
+    .timeline-line {
+      width: 1px;
+      flex: 1 1 auto;
+      margin-top: 6px;
+      min-height: 44px;
+      background: var(--border);
+    }
+    .timeline-item:last-child .timeline-line { display: none; }
+    .timeline-body {
+      padding-bottom: 18px;
+    }
+    .timeline-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: baseline;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+    .stage {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .sep, .delta {
+      color: var(--muted-light);
+    }
+    .ts {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+    .message {
+      margin: 0;
+      color: #4b5563;
+      font-size: 13px;
+      line-height: 1.8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    /* Dot-only status colors: keep timeline rows neutral and let the circle carry status */
+    .timeline-dot.resolved { background: var(--resolved); }
+    .timeline-dot.monitoring { background: var(--monitoring); }
+    .timeline-dot.identified { background: var(--identified); }
+    .timeline-dot.investigating { background: var(--investigating); }
+
+    /* Keep the connector line neutral instead of tinting the entire section by status */
+    .timeline-line { background: var(--border); }
+
+    @media (max-width: 760px) {
+      .wrap { padding: 28px 16px 56px; }
+      .event-group {
+        grid-template-columns: 1fr;
+        row-gap: 12px;
+      }
+      .event-date {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2 class="section-kicker">Event History</h2>
+
+    <div id="event-history" class="event-list"></div>
+  </div>
+
+  <script>
+    const events = [
+      {
+        dateLabel: 'Apr 15, 2026',
+        agoLabel: '3 days ago',
+        title: 'Delayed webhook delivery',
+        services: ['App'],
+        timeline: [
+          {
+            stage: 'Resolved',
+            variant: 'resolved',
+            timestamp: 'April 15 at 12:22 PM',
+            delta: '(in 1 hour)',
+            message: 'The delays for webhook deliveries have been fixed.'
+          },
+          {
+            stage: 'Resolved',
+            variant: 'resolved',
+            timestamp: 'April 15 at 11:12 AM',
+            delta: '(1 hour earlier)',
+            message: 'One of our providers is dealing with DNS resolution issues in us-east-1, causing our systems to delay sending webhooks. We are working closely with them to get a resolution ASAP.'
+          }
+        ]
+      },
+      {
+        dateLabel: 'Apr 6, 2026',
+        agoLabel: '12 days ago',
+        title: 'Intermittent issues loading data on app.cal.com dashboard',
+        services: ['App'],
+        timeline: [
+          {
+            stage: 'Resolved',
+            variant: 'resolved',
+            timestamp: 'April 6 at 8:22 AM',
+            delta: '(in 28 minutes)',
+            message: 'We have confirmed the issue is resolved.'
+          },
+          {
+            stage: 'Monitoring',
+            variant: 'monitoring',
+            timestamp: 'April 6 at 8:13 AM',
+            delta: '(9 minutes earlier)',
+            message: 'We\'ve identified the issue and have deployed a fix. We are actively monitoring to ensure the errors stop.'
+          },
+          {
+            stage: 'Investigating',
+            variant: 'investigating',
+            timestamp: 'April 6 at 7:54 AM',
+            delta: '(19 minutes earlier)',
+            message: 'We are investigating an issue where an error is being shown claiming a commercial license is needed.'
+          }
+        ]
+      },
+      {
+        dateLabel: 'Mar 6, 2026',
+        agoLabel: '1 month ago',
+        title: 'Degraded service for creating bookings via API v2',
+        services: ['API'],
+        timeline: [
+          {
+            stage: 'Resolved',
+            variant: 'resolved',
+            timestamp: 'March 6 at 11:03 PM',
+            delta: '(in 15 minutes)',
+            message: 'We identified and resolved the issue. Apologies for the disruption.'
+          },
+          {
+            stage: 'Investigating',
+            variant: 'investigating',
+            timestamp: 'March 6 at 10:48 PM',
+            delta: '(15 minutes earlier)',
+            message: 'We are seeing 502 Bad Gateway errors on the api.cal.com/v2/bookings endpoint for POST.'
+          }
+        ]
+      }
+    ];
+
+    const root = document.getElementById('event-history');
+
+    root.innerHTML = events.map(group => `
+      <section class="event-group">
+        <div class="event-date">
+          <div class="date">${group.dateLabel}</div>
+          <span class="ago">${group.agoLabel}</span>
+        </div>
+        <div class="event-card">
+          <h3 class="event-title">${group.title}</h3>
+          <div class="badges">
+            ${group.services.map(service => `<span class="badge">${service}</span>`).join('')}
+          </div>
+          <div>
+            ${group.timeline.map((item, idx) => `
+              <div class="timeline-item ${item.variant}">
+                <div class="timeline-rail">
+                  <div class="timeline-dot ${item.variant}"></div>
+                  ${idx < group.timeline.length - 1 ? '<div class="timeline-line"></div>' : ''}
+                </div>
+                <div class="timeline-body">
+                  <div class="timeline-head">
+                    <span class="stage">${item.stage}</span>
+                    <span class="sep">·</span>
+                    <span class="ts">${item.timestamp}</span>
+                    ${item.delta ? `<span class="delta">${item.delta}</span>` : ''}
+                  </div>
+                  <p class="message">${item.message}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>
+    `).join('');
+  </script>
+</body>
+</html>

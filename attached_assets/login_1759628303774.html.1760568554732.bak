@@ -1,0 +1,4 @@
+<!doctype html><meta charset='utf-8'><title>Login</title>
+<link rel='stylesheet' href='/css/theme.css'>
+<div class='container'><h1>Sign in</h1><input id='email' class='input' placeholder='you@example.com'><button id='go' class='btn' style='margin-top:12px'>Continue</button></div>
+<script type='module'>import {api} from '/js/app.js'; document.querySelector('#go').onclick=async()=>{ const email=document.querySelector('#email').value.trim(); const res=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email})}); localStorage.setItem('me', JSON.stringify(res.user)); location.href='/profile.html'; };</script>

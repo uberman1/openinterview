@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>OpenInterview — Profile v4.1</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/theme.css"/>
+  <!-- Core app scripts -->
+  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="/js/nav-patch.js"></script>
+  <!-- New: Cal.com binder -->
+  <script type="module" src="/js/cal-embed.bind.js"></script>
+</head>
+<body class="bg-background-light text-primary font-[Inter]">
+  <main class="max-w-5xl mx-auto p-4">
+    <!-- ... other sections (video, about, resume, highlights) ... -->
+
+    <!-- Booking Card (unchanged format/styles) -->
+    <section id="bookingSection" class="section mt-8">
+      <div id="bookingCard"
+           class="rounded-2xl border border-neutral-200 p-4 bg-white"
+           data-cal-link="" 
+           data-profile-handle="ethereal-demo">
+        <h2 class="text-xl font-semibold mb-3">Book a time</h2>
+
+        <!-- Cal inline mount point -->
+        <div id="calEmbedContainer" class="w-full"></div>
+
+        <!-- Fallback appears only if Cal fails or no handle/link is set -->
+        <div id="bookingFallback" class="mt-4 hidden">
+          <p class="text-sm text-neutral-600 mb-2">
+            The scheduler couldn’t load. You can still add this to your calendar via .ics.
+          </p>
+          <div class="grid gap-3">
+            <label class="text-sm">Choose a date</label>
+            <input type="date" id="fallbackDate" class="input border rounded px-3 py-2"/>
+            <label class="text-sm">Choose a time</label>
+            <input type="time" id="fallbackTime" class="input border rounded px-3 py-2"/>
+            <label class="text-sm">Your email</label>
+            <input type="email" id="fallbackEmail" placeholder="you@example.com" class="input border rounded px-3 py-2"/>
+            <button id="fallbackConfirm" class="btn border rounded px-4 py-2">
+              Download invite (.ics)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+OPENINTERVIEW — SHAREABLE PROFILE QA PACK
+
+What this does
+- Contract-driven DOM checks, behavior (copy link, section toggle), a11y, security (CSP + no token/email leaks), visual baseline.
+- Auto-updates test2.html (Shareable Profile section).
+- Behavior enforces prerequisite: subscription must be active via qa/_state/session.json.
+
+Install (Replit)
+1) Unzip at repo root.
+2) Deps:
+   pip install -r profile_pack/requirements.txt
+   python -m playwright install --with-deps chromium
+
+Run
+# export OI_BASE_URL="https://<replit-preview-domain>"  # if needed
+python profile_pack/run.py

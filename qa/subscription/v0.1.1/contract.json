@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "css": "main#content",
+      "status": "PASS"
+    },
+    {
+      "css": "#billing_toggle",
+      "status": "PASS"
+    },
+    {
+      "css": ".card[data-plan='starter'] .select-plan",
+      "status": "PASS"
+    },
+    {
+      "css": ".card[data-plan='pro'] .select-plan",
+      "status": "PASS"
+    },
+    {
+      "css": ".card[data-plan='team'] .select-plan",
+      "status": "PASS"
+    },
+    {
+      "css": "#pm_brand",
+      "status": "PASS"
+    },
+    {
+      "css": "#pm_last4",
+      "status": "PASS"
+    },
+    {
+      "css": "#manage_billing",
+      "status": "PASS"
+    },
+    {
+      "css": "#cancel_plan",
+      "status": "PASS"
+    }
+  ]
+}

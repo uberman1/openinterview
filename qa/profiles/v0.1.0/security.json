@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "csp": "present"
+    },
+    {
+      "url_token_leak": "none"
+    },
+    {
+      "email_leak": "none"
+    }
+  ]
+}

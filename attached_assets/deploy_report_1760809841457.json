@@ -1,0 +1,15 @@
+{
+  "file": "/mnt/data/openinterview_replit_deploy/deploy/profile_edit.bind.js",
+  "size_bytes": 28504,
+  "required_symbols": {
+    "wireResumeImportUI": true,
+    "analyzeResumeAndPopulate": true,
+    "wireAvailability": true,
+    "paintAvailability": true,
+    "readAvailabilityFromUI": true,
+    "renderResumeAndAttachments": true,
+    "pickFile": true,
+    "pickFiles": true
+  },
+  "all_symbols_present": true
+}

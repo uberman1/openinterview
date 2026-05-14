@@ -1,0 +1,16 @@
+{
+  "name": "openinterview-module1-login",
+  "version": "1.0.2",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "node selftest.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.3"
+  }
+}

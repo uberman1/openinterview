@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "csp": "present"
+    },
+    {
+      "email_leak": "none"
+    }
+  ]
+}

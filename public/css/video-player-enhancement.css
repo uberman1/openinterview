@@ -1,0 +1,15 @@
+/* Video Player Enhancement Styles - MINIMAL APPROACH */
+/* DO NOT interfere with existing working video functionality */
+
+/* This file is intentionally minimal to avoid breaking existing video loading */
+/* The JavaScript loaders (owner-preview-loader.js, public-profile-loader.js) handle all video display */
+
+/* Only provide basic fallback styles that don't interfere */
+.video-container {
+  /* Let JavaScript handle all styling */
+}
+
+/* Ensure we don't break existing functionality */
+[data-profile="video-container"] {
+  /* Let JavaScript populate this container completely */
+}

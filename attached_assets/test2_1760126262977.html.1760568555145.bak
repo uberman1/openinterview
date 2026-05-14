@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenInterview.me — Test & Validation Page (test2)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root{--bg:#ffffff;--fg:#111827;--muted:#6b7280;--border:#e5e7eb}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--fg); margin:0; padding:0;}
+    .container{max-width:1100px;margin:32px auto;padding:24px;}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+    h1{font-size:20px;margin:0;}
+    h2{font-size:16px;margin:0 0 6px 0;}
+    .subtitle{color:var(--muted);font-size:13px;}
+    section{margin-top:28px;border:1px solid var(--border);border-radius:8px;padding:16px;background:#fff;}
+    table{width:100%;border-collapse:collapse;margin-top:12px;}
+    th, td{text-align:left;padding:10px;border-bottom:1px dashed var(--border);}
+    th{background:#fafafa;font-weight:600;}
+    thead th{border-bottom:2px solid var(--border);}
+    .actions{display:flex;gap:8px;}
+    .btn{background:#111827;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;font-size:13px;}
+    .small{font-size:12px;color:var(--muted);}
+    .spacer{height:12px} 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Test & Validation Page (test2.html)</h1>
+        <div class="subtitle">Rebuilt from your outline. White background, black text, minimal styling.</div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="/" target="_blank">Open app root</a>
+      </div>
+    </header>
+
+    <!-- Home -->
+    <section id="home">
+      <h2>Home</h2>
+      <p class="small">Track releases and test artifacts for the Home page.</p>
+      <table aria-label="Home versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Shareable Profile -->
+    <section id="shareable-profile">
+      <h2>Shareable Profile</h2>
+      <p class="small">Versions for the shareable profile page and its variants.</p>
+      <table aria-label="Shareable Profile versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Availability -->
+    <section id="availability">
+      <h2>Availability</h2>
+      <p class="small">Calendar and availability UI tests.</p>
+      <table aria-label="Availability versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Profiles -->
+    <section id="profiles">
+      <h2>Profiles</h2>
+      <p class="small">Profile creation, edit flow, and templates.</p>
+      <table aria-label="Profiles versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Uploads -->
+    <section id="uploads">
+      <h2>Uploads</h2>
+      <p class="small">Resumes, attachments, avatars — upload behavior and storage.</p>
+      <table aria-label="Uploads versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Subscription -->
+    <section id="subscription">
+      <h2>Subscription</h2>
+      <p class="small">Billing, plans, and subscription flow tests.</p>
+      <table aria-label="Subscription versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Password -->
+    <section id="password">
+      <h2>Password</h2>
+      <p class="small">Password reset and auth-related tests.</p>
+      <table aria-label="Password versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer style="margin-top:22px;font-size:13px;color:#6b7280">
+      <div>Generated: 2025-10-10</div>
+      <div>Source: test page outline remade to spec.</div>
+    </footer>
+  </div>
+</body>
+</html>

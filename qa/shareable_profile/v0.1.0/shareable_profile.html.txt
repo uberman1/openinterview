@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Shareable Profile — OpenInterview</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:">
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#fff;color:#111}
+header,main{max-width:960px;margin:0 auto;padding:16px}
+.card{border:1px solid #111;border-radius:12px;padding:16px;margin-top:16px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{padding:10px 14px;border-radius:8px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
+.btn.secondary{background:#fff;color:#111}
+.muted{color:#666;font-size:14px}
+.hidden{display:none}
+img.avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:1px solid #111}
+a.link{color:#111}
+.status{margin-top:8px;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+<a id="back_to_home" href="/" class="muted">&larr; Home</a>
+<h1 id="profile_name">Jordan Lee</h1>
+<p id="profile_title" class="muted">Product Manager</p>
+</header>
+<main id="content">
+<section class="row" aria-label="Profile header">
+<img id="avatar" class="avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='100%25' height='100%25' fill='%23eee'/%3E%3C/svg%3E" alt="Profile photo of Jordan Lee"/>
+<button id="copy_link_btn" class="btn" aria-describedby="copy_status">Copy shareable link</button>
+<span id="copy_status" class="status" role="status" aria-live="polite"></span>
+</section>
+<section id="about_section" class="card" aria-labelledby="about_h">
+<div class="row" style="justify-content:space-between;">
+<h2 id="about_h">About</h2>
+<button id="toggle_about" class="btn secondary" aria-controls="about_body" aria-pressed="false">Hide</button>
+</div>
+<div id="about_body">
+<p>Experienced PM focused on interview intelligence and candidate experience.</p>
+</div>
+</section>
+<section id="links_section" class="card" aria-labelledby="links_h">
+<div class="row" style="justify-content:space-between;">
+<h2 id="links_h">Links</h2>
+<button id="toggle_links" class="btn secondary" aria-controls="links_body" aria-pressed="false">Hide</button>
+</div>
+<div id="links_body">
+<ul>
+<li><a class="link" id="link_website" href="https://openinterview.me" rel="noopener">Website</a></li>
+<li><a class="link" id="link_linkedin" href="https://www.linkedin.com" rel="noopener">LinkedIn</a></li>
+<li><a class="link" id="link_github" href="https://github.com" rel="noopener">GitHub</a></li>
+</ul>
+</div>
+</section>
+<div id="errors" class="muted" role="alert" aria-live="assertive"></div>
+</main>
+<script>
+const copyBtn=document.getElementById('copy_link_btn');
+const copyStatus=document.getElementById('copy_status');
+const aboutBtn=document.getElementById('toggle_about');
+const linksBtn=document.getElementById('toggle_links');
+const aboutBody=document.getElementById('about_body');
+const linksBody=document.getElementById('links_body');
+copyBtn.addEventListener('click',async()=>{const url=window.location.origin+'/p/jordan-lee';try{await navigator.clipboard.writeText(url);copyStatus.textContent='Link copied!';}catch(e){copyStatus.textContent='Copy failed — URL: '+url;}});
+function toggle(btn,body){const isHidden=body.classList.toggle('hidden');btn.setAttribute('aria-pressed',String(isHidden));btn.textContent=isHidden?'Show':'Hide';}
+aboutBtn.addEventListener('click',()=>toggle(aboutBtn,aboutBody));
+linksBtn.addEventListener('click',()=>toggle(linksBtn,linksBody));
+</script>
+</body>
+</html>

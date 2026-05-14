@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outbox • OpenInterview</title>
+  <link rel="stylesheet" href="/css/tailwind.css">
+  <style>body{background:#0b0b0b;color:#e5e7eb}</style>
+</head>
+<body class="font-sans">
+  <header class="p-4 border-b border-gray-800"><strong>Outbox (dev preview)</strong></header>
+  <main class="p-4">
+    <div id="rows" class="divide-y divide-gray-800"></div>
+    <p class="text-gray-400" id="empty">No messages yet.</p>
+  </main>
+<script>
+  const key = 'oi.outbox';
+  const rows = document.getElementById('rows');
+  const empty = document.getElementById('empty');
+  const list = JSON.parse(localStorage.getItem(key) || '[]');
+  if (list.length) empty.style.display = 'none';
+  list.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'py-3 flex gap-3 items-center';
+    div.innerHTML = `
+      <div>
+        <div class="font-semibold">${item.subject}</div>
+        <div class="text-sm text-gray-400">${item.to} • ${new Date(item.sentAt).toLocaleString()}</div>
+      </div>
+      <div class="ml-auto">
+        <a class="px-3 py-1 rounded border border-gray-700" href="javascript:void(0)" data-id="${item.id}">Open</a>
+      </div>`;
+    rows.appendChild(div);
+  });
+  rows.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-id]');
+    if (!a) return;
+    const id = a.getAttribute('data-id');
+    const msg = (JSON.parse(localStorage.getItem(key) || '[]')).find(m=>m.id===id);
+    if (!msg) return;
+    const blob = new Blob([msg.html], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    const w = 860, h = 900;
+    const left = (screen.width - w) / 2;
+    const top  = (screen.height - h) / 2;
+    window.open(url, 'emailPreview', `width=${w},height=${h},left=${left},top=${top}`);
+    setTimeout(()=>URL.revokeObjectURL(url), 10000);
+  });
+</script>
+</body>
+</html>

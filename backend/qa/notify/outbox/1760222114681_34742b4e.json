@@ -1,0 +1,10 @@
+{
+  "mode": "mock",
+  "to": "qa_tester@example.com",
+  "subject": "Your OpenInterview verification code",
+  "template": "otp",
+  "html": "<!doctype html><html><body>\n<h1>OpenInterview Notification: otp</h1>\n<p>{\"email\": \"qa_tester@example.com\", \"code\": \"123456\", \"token\": \"eyJjb2RlIjoiMTIzNDU2IiwiZW1haWwiOiJxYV90ZXN0ZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NjAyMjMwMTR9LnuyqUlZnFnRm_4Ds9iBePMhWjbJ-sHSZF95tQ8wCKLi\"}</p>\n<hr/>\n<p style=\"font-size:12px;color:#666\">If you didn't request this, please ignore.</p>\n</body></html>",
+  "text": "OpenInterview Notification: otp\n{\"email\": \"qa_tester@example.com\", \"code\": \"123456\", \"token\": \"eyJjb2RlIjoiMTIzNDU2IiwiZW1haWwiOiJxYV90ZXN0ZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NjAyMjMwMTR9LnuyqUlZnFnRm_4Ds9iBePMhWjbJ-sHSZF95tQ8wCKLi\"}\n--\nIf you didn't request this, please ignore.",
+  "token": "eyJjb2RlIjoiMTIzNDU2IiwiZW1haWwiOiJxYV90ZXN0ZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NjAyMjMwMTR9LnuyqUlZnFnRm_4Ds9iBePMhWjbJ-sHSZF95tQ8wCKLi",
+  "time": "2025-10-11T22:35:14+0000"
+}

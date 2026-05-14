@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenInterview.me — Test & Validation Page (test2)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root{--bg:#ffffff;--fg:#111827;--muted:#6b7280;--border:#e5e7eb}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--fg); margin:0; padding:0;}
+    .container{max-width:1100px;margin:32px auto;padding:24px;}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+    h1{font-size:20px;margin:0;}
+    h2{font-size:16px;margin:0 0 6px 0;}
+    .subtitle{color:var(--muted);font-size:13px;}
+    section{margin-top:28px;border:1px solid var(--border);border-radius:8px;padding:16px;background:#fff;}
+    table{width:100%;border-collapse:collapse;margin-top:12px;}
+    th, td{text-align:left;padding:10px;border-bottom:1px dashed var(--border);}
+    th{background:#fafafa;font-weight:600;}
+    thead th{border-bottom:2px solid var(--border);}
+    .actions{display:flex;gap:8px;}
+    .btn{background:#111827;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;font-size:13px;}
+    .small{font-size:12px;color:var(--muted);}
+    .spacer{height:12px} 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Test & Validation Page (test2.html)</h1>
+        <div class="subtitle">Rebuilt from your outline. White background, black text, minimal styling.</div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="/" target="_blank">Open app root</a>
+      </div>
+    </header>
+
+    <!-- Home -->
+    <section id="home">
+      <h2>Home</h2>
+      <p class="small">Track releases and test artifacts for the Home page.</p>
+      <table aria-label="Home versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.1</td><td>✅ Home: readiness + nav (6 pages) + optional API health + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.1/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.1/tests.txt">tests</a></td></tr><tr><td>v0.1.0</td><td>✅ Home: readiness banner + nav smoke (6 pages) + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.0/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.0/tests.txt">tests</a></td></tr>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Shareable Profile -->
+    <section id="shareable-profile">
+      <h2>Shareable Profile</h2>
+      <p class="small">Versions for the shareable profile page and its variants.</p>
+      <table aria-label="Shareable Profile versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td>v0.1.0</td><td>✅ Home: readiness banner + nav smoke (6 pages) + visual (1 baseline)</td><td><a href="/home_test.html">page</a></td><td><a href="/qa/home/v0.1.0/home.html.txt">code</a></td><td><a href="/qa/home/v0.1.0/tests.txt">tests</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Shareable Profile: copy link, toggle sections, a11y, CSP, visual (1 baseline)</td><td><a href="/shareable_profile_test.html" target="_blank">open</a></td><td><a href="/qa/shareable_profile/v0.1.0/shareable_profile.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/shareable_profile/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Availability -->
+    <section id="availability">
+      <h2>Availability</h2>
+      <p class="small">Calendar and availability UI tests.</p>
+      <table aria-label="Availability versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Availability: slot selection, confirm/cancel flows, a11y, CSP, visual (3 baselines)</td><td><a href="/availability_test.html" target="_blank">open</a></td><td><a href="/qa/availability/v0.1.0/availability.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/availability/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Profiles -->
+    <section id="profiles">
+      <h2>Profiles</h2>
+      <p class="small">Profile creation, edit flow, and templates.</p>
+      <table aria-label="Profiles versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Profiles: table visibility post-hydrate, create/save/publish, a11y, CSP, visual (1 baseline)</td><td><a href="/profiles_test.html" target="_blank">open</a></td><td><a href="/qa/profiles/v0.1.0/profiles.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/profiles/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Uploads -->
+    <section id="uploads">
+      <h2>Uploads</h2>
+      <p class="small">Resumes, attachments, avatars — upload behavior and storage.</p>
+      <table aria-label="Uploads versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Uploads: MIME validation, preseed profiles, avatar PASS, size/progress/cancel, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.1/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Uploads: size validation (5MB), progress bar, cancel, avatar integration, visual (1 baseline)</td><td><a href="/uploads_test.html" target="_blank">open</a></td><td><a href="/qa/uploads/v0.1.0/uploads.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/uploads/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Subscription -->
+    <section id="subscription">
+      <h2>Subscription</h2>
+      <p class="small">Billing, plans, and subscription flow tests.</p>
+      <table aria-label="Subscription versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines) (mock)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.1</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.1/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.1/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.0</td><td>✅ Subscription plans + flows (success/cancel) + a11y + CSP + visual (3 baselines)</td><td><a href="/subscription_test.html" target="_blank">open</a></td><td><a href="/qa/subscription/v0.1.0/subscription.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/subscription/v0.1.0/tests.txt" target="_blank">tests.txt</a></td></tr>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- Password -->
+    <section id="password">
+      <h2>Password</h2>
+      <p class="small">Password reset and auth-related tests.</p>
+      <table aria-label="Password versions">
+        <thead>
+          <tr><th>version</th><th>description</th><th>link</th><th>code</th><th>Test file</th></tr>
+        </thead>
+        <tbody>
+<tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr><tr><td>-</td><td></td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td class="mono">v0.1.2</td><td>Password page QA: unit & story tests executed; reports generated; test2.html updated (Option C).</td><td><a href="/password.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.2/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.2/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.3</td><td>Password page updated to QA contract (Option 1): IDs, a11y hooks, CSRF & CSP added; tests executed; test2.html updated.</td><td><a href="/password.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.3/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.3/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.4</td><td>Password Reset page tested (Option A): contract/behavior/a11y/security/visual suites executed; artifacts generated.</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.4/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.4/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.5</td><td>✅ ALL TESTS PASS! Responsive fixes, &lt;main&gt; wrapper, form redirect to success page. 100% coverage.</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.5/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.5/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>✅ 100% PASS! Success page visual baseline + E2E state tracking (qa/_state/session.json). 2 baselines.</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>Password Reset page tested (Option A, v0.1.4).</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>Password Reset page tested (Option A, v0.1.4).</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>Password Reset page tested (Option A, v0.1.4).</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>Password Reset page tested (Option A, v0.1.4).</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>Password Reset page tested (Option A, v0.1.4).</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr><tr><td class="mono">v0.1.6</td><td>Password Reset page tested (Option A, v0.1.4).</td><td><a href="/password_reset.html" target="_blank">open</a></td><td><a href="/qa/password/v0.1.6/password.html.txt" target="_blank">source.txt</a></td><td><a href="/qa/password/v0.1.6/tests.txt" target="_blank">tests.txt</a></td></tr></tbody>
+      </table>
+    </section>
+
+    <footer style="margin-top:22px;font-size:13px;color:#6b7280">
+      <div>Generated: 2025-10-10</div>
+      <div>Source: test page outline remade to spec.</div>
+    </footer>
+  </div>
+<section id='auth'><h2>Auth</h2><table border='1'><thead><tr><th>version</th><th>description</th><th>link</th><th>code</th><th>test</th></tr></thead><tbody><tr><td>v0.1.0</td><td>Auth & Session Pack vv0.1.0 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.0/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.0/tests.txt'>test</a></td></tr><tr><td>v0.1.0</td><td>Auth & Session Pack vv0.1.0 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.0/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.0/tests.txt'>test</a></td></tr><tr><td>v0.1.0</td><td>Auth & Session Pack vv0.1.0 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.0/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.0/tests.txt'>test</a></td></tr><tr><td>v0.1.0</td><td>Auth & Session Pack vv0.1.0 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.0/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.0/tests.txt'>test</a></td></tr><tr><td>v0.1.1</td><td>Auth & Session Pack vv0.1.1 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.1/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.1/tests.txt'>test</a></td></tr><tr><td>v0.1.1</td><td>Auth & Session Pack vv0.1.1 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.1/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.1/tests.txt'>test</a></td></tr><tr><td>v0.1.1</td><td>Auth & Session Pack vv0.1.1 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.1/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.1/tests.txt'>test</a></td></tr><tr><td>v0.1.1</td><td>Auth & Session Pack vv0.1.1 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.1/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.1/tests.txt'>test</a></td></tr><tr><td>v0.1.1</td><td>Auth & Session Pack vv0.1.1 – passwordless OTP, sessions, CSRF, invite-only alpha.</td><td><a href='/public/auth_test.html'>page</a></td><td><a href='/qa/auth/v0.1.1/tests.json'>code</a></td><td><a href='/qa/auth/v0.1.1/tests.txt'>test</a></td></tr></tbody></table></section>
+<section id="release-gate-infra">
+  <h2>Release Gate – Infra</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>version</th>
+        <th>description</th>
+        <th>link</th>
+        <th>code</th>
+        <th>test</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+<tr data-version="v0.2.0" data-ts="2025-10-12T01:26:23Z">
+  <td>v0.2.0</td>
+  <td>Bundle A (Security, Stripe webhook, Notifications); requests-based tests wired into Release Gate.</td>
+  <td><a href="backend/README.md">backend docs</a></td>
+  <td><a href="bundle_a/run_bundle_a_tests.py">bundle tests</a></td>
+  <td><a href="qa/bundle_a/v0.2.0/tests.json">results</a></td>
+</tr>
+</tbody>
+  </table>
+</section>
+
+
+<section id="quality-gate-ui">
+  <h2>Quality Gate – UI</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>version</th>
+        <th>description</th>
+        <th>link</th>
+        <th>code</th>
+        <th>test</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+<tr data-version="v0.2.0" data-ts="2025-10-12T02:16:21Z">
+  <td>v0.2.0</td>
+  <td>Bundle B (UI Quality Gate): a11y, performance, responsive, error-state smoke via Playwright.</td>
+  <td><a href="qa/bundle_b/v0.2.0/tests.json">summary</a></td>
+  <td><a href="bundle_b/run_bundle_b_tests.py">runner</a></td>
+  <td><a href="qa/bundle_b/v0.2.0/tests.json">results</a></td>
+</tr>
+</tbody>
+  </table>
+</section>
+
+
+<section id="quality-gate-governance">
+  <h2>Quality Gate – Governance (Org, Audit, Metrics)</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>version</th>
+        <th>description</th>
+        <th>link</th>
+        <th>code</th>
+        <th>test</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+<tr data-version="v0.2.0" data-ts="2025-10-12T03:10:07Z">
+  <td>v0.2.0</td>
+  <td>Bundle C: Organizations & roles, audit log with hash chain + redaction, metrics & extended health.</td>
+  <td><a href="qa/bundle_c/v0.2.0/tests.json">summary</a></td>
+  <td><a href="bundle_c/run_bundle_c_tests.py">runner</a></td>
+  <td><a href="qa/bundle_c/v0.2.0/tests.txt">results</a></td>
+</tr>
+</tbody>
+  </table>
+</section>
+
+</body></html>
