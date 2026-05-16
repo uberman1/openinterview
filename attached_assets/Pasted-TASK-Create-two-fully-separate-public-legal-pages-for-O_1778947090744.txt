@@ -1,0 +1,316 @@
+TASK:
+Create two fully separate public legal pages for OpenInterview.me to satisfy Twilio A2P 10DLC campaign compliance requirements and general platform legal disclosure requirements.
+
+OBJECTIVE:
+Replace the existing combined privacy-terms implementation with:
+
+1. https://openinterview.me/privacy
+2. https://openinterview.me/terms
+3. Optional helper page: https://openinterview.me/sms-consent
+
+Preserve site branding/styling consistent with OpenInterview.me.
+
+REQUIREMENTS:
+
+PAGE 1 — PRIVACY POLICY
+Route:
+`/privacy`
+
+Title:
+Privacy Policy — OpenInterview.me
+
+Content:
+
+# Privacy Policy
+
+Effective Date: [insert current date]
+
+OpenInterview.me (“OpenInterview”, “we”, “our”, or “us”) provides a digital hiring and interview platform that enables users to create professional profiles, upload resumes, receive interview requests, manage scheduling, and communicate with recruiters or hiring entities.
+
+This Privacy Policy explains how we collect, use, store, and protect your information.
+
+## Information We Collect
+
+We may collect:
+
+* Name
+* Email address
+* Mobile phone number
+* Resume data
+* Employment history
+* Skills and qualifications
+* Video interview submissions
+* Scheduling and availability information
+* Profile content
+* Authentication/account information
+* Device/browser metadata
+* IP address
+* Cookies and analytics data
+
+## How We Use Information
+
+We use collected information to:
+
+* Create and manage user accounts
+* Enable hiring workflows
+* Process interview scheduling
+* Deliver interview requests and notifications
+* Improve platform functionality
+* Provide support
+* Prevent abuse, fraud, or unauthorized access
+* Maintain platform security
+* Meet legal and compliance obligations
+
+## SMS Messaging Privacy
+
+If you voluntarily opt in to SMS notifications, OpenInterview.me may send transactional SMS messages related to:
+
+* Interview requests
+* Interview scheduling
+* Booking confirmations
+* Interview reminders
+* Scheduling changes
+* Account-related transactional notifications
+
+Message frequency varies.
+
+Message and data rates may apply depending on your wireless carrier.
+
+You may opt out at any time by replying STOP.
+
+You may request assistance by replying HELP.
+
+SMS consent is not required to use OpenInterview.me.
+
+Mobile opt-in information will not be shared with third parties or affiliates for marketing or promotional purposes.
+
+SMS consent applies only to transactional notifications explicitly requested by the user.
+
+## Information Sharing
+
+We may share information only as necessary with:
+
+* Employers or recruiters you interact with
+* Infrastructure providers
+* Cloud hosting vendors
+* Payment processors
+* Communications providers
+* Security/fraud prevention vendors
+* Legal authorities when required
+
+We do not sell your personal information.
+
+We do not sell, rent, or share mobile phone numbers for marketing purposes.
+
+## Cookies / Analytics
+
+We may use cookies and analytics technologies to improve platform performance and user experience.
+
+Users may disable cookies through browser settings, though some features may be impacted.
+
+## Data Security
+
+We implement reasonable technical and organizational safeguards to protect information.
+
+No system can guarantee absolute security.
+
+## Data Retention
+
+We retain information only as necessary for platform operations, compliance, legal obligations, or account continuity.
+
+Users may request deletion where applicable.
+
+## Third-Party Services
+
+OpenInterview.me uses trusted third-party service providers for infrastructure and communications.
+
+These may include:
+
+* payment providers
+* hosting providers
+* messaging providers
+* analytics tools
+
+Each provider maintains its own policies.
+
+## User Rights
+
+Users may request:
+
+* access
+* correction
+* deletion
+* account closure
+
+subject to legal or operational limitations.
+
+## Contact
+
+For privacy questions:
+
+[support@openinterview.me](mailto:support@openinterview.me)
+
+---
+
+PAGE 2 — TERMS & CONDITIONS
+Route:
+`/terms`
+
+Title:
+Terms & Conditions — OpenInterview.me
+
+Content:
+
+# Terms & Conditions
+
+Effective Date: [insert current date]
+
+These Terms govern use of OpenInterview.me.
+
+By accessing or using the platform, you agree to these terms.
+
+## Platform Description
+
+OpenInterview.me provides tools for:
+
+* digital profiles
+* resume hosting
+* video interview submissions
+* interview scheduling
+* recruiter interactions
+* application workflow support
+
+## User Responsibilities
+
+Users agree to:
+
+* provide accurate information
+* maintain lawful use
+* avoid abuse or impersonation
+* avoid unauthorized access attempts
+* avoid harmful uploads or malicious content
+
+## Account Access
+
+Users are responsible for safeguarding account access.
+
+OpenInterview may suspend accounts for abuse, fraud, or policy violations.
+
+## SMS Messaging Terms
+
+Users may optionally opt in to transactional SMS messaging.
+
+By opting in, users agree to receive SMS notifications related to:
+
+* interview requests
+* interview scheduling
+* booking confirmations
+* reminders
+* scheduling changes
+* account transactional updates
+
+Message frequency varies.
+
+Message and data rates may apply.
+
+Consent is not a condition of purchase or platform use.
+
+To unsubscribe:
+Reply STOP
+
+For help:
+Reply HELP
+
+SMS messaging is transactional only.
+
+## Embedded Links
+
+Some SMS or platform notifications may include secure embedded links to relevant OpenInterview workflows.
+
+## Payments
+
+If paid services are offered:
+
+* charges are disclosed before purchase
+* subscriptions renew according to selected plan terms
+* refunds follow published billing policy
+
+## Intellectual Property
+
+OpenInterview branding, workflows, software, and content remain protected property unless otherwise stated.
+
+## Service Availability
+
+We may modify, suspend, or discontinue features without notice.
+
+Availability is not guaranteed.
+
+## Limitation of Liability
+
+OpenInterview is provided as-is to the extent permitted by law.
+
+We are not liable for indirect or consequential damages arising from platform use.
+
+## Termination
+
+Accounts may be suspended or terminated for policy violations, abuse, or unlawful use.
+
+## Governing Law
+
+Applicable laws govern these terms based on operating jurisdiction.
+
+## Contact
+
+[support@openinterview.me](mailto:support@openinterview.me)
+
+---
+
+OPTIONAL PAGE 3 — SMS CONSENT EVIDENCE PAGE
+Route:
+`/sms-consent`
+
+Title:
+SMS Consent Information
+
+Content:
+
+# SMS Consent
+
+OpenInterview users may optionally opt in to receive transactional SMS notifications.
+
+Example consent language:
+
+☐ I agree to receive transactional SMS notifications from OpenInterview.me regarding interview requests, interview scheduling, booking confirmations, reminders, and scheduling changes.
+
+Message frequency varies.
+
+Message & data rates may apply.
+
+Reply STOP to unsubscribe.
+
+Reply HELP for help.
+
+Consent is not required to use OpenInterview.me.
+
+This page exists to provide transparency regarding our SMS consent process.
+
+IMPLEMENTATION REQUIREMENTS:
+
+* replace old combined privacy-terms page links in site nav/footer
+* ensure all routes are public/no authentication
+* mobile responsive
+* preserve existing branding
+* clean typography
+* SEO-safe titles
+* HTTPS accessible
+* no placeholder lorem ipsum
+* support email visible
+
+DONE WHEN:
+
+https://openinterview.me/privacy loads
+https://openinterview.me/terms loads
+https://openinterview.me/sms-consent loads
+all content visible publicly
+footer links updated
+old privacy-terms page either redirects or removed
