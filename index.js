@@ -696,6 +696,14 @@ function serveDownloads(req, res) {
 app.get('/downloads.html', serveDownloads);
 app.get('/downloads', serveDownloads);
 
+// ---- Legal pages: /privacy, /terms, /sms-consent
+app.get('/privacy.html', (req, res) => res.redirect(301, '/privacy'));
+app.get('/privacy', (req, res) => res.sendFile(path.join(__dirname, 'public', 'privacy.html')));
+app.get('/terms.html', (req, res) => res.redirect(301, '/terms'));
+app.get('/terms', (req, res) => res.sendFile(path.join(__dirname, 'public', 'terms.html')));
+app.get('/sms-consent.html', (req, res) => res.redirect(301, '/sms-consent'));
+app.get('/sms-consent', (req, res) => res.sendFile(path.join(__dirname, 'public', 'sms-consent.html')));
+
 // ---- Serve /status2 - public system status page
 function serveStatus2(req, res) {
   const p = path.join(__dirname, 'public', 'status2.html');
