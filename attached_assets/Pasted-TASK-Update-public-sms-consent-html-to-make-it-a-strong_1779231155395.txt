@@ -1,0 +1,83 @@
+TASK:
+Update public/sms-consent.html to make it a stronger Twilio A2P 10DLC CTA verification page by adding the two provided screenshots and clearer workflow language.
+
+FILES:
+- public/sms-consent.html
+- Add provided image assets to public/images/ or the existing site image asset folder:
+  - drag.png
+  - sms.png
+
+OBJECTIVE:
+The SMS Consent page should publicly verify the real OpenInterview SMS opt-in flow for Twilio reviewers.
+
+PAGE UPDATES:
+
+1. Change main page heading to:
+SMS Opt-In Verification
+
+2. Add intro text near the top:
+This page provides public verification of OpenInterview.me’s transactional SMS opt-in workflow for compliance review.
+
+3. Add section:
+How SMS Consent Works
+
+Use this text:
+OpenInterview.me users begin by uploading their resume and proceeding to the profile editing page.
+
+During profile setup, users may optionally provide their mobile phone number.
+
+To receive SMS notifications, users must manually check an unchecked checkbox labeled “Receive SMS notifications.”
+
+SMS consent is optional and is not required to use OpenInterview.me.
+
+4. Add screenshot section after the workflow text.
+
+Screenshot 1:
+Use drag.png
+
+Caption:
+Step 1: Users begin by uploading their resume and continuing to profile setup.
+
+Screenshot 2:
+Use sms.png
+
+Caption:
+Step 2: On the profile editing page, users may optionally enter their phone number and manually check the unchecked SMS consent checkbox.
+
+5. Keep/add the exact consent language in a bordered box:
+
+I agree to receive transactional SMS notifications from OpenInterview.me regarding interview requests, interview scheduling, booking confirmations, reminders, and scheduling changes. Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for assistance. Consent is not required to use OpenInterview.me.
+
+6. Add compliance checklist:
+
+Transactional messages only
+No promotional or marketing SMS
+Consent checkbox is unchecked by default
+Explicit user action is required
+Message frequency varies
+Message & data rates may apply
+Reply STOP to unsubscribe
+Reply HELP for assistance
+Consent is not required to use OpenInterview.me
+
+7. Keep the existing message types section.
+
+8. Keep links to:
+Privacy Policy → /privacy
+Terms & Conditions → /terms
+
+STYLE REQUIREMENTS:
+- Match existing OpenInterview page branding
+- Screenshots should be centered
+- Images should be responsive with max-width: 100%
+- Use clean bordered cards/sections
+- Do not distort image aspect ratios
+- Mobile responsive
+- No icons required
+
+DONE WHEN:
+- /sms-consent loads publicly
+- drag.png and sms.png display correctly
+- page clearly shows resume upload → profile setup → optional SMS checkbox flow
+- exact consent language is visible
+- privacy and terms links are visible
