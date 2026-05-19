@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>SMS Consent Information — OpenInterview.me</title>
-    <meta name="description" content="OpenInterview.me SMS consent information — how users opt in to transactional SMS notifications and how to opt out."/>
+    <title>SMS Opt-In Verification — OpenInterview.me</title>
+    <meta name="description" content="Public verification of OpenInterview.me's transactional SMS opt-in workflow for Twilio A2P 10DLC compliance review."/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
     <script>
@@ -48,8 +48,8 @@
 
         <div class="mb-12">
             <p class="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-3">Compliance</p>
-            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">SMS Consent</h1>
-            <p class="text-base text-neutral-500">Transparency regarding how OpenInterview.me handles SMS opt-in consent.</p>
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">SMS Opt-In Verification</h1>
+            <p class="text-base text-neutral-500">This page provides public verification of OpenInterview.me's transactional SMS opt-in workflow for compliance review.</p>
         </div>
 
         <div class="prose prose-neutral max-w-none space-y-10 text-neutral-700 leading-relaxed">
@@ -57,11 +57,21 @@
             <p>OpenInterview users may optionally opt in to receive transactional SMS notifications from OpenInterview.me.</p>
 
             <section>
-                <h2 class="text-2xl font-bold text-neutral-900 mt-10 mb-4">How SMS Opt-In Works</h2>
-                <p>OpenInterview.me users first upload their resume and are taken to their profile editing page to complete or update their OpenInterview profile.</p>
-                <p class="mt-3">On that profile page, users may optionally provide a mobile phone number and manually check an unchecked checkbox labeled "Receive SMS notifications."</p>
-                <p class="mt-3">Only users who actively check this box are opted in to transactional SMS notifications.</p>
-                <p class="mt-3">SMS consent is optional and not required to use OpenInterview.me.</p>
+                <h2 class="text-2xl font-bold text-neutral-900 mt-10 mb-4">How SMS Consent Works</h2>
+                <p>OpenInterview.me users begin by uploading their resume and proceeding to the profile editing page.</p>
+                <p class="mt-3">During profile setup, users may optionally provide their mobile phone number.</p>
+                <p class="mt-3">To receive SMS notifications, users must manually check an unchecked checkbox labeled "Receive SMS notifications."</p>
+                <p class="mt-3">SMS consent is optional and is not required to use OpenInterview.me.</p>
+
+                <div class="mt-8 border border-neutral-200 rounded-lg overflow-hidden">
+                    <img src="/images/drag.png" alt="Step 1: Resume upload screen" class="w-full max-w-full object-contain">
+                    <p class="text-sm text-neutral-500 text-center px-4 py-3 bg-neutral-50 border-t border-neutral-200">Step 1: Users begin by uploading their resume and continuing to profile setup.</p>
+                </div>
+
+                <div class="mt-6 border border-neutral-200 rounded-lg overflow-hidden">
+                    <img src="/images/sms.png" alt="Step 2: Profile editing page with SMS checkbox" class="w-full max-w-full object-contain">
+                    <p class="text-sm text-neutral-500 text-center px-4 py-3 bg-neutral-50 border-t border-neutral-200">Step 2: On the profile editing page, users may optionally enter their phone number and manually check the unchecked SMS consent checkbox.</p>
+                </div>
             </section>
 
             <section>
@@ -73,6 +83,21 @@
                         <span class="text-sm leading-relaxed">I agree to receive transactional SMS notifications from OpenInterview.me regarding interview requests, interview scheduling, booking confirmations, reminders, and scheduling changes. Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe. Reply HELP for assistance. Consent is not required to use OpenInterview.me.</span>
                     </label>
                 </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-neutral-900 mt-10 mb-4">Compliance Summary</h2>
+                <ul class="space-y-2 mt-3">
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Transactional messages only</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>No promotional or marketing SMS</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Consent checkbox is unchecked by default</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Explicit user action is required</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Message frequency varies</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Message &amp; data rates may apply</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Reply STOP to unsubscribe</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Reply HELP for assistance</span></li>
+                    <li class="flex items-start gap-2"><span class="text-green-600 font-bold mt-0.5">✓</span><span>Consent is not required to use OpenInterview.me</span></li>
+                </ul>
             </section>
 
             <section>
