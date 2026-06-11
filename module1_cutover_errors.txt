@@ -1,0 +1,121 @@
+MODULE-1 LOGIN CUTOVER - ERROR REPORT & RECOMMENDATIONS
+=======================================================
+
+EXECUTION DATE: October 4, 2025
+TASK: Replace current login with Module-1 static HTML login
+
+ERRORS ENCOUNTERED:
+-------------------
+
+1. WORKFLOW CONFIGURATION ERROR
+   Location: .replit file (line 98)
+   Error: Cannot edit .replit file - forbidden by system policy
+   Details: Attempted to change workflow command from "npm run dev" to "npm start"
+   Current workflow command: "npm run dev"
+   Required workflow command: "npm start"
+
+2. PACKAGE.JSON MODIFICATION ERROR
+   Location: package.json
+   Error: Cannot edit package.json - forbidden by system policy
+   Details: Attempted to add "dev" script to match existing workflow expectations
+   Impact: Workflow fails with "Missing script: dev" error
+
+3. DEPENDENCY INSTALLATION ERROR
+   Package: supertest (devDependency)
+   Error: ERR_MODULE_NOT_FOUND - Cannot find package 'supertest'
+   Details: Required by selftest.mjs but not installed in node_modules
+   Root cause: npm install was not successfully executed via packager tool
+
+4. SELFTEST.MJS SYNTAX ERROR (FIXED)
+   Location: selftest.mjs (lines 11-12, 39-51)
+   Error: Import statements inside async function + malformed template literal
+   Status: CORRECTED - moved imports to top level, fixed template string
+   
+FILE PLACEMENT STATUS:
+----------------------
+✓ index.js - Placed at root
+✓ seed.json - Placed at root
+✓ selftest.mjs - Placed at root (syntax fixed)
+✓ GUARDRAILS.md - Placed at root
+✓ README.md - Placed at root
+✓ package.json - Placed at root
+✓ public/login.html - Placed correctly
+✓ public/index.html - Placed correctly
+✓ public/js/app.js - Placed correctly
+✓ public/css/theme.css - Placed correctly
+
+SERVER STATUS:
+--------------
+✓ Server started manually on port 5000: node index.js
+✓ Root redirect verified: / → redirects to /login.html (via index.html)
+✓ Static files served from public/ directory
+✗ Self-test not executed (missing dependencies)
+
+RECOMMENDATIONS TO RESOLVE:
+---------------------------
+
+OPTION 1: Install Dependencies via Packager Tool
+   Step 1: Use packager_tool to install "express" and "supertest"
+   Step 2: Restart workflow or manually run: node index.js
+   Step 3: Execute self-test: node selftest.mjs
+   
+   Commands:
+   - packager_tool(install_or_uninstall="install", language_or_system="nodejs", dependency_list=["express", "supertest"])
+   - Manual test: node selftest.mjs
+
+OPTION 2: Update Workflow Configuration (if permissions allow)
+   Step 1: Use workflow configuration tool to update "Start application" command to "npm start"
+   Step 2: Install dependencies via packager tool
+   Step 3: Restart workflow
+   Step 4: Verify / redirects to /login.html
+   Step 5: Run: node selftest.mjs
+
+OPTION 3: Hybrid Manual Approach (CURRENT STATE)
+   Step 1: Install dependencies: packager_tool for express + supertest
+   Step 2: Keep server running manually: node index.js &
+   Step 3: Run self-test: node selftest.mjs
+   Step 4: Verify guardrail checksums pass
+   Step 5: Test login flow manually at /login.html
+
+CRITICAL NEXT STEPS:
+--------------------
+1. Install express and supertest via packager_tool
+2. Run self-test to verify all checksums and API endpoints
+3. Confirm visual verification:
+   - Visit /login.html - should show minimalist white login
+   - Black "Continue" button visible
+   - Demo chips for user@example.com and admin@example.com
+   - Brand bar at top with "OpenInterview.me"
+4. Test routing:
+   - user@example.com → /profile.html (may 404 until Module 2)
+   - admin@example.com → /admin.html (may 404 until Module 4)
+5. Verify no framework additions or visual token changes
+
+GUARDRAIL COMPLIANCE STATUS:
+----------------------------
+✓ No changes to public/login.html (checksum protected)
+✓ No changes to public/css/theme.css (checksum protected)
+✓ No changes to public/index.html (checksum protected)
+✓ No new frameworks added
+✓ Role routing logic preserved in index.js
+✗ Self-test not yet executed (blocked by missing dependencies)
+
+EXPECTED SELF-TEST OUTPUT (when resolved):
+------------------------------------------
+✔ Guardrail: login.html checksum matches
+✔ Guardrail: theme.css checksum matches
+✔ Guardrail: index.html checksum matches
+✔ serves /login.html
+✔ POST /api/auth/login returns user role
+✔ POST /api/auth/login returns admin role
+✔ GET public profile by handle
+✔ GET admin users
+✔ Root redirects to /login.html
+✔ index.html contains hash-route redirect
+
+Summary: 10 passed, 0 failed
+
+FINAL RECOMMENDATION:
+---------------------
+Execute: packager_tool to install dependencies, then run node selftest.mjs
+This will complete the cutover and verify all guardrails are met.

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQX1RSL8YQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GQX1RSL8YQ');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me - Profiles</title>
+<link rel="stylesheet" href="/css/tailwind.css"/>
+<style>
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.25rem;
+            border: 2px solid #E5E5E5;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            outline: none;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .dark .custom-checkbox {
+            border-color: #2A2A2A;
+        }
+        .custom-checkbox:checked {
+            background-color: #141414;
+            border-color: #141414;
+        }
+        .dark .custom-checkbox:checked {
+            background-color: #141414;
+            border-color: #141414;
+        }
+        .custom-checkbox:checked::after {
+            content: '✓';
+            color: #f7f7f7;
+            font-size: 1rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .dark .custom-checkbox:checked::after {
+            color: #f7f7f7;
+        }
+
+        /* Skeleton Loading Animation - Custom Implementation */
+        .skeleton-pulse {
+            background-color: #e5e7eb;
+            animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .dark .skeleton-pulse {
+            background-color: #374151;
+        }
+        
+        @keyframes skeleton-pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Ensure skeleton elements have proper display */
+        .skeleton-pulse {
+            display: block !important;
+            min-height: 1rem;
+            border-radius: 0.25rem;
+        }
+
+        /* Button Loading States */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+            pointer-events: none;
+        }
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            margin: -6px 0 0 -6px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Show skeleton initially, hide when loaded */
+        .profiles-table tbody {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .profiles-table tbody.loaded {
+            opacity: 1;
+        }
+        
+        /* Hide skeleton elements when data is loaded */
+        .profiles-table tbody.loaded .skeleton-pulse {
+            display: none;
+        }
+
+        /* Loading spinner animation */
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Disabled checkbox styling */
+        .custom-checkbox:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Checkbox hover effect */
+        .custom-checkbox:not(:disabled):hover {
+            border-color: #141414;
+            transform: scale(1.05);
+            transition: all 0.2s ease;
+        }
+        .dark .custom-checkbox:not(:disabled):hover {
+            border-color: #141414;
+        }
+
+        /* Row loading state */
+        .row-loading {
+            background-color: rgba(59, 130, 246, 0.05);
+            transition: background-color 0.2s ease;
+        }
+        .dark .row-loading {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Tooltip for default checkbox */
+        .default-checkbox-container {
+            position: relative;
+        }
+        .default-checkbox-container:hover::after {
+            content: 'Click to set as default';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1f2937;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 4px;
+        }
+        .dark .default-checkbox-container:hover::after {
+            background-color: #374151;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark text-primary dark:text-neutral-50 font-display">
+<app-navbar></app-navbar>
+<main class="flex-1 w-full max-w-[960px] mx-auto px-4 py-8">
+<div class="max-w-5xl mx-auto">
+<header class="mb-8">
+<h2 class="text-4xl font-bold tracking-tight">Profiles</h2>
+</header>
+<div class="bg-background-light dark:bg-background-dark overflow-x-auto">
+<table class="w-full text-left profiles-table">
+<thead class="border-b border-subtle-light dark:border-subtle-dark">
+<tr>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-2/6">Profile name</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-1/6">Title</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-1/6">Date Created</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm text-center w-1/12">Default</th>
+<th class="py-4 px-6 font-medium text-muted-light dark:text-muted-dark text-sm w-1/4"></th>
+</tr>
+</thead>
+<tbody>
+<!-- Skeleton Loading Rows -->
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-48 rounded"></div>
+</td>
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-32 rounded"></div>
+</td>
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-24 rounded"></div>
+</td>
+<td class="py-5 px-6 text-center">
+<div class="skeleton-pulse h-5 w-5 rounded mx-auto"></div>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center justify-end gap-6">
+<div class="skeleton-pulse h-4 w-8 rounded"></div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-40 rounded"></div>
+</td>
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-28 rounded"></div>
+</td>
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-24 rounded"></div>
+</td>
+<td class="py-5 px-6 text-center">
+<div class="skeleton-pulse h-5 w-5 rounded mx-auto"></div>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center justify-end gap-6">
+<div class="skeleton-pulse h-4 w-8 rounded"></div>
+<div class="skeleton-pulse h-4 w-10 rounded"></div>
+<div class="skeleton-pulse h-4 w-8 rounded"></div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-subtle-light dark:border-subtle-dark">
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-44 rounded"></div>
+</td>
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-36 rounded"></div>
+</td>
+<td class="py-5 px-6">
+<div class="skeleton-pulse h-4 w-24 rounded"></div>
+</td>
+<td class="py-5 px-6 text-center">
+<div class="skeleton-pulse h-5 w-5 rounded mx-auto"></div>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center justify-end gap-6">
+<div class="skeleton-pulse h-4 w-8 rounded"></div>
+<div class="skeleton-pulse h-4 w-10 rounded"></div>
+<div class="skeleton-pulse h-4 w-8 rounded"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+
+<script src="/js/components/navbar.js"></script>
+<script src="/js/header.avatar.bind.js"></script>
+<script src="/js/profiles.bind.js"></script>
+<script type="module" src="/js/redirect-shim.js"></script>
+</body></html>

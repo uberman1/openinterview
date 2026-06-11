@@ -1,0 +1,12 @@
+{
+  "name": "Module 3 \u2013 Dashboard & Profile (Mock Data)",
+  "public": [
+    "/"
+  ],
+  "protected": [
+    "/#/dashboard",
+    "/#/profile"
+  ],
+  "admin": [],
+  "notes": "Ensures mock dashboard shows non-empty content and profile edits persist in localStorage."
+}

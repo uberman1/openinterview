@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OpenInterview • Availability</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#ffffff",
+            "background-dark": "#191919",
+            "foreground-light": "#141414",
+            "foreground-dark": "#f7f7f7",
+            "subtle-light": "#e5e5e5",
+            "subtle-dark": "#2a2a2a",
+            "muted-light": "#737373",
+            "muted-dark": "#a3a3a3"
+          },
+          fontFamily: { "display": ["Inter","ui-sans-serif","system-ui","sans-serif"] },
+          borderRadius: { "DEFAULT":"0.5rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" }
+        }
+      }
+    }
+  </script>
+  <style> body{font-family:'Inter',sans-serif} .day-chip{width:2.25rem;height:2.25rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:700;background:#f7f7f7;border:1px solid #e5e5e5} .icon-btn{border:1px solid #e5e5e5;border-radius:.5rem;padding:.375rem .5rem;line-height:1} .icon-inline{font-weight:700;padding:0 .25rem} </style>
+</head>
+<body class="bg-background-light text-foreground-light">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+    <header class="mb-8">
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl sm:text-3xl font-bold">Availability</h1>
+        <div class="flex items-center gap-3">
+          <button id="btnRevert" class="px-4 py-2 rounded-lg border border-subtle-light hover:bg-subtle-light">Revert</button>
+          <button id="btnSave" class="px-4 py-2 rounded-lg bg-primary text-white">Save</button>
+        </div>
+      </div>
+      <p class="text-sm text-muted-light mt-2">Define weekly hours, rules, and exceptions. These settings power your public booking widget.</p>
+    </header>
+
+    <nav class="border-b border-subtle-light mb-6">
+      <ul class="flex flex-wrap gap-1">
+        <li><button data-tab="weekly" class="tab px-4 py-2 rounded-t-lg bg-primary text-white">Weekly Hours</button></li>
+        <li><button data-tab="rules" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Rules</button></li>
+        <li><button data-tab="exceptions" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Exceptions</button></li>
+        <li><button data-tab="preview" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Preview</button></li>
+        <li><button data-tab="troubleshoot" class="tab px-4 py-2 rounded-t-lg hover:bg-subtle-light">Troubleshoot</button></li>
+      </ul>
+    </nav>
+
+    <!-- WEEKLY (vertical layout) -->
+    <section id="tab-weekly">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-8">
+          <div class="rounded-xl border border-subtle-light p-6">
+            <h3 class="text-lg font-semibold">Weekly hours</h3>
+            <p class="text-sm text-muted-light mb-4">Set when you are typically available for meetings</p>
+
+            <div class="divide-y divide-subtle-light" id="weeklyList">
+              <!-- day rows -->
+              <div class="flex items-start gap-4 py-4" data-day="Sun">
+                <span class="day-chip">S</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 py-4" data-day="Mon">
+                <span class="day-chip">M</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 py-4" data-day="Tue">
+                <span class="day-chip">T</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 py-4" data-day="Wed">
+                <span class="day-chip">W</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 py-4" data-day="Thu">
+                <span class="day-chip">Th</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 py-4" data-day="Fri">
+                <span class="day-chip">F</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 py-4" data-day="Sat">
+                <span class="day-chip">S</span>
+                <div class="flex-1">
+                  <div class="empty-note text-sm text-muted-light">Unavailable <button class="add-block icon-btn ml-2">+</button></div>
+                  <div class="blocks space-y-2"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <label class="text-sm font-medium mr-2">Timezone:</label>
+              <select id="timezone" class="rounded-lg">
+                <option value="America/Los_Angeles">America/Los_Angeles (PDT)</option>
+                <option value="America/Denver">America/Denver (MDT)</option>
+                <option value="America/Chicago">America/Chicago (CDT)</option>
+                <option value="America/New_York">America/New_York (EDT)</option>
+                <option value="UTC">UTC</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-4 space-y-4">
+          <div class="border border-subtle-light rounded-lg p-4">
+            <h4 class="font-semibold mb-3">Quick actions</h4>
+            <div class="space-y-2">
+              <button id="copyWeekdays" class="w-full border rounded-lg px-3 py-2 hover:bg-subtle-light">Copy Mon → Tue–Fri</button>
+              <button id="applyWeekdays" class="w-full border rounded-lg px-3 py-2 hover:bg-subtle-light">Use same hours for all weekdays</button>
+              <button id="resetAll" class="w-full border rounded-lg px-3 py-2 hover:bg-subtle-light">Reset all</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- RULES / EXCEPTIONS / PREVIEW / TROUBLESHOOT preserved from prior patch -->
+    <section id="tab-rules" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Minimum scheduling notice</h4>
+          <select id="minNotice" class="w-full rounded-lg">
+            <option value="60">1 hour</option>
+            <option value="120" selected>2 hours</option>
+            <option value="1440">24 hours</option>
+            <option value="2880">48 hours</option>
+          </select>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Scheduling window</h4>
+          <select id="windowDays" class="w-full rounded-lg">
+            <option value="14">2 weeks</option>
+            <option value="30" selected>30 days</option>
+            <option value="60">60 days</option>
+            <option value="90">90 days</option>
+          </select>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Start time increments</h4>
+          <div class="flex flex-wrap gap-2">
+            <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="5"><span class="px-3 py-2 rounded-lg border inline-block">5 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="10"><span class="px-3 py-2 rounded-lg border inline-block">10 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="15"><span class="px-3 py-2 rounded-lg border inline-block">15 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="30" checked><span class="px-3 py-2 rounded-lg border inline-block">30 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="radio" name="inc" value="60"><span class="px-3 py-2 rounded-lg border inline-block">60 min</span></label>
+          </div>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Buffers</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="text-sm">Before (min)</label><input id="bufBefore" type="number" class="w-full rounded-lg" min="0" step="5" value="30"></div>
+            <div><label class="text-sm">After (min)</label><input id="bufAfter" type="number" class="w-full rounded-lg" min="0" step="5" value="10"></div>
+          </div>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Daily meeting cap</h4>
+          <input id="maxPerDay" type="number" class="w-full rounded-lg" min="1" value="5">
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Durations offered</h4>
+          <div id="durations" class="flex flex-wrap gap-2">
+            <label class="cursor-pointer"><input class="sr-only" type="checkbox" value="15" checked><span class="px-3 py-2 rounded-lg border inline-block">15 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="checkbox" value="30" checked><span class="px-3 py-2 rounded-lg border inline-block">30 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="checkbox" value="45" checked><span class="px-3 py-2 rounded-lg border inline-block">45 min</span></label>
+            <label class="cursor-pointer"><input class="sr-only" type="checkbox" value="60"><span class="px-3 py-2 rounded-lg border inline-block">60 min</span></label>
+          </div>
+          <div class="mt-3">
+            <label class="text-sm">Default duration</label>
+            <select id="defaultDuration" class="w-full rounded-lg">
+              <option>15</option><option selected>30</option><option>45</option><option>60</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-exceptions" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Calendar</h4>
+          <div class="h-64 border border-dashed rounded-lg flex items-center justify-center text-muted-light">Month grid placeholder (no external sync)</div>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4 space-y-3">
+          <h4 class="font-semibold">Manage exceptions</h4>
+          <div class="flex gap-2">
+            <input id="exDate" type="date" class="rounded-lg w-full">
+            <select id="exType" class="rounded-lg">
+              <option value="block">Block date</option>
+              <option value="custom">Custom hours</option>
+            </select>
+          </div>
+          <div id="exCustom" class="hidden">
+            <div class="flex gap-2 mt-2">
+              <input id="exStart" type="time" class="rounded-lg w-full">
+              <input id="exEnd" type="time" class="rounded-lg w-full">
+            </div>
+          </div>
+          <button id="addException" class="w-full bg-primary text-white rounded-lg py-2">Add</button>
+          <div class="pt-2">
+            <h5 class="font-semibold mb-2">List</h5>
+            <ul id="exList" class="space-y-2 text-sm"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-preview" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">What recruiters will see</h4>
+          <div class="grid grid-cols-7 gap-1 text-center text-sm mb-3">
+            <span class="font-medium">S</span><span class="font-medium">M</span><span class="font-medium">T</span><span class="font-medium">W</span><span class="font-medium">T</span><span class="font-medium">F</span><span class="font-medium">S</span>
+          </div>
+          <div class="grid grid-cols-7 gap-2 text-center">
+            <button class="h-10 rounded border hover:bg-subtle-light"> 5 </button>
+            <button class="h-10 rounded border hover:bg-subtle-light"> 6 </button>
+            <button class="h-10 rounded border hover:bg-subtle-light"> 7 </button>
+            <button class="h-10 rounded border hover:bg-subtle-light"> 8 </button>
+            <button class="h-10 rounded border hover:bg-subtle-light"> 9 </button>
+          </div>
+        </div>
+        <div class="border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Times on selected date</h4>
+          <div id="previewSlots" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-troubleshoot" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="border border-subtle-light rounded-lg p-4 space-y-3">
+          <h4 class="font-semibold">Check a slot</h4>
+          <input id="tsDate" type="date" class="rounded-lg w-full">
+          <input id="tsTime" type="time" class="rounded-lg w-full">
+          <select id="tsDuration" class="rounded-lg w-full">
+            <option>15</option><option selected>30</option><option>45</option><option>60</option>
+          </select>
+          <button id="runTroubleshoot" class="w-full bg-primary text-white rounded-lg py-2">Explain availability</button>
+        </div>
+        <div class="lg:col-span-2 border border-subtle-light rounded-lg p-4">
+          <h4 class="font-semibold mb-2">Result</h4>
+          <pre id="tsResult" class="text-sm text-muted-light whitespace-pre-wrap">—</pre>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <script type="module" src="/js/availability.js"></script>
+</body>
+</html>

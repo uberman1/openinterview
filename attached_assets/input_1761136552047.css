@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: minimal safety to avoid hydration cloaks in tests */
+html, body { visibility: visible !important; opacity: 1 !important; }

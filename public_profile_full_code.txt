@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#141414",
+          "background-light": "#f7f7f7",
+          "background-dark": "#191919",
+          "foreground-light": "#141414",
+          "foreground-dark": "#f7f7f7",
+          "subtle-light": "#e5e5e5",
+          "subtle-dark": "#2a2a2a",
+          "muted-light": "#737373",
+          "muted-dark": "#a3a3a3",
+        },
+        fontFamily: { "display": ["Inter", "sans-serif"] },
+        borderRadius: { "DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+<div class="lg:grid lg:grid-cols-12 lg:gap-16">
+<main class="lg:col-span-8 flex flex-col h-full lg:max-h[calc(100vh-12rem)]">
+<div class="sticky top-12 z-10">
+<div class="relative aspect-video w-full rounded-lg overflow-hidden">
+<div id="heroBg" class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEWkqe3829dlPRN9mSVzmsZ29jFNPCEOdez7552lK-y6ncfxZmA91LJ14PEn7AAw59d27yP2QM0D1UxMBk_EJMkwX4qWEKei2CtS3cyy0SLxC6WUdmXvTORyfCdUB7dY-ittZ_3R_l4QuPX7Fn_tsJvl8AyxulVN84Z5AWgnrK2M3CLJC0k7nqFap67TqL24MZcrBimP27aaOaOZoPSU-bnBbwNaGnDklaOW-LVlT96Jh8144TEiIUVAtF6JDaaxUPwoAyi3f3Obk");'></div>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110" aria-label="Play">
+<svg class="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6.3 20.3V3.7L20.3 12L6.3 20.3Z"></path></svg>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 p-6 text-white">
+<h1 id="heroName" class="text-3xl font-bold">Ethan Carter</h1>
+<p id="heroTitle" class="text-lg text-white/80">Senior Product Designer</p>
+</div>
+</div>
+</div>
+<div class="overflow-y-auto mt-12 space-y-12 no-scrollbar">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<section>
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Attachments</h2>
+<div id="attachmentsList" class="space-y-4"></div>
+</section>
+<section>
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Highlights</h2>
+<ul id="highlightsList" class="space-y-4"></ul>
+</section>
+</div>
+<section class="space-y-6">
+<h2 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Resume</h2>
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg overflow-hidden">
+<div class="bg-background-light dark:bg-subtle-dark p-4 sm:p-6">
+<div class="aspect-[8.5/11] bg-white dark:bg-background-dark shadow-md rounded-md p-8 text-foreground-light dark:text-foreground-dark">
+<div class="flex justify-between items-start">
+<div>
+<h3 id="cvName" class="text-3xl font-bold">Ethan Carter</h3>
+<p id="cvTitle" class="text-lg text-muted-light dark:text-muted-dark">Senior Product Designer</p>
+</div>
+<div id="cvMeta" class="text-right text-sm"><p>San Francisco, CA</p></div>
+</div>
+<div class="mt-8 space-y-6">
+<div>
+<h4 class="text-lg font-bold border-b border-subtle-light dark:border-subtle-dark pb-2 mb-2">Summary</h4>
+<p id="aboutText" class="text-sm text-muted-light dark:text-muted-dark">Experienced product designer with a passion for creating intuitive and impactful user experiences.</p>
+</div>
+<div>
+<h4 class="text-lg font-bold border-b border-subtle-light dark:border-subtle-dark pb-2 mb-2">Experience</h4>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between items-baseline">
+<h5 class="font-bold">Senior Product Designer</h5>
+<p class="text-sm text-muted-light dark:text-muted-dark">2020 - Present</p>
+</div>
+<p class="text-sm text-muted-light dark:text-muted-dark italic">Tech Solutions Inc.</p>
+<ul class="list-disc list-inside text-sm text-muted-light dark:text-muted-dark mt-1 space-y-1">
+<li>Lead designer for a suite of enterprise software products.</li>
+<li>Mentored junior designers and improved design processes.</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-bold border-b border-subtle-light dark:border-subtle-dark pb-2 mb-2">Education</h4>
+<div>
+<div class="flex justify-between items-baseline">
+<h5 class="font-bold">M.S. in Human-Computer Interaction</h5>
+<p class="text-sm text-muted-light dark:text-muted-dark">2018</p>
+</div>
+<p class="text-sm text-muted-light dark:text-muted-dark italic">University of Design</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-center p-4 bg-background-light dark:bg-subtle-dark border-t border-subtle-light dark:border-subtle-dark">
+<div class="flex items-center space-x-4">
+<button class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-primary/50 disabled:opacity-50 disabled:cursor-not-allowed" disabled aria-label="Prev page">
+<svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<span class="text-sm font-medium text-muted-light dark:text-muted-dark">Page 1 of 2</span>
+<button class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-primary/50" aria-label="Next page">
+<svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<aside class="lg:col-span-4 mt-12 lg:mt-0">
+<div class="sticky top-12 space-y-12">
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+<div class="text-center space-y-4">
+<img id="avatar" alt="Ethan Carter" class="w-24 h-24 rounded-full mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOyBBUWv-aZFP72bm6P1T0ooUqEElaCh-Z96b7war0IQSiII9PCL1cbQ3i46GqnnWPy4YZtRhZ8FfYw8hdnctP4i1UtYTsDYv8cqwt99zRPuo-o0W4JsZ6LYMBJxzjLzZmN94uXVV8j3h5eatY5GgIacHoEHFgW16iTY1_ddWTvBf8uRGO0-5FbIqgtP1XbJZJ-IgkJYlcTkQdKghrCgOQ9uZ9Hm36hxOzOFQWoM4BoLGXCCdnZYsLl12-E-VKce8Z3uml36Ei8c4"/>
+<div>
+<h3 id="sideName" class="text-xl font-bold text-foreground-light dark:text-foreground-dark">Ethan Carter</h3>
+<p id="sideTitle" class="text-muted-light dark:text-muted-dark">Senior Product Designer</p>
+<p id="sideCity" class="text-sm text-muted-light dark:text-muted-dark">San Francisco, CA</p>
+</div>
+</div>
+<p id="sideAbout" class="text-center text-muted-light dark:text-muted-dark">Experienced product designer with a passion for creating intuitive and impactful user experiences.</p>
+</div>
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book an Interview</h2>
+<div class="flex items-center justify-between">
+<button class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark" aria-label="Prev month">
+<svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<p class="font-semibold">July 2024</p>
+<button class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark" aria-label="Next month">
+<svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<div id="slotButtons" class="flex flex-wrap gap-2 justify-center"></div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="email">Recruiter Email</label>
+<input class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="email" placeholder="Enter your email" type="email"/>
+</div>
+<button class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Confirm Booking</button>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<footer class="mt-24 pb-12 text-center text-sm text-muted-light dark:text-muted-dark">
+<div class="flex items-center justify-center space-x-4">
+<p>Powered by OpenInterview.me</p>
+<div class="w-16 h-16 p-1 border border-subtle-light dark:border-subtle-dark rounded-lg">
+<div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDB0gLGf771ZSa4HeTQVhxqjiV26vkvloQjJkhObHc037el4R_sXAUDay1PTiHf6QH35fMwpqo4eEBnVan4AQi2aJzvCQ9r4flDOVtWvqxLqrlZijNcaSC3PFnpT_xEQ-SUzEjy3A6i3w3mHrGMupK3JDMuFyu-44Sb9TNz1MzvRDwfueX0Vw5m9xbT8QRS2ZxSmBaKQIHetUZMNQCvDzHeBtBrV2W54NU-8mDOXHllN0ihTBxlA4AeIvNWRO-99uHoxC-Pzqr9vck");'></div>
+</div>
+</div>
+</footer>
+<script type="module">
+  const $ = (s)=>document.querySelector(s);
+  const el = (t,c='',h='')=>{const n=document.createElement(t); if(c) n.className=c; if(h) n.innerHTML=h; return n;};
+  const iconDownload='<svg class="h-6 w-6 text-muted-light dark:text-muted-dark" fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+  const iconLink='<svg class="h-6 w-6 text-muted-light dark:text-muted-dark" fill="none" height="24" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+  function youtubeId(url){ try{ const u=new URL(url); if(u.hostname.includes('youtu.be'))return u.pathname.slice(1); if(u.hostname.includes('youtube.com')) return u.searchParams.get('v'); return null; }catch{ return null; } }
+  function ytThumb(url){ const id=youtubeId(url); return id?`https://img.youtube.com/vi/${id}/maxresdefault.jpg`:null; }
+  async function api(p,opts={}){ const r=await fetch(p,{headers:{'Content-Type':'application/json'},...opts}); if(!r.ok) throw new Error(await r.text()); return r.json(); }
+  (async function init(){
+    const handle = location.pathname.split('/').pop();
+    const p = await api(`/api/public/profile/${handle}`);
+    $('#heroName').textContent=p.name||handle; $('#heroTitle').textContent=p.title||'';
+    $('#sideName').textContent=p.name||handle; $('#sideTitle').textContent=p.title||''; $('#sideCity').textContent=p.city||'';
+    $('#cvName').textContent=p.name||handle; $('#cvTitle').textContent=p.title||''; $('#cvMeta').innerHTML=p.city?`<p>${p.city}</p>`:'';
+    $('#aboutText').textContent=p.about||''; $('#sideAbout').textContent=p.about||$('#sideAbout').textContent;
+    const bg=ytThumb(p.video); if(bg) $('#heroBg').style.backgroundImage=`url("${bg}")`;
+    const wrap=$('#attachmentsList'); const card=(label,href,isD)=>{const a=el('a','flex items-center justify-between p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark hover:bg-subtle-light dark:hover:bg-primary/50 transition-colors'); a.href=href||'#'; a.target='_blank'; a.rel='noopener'; a.innerHTML=`<span class="font-medium">${label}</span>${isD?iconDownload:iconLink}`; return a;};
+    wrap.innerHTML=''; if(p.resume) wrap.appendChild(card(p.resume.name||'Resume', p.resume.url, true));
+    (p.links||[]).forEach(l=>wrap.appendChild(card(l.label||l.href,l.href,false)));
+    (p.attachments||[]).forEach(f=>wrap.appendChild(card(f.name,f.url,false)));
+    if(!wrap.children.length) wrap.innerHTML='<div class="text-muted-light dark:text-muted-dark">No attachments</div>';
+    const hi=$('#highlightsList'); hi.innerHTML=''; (p.highlights||[]).forEach(t=>{const li=el('li','flex items-start'); li.innerHTML='<span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span><p class="text-muted-light dark:text-muted-dark">'+t+'</p>'; hi.appendChild(li);}); if(!hi.children.length) hi.innerHTML='<li class="text-muted-light dark:text-muted-dark">No highlights</li>';
+    try{ const av=await api(`/api/availability?userId=${p.userId}`); const slots=[]; ['Mon','Tue','Wed','Thu','Fri'].forEach(d=>{ (av.weekly?.[d]||[]).forEach(t=>{ const b=el('label','cursor-pointer'); b.innerHTML='<input class="sr-only" name="time" type="radio"/><span class="block text-sm font-medium rounded-lg px-4 py-2 border border-subtle-light dark:border-subtle-dark peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">'+t+'</span>'; slots.push(b); }); }); const sb=$('#slotButtons'); sb.innerHTML=''; slots.slice(0,8).forEach(x=>sb.appendChild(x)); if(!slots.length) sb.innerHTML='<span class="text-sm text-muted-light dark:text-muted-dark">No slots available</span>'; }catch{}
+  })();
+</script>
+</body></html>

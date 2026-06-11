@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Notifications Test</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self'">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+  <style>body{font-family:Inter,system-ui,sans-serif;padding:24px;max-width:600px}.container{margin:0 auto}button{padding:8px 16px;margin:4px;background:#000;color:#fff;border:1px solid #222;border-radius:8px;cursor:pointer}input{padding:8px;border:1px solid #ccc;border-radius:8px;width:280px}label{display:block;margin:12px 0}ul{list-style:none;padding:0}li{padding:4px;font-size:12px;color:#666}</style>
+</head>
+<body>
+  <main class="container">
+    <h1 id="h1">Notifications Test</h1>
+    <div>
+      <label>Email <input id="email" type="email" autocomplete="email"></label>
+    </div>
+    <div>
+      <button id="send_otp_btn">Send OTP</button>
+      <button id="send_generic_btn">Send Generic</button>
+    </div>
+    <p id="status" role="status" aria-live="polite"></p>
+    <ul id="outbox_list" aria-label="Outbox"></ul>
+  </main>
+  <script src="./notify.bind.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQX1RSL8YQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GQX1RSL8YQ');
+</script>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SMS Opt-In Verification — OpenInterview.me</title>
+    <meta name="description" content="Public verification of OpenInterview.me's transactional SMS opt-in workflow for Twilio A2P 10DLC compliance review."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body class="bg-background-light dark:bg-background-dark text-neutral-900 dark:text-white antialiased">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-200 dark:border-neutral-800 px-4 py-4 md:px-6">
+        <a href="/home.html" class="flex items-center gap-4 text-primary dark:text-background-light hover:opacity-80 transition-opacity">
+            <div class="h-8 w-auto">
+                <img src="/defaults/logo_1.png" alt="OpenInterview Logo" class="h-full w-auto object-contain">
+            </div>
+        </a>
+        <div class="flex flex-1 items-center justify-end gap-6">
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="relative text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/oi-business"><span style="position:absolute;top:-10px;right:-6px;background:#f97316;color:#fff;font-size:7px;font-weight:400;border-radius:999px;padding:0 5px;height:14px;line-height:14px;letter-spacing:0.04em;display:inline-block;">BETA</span>Oi Business</a>
+                <a class="text-sm font-medium text-primary/70 hover:text-primary dark:text-white/70 dark:hover:text-white" href="/subscription.html">Subscription</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="/login-page.html" class="flex h-10 items-center justify-center rounded bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors">Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+
+        <!-- Page Header -->
+        <div class="mb-12 text-center">
+            <p class="mb-3 text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">Compliance</p>
+            <h1 class="text-4xl font-black tracking-tight text-neutral-900 dark:text-white sm:text-5xl">SMS Opt-In Verification</h1>
+            <p class="mt-5 max-w-2xl mx-auto text-neutral-500 dark:text-neutral-400">This page provides public verification of OpenInterview.me's transactional SMS opt-in workflow for compliance review.</p>
+        </div>
+
+        <!-- Inline nav -->
+        <div class="mb-10 flex gap-6 border-b border-neutral-200 dark:border-neutral-700 pb-1 text-sm font-medium">
+            <a href="/terms" class="border-b-2 border-transparent pb-2 text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200">Terms of Service</a>
+            <a href="/privacy" class="border-b-2 border-transparent pb-2 text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200">Privacy Policy</a>
+            <a href="/sms-consent" class="border-b-2 border-primary dark:border-white pb-2 text-primary dark:text-white">SMS Consent</a>
+        </div>
+
+        <div class="space-y-12 text-neutral-700 dark:text-neutral-300">
+
+            <!-- Section 1: How SMS Consent Works -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">1. How SMS Consent Works</h2>
+                <p class="mb-6">Users begin by uploading their resume to auto-fill their profile. After completing the upload flow, they are taken to the profile editing page where they <strong>may optionally</strong> enter their phone number and check an unchecked SMS consent checkbox. Consent is never assumed or pre-checked.</p>
+
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
+                    <figure class="overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+                        <img src="/images/drag.png" alt="Step 1: Resume upload flow" class="w-full object-contain" loading="lazy"/>
+                        <figcaption class="px-4 py-3 text-sm text-neutral-500 dark:text-neutral-400">Step 1: Users begin by uploading their resume and continuing to profile setup.</figcaption>
+                    </figure>
+                    <figure class="overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+                        <img src="/images/sms.png" alt="Step 2: Optional SMS opt-in on profile editing page" class="w-full object-contain" loading="lazy"/>
+                        <figcaption class="px-4 py-3 text-sm text-neutral-500 dark:text-neutral-400">Step 2: On the profile editing page, users may optionally enter their phone number and manually check the unchecked SMS consent checkbox.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- Section 2: Consent Language -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">2. Consent Language</h2>
+                <p class="mb-4">The following exact consent text is displayed adjacent to the SMS opt-in checkbox on the profile editing page:</p>
+                <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 p-6">
+                    <div class="flex items-start gap-3">
+                        <span class="mt-0.5 text-lg leading-none text-neutral-400">&#9744;</span>
+                        <div>
+                            <p class="text-sm font-medium text-neutral-900 dark:text-white mb-2">Receive SMS notifications</p>
+                            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">I agree to receive transactional SMS notifications from OpenInterview.me regarding interview requests, interview scheduling, booking confirmations, reminders, and scheduling changes. Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe. Reply HELP for assistance. Consent is not required to use OpenInterview.me.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Compliance Summary -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">3. Compliance Summary</h2>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Transactional messages only</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>No promotional or marketing SMS</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Consent checkbox is unchecked by default</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Explicit user action is required</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Message frequency varies</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Message &amp; data rates may apply</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Reply STOP to unsubscribe</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Reply HELP for assistance</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold">&#10003;</span>
+                        <span>Consent is not required to use OpenInterview.me</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 4: Message Types -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">4. Message Types</h2>
+                <p class="mb-3">OpenInterview.me sends only transactional SMS messages. Message types include:</p>
+                <ul class="list-disc pl-6 space-y-1">
+                    <li>Interview requests</li>
+                    <li>Scheduling confirmations</li>
+                    <li>Booking confirmations</li>
+                    <li>Appointment reminders</li>
+                    <li>Scheduling changes or cancellations</li>
+                    <li>Account transactional notifications</li>
+                </ul>
+                <p class="mt-4 text-sm font-medium text-neutral-500 dark:text-neutral-400">No promotional or marketing SMS messages are sent.</p>
+            </section>
+
+            <!-- Section 5: Message Frequency & Rates -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">5. Message Frequency &amp; Rates</h2>
+                <p>Message frequency varies based on your account activity — for example, a user with frequent interview bookings will receive more messages than one with occasional activity. Standard message and data rates may apply depending on your carrier plan.</p>
+            </section>
+
+            <!-- Section 6: Opt-Out -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">6. Opt-Out / Unsubscribe</h2>
+                <p>Reply <strong>STOP</strong> to any SMS from OpenInterview.me at any time. You will receive a one-time confirmation message and no further SMS messages will be sent. You can re-enable SMS notifications at any time from your profile settings. Opting out does not affect your ability to use any feature of OpenInterview.me.</p>
+            </section>
+
+            <!-- Section 7: Help -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">7. Help</h2>
+                <p>Reply <strong>HELP</strong> to any SMS from OpenInterview.me for assistance. You may also contact us directly at <a href="mailto:support@openinterview.me" class="underline text-neutral-900 dark:text-white hover:opacity-70">support@openinterview.me</a>.</p>
+            </section>
+
+            <!-- Section 8: Data Privacy -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">8. Data Privacy</h2>
+                <p>Mobile opt-in data, including phone numbers collected for SMS notifications, is never shared with or sold to third parties for marketing purposes. It is used solely to send the transactional messages described above. For full details see our <a href="/privacy" class="underline text-neutral-900 dark:text-white hover:opacity-70">Privacy Policy</a>.</p>
+            </section>
+
+            <!-- Section 9: Contact -->
+            <section>
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white mb-4">9. Contact</h2>
+                <p>For questions about SMS consent or this compliance page, contact us at <a href="mailto:support@openinterview.me" class="underline text-neutral-900 dark:text-white hover:opacity-70">support@openinterview.me</a> or 8 The Green STE A, Dover, DE 19901.</p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 mt-16">
+        <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-10 sm:grid-cols-3">
+                <div>
+                    <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Use Cases</h3>
+                    <ul class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                        <li><a href="/for/tutors">Tutors &amp; Coaches</a></li>
+                        <li><a href="/for/freelancers">Freelancers</a></li>
+                        <li><a href="/for/caregivers">Babysitters &amp; Caregivers</a></li>
+                        <li><a href="/for/performers">Actors &amp; Performers</a></li>
+                        <li><a href="/for/musicians">Musicians &amp; Singers</a></li>
+                        <li><a href="/for/events">Event Staffing</a></li>
+                        <li><a href="/for/creators">Influencers &amp; Creators</a></li>
+                        <li><a href="/for/startups">Startup Hiring &amp; Recruiting</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Product</h3>
+                    <ul class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-10">
+                        <li><a href="/home.html">Home</a></li>
+                        <li><a href="/oi-business">Oi Business (Beta)</a></li>
+                        <li><a href="/status2">System Performance</a></li>
+                        <li><a href="/pricing.html">Pricing</a></li>
+                        <li><a href="/login-page.html">Sign In</a></li>
+                    </ul>
+                    <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Legal &amp; Trust</h3>
+                    <ul class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/sms-consent">SMS Consent</a></li>
+                        <li><a href="/ai-transparency.html">AI Transparency</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-neutral-900 dark:text-white mb-3">Contact</h3>
+                    <ul class="space-y-3 text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                        <li>8 The Green STE A, Dover, DE 19901</li>
+                        <li><a href="mailto:support@openinterview.me">support@openinterview.me</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-neutral-200 dark:border-neutral-800 pt-8 text-center text-xs text-neutral-400 dark:text-neutral-600">
+                &copy; 2025 OpenInterview.me. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

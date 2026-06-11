@@ -1,0 +1,13 @@
+services: 
+   app: 
+     # Uses the image built and pushed by GitHub Actions 
+     # Requires DOCKERHUB_USERNAME to be set in .env file on server 
+     image: ${DOCKERHUB_USERNAME}/gman-backend:Open-Interview 
+     ports: 
+       - "3008:3000" 
+     env_file: 
+       - .env 
+     volumes: 
+       # Persist uploads 
+       - ./public/uploads:/app/public/uploads 
+     restart: always 

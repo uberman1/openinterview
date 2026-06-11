@@ -1,0 +1,11 @@
+{
+  "name": "Module 10 \u2013 Pagination & Search",
+  "public": [
+    "/"
+  ],
+  "protected": [
+    "/#/browse"
+  ],
+  "admin": [],
+  "notes": "List page provides client-side pagination and search with mock data; state synced to URL params."
+}

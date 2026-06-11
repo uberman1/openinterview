@@ -1,0 +1,17 @@
+{
+  "notifications": {
+    "otp": {
+      "email": "qa_tester@example.com",
+      "token_ok": true,
+      "outbox": "qa/notify/outbox/1760222369550_fa6b7c5d.json",
+      "time": "2025-10-11T22:39:29+0000"
+    },
+    "last_send": {
+      "to": "qa_tester@example.com",
+      "template": "generic",
+      "subject": "Hello from QA",
+      "outbox": "qa/notify/outbox/1760222369634_661290a0.json",
+      "time": "2025-10-11T22:39:29+0000"
+    }
+  }
+}

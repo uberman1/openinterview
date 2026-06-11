@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paywall Modal Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        .text-primary { color: #1f2937; }
+        .bg-primary { background-color: #1f2937; }
+        .border-primary { border-color: #1f2937; }
+    </style>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Paywall Modal Test</h1>
+        
+        <div class="space-y-4">
+            <button onclick="PaywallModal.open()" 
+                class="w-full px-6 py-3 bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
+                Test Default Modal
+            </button>
+            
+            <button onclick="PaywallModal.open({ sharesUsed: 1, sharesLimit: 1 })" 
+                class="w-full px-6 py-3 bg-orange-600 text-white font-medium hover:bg-orange-700 transition-colors">
+                Test Share Limit Reached
+            </button>
+            
+            <button onclick="PaywallModal.open({ sharesUsed: 3, sharesLimit: 5 })" 
+                class="w-full px-6 py-3 bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors">
+                Test Partial Usage (3/5)
+            </button>
+            
+            <button onclick="testErrorState()" 
+                class="w-full px-6 py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition-colors">
+                Test Error State
+            </button>
+            
+            <button onclick="testDirectAPI()" 
+                class="w-full px-6 py-3 bg-green-600 text-white font-medium hover:bg-green-700 transition-colors">
+                Test API Direct
+            </button>
+        </div>
+        
+        <div class="mt-8 p-4 bg-white border border-gray-200">
+            <h3 class="font-semibold mb-2">Instructions:</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Click any button to test different modal states</li>
+                <li>• Modal should show plans from your database</li>
+                <li>• Plans without stripe_price_id show "Coming Soon"</li>
+                <li>• Plans with stripe_price_id are clickable</li>
+                <li>• Check browser console for API calls</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/js/paywall-modal.js"></script>
+    <script>
+        async function testErrorState() {
+            // Temporarily break the modal's API call
+            const originalFetch = PaywallModal.fetchPlans;
+            PaywallModal.fetchPlans = async () => {
+                throw new Error('Test error - API unavailable');
+            };
+            
+            PaywallModal.open();
+            
+            // Restore after 5 seconds
+            setTimeout(() => {
+                PaywallModal.fetchPlans = originalFetch;
+            }, 5000);
+        }
+        
+        async function testDirectAPI() {
+            try {
+                const response = await fetch('/api/plans');
+                const plans = await response.json();
+                console.log('Plans from API:', plans);
+                alert(`Found ${plans.length} plans. Check console for details.`);
+            } catch (error) {
+                console.error('API Error:', error);
+                alert('API Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

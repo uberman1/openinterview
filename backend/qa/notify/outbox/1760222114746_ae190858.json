@@ -1,0 +1,12 @@
+{
+  "mode": "mock",
+  "to": "qa_tester@example.com",
+  "subject": "Hello from QA",
+  "template": "generic",
+  "html": "<!doctype html><html><body>\n<h1>OpenInterview Notification: generic</h1>\n<p>{\"test\": true}</p>\n<hr/>\n<p style=\"font-size:12px;color:#666\">If you didn't request this, please ignore.</p>\n</body></html>",
+  "text": "OpenInterview Notification: generic\n{\"test\": true}\n--\nIf you didn't request this, please ignore.",
+  "headers": {
+    "List-Unsubscribe": "<mailto:noreply@openinterview.me?subject=unsubscribe>, <https://openinterview.me/unsubscribe>"
+  },
+  "time": "2025-10-11T22:35:14+0000"
+}

@@ -1,0 +1,35 @@
+{
+  "baseUrl": "https://res.cloudinary.com/dwlencbgv/image/upload/openinterview/static/screenshots/",
+  "bySection": {
+    "edit-profile/identity-media": [
+      "profile_photo.png",
+      "video_thumbnail.png"
+    ],
+    "edit-profile/resume-attachments": [
+      "Resume.png"
+    ],
+    "edit-profile/professional-content": [
+      "highlights.png",
+      "skills.png",
+      "experience.png",
+      "education.png"
+    ],
+    "edit-profile/availability": [
+      "set_your_availability.png",
+      "quick_actions.png",
+      "rules.png"
+    ],
+    "share-profile/return-profile": [
+      "Return_to_your_profile_page.png"
+    ],
+    "share-profile/share-modal": [
+      "Share_modal_overview.png"
+    ],
+    "create-new-openinterview/access-new": [
+      "New_Interview_top_navigation.png"
+    ],
+    "create-new-openinterview/new-editor": [
+      "New_editor_overview.png"
+    ]
+  }
+}

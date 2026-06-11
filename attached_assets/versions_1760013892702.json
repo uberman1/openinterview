@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "major": 3,
+      "rows": [
+        {
+          "version": "3.1",
+          "description": "Seed row",
+          "page": "profile_pagev2.html",
+          "code": "data/code/profile_v3_1.txt",
+          "timestamp": "2025-10-09",
+          "unit_test": "data/tests/profile_v3_1_tests.txt"
+        }
+      ]
+    }
+  ],
+  "latest_major": 3
+}

@@ -1,0 +1,82 @@
+Create a static OpenInterview use-case template page for Tutors.
+
+Important correction:
+Use the existing homepage sections only as a reference for the initial build of this page.
+The page should be assembled at request time using shared homepage sections.
+Use home.html as the source of truth for those sections so updates to home.html carry through automatically.
+
+Do NOT duplicate the lower sections into a separate static copy.
+Do NOT create a second source of truth for shared sections.
+
+What I want:
+- one new Tutors use-case page
+- a newly built top hero/use-case section
+- the lower homepage sections rendered from the existing home.html implementation
+- the final page should be assembled dynamically at request time
+
+This means:
+- home.html is both the design reference and the shared source of truth
+- the use-case page should combine:
+  - custom Tutors hero section
+  - existing homepage sections (How It Works, Why OpenInterview, Wall of Love, CTA, Footer)
+- no duplicated HTML for shared sections
+
+Page goal:
+Create a reusable use-case landing page pattern for OpenInterview, starting with Tutors.
+
+The page should have:
+1. Header matching the current homepage
+2. A new custom 2-column Tutors hero section at the top
+3. The same lower-page sections as the homepage, sourced from home.html:
+   - How It Works
+   - Why OpenInterview
+   - Wall of Love / Testimonials
+   - CTA upload block
+   - Footer
+
+Top hero requirements:
+Create a 2-column hero section with:
+- eyebrow label
+- headline
+- description
+- hero image
+- 5 bullets
+- two CTA buttons
+
+Default Tutors content:
+Eyebrow: For Tutors
+Headline: Show parents how you teach before they ever book a session.
+Description: OpenInterview helps tutors present more than credentials. Instead of relying on a profile photo and a few lines of text, you can show your communication style, clarity, warmth, and confidence in one simple link. Parents and students get a faster, stronger first impression, which helps you earn trust sooner and convert more profile views into real sessions.
+Bullets:
+- Build trust before the first lesson
+- Show how clearly you explain concepts
+- Stand out from text-only tutor profiles
+- Reduce back-and-forth before booking
+- Convert more views into real sessions
+
+Design requirements:
+- match the current OpenInterview design system
+- Inter font
+- primary color #141414
+- monochrome / neutral palette
+- same spacing rhythm as homepage
+- same button style as homepage
+- same overall premium, minimal style
+
+Implementation requirements:
+- create a Tutors use-case route (e.g., /for/tutors)
+- assemble the page at request time
+- reuse homepage sections from home.html (do not duplicate)
+- keep implementation simple and minimal (no over-engineering)
+
+Do not:
+- do not duplicate the lower homepage sections into a new static file
+- do not create independent copies of shared sections
+- do not redesign the page
+- do not build the other use-case pages yet
+- do not introduce unnecessary abstraction or complexity
+
+When done, provide:
+- files changed
+- route created
+- short summary confirming that shared sections are sourced from home.html and not duplicated

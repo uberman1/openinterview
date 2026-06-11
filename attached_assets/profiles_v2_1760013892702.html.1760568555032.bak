@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OpenInterview.me – Versions Index</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>body{font-family:system-ui,sans-serif}</style>
+</head>
+<body>
+  <main>
+    <div id="sections"></div>
+  </main>
+<script>
+async function loadVersions(){
+  const r = await fetch('./data/versions.json', { cache: 'no-store' });
+  return r.json();
+}
+function renderTable(major, rows){
+  const wrap = document.createElement('section');
+  const h = document.createElement('h2'); h.textContent = 'Version '+major; wrap.appendChild(h);
+  const table = document.createElement('table'); const thead = document.createElement('thead');
+  thead.innerHTML = '<tr><th>Version</th><th>Description</th><th>Page</th><th>Code</th><th>Unit Test</th></tr>';
+  table.appendChild(thead);
+  const tbody = document.createElement('tbody');
+  rows.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = '<td>'+r.version+'</td><td>'+r.description+'</td><td><a href="'+r.page+'">page</a></td><td><a href="'+r.code+'">code</a></td><td><a href="'+r.unit_test+'">file</a></td>'; tbody.appendChild(tr); });
+  table.appendChild(tbody); wrap.appendChild(table); return wrap;
+}
+(async function(){ const data = await loadVersions(); const host = document.getElementById('sections'); (data.sections||[]).forEach(sec=>host.appendChild(renderTable(sec.major, sec.rows||[]))); })();
+</script>
+</body></html>

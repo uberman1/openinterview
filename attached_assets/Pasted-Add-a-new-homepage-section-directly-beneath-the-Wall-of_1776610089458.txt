@@ -1,0 +1,239 @@
+Add a new homepage section directly beneath the “Wall of Love” section and directly above the “You are more than a piece of paper” CTA section.
+
+SECTION NAME
+...and so much more!
+
+OBJECTIVE
+Create a feature grid section that visually matches the attached reference:
+- light gray section background
+- centered headline
+- white rounded tiles
+- subtle border and shadow
+- small icon plate at the top of each tile
+- 4-column grid on desktop
+- clean, minimal, premium look
+- same OpenInterview design system
+
+Important:
+- keep the current page structure unchanged except for inserting this new section
+- do not redesign surrounding sections
+- do not move Wall of Love or the CTA section
+- this section should sit exactly between them
+
+DESIGN REQUIREMENTS
+- background: soft light gray
+- tile background: white
+- tile border: subtle light gray
+- tile radius: rounded-xl / rounded-2xl feel
+- tile shadow: very light
+- headline centered: "...and so much more!"
+- headline should feel bold, large, and premium
+- each tile should have:
+  - small icon area at top
+  - feature title
+  - supporting description
+- the visual style should closely match the attached screenshot
+- use the existing site typography and spacing system
+- keep everything responsive
+
+GRID REQUIREMENTS
+- desktop: 4 columns
+- tablet: 3 columns or 2 columns as needed
+- mobile: 1 or 2 columns depending on current site pattern
+- all tiles should have equal visual weight
+- the section should feel balanced and clean
+
+TILE CONTENT
+Create 9 tiles with these exact titles and descriptions:
+
+1. SMS Text Alerts
+   Never miss an interview.
+
+2. Email Invites
+   Automate invites to everyone.
+
+3. Privacy First
+   Share secure profile links.
+
+4. Built-In Calendar
+   Instant interview scheduling.
+
+5. Social Media
+   Link all social media profiles.
+
+6. Custom Links
+   Add custom URL links.
+
+7. Mail Integration
+   Compatible with most email.
+
+8. Simple Setup
+   Configure & share in minutes.
+
+9. Robust Free Plan
+   Free plan is better than most paid.
+
+INTERACTION
+- keep it simple and polished
+- tiles can be static
+- no need for animation unless there is already an established subtle hover pattern on the homepage
+- if hover exists elsewhere, use a very light lift/shadow increase only
+
+ICONS / TILE IMAGES
+Create simple clean icon graphics for each tile using inline SVG so no external assets are needed.
+Use neutral monochrome styling consistent with the screenshot.
+
+Suggested icon mapping:
+- SMS Text Alerts → chat bubble / message icon
+- Email Invites → envelope icon
+- Privacy First → shield/check icon
+- Built-In Calendar → calendar icon
+- Social Media → nodes/share/network icon
+- Custom Links → external link / chain icon
+- Mail Integration → inbox/mail sync icon
+- Simple Setup → sliders / settings icon
+- Robust Free Plan → star / badge icon
+
+IMPLEMENTATION REQUIREMENTS
+- insert this section into the existing homepage file in the correct location:
+  - after Wall of Love
+  - before “You are more than a piece of paper”
+- preserve all surrounding markup
+- reuse existing color tokens/classes where possible
+- do not introduce unnecessary dependencies
+- do not use a new library
+- do not refactor unrelated sections
+
+If the page already uses Tailwind:
+- implement the section in Tailwind
+- match the site’s existing class style
+
+If the page is plain HTML/CSS:
+- add scoped CSS for this section only
+- avoid affecting global styles
+
+USE THIS CODE AS THE BASE IMPLEMENTATION
+
+<section class="w-full bg-[#f4f4f4] py-16 md:py-20">
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-10 md:mb-12 text-center">
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight text-[#141414]">
+        ...and so much more!
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Tile -->
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 6h16v10H7l-3 3V6Z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">SMS Text Alerts</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Never miss an interview.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 6h16v12H4z"/>
+            <path d="m5 7 7 6 7-6"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Email Invites</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Automate invites to everyone.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3Z"/>
+            <path d="m9.5 12 1.8 1.8 3.7-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Privacy First</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Share secure profile links.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="4" y="5" width="16" height="15" rx="2"/>
+            <path d="M8 3v4M16 3v4M4 9h16"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Built-In Calendar</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Instant interview scheduling.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M7 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm10 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM8.5 8.5l7 7"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Social Media</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Link all social media profiles.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M10 14 21 3"/>
+            <path d="M21 8V3h-5"/>
+            <path d="M14 10 3 21"/>
+            <path d="M8 21H3v-5"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Custom Links</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Add custom URL links.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 6h16v12H4z"/>
+            <path d="m5 7 7 6 7-6"/>
+            <path d="M8 11h8"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Mail Integration</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Compatible with most email.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 12h16"/>
+            <path d="M12 4v16"/>
+            <path d="M7 7h10v10H7z"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Simple Setup</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Configure &amp; share in minutes.</p>
+      </div>
+
+      <div class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-[0_1px_5px_-4px_rgba(36,36,36,0.7),0_4px_8px_rgba(36,36,36,0.05)] min-h-[170px] flex flex-col items-center text-center">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#f5f5f5] shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_0_0_1px_rgba(34,42,53,0.1),0_4px_8px_rgba(34,42,53,0.05)] text-[#4a4a4a]">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.1L12 17.2 6.4 20l1.1-6.1L3 9.6l6.2-.9L12 3Z"/>
+          </svg>
+        </div>
+        <h3 class="text-[15px] leading-[1.2] font-extrabold tracking-[-0.02em] text-[#141414]">Robust Free Plan</h3>
+        <p class="mt-3 text-sm leading-6 text-neutral-500">Free plan is better than most paid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+FINAL INSTRUCTIONS
+- insert the section in the correct position only
+- preserve all existing surrounding code
+- use the code above as the base implementation
+- adjust only as needed to match the site’s existing spacing/classes
+- do not redesign the surrounding sections
+- when done, report:
+  - file changed
+  - exact insertion point
+  - whether any class names were adjusted to match the existing homepage

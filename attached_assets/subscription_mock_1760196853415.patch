@@ -1,0 +1,61 @@
+diff --git a/subscription_pack/contract.yml b/subscription_pack/contract.yml
+--- a/subscription_pack/contract.yml
++++ b/subscription_pack/contract.yml
+@@
+-page: subscription
+-version: v0.1.0
++page: subscription
++version: v0.1.1
+ section_id: subscription
+ url: /subscription_test.html
+@@
+ # NOTE: keep CSS selectors quoted so # isn't treated as a YAML comment
+ 
+diff --git a/subscription_pack/tests_behavior.py b/subscription_pack/tests_behavior.py
+--- a/subscription_pack/tests_behavior.py
++++ b/subscription_pack/tests_behavior.py
+@@
+-from playwright.sync_api import sync_playwright
++import os
++from playwright.sync_api import sync_playwright
+@@
++USE_MOCK = os.environ.get("STRIPE_MOCK") == "1"
++if USE_MOCK:
++    # Optional mock driver (added via this patch)
++    from subscription_pack.mock_stripe import create_checkout_session, emit_webhook
++
+ def run_workflows(base_url, contract, outdir):
+@@
+-            # existing purchase flow (frontend-only)
+-            page.goto(base_url + "/subscription_test.html")
+-            page.click("#buy_pro_btn")
+-            page.wait_for_url(lambda url: "/subscription/success" in url)
++            # purchase flow with optional Stripe mock
++            page.goto(base_url + "/subscription_test.html")
++            if USE_MOCK:
++                # Simulate creating a checkout session and redirecting to success
++                try:
++                    sess = create_checkout_session(price_id="price_test_pro")
++                    page.goto(base_url + sess["url"])
++                    # Optionally simulate a webhook that your app would handle server-side
++                    _ = emit_webhook("checkout.session.completed",
++                                     {"mode": "subscription", "status": "complete", "price": "price_test_pro"})
++                except Exception as e:
++                    # fallback to existing UI click if mock is disabled at runtime
++                    page.click("#buy_pro_btn")
++            else:
++                page.click("#buy_pro_btn")
++            page.wait_for_url(lambda url: "/subscription/success" in url)
+@@
+-            # change/cancel tests that rely on active subscription state continue unchanged
++            # change/cancel tests that rely on active subscription state continue unchanged
+ 
+diff --git a/subscription_pack/run.py b/subscription_pack/run.py
+--- a/subscription_pack/run.py
++++ b/subscription_pack/run.py
+@@
+-    description = "Subscription page tested: plan select, redirect success/cancel, a11y, CSP, visual baselines"
++    # Annotate description if mock mode was used (helpful in test2.html index)
++    import os as _os
++    _mock_note = " (mock)" if _os.environ.get("STRIPE_MOCK") == "1" else ""
++    description = "Subscription page tested: plan select, redirect success/cancel, a11y, CSP, visual baselines" + _mock_note

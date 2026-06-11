@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQX1RSL8YQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GQX1RSL8YQ');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#141414",
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+            "foreground-light": "#141414",
+            "foreground-dark": "#f7f7f7",
+            "subtle-light": "#e5e5e5",
+            "subtle-dark": "#2a2a2a",
+            "muted-light": "#737373",
+            "muted-dark": "#a3a3a3",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem", //8px
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Professional Icon Animations */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-2px) scale(1.01);
+      }
+    }
+    
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* Pause animation on hover for better UX */
+    .group:hover .animate-float {
+      animation-play-state: paused;
+    }
+
+    /* ─── Mobile-only section reorder (below lg = <1024px) ─── */
+    @media (max-width: 1023px) {
+      /* Convert outer grid to flex column so order works across main + aside */
+      .profile-outer-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* Make main, aside, and the aside's sticky wrapper layout-transparent
+         so their children become direct flex items of .profile-outer-grid */
+      main.profile-main,
+      aside.profile-aside,
+      .profile-aside-sticky {
+        display: contents;
+      }
+
+      /* Assign order to each top-level section */
+      #mobile-welcome-section  { order: 1; }
+      #profile-summary-section { order: 2; }
+      #profile-video-section   { order: 3; }
+      #profile-content-grid    { order: 4; display: flex; flex-direction: column; }
+      #profile-resume-section  { order: 5; }
+      #profile-booking-section { order: 6; }
+
+      /* Within content grid: highlights (2nd in DOM) floats above attachments */
+      #profile-highlights-section  { order: 1; }
+      #profile-attachments-section { order: 2; }
+
+      /* Prevent booking calendar from overflowing narrow screens */
+      #profile-booking-section { overflow-x: hidden; }
+
+      /* Disable sticky sidebar behaviour on mobile */
+      .profile-aside-sticky { position: static; }
+    }
+  </style>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+<div class="profile-outer-grid grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+<main class="profile-main lg:col-span-8 space-y-12">
+
+<!-- Mobile-only welcome header (hidden on desktop; populated by renderBasicInfo via data-profile) -->
+<div id="mobile-welcome-section" class="lg:hidden pt-2">
+  <h1 data-profile="header-name" class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Loading...</h1>
+  <p data-profile="header-title" class="text-base text-muted-light dark:text-muted-dark mt-1">Loading...</p>
+</div>
+
+<div id="profile-video-section">
+<div data-profile="video-container" class="relative aspect-video w-full bg-gradient-to-br from-primary/20 to-primary/10">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<div class="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
+<svg class="h-10 w-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+<path d="M6.3 20.3V3.7L20.3 12L6.3 20.3Z"></path>
+</svg>
+</div>
+<p class="text-muted-light dark:text-muted-dark">Loading video...</p>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-6 text-white bg-gradient-to-t from-black/60 to-transparent w-full">
+<h1 data-profile="header-name" class="text-3xl font-bold">Loading...</h1>
+<p data-profile="header-title" class="text-lg text-white/80">Loading...</p>
+</div>
+</div>
+</div>
+
+<div id="profile-content-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<section id="profile-attachments-section">
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Attachments</h2>
+<div data-profile="attachments" class="space-y-4">
+<p class="text-muted-light dark:text-muted-dark">Loading attachments...</p>
+</div>
+
+<!-- Social Links -->
+<div class="mt-8" data-profile="social-links" id="profile-socials-section">
+<h3 class="text-lg font-semibold mb-4 text-foreground-light dark:text-foreground-dark">Socials</h3>
+<div class="space-y-3" id="social-links-container">
+<!-- Social links will be populated here -->
+</div>
+</div>
+</section>
+<section id="profile-highlights-section">
+<h2 class="text-2xl font-bold mb-6 text-foreground-light dark:text-foreground-dark">Highlights</h2>
+<ul data-profile="highlights" class="space-y-4">
+<li class="flex items-start">
+<span class="h-1.5 w-1.5 rounded-full bg-primary mt-2.5 mr-4 shrink-0"></span>
+<p class="text-muted-light dark:text-muted-dark">Loading highlights...</p>
+</li>
+</ul>
+</section>
+</div>
+<section class="space-y-6" id="profile-resume-section">
+<h2 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Resume</h2>
+<div class="border border-subtle-light dark:border-subtle-dark rounded-lg overflow-hidden">
+<div data-profile="resume" class="bg-white dark:bg-background-dark">
+<p class="text-muted-light dark:text-muted-dark p-8">Loading resume...</p>
+</div>
+</div>
+</section>
+</main>
+<aside class="profile-aside lg:col-span-4 mt-12 lg:mt-0">
+<div class="profile-aside-sticky sticky top-12 space-y-12">
+<div id="profile-summary-section" class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+<div class="text-center space-y-4">
+<img data-profile="sidebar-avatar" alt="Profile" class="w-24 h-24 rounded-full mx-auto" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect fill='%23141414' width='96' height='96'/%3E%3C/svg%3E"/>
+<div>
+<h3 data-profile="sidebar-name" class="text-xl font-bold text-foreground-light dark:text-foreground-dark">Loading...</h3>
+<p data-profile="sidebar-title" class="text-muted-light dark:text-muted-dark">Loading...</p>
+<p data-profile="sidebar-location" class="text-sm text-muted-light dark:text-muted-dark"></p>
+</div>
+</div>
+<p data-profile="sidebar-bio" class="text-center text-muted-light dark:text-muted-dark">Loading profile...</p>
+</div>
+<div id="profile-booking-section" class="border border-subtle-light dark:border-subtle-dark rounded-lg p-6 space-y-6">
+<h2 class="text-2xl font-bold text-center text-foreground-light dark:text-foreground-dark">Book an Interview</h2>
+<p id="browser-timezone" class="text-xs text-center font-medium text-muted-light dark:text-muted-dark mt-2"></p>
+<div class="flex items-center justify-between">
+            <button id="calendar-prev" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark">
+              <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </button>
+            <p id="calendar-month" class="font-semibold">July 2024</p>
+            <button id="calendar-next" class="p-2 rounded-full hover:bg-subtle-light dark:hover:bg-subtle-dark">
+              <svg class="w-5 h-5 text-muted-light dark:text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </button>
+          </div>
+          <div id="calendar-grid" class="grid grid-cols-7 gap-1 text-center text-sm">
+<span class="font-medium text-muted-light dark:text-muted-dark">S</span>
+<span class="font-medium text-muted-light dark:text-muted-dark">M</span>
+<span class="font-medium text-muted-light dark:text-muted-dark">T</span>
+<span class="font-medium text-muted-light dark:text-muted-dark">W</span>
+<span class="font-medium text-muted-light dark:text-muted-dark">T</span>
+<span class="font-medium text-muted-light dark:text-muted-dark">F</span>
+<span class="font-medium text-muted-light dark:text-muted-dark">S</span>
+<span class="col-start-4 text-muted-light dark:text-muted-dark/50">1</span>
+<span class="text-muted-light dark:text-muted-dark/50">2</span>
+          <span class="text-muted-light dark:text-muted-dark/50">3</span>
+          <span class="text-muted-light dark:text-muted-dark/50">4</span>
+          <button class="h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white font-semibold">5</button>
+          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+        </div>
+        <div id="booking-slots" class="flex flex-wrap gap-2 justify-center">
+          <p class="text-sm text-muted-light dark:text-muted-dark w-full text-center">Loading available slots...</p>
+        </div>
+        <div class="space-y-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="name">Your Name</label>
+            <input class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="name" placeholder="Enter your name" type="text"/>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="email">Your Email</label>
+            <input class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="email" placeholder="Enter your email" type="email"/>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="message">Message</label>
+            <textarea class="w-full rounded-lg border-subtle-light dark:border-subtle-dark bg-background-light dark:bg-subtle-dark focus:ring-primary focus:border-primary" id="message" placeholder="Brief message..." rows="2"></textarea>
+          </div>
+        </div>
+        <button id="confirm-booking-btn" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Confirm Booking</button>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<footer class="mt-24 pb-12 text-center text-sm text-muted-light dark:text-muted-dark">
+<div class="flex items-center justify-center space-x-4">
+<p>Powered by OpenInterview.me</p>
+<div class="w-16 h-16 p-1 border border-subtle-light dark:border-subtle-dark rounded-lg">
+<img src="/images/oi-symbol.png" alt="OpenInterview Logo" class="w-full h-full object-contain"/>
+</div>
+</div>
+</footer>
+
+<!-- Error Modal -->
+<div id="error-modal" class="fixed inset-0 bg-black/30 dark:bg-black/50 hidden items-center justify-center z-50">
+    <div class="relative flex w-full max-w-sm flex-col overflow-hidden bg-white dark:bg-background-dark rounded-xl shadow-2xl p-6 transform transition-all scale-100 opacity-100">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-bold text-red-600 dark:text-red-400 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Error
+            </h3>
+            <button onclick="document.getElementById('error-modal').classList.add('hidden'); document.getElementById('error-modal').classList.remove('flex');" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <p id="error-modal-message" class="text-base text-primary/80 dark:text-white/80 mb-6">
+            Something went wrong.
+        </p>
+        <div class="flex justify-end">
+            <button onclick="document.getElementById('error-modal').classList.add('hidden'); document.getElementById('error-modal').classList.remove('flex');" class="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/ga-events.js"></script>
+<script src="/js/public-profile-loader.js" type="module"></script>
+<script>
+    try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const tzElement = document.getElementById('browser-timezone');
+        if (tzElement && tz) {
+            tzElement.textContent = `Time zone: ${tz}`;
+        }
+    } catch (e) {
+        console.error('Failed to display time zone', e);
+    }
+</script>
+</body></html>

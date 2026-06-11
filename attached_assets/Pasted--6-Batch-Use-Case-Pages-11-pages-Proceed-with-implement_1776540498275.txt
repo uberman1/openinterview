@@ -1,0 +1,117 @@
+#6 — Batch Use-Case Pages (11 pages)
+
+Proceed with implementation as written with the following confirmed constraints.
+
+OBJECTIVE
+Create 11 static OpenInterview use-case pages using public/for-tutors.html as the exact source template.
+
+IMPORTANT
+- public/for-tutors.html is the fixed source template only
+- Do NOT modify public/for-tutors.html
+- Do NOT modify home.html
+- Do NOT redesign any section
+- Do NOT introduce new layout, styling, or structure
+- This is a duplication + content swap task only
+
+GOAL
+Generate 11 static standalone pages by copying the template and replacing ONLY:
+- <title>
+- hero eyebrow
+- hero headline
+- hero description
+- hero bullet list
+- 3 Wall of Love testimonial cards
+
+Everything else must remain identical to the template.
+No other sections should be changed, rebuilt, or restructured.
+
+FILES TO CREATE (11 total)
+Create the following files inside /public:
+
+freelancers.html
+tutors.html
+services.html
+caregivers.html
+performers.html
+musicians.html
+events.html
+conventions.html
+sales.html
+creators.html
+startups.html
+
+NOTES
+- tutors.html must be created as one of the final pages from the template
+- do not reuse for-tutors.html directly as the final page
+- all pages must be standalone static HTML files
+- all pages must visually match the template exactly except for swapped content
+
+ROUTES
+Add 11 GET routes in index.js using the same pattern as the existing use-case route:
+
+/for/freelancers
+/for/tutors-coaches
+/for/services
+/for/caregivers
+/for/performers
+/for/musicians
+/for/events
+/for/conventions
+/for/sales
+/for/creators
+/for/startups
+
+Implementation requirements:
+- follow the same fs.readFileSync pattern used in the existing route
+- inject header.avatar.bind.js exactly the same way
+- keep route logic simple and consistent
+- you may create a small helper (serveUseCasePage) only if it reduces repetition and stays minimal
+- do not introduce runtime assembly, parsing, or dynamic injection beyond the existing route pattern
+
+CONTENT
+- I will provide the use-case content separately
+- insert the content exactly as provided
+- do NOT rewrite, summarize, or modify the copy
+- do NOT generate placeholder text
+- do not rely on any attached files unless explicitly provided inline
+
+VISUAL / STRUCTURAL CONSISTENCY
+- maintain exact visual and structural consistency across all pages
+- preserve the existing OpenInterview design system
+- do not alter shared lower-page sections
+- do not change layout rhythm, styling, spacing, or button treatments
+
+EXECUTION CONSTRAINTS (STRICT)
+- treat this as a pure execution task
+- do not explore the repo beyond:
+  - public/for-tutors.html
+  - index.js route section
+- do not open or inspect unrelated files
+- do not refactor, optimize, or suggest improvements
+- do not introduce abstractions beyond what is necessary to complete routes
+- keep implementation minimal and deterministic
+- minimize file reads and edits
+- reuse the known template pattern for all pages
+- stop immediately after pages and routes are created
+
+OUT OF SCOPE
+- CMS or data layer
+- shared component extraction
+- homepage changes
+- additional pages beyond the 11 listed
+
+DONE LOOKS LIKE
+- 11 static HTML files created in /public
+- 11 corresponding /for/<slug> routes added
+- all pages return 200 status
+- all pages match the template visually
+- only hero + testimonials differ per page
+- shared structure remains unchanged
+
+DELIVER EXACTLY
+- 11 static HTML pages
+- 11 corresponding routes
+- list of files created
+- list of routes added
+- short confirmation that all pages were generated from the same template pattern without modifying shared structure
+- confirmation of completion

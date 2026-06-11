@@ -1,0 +1,17 @@
+{
+  "sealedAt": "2025-10-04T14:38:48.367Z",
+  "entries": [
+    {
+      "file": "public/login.html",
+      "sha256": "1553c79bb7338d69b9114ce7f4ff7d431d6ef9a2ad896d5c8cd2bbee41a8d535"
+    },
+    {
+      "file": "public/css/theme.css",
+      "sha256": "a87605d2d1ebf9461f0458b1eee3a681a367dd84ad868c160e770c2ccedb46dc"
+    },
+    {
+      "file": "public/index.html",
+      "sha256": "c6c62c874b8329b376ff9922023b427fee2ff7ca6436891bd9429cab59594b0c"
+    }
+  ]
+}

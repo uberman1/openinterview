@@ -1,0 +1,63 @@
+// /client/src/App.jsx (Module 3 patch) — adds auth UI + guards
+import React from 'react'
+import { ErrorBoundary } from './ErrorBoundary'
+import { useHashLocation, matchRoute } from './router'
+import Dashboard from './pages/Dashboard'
+import ProfilesList from './pages/ProfilesList'
+import ProfileNew from './pages/ProfileNew'
+import ProfileDetail from './pages/ProfileDetail'
+import InterviewNew from './pages/InterviewNew'
+import NotFound from './pages/NotFound'
+import Login from './pages/Login'
+import { authStore } from './auth'
+import { api } from './api'
+
+export default function App(){
+  const [path, navigate] = useHashLocation()
+  const [loggedIn, setLoggedIn] = React.useState(authStore.isLoggedIn())
+
+  async function doLogout(){
+    try{ await api.auth.logout() }catch{}
+    authStore.logout()
+    setLoggedIn(false)
+    navigate('/login')
+  }
+
+  const guard = (el)=> loggedIn ? el : <Login navigate={navigate}/>
+
+  const renderRoute = ()=>{
+    if (path === '/' || path === '') return <Dashboard/>
+    if (path === '/login') return <Login navigate={navigate}/>
+    if (path === '/profiles') return guard(<ProfilesList navigate={navigate}/>)
+    if (path === '/profiles/new') return guard(<ProfileNew navigate={navigate}/>)
+    let m
+    if (m = matchRoute('/profiles/:id', path)) return guard(<ProfileDetail id={m.id} navigate={navigate}/>)
+    if (m = matchRoute('/profiles/:id/interviews/new', path)) return guard(<InterviewNew profileId={m.id} navigate={navigate}/>)
+    return <NotFound/>
+  }
+
+  React.useEffect(()=>{
+    const onStorage = (e)=>{ if (e.key === 'oi_token') setLoggedIn(authStore.isLoggedIn()) }
+    window.addEventListener('storage', onStorage)
+    return ()=> window.removeEventListener('storage', onStorage)
+  }, [])
+
+  return (
+    <ErrorBoundary>
+      <div style={{display:'grid', gridTemplateColumns:'220px 1fr', minHeight:'100vh', fontFamily:'system-ui, -apple-system, Segoe UI, Roboto'}}>
+        <aside style={{background:'#0f172a', color:'#cbd5e1', padding:16}}>
+          <h3 style={{marginTop:0}}>OpenInterview</h3>
+          <nav style={{display:'grid', gap:8}}>
+            <a href="#/" style={{color:'#93c5fd'}}>Dashboard</a>
+            {!loggedIn && <a href="#/login" style={{color:'#93c5fd'}}>Login</a>}
+            {loggedIn && <a href="#/profiles" style={{color:'#93c5fd'}}>Profiles</a>}
+            {loggedIn && <button onClick={doLogout} style={{marginTop:8}}>Logout</button>}
+          </nav>
+        </aside>
+        <main style={{padding:24}}>
+          {renderRoute()}
+        </main>
+      </div>
+    </ErrorBoundary>
+  )
+}

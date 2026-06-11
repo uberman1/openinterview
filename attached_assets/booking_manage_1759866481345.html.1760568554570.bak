@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenInterview.me - Manage Booking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#141414",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        .no-icon-button svg { display: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-white transition-colors duration-300">
+<div class="flex flex-col min-h-screen">
+<header class="w-full">
+<div class="container mx-auto px-6 py-4">
+<div class="flex items-center justify-between">
+<div class="text-xl font-bold">OpenInterview.me</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-6 py-12 fade-in">
+<div class="max-w-4xl mx-auto">
+<h1 class="text-4xl font-bold text-center mb-4">Manage Booking</h1>
+<p class="text-center text-primary/70 dark:text-white/70 mb-12">Interview with Alex Turner</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="md:col-span-2 bg-white dark:bg-primary/5 rounded-lg p-6">
+<div class="flex items-center justify-between mb-6 no-icon-button">
+<button class="p-2 rounded-full hover:bg-primary/10 dark:hover:bg-white/10 transition-colors">
+<svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg>
+</button>
+<h2 class="text-lg font-semibold">July 2024</h2>
+<button class="p-2 rounded-full hover:bg-primary/10 dark:hover:bg-white/10 transition-colors">
+<svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path></svg>
+</button>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-sm text-primary/50 dark:text-white/50 mb-2">
+<div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<div class="text-primary/30 dark:text-white/30 col-start-2 py-2">30</div>
+<div class="py-2">1</div>
+<div class="py-2">2</div>
+<div class="py-2">3</div>
+<div class="py-2">4</div>
+<div class="py-2">5</div>
+<div class="py-2">6</div>
+<div class="py-2">7</div>
+<div class="py-2">8</div>
+<div class="py-2">9</div>
+<div class="py-2">10</div>
+<div class="py-2">11</div>
+<div class="py-2">12</div>
+<div class="py-2">13</div>
+<div class="py-2">14</div>
+<div class="py-2">15</div>
+<div class="py-2">16</div>
+<div class="py-2">17</div>
+<div class="py-2">18</div>
+<div class="py-2">19</div>
+<div class="py-2">20</div>
+<div class="py-2">21</div>
+<button class="bg-primary text-white rounded-lg py-2">22</button>
+<div class="py-2">23</div>
+<div class="py-2">24</div>
+<div class="py-2">25</div>
+<div class="py-2">26</div>
+<div class="py-2">27</div>
+<div class="py-2">28</div>
+<div class="py-2">29</div>
+<div class="py-2">30</div>
+<div class="py-2">31</div>
+<div class="text-primary/30 dark:text-white/30 col-start-3 py-2">1</div>
+<div class="text-primary/30 dark:text-white/30 py-2">2</div>
+<div class="text-primary/30 dark:text-white/30 py-2">3</div>
+</div>
+<div class="mt-8">
+<h3 class="text-base font-semibold mb-3">Available Times for Monday, July 22</h3>
+<div class="grid grid-cols-3 gap-2">
+<button class="w-full py-2 border border-primary/20 dark:border-white/20 rounded-lg hover:bg-primary/5 dark:hover:bg-white/5 transition-colors">09:00 AM</button>
+<button class="w-full py-2 border border-primary/20 dark:border-white/20 rounded-lg hover:bg-primary/5 dark:hover:bg-white/5 transition-colors">09:30 AM</button>
+<button class="w-full py-2 border bg-primary/20 border-primary/20 dark:bg-white/20 dark:border-white/20 rounded-lg">10:00 AM</button>
+<button class="w-full py-2 border border-primary/20 dark:border-white/20 rounded-lg hover:bg-primary/5 dark:hover:bg-white/5 transition-colors">10:30 AM</button>
+<button class="w-full py-2 border border-primary/20 dark:border-white/20 rounded-lg hover:bg-primary/5 dark:hover:bg-white/5 transition-colors">11:00 AM</button>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-white dark:bg-primary/5 rounded-lg p-6">
+<h3 class="text-lg font-semibold mb-3">Current Appointment</h3>
+<p class="text-primary dark:text-white">Monday, July 22, 2024</p>
+<p class="text-primary dark:text-white">10:00 AM - 10:30 AM</p>
+</div>
+<div class="space-y-4">
+<button class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/80 dark:hover:bg-primary/90 transition-colors" id="confirm-reschedule">Confirm Reschedule</button>
+<button class="w-full bg-transparent text-primary dark:text-white py-3 rounded-lg font-semibold hover:bg-primary/5 dark:hover:bg-white/5 border border-primary/20 dark:border-white/20 transition-colors" id="cancel-appointment">Cancel Appointment</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

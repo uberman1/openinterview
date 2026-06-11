@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "name": "upload.create",
+      "ok": true,
+      "status": 201
+    },
+    {
+      "name": "upload.meta",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "upload.delete",
+      "ok": true,
+      "status": 204
+    },
+    {
+      "name": "upload.delete_verify",
+      "ok": true,
+      "status": 404
+    },
+    {
+      "name": "client.build",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "ts": "2025-10-01T20:56:02.026Z",
+  "module": "05"
+}

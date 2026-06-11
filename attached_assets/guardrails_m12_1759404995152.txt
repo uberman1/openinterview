@@ -1,0 +1,12 @@
+Scope: Add Admin Console UI and endpoints using existing stats and fsStore. Do not change package.json, install packages, or edit env/config. Keep TS/Vite architecture.
+
+Allowed:
+- Add /server/admin.console.routes.ts and /server/flags.store.ts
+- Edit /server/routes.ts to mount admin console routes after auth/admin guards
+- Add /client/src/pages/AdminConsole.jsx and wire /admin route
+- Replace /scripts/selftest.js to include Module 12 checks
+- Write logs/selftest.mod-12.json and logs/mod-12.log
+
+Run:
+  npm run build
+  MODULE_NUM=12 node scripts/selftest.js

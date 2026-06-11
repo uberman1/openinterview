@@ -1,0 +1,31 @@
+name: Stage 4 Gate
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL (e.g., https://staging.example.com)"
+        required: true
+      health_url:
+        description: "Health URL (e.g., https://staging.example.com/health)"
+        required: true
+jobs:
+  stage4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r stage4/requirements.txt
+      - name: Run Stage 4 Gate
+        env:
+          PROD_URL: ${{ github.event.inputs.base_url }}
+          HEALTH_URL: ${{ github.event.inputs.health_url }}
+          EXPECT_LIVE: "1"
+        run: |
+          python stage4/run_stage4.py
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4-artifacts
+          path: qa/stage4/v0.4.0/

@@ -1,0 +1,53 @@
+{
+  "workflows": [
+    {
+      "id": "SB-PURCHASE-HAPPY",
+      "steps": [
+        {
+          "visit": "/subscription_test.html"
+        },
+        {
+          "click": ".card[data-plan='pro'] .select-plan"
+        },
+        {
+          "expect_url_contains": "/subscription/success"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "SB-CANCEL-AT-PERIOD-END",
+      "steps": [
+        {
+          "visit": "/subscription_test.html"
+        },
+        {
+          "click": "#cancel_plan"
+        },
+        {
+          "expect_url_contains": "/subscription/canceled"
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "responsive": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "name": "mobile"
+      },
+      "status": "PASS"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "name": "desktop"
+      },
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}
